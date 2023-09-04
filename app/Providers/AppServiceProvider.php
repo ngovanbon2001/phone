@@ -20,6 +20,7 @@ use App\Services\OrderService;
 use App\Services\ProductService;
 use App\Services\ReportService;
 use App\Services\UserService;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -40,6 +41,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CategoryServiceInterface::class, CategoryService::class);
         $this->app->bind(ReportServiceInterface::class, ReportService::class);
         $this->app->bind(CartServiceInterface::class, CartService::class);
+
+        $provinces = DB::table('provinces')->get();
+        view()->share('provinces', $provinces);
     }
 
     /**

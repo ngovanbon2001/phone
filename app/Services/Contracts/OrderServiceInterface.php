@@ -8,7 +8,7 @@ interface OrderServiceInterface
 
     public function create(array $attributes);
 
-    public function update(array $attributes, int $id);
+    public function update(int $id);
 
     public function delete(int $id);
 
@@ -25,4 +25,6 @@ interface OrderServiceInterface
     public function showListItem(mixed $order);
 
     public function select_delivery(array $data);
+
+    public function cancel(int $id);
 }

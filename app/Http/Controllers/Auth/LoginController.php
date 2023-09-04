@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -42,11 +43,39 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+        if (Auth::attempt([
+            'email' => $request->email,
+            'password' => $request->password
+        ])) {
+            $cart      = Session::get('cart-0') ?? [];
+            $cartLogin = Session::get('cart-' . auth()->user()->id) ?? [];
+            $products  = array_merge($cart, $cartLogin);
+
+            $aggregatedProducts = [];
+
+            foreach ($products as $product) {
+                $productId = $product["product_id"];
+                $quantity = intval($product["quantity"]);
+
+                if (!isset($aggregatedProducts[$productId])) {
+                    $aggregatedProducts[$productId] = $product;
+                } else {
+                    $aggregatedProducts[$productId]["quantity"] += $quantity;
+                }
+            }
+            
+            Session::put('cart-' . auth()->user()->id, $aggregatedProducts);
+
             return redirect()->route('web.home');
         } else {
             session()->flash('messageLoginError', 'User account or password incorrect');
             return redirect()->route('login');
         }
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/');
     }
 }

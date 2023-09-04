@@ -24,7 +24,13 @@ class Common
 
     const ACTIVE = 1;
 
+    const IN_ACTIVE = 0;
+
     const DELETE = 2;
+
+    const PAID = 2;
+
+    const CANCEL = 3;
 
     const PAGINATE_BE = 10;
 
@@ -45,4 +51,11 @@ class Common
     const PAGINATE_BANNER = 10;
 
     const PRICE = 100;
+
+    const STATUS_ORDER = [
+        self::IN_ACTIVE => 'Unconfimred',
+        self::ACTIVE    => 'Confirmed',
+        self::PAID      => 'Paid',
+        self::CANCEL    => 'Cancel',
+    ];
 }

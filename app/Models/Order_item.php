@@ -17,6 +17,12 @@ class Order_item extends Model
         'product_name',
         'product_image',
         'product_price',
-        'product_quantity'
+        'product_quantity',
+        'status'
     ];
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'order_id', 'id');
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CountRequestsMiddleware;
 use App\Http\Middleware\isAdmin;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -66,6 +67,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'jwt.auth' => \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
         'jwt.refresh' => \Tymon\JWTAuth\Http\Middleware\RefreshToken::class,
-        'isAdmin' => isAdmin::class
+        'isAdmin' => isAdmin::class,
+        'count_requests' => CountRequestsMiddleware::class
     ];
 }

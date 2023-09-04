@@ -12,11 +12,13 @@ use App\Repositories\Contracts\BannerRepositoryInterface;
 use App\Repositories\Contracts\BrandRepositoryInterface;
 use App\Repositories\Contracts\CategoryReponsitoryInterface;
 use App\Repositories\Contracts\ImageRepositoryInterface;
+use App\Repositories\Contracts\OrderItemsRepositoryInterface;
 use App\Repositories\Contracts\OrderRepositoryInterface;
 use App\Repositories\Contracts\ProductReponsitoryInterface;
 use App\Repositories\Contracts\ReportRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\ImageRepository;
+use App\Repositories\OrderItemsRespository;
 use App\Repositories\OrderRespository;
 use App\Repositories\ProductReponsitory;
 use App\Repositories\ReportRepository;
@@ -45,6 +47,7 @@ class RepositoryProvider extends ServiceProvider
         $this->app->bind(ImageRepositoryInterface::class, ImageRepository::class);
         $this->app->bind(ReportRepositoryInterface::class, ReportRepository::class);
         $this->app->bind(AdminRepositoryInterface::class, AdminRepository::class);
+        $this->app->bind(OrderItemsRepositoryInterface::class, OrderItemsRespository::class);
     }
 
     /**

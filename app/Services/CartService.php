@@ -36,6 +36,8 @@ class CartService implements CartServiceInterface
      */
     public function list(int $id)
     {
+        // Session::flush();
+        // dd(Session::get('cart-' . $id));
         return Session::get('cart-' . $id);
     }
 
@@ -45,49 +47,39 @@ class CartService implements CartServiceInterface
      */
     public function create(array $attributes)
     {
-        Cart::destroy();
-        $result = false;
         $user_id = auth()->user()->id ?? 0;
-        $product = $this->productReponsitoryInterface->find($attributes['product_id']);
-        if ($product->amount < (int)$attributes['quantity']) {
-            throw new CartException();
+
+        return $this->addCart($user_id, $attributes);
+    }
+
+    private function addCart($user_id, $attributes)
+    {
+        $carts = Session::get('cart-' . $user_id) ?? [];
+        $cartFilter = array_filter($carts, function ($item) use ($attributes) {
+            return ((int)$item['product_id'] ?? null) === (int)$attributes['product_id'];
+        });
+
+        if (count($cartFilter) === 0) {
+            $dataCart = [
+                'product_id' => $attributes['product_id'],
+                'quantity'   => $attributes['quantity'],
+                'name'       => $attributes['product_name'],
+                'price'      => $attributes['product_price'],
+                'options'    => [
+                    'image'  => $attributes['product_image'],
+                ],
+            ];
+
+            Session::push('cart-' . $user_id, $dataCart);
         } else {
-            $carts = Session::get('cart-' . $user_id) ?? [];
-            $cartFilter = array_filter($carts, function($item) use ($attributes) {
-                return (int)$item['id'] === (int)$attributes['product_id'];
-            });
-
-            if (count($cartFilter) === 0) {
-                $dataCart = [
-                    'id'      => (int)$attributes['product_id'],
-                    'qty'     => (int)$attributes['quantity'],
-                    'name'    => $attributes['product_name'],
-                    'price'   => $attributes['product_price'],
-                    'weight'  => '12',
-                    'options' => [
-                        'image' => $attributes['product_image'],
-                    ],
-                ];
-    
-                Session::push('cart-' . $user_id, $dataCart);
-            } else {
-                $cartUpdate = array_map(function ($item) use ($attributes) {
-                    if ((int)$item['id'] === (int)$attributes['product_id']) {
-                        (int)$item['qty'] +=  (int)$attributes['quantity'];
-                    }
-                    return $item;
-                }, $carts);
-                Session::put('cart-' . $user_id, $cartUpdate);
-            }
-
-            $newAmount = $product->amount - $attributes['quantity'];
-
-            $result = (boolean)$product->update(['amount' => $newAmount]);
+            $cartUpdate = array_map(function ($item) use ($attributes) {
+                if ((int)$item['product_id'] === (int)$attributes['product_id']) {
+                    (int)$item['quantity'] +=  (int)$attributes['quantity'];
+                }
+                return $item;
+            }, $carts);
+            Session::put('cart-' . $user_id, $cartUpdate);
         }
-
-        return [
-            'created' => $result
-        ];
     }
 
     /**
@@ -97,43 +89,10 @@ class CartService implements CartServiceInterface
      */
     public function update(array $request, int $id)
     {
-        $result = true;
-
-        $message = '';
-
-        DB::beginTransaction();
         try {
-            if (!empty($request['products'])) {
-                foreach ($request['products'] as $value) {
-                    $newAmount = 0;
-                    $product = $this->productReponsitoryInterface->find($value['id']);
-
-                    if (!empty($product)) {
-                        if ($product['amount'] < ($value['qty'])) {
-                            $result = false;
-                            $message = StatusCodeMessage::getMessage(StatusCodeMessage::UPDATE_DATA_FAIL);
-                            throw new CartException();
-                        }
-
-                        $newAmount = $product['amount'] - ($value['qty']);
-
-                        $result = (boolean)$product->update(['amount' => $newAmount]);
-                    }
-
-                    if (!$result) {
-                        break;
-                    }
-                }
-            }
-
-            if (!$result) {
-                DB::rollBack();
-                $message = StatusCodeMessage::getMessage(StatusCodeMessage::CODE_FAIL);
-                throw new CartException();
-            } else {
-                DB::commit();
+            if (!empty($request['data'])) {
                 Session::put('cart-' . $id, $request['data']);
-                $carts = Session::get('cart-'.$id);
+                $carts = Session::get('cart-' . $id);
                 return [
                     'code'    => StatusCodeMessage::CODE_OK,
                     'message' => StatusCodeMessage::getMessage(StatusCodeMessage::CODE_OK),
@@ -141,9 +100,9 @@ class CartService implements CartServiceInterface
                 ];
             }
         } catch (Exception $e) {
-            DB::rollBack();
+            dd($e->getMessage());
             Log::error($e->getMessage());
-            throw new CartException($message);
+            throw new CartException($e->getMessage());
         }
     }
 

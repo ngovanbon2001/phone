@@ -65,6 +65,8 @@ abstract class BaseRepository extends L5Repository implements RepositoryInterfac
      * @param $records
      * @param array $exclude
      * @return bool
+     * insert [[][]]
+     * update ['id' => [], 'id2'=>[]]
      */
     public function insertOrUpdateBatch($records, array $exclude = [])
     {

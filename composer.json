@@ -13,6 +13,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "phpoffice/phpspreadsheet": "^1.29",
+        "predis/predis": "^2.2",
         "prettus/l5-repository": "^2.9",
         "tymon/jwt-auth": "^1.0@dev"
     },

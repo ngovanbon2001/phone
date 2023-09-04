@@ -43,18 +43,15 @@
 			<div class="menuextras">
 				<div class="extras">
 					<ul>
-						<li class="shopping-cart-items"><i class="glyphicon glyphicon-shopping-cart icon-white"></i> <a href="page-shopping-cart.html"><b>3 items</b></a></li>
-						<li><a href="{{ route('login') }}">Login</a></li>
-						<li class="nav-item">
-							<a class="nav-link collapsed" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+						<li class="shopping-cart-items"><i class="glyphicon glyphicon-shopping-cart icon-white"></i> <a href="{{ route('cart', auth()->user()->id ?? 0) }}"><b>3 items</b></a></li>
+						<li class="{{ isset(auth()->user()->id) ? 'hidden' : '' }}"><a href="{{ route('login') }}">Login</a></li>
+						<li class="nav-item {{ !(isset(auth()->user()->id)) ? 'hidden' : '' }}">
+							<a class="nav-link collapsed" href="{{ route('user.logout') }}">
 								<i class="bi bi-box-arrow-in-right"></i>
-								<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-									@csrf
-								</form>
 								<span>Logout</span>
 							</a>
 						</li><!-- End Login Page Nav -->
+						<li><p>{{ auth()->user()->username ?? '' }}</p></li>
 					</ul>
 				</div>
 			</div>
@@ -153,3 +150,8 @@
 </body>
 
 </html>
+<style>
+	.hidden {
+		display: none;
+	}
+</style>

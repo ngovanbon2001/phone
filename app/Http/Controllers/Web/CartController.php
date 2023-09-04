@@ -2,25 +2,25 @@
 
 namespace App\Http\Controllers\Web;
 
-use App\Constants\StatusCodeMessage;
 use App\Http\Controllers\Controller;
 use App\Services\Contracts\CartServiceInterface;
-use Exception;
+use App\Services\Contracts\OrderServiceInterface;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
-use Predis\Protocol\Text\Handler\StatusResponse;
 
 class CartController extends Controller
 {
     protected $cartServiceInterface;
+    protected $orderServiceInterface;
 
     /**
      * @param BannerServiceInterface $bannerServiceInterface
      */
     public function __construct(
-        CartServiceInterface  $cartServiceInterface
+        CartServiceInterface  $cartServiceInterface,
+        OrderServiceInterface $orderServiceInterface
     ) {
-        $this->cartServiceInterface = $cartServiceInterface;
+        $this->cartServiceInterface  = $cartServiceInterface;
+        $this->orderServiceInterface = $orderServiceInterface;
     }
 
     public function index($id)
@@ -40,5 +40,10 @@ class CartController extends Controller
         $carts  = $request->all();
         $result = $this->cartServiceInterface->update($request->all(), $carts['cart_id']);
         return $this->response($result);
+    }
+
+    public function delivery(Request $request)
+    {
+        return $this->orderServiceInterface->select_delivery($request->all());
     }
 }

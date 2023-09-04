@@ -21,6 +21,19 @@
         <section class="section dashboard">
             <div class="row">
 
+                <div id="message">
+                    @if (session()->has('message-update-order'))
+                    <div class="alert alert-danger">
+                        {{ session('message-update-order') }}
+                    </div>
+                    @endif
+                    @if (session()->has('message-update-order-success'))
+                    <div class="alert alert-success">
+                        {{ session('message-update-order-success') }}
+                    </div>
+                    @endif
+                </div>
+
                 <!-- Left side columns -->
                 <div class="col-lg-12">
                     <div class="row">
@@ -85,39 +98,49 @@
                                         <thead>
                                             <tr>
                                                 <th style="width:5%; text-align: center;">No</th>
-                                                <th style="width:15%; text-align: left;">Customer's name</th>
+                                                <th style="width:10%; text-align: left;">Customer's name</th>
                                                 <th style="width:10%; text-align: left;">Email</th>
                                                 <th style="width:5%; text-align: center;">Phone</th>
-                                                <th style="width:10%; text-align: center;">Total</th>
-                                                <th style="width:25%; text-align: center;">Items</th>
-                                                <th style="width:10%; text-align: center;">Status</th>
-                                                <th style="width:20%; text-align: center;">Action</th>
+                                                <th style="width:10%; text-align: center;">Total product</th>
+                                                <th style="width:15%; text-align: center;">Items</th>
+                                                <th style="width:5%; text-align: center;">Status</th>
+                                                <th style="width:35%; text-align: center;">Action</th>
+                                                <th style="width:5%; text-align: center;"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach($orders as $key => $orderList)
                                             <tr>
-                                                <td style="text-align: center;">{{ $key+1 }}</td>
-                                                <td style="text-align: left;">{{ $orderList->customer_name }}</td>
-                                                <td style="text-align: left;">{{ $orderList->customer_email }}</td>
-                                                <td style="text-align: center;">{{ $orderList->customer_phone }}</td>
-                                                <td style="text-align: right;">${{ number_format($orderList->total_money) }}</td>
+                                                <td style="text-align: center;"><a class="color-text" href="{{ route('showbyId', $orderList->id) }}">{{ $key+1 }} </a></td>
+                                                <td style="text-align: left;"><a class="color-text" href="{{ route('showbyId', $orderList->id) }}">{{ $orderList['order']['customer_name'] ?? ''}}</a></td>
+                                                <td style="text-align: left;"><a class="color-text" href="{{ route('showbyId', $orderList->id) }}">{{ $orderList->order->customer_email ?? '' }}</a></td>
+                                                <td style="text-align: center;"><a class="color-text" href="{{ route('showbyId', $orderList->id) }}">{{ $orderList->order->customer_phone ?? '' }}</a></td>
+                                                <td style="text-align: right;"><a class="color-text" href="{{ route('showbyId', $orderList->id) }}">{{ number_format($orderList->product_quantity ?? 0) }}</a></td>
                                                 <td style="text-align: left;">
-                                                    @foreach ($itemOrder as $items)
-                                                    @if ($orderList->id == $items->order_id)
-                                                    <p>- {{ $items->product_name }} (<span>{{ $items->product_quantity }}</span>)
-                                                    </p>
-                                                    @endif
-                                                    @endforeach
+                                                    <a class="color-text" href="{{ route('showbyId', $orderList->id) }}">
+                                                        {{ $orderList->product_name ?? '' }}
+                                                    </a>
                                                 </td>
-                                                @if($orderList->status == 0)
-                                                <td>Unpaid</td>
-                                                @else
-                                                <td>Paid</td>
-                                                @endif
+                                                @foreach (App\Constants\Common::STATUS_ORDER as $key => $value)
+                                                    @if(($orderList->status ?? 0) == $key)
+                                                        <td>{{ $value }}</td>
+                                                    @endif
+                                                @endforeach
                                                 <td>
-                                                    <a href="{{ route('showbyId', $orderList->id) }}" class="btn btn-primary"><i class="ri-eye-line"></i></a>
-                                                    <a class="btn btn-success" href="{{ route('updateOrder', $orderList->id) }}"><i class="bi bi-coin"></i></a>
+                                                    @if ((($orderList->status ?? 0) != App\Constants\Common::CANCEL) && (($orderList->status ?? 0) != App\Constants\Common::PAID))
+                                                    <form action="{{ route('updateOrder', $orderList->id) }}" method="post">
+                                                        @csrf
+                                                        <button class="btn btn-success" type="submit"><i class="bi bi-coin"></i></button>
+                                                    </form>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if ((($orderList->status ?? 0) != App\Constants\Common::CANCEL) && (($orderList->status ?? 0) != App\Constants\Common::PAID))
+                                                    <form action="{{ route('cancel-order', $orderList->id) }}" method="post">
+                                                        @csrf
+                                                        <button class="btn btn-danger" type="submit"><i class="bi bi-coin"></i></button>
+                                                    </form>
+                                                    @endif
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -140,13 +163,13 @@
                     <!-- Basic Pagination -->
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="{{$orders->previousPageUrl()}}">
+                            <li class="page-item"><a class="page-link" href="{{  $orders->appends(request()->except('page'))->previousPageUrl() }}">
                                     << </a>
                             </li>
                             @foreach($orders->links()->getData()["elements"][0] as $key => $item)
                             <li class="page-item"><a class="page-link" href="{{$item}}">{{$key}}</a></li>
                             @endforeach
-                            <li class="page-item"><a class="page-link" href="{{$orders->nextPageUrl()}}">>></a></li>
+                            <li class="page-item"><a class="page-link" href="{{ $orders->appends(request()->except('page'))->nextPageUrl() }}">>></a></li>
                         </ul>
                     </nav><!-- End Basic Pagination -->
                 </div>

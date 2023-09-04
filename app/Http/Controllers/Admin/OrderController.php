@@ -42,17 +42,13 @@ class OrderController extends Controller
      */
     public function index(FilterOrderRequest $request)
     {
-        Session::put('data', $request->all());
-
         $orders = $this->orderServiceInterface->list($request->all());
 
         $categories = $this->categoryServiceInterface->getAll();
 
         $brands = $this->brandServiceInterface->getAll();
 
-        $itemOrder = Order_item::all();
-
-        return view('admin/order/show', compact('categories', 'brands', 'orders', 'itemOrder'));
+        return view('admin/order/show', compact('categories', 'brands', 'orders'));
     }
 
     /**
@@ -64,7 +60,26 @@ class OrderController extends Controller
      */
     public function update($id)
     {
-        $this->orderServiceInterface->update(["status" => Common::STATUS_ACTIVE], $id);
+        $order = $this->orderServiceInterface->update($id);
+
+        if ($order) {
+            session()->flash('message-update-order-success', 'Order has been updated.');
+        } else {
+            session()->flash('message-update-order', 'Order has been updated fail.');
+        }
+
+        return redirect()->route('indexOrder');
+    }
+
+    public function cancel($id)
+    {
+        $order = $this->orderServiceInterface->cancel($id);
+
+        if ($order) {
+            session()->flash('message-update-order-success', 'Cancel order successful.');
+        } else {
+            session()->flash('message-update-order', 'Cancel order fail.');
+        }
 
         return redirect()->route('indexOrder');
     }
@@ -81,7 +96,7 @@ class OrderController extends Controller
         $brands = $this->brandServiceInterface->getAll();
 
         $order = $this->orderServiceInterface->detail($id);
-        
+
         $itemOrder = $this->orderServiceInterface->showListItem($order);
 
         return view('admin/order/detail', compact('categories', 'brands', 'order', 'itemOrder'));
