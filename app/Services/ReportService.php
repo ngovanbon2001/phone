@@ -4,13 +4,15 @@ namespace App\Services;
 
 use App\Repositories\Contracts\ReportRepositoryInterface;
 use App\Services\Contracts\ReportServiceInterface;
+use Exception;
+use Illuminate\Support\Facades\Log;
 
 class ReportService implements ReportServiceInterface
 {
-    protected $reportRepositoryInterface;
+    protected ReportRepositoryInterface $reportRepositoryInterface;
 
     /**
-     * 
+     * @param ReportRepositoryInterface $reportRepositoryInterface
      */
     public function __construct(ReportRepositoryInterface $reportRepositoryInterface)
     {
@@ -21,18 +23,28 @@ class ReportService implements ReportServiceInterface
      * @param array $attributes
      * @return mixed
      */
-    public function list(array $attributes)
+    public function list(array $attributes): mixed
     {
-        return $this->reportRepositoryInterface->list($attributes);
+        try {
+            return $this->reportRepositoryInterface->list($attributes);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 
     /**
      * @param array $attributes
      * @return mixed
      */
-    public function create(array $attributes)
+    public function create(array $attributes): mixed
     {
-        return $this->reportRepositoryInterface->create($attributes);
+        try {
+            return $this->reportRepositoryInterface->create($attributes);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 
     /**
@@ -40,35 +52,67 @@ class ReportService implements ReportServiceInterface
      * @param int $id
      * @return mixed
      */
-    public function update(array $attributes, int $id)
+    public function update(array $attributes, int $id): mixed
     {
-        return $this->reportRepositoryInterface->update($attributes, $id);
+        try {
+            $report = $this->reportRepositoryInterface->find($id);
+
+            if ($report) {
+                $report->update($attributes);
+            }
+
+            return $report;
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 
     /**
      * @param int $id
-     * @return int
+     * @return mixed|null
      */
-    public function delete(int $id): int
+    public function delete(int $id): mixed
     {
-        return $this->reportRepositoryInterface->delete($id);
+        try {
+            $report = $this->reportRepositoryInterface->find($id);
+
+            if ($report) {
+                $report->delete();
+            }
+
+            return $report;
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 
     /**
      * @param int $id
      * @return mixed
      */
-    public function detail(int $id)
+    public function detail(int $id): mixed
     {
-        return $this->reportRepositoryInterface->find($id);
+        try {
+            return $this->reportRepositoryInterface->find($id);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 
-    public function updateActive(array $attribute) 
+    public function updateActive(array $attribute)
     {
-        $value = [
-            "active" => $attribute['status']
-        ];
+        try {
+            $value = [
+                "active" => $attribute['status']
+            ];
 
-        return $this->reportRepositoryInterface->updateActive($attribute['id'], $value);
+            return $this->reportRepositoryInterface->updateActive($attribute['id'], $value);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 }

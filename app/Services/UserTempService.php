@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 
 class UserTempService implements UserTempServiceInterface
 {
-    protected $userRepository;
+    protected UserTempRepositoryInterface $userRepository;
 
     /**
      * @param UserTempRepositoryInterface $userRepository
@@ -28,7 +28,7 @@ class UserTempService implements UserTempServiceInterface
      * @param array $attributes
      * @return mixed
      */
-    public function create(array $attributes)
+    public function create(array $attributes): mixed
     {
         try {
             $attributes['code'] = Str::random(6);
@@ -53,18 +53,35 @@ class UserTempService implements UserTempServiceInterface
 
     /**
      * @param int $id
-     * @return int
+     * @return mixed|null
      */
-    public function delete(int $id): int
+    public function delete(int $id): mixed
     {
-        return $this->userRepository->delete($id);
+        try {
+            $userTemp = $this->userRepository->find($id);
+
+            if ($userTemp) {
+                $userTemp->delete();
+            }
+
+            return $userTemp;
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 
     /**
      * @param int $id
+     * @return mixed|null
      */
-    public function show(int $id)
+    public function show(int $id): mixed
     {
-        return $this->userRepository->find($id);
+        try {
+            return $this->userRepository->find($id);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 }

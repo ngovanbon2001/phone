@@ -6,135 +6,119 @@ use App\Constants\Common;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\CreateCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
-use App\Services\Contracts\BrandServiceInterface;
 use App\Services\Contracts\CategoryServiceInterface;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    protected $brandServiceInterface;
-    protected $categoryServiceInterface;
+    protected CategoryServiceInterface $categoryServiceInterface;
+    private string $action = 'category';
 
     /**
-     * @param BannerServiceInterface $bannerServiceInterface
+     * @param CategoryServiceInterface $categoryServiceInterface
      */
     public function __construct(
-        BrandServiceInterface    $brandServiceInterface,
         CategoryServiceInterface $categoryServiceInterface
     ) {
-        $this->brandServiceInterface    = $brandServiceInterface;
         $this->categoryServiceInterface = $categoryServiceInterface;
     }
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Factory|View|Application
      */
-    public function index(Request $request)
+    public function index(Request $request): Factory|View|Application
     {
-        //all category
-        $categories = $this->categoryServiceInterface->getAll();
-
-        //all brand
-        $brands = $this->brandServiceInterface->getAll();
-
         //all brand
         $categoryList = $this->categoryServiceInterface->list($request->all());
 
-        return view('admin/category/show', compact('categoryList', 'categories', 'brands'));
+        return view('admin/category/show', compact('categoryList'));
     }
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return Factory|View|Application
      */
-    public function create()
+    public function create(): Factory|View|Application
     {
-        //all category
-        $categories = $this->categoryServiceInterface->getAll();
-
-        //all brand
-        $brands = $this->brandServiceInterface->getAll();
-
-        return view('admin/category/add', compact('categories', 'brands'));
+        return view('admin/category/add');
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param CreateCategoryRequest $request
+     * @return RedirectResponse
      */
-    public function store(CreateCategoryRequest $request)
+    public function store(CreateCategoryRequest $request): RedirectResponse
     {
         // create category
         $category = $this->categoryServiceInterface->create($request->all());
 
-        session()->flash('messageAdd', $category->name . ' has been added.');
-        return redirect()->route('showCate');
+        return $this->handleViewResponse(
+            $category,
+            'showCate',
+            Common::ACTION[Common::ACTION_CREATE]. ' '.$this->action
+        );
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Factory|View|Application
      */
-    public function edit($id)
+    public function edit(int $id): Factory|View|Application
     {
-        //all category
-        $categories = $this->categoryServiceInterface->getAll();
-
-        //all brand
-        $brands = $this->brandServiceInterface->getAll();
-
         // Get Category
         $category = $this->categoryServiceInterface->detail($id);
 
-        return view('admin/category/update', compact('category', 'categories', 'brands'));
+        return view('admin/category/update', compact('category'));
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateCategoryRequest $request
+     * @param int $id
+     * @return RedirectResponse
      */
-    public function update(UpdateCategoryRequest $request, $id)
+    public function update(UpdateCategoryRequest $request, int $id): RedirectResponse
     {
         // Category
         $category = $this->categoryServiceInterface->update($request->all(), $id);
 
-        session()->flash('messageUpdate', $category->name . ' has been updated.');
-        return redirect()->route('showCate');
+        return $this->handleViewResponse(
+            $category,
+            'showCate',
+            Common::ACTION[Common::ACTION_UPDATE]. ' '.$this->action
+        );
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
-        $brand = $this->categoryServiceInterface->delete($id);
+        $category = $this->categoryServiceInterface->delete($id);
 
-        if ($brand > Common::STATUS_INACTIVE) {
-            session()->flash('messageDelete', 'Item has been deleted.');
-        } else {
-            session()->flash('messageError', 'Item cannot be deleted.');
-        }
-
-        return redirect()->route('showCate');
+        return $this->handleViewResponse(
+            $category,
+            'showCate',
+            Common::ACTION[Common::ACTION_DELETE]. ' '.$this->action
+        );
     }
 
-    public function active(Request $request)
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function active(Request $request): mixed
     {
-        echo ($request->input("status"));
-
         return $this->categoryServiceInterface->updateActive($request->all());
     }
 }

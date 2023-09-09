@@ -5,104 +5,107 @@ namespace App\Http\Controllers\Admin;
 use App\Constants\Common;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Order\FilterOrderRequest;
-use App\Models\Order_item;
-use App\Services\Contracts\BrandServiceInterface;
-use App\Services\Contracts\CategoryServiceInterface;
 use App\Services\Contracts\OrderServiceInterface;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
+use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class OrderController extends Controller
 {
-    protected $brandServiceInterface;
-    protected $categoryServiceInterface;
-    protected $orderServiceInterface;
+    protected OrderServiceInterface $orderServiceInterface;
+    private string $action = 'order';
 
     /**
-     * @param BannerServiceInterface $bannerServiceInterface
+     * @param OrderServiceInterface $orderServiceInterface
      */
     public function __construct(
-        BrandServiceInterface    $brandServiceInterface,
-        CategoryServiceInterface $categoryServiceInterface,
         OrderServiceInterface    $orderServiceInterface,
     ) {
-        $this->brandServiceInterface    = $brandServiceInterface;
-        $this->categoryServiceInterface = $categoryServiceInterface;
         $this->orderServiceInterface    = $orderServiceInterface;
     }
-    
+
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param FilterOrderRequest $request
+     * @return Factory|View|Application
      */
-    public function index(FilterOrderRequest $request)
+    public function index(FilterOrderRequest $request): Factory|View|Application
     {
         $orders = $this->orderServiceInterface->list($request->all());
 
-        $categories = $this->categoryServiceInterface->getAll();
-
-        $brands = $this->brandServiceInterface->getAll();
-
-        return view('admin/order/show', compact('categories', 'brands', 'orders'));
+        return view('admin/order/show', compact('orders'));
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return RedirectResponse
      */
-    public function update($id)
+    public function update(int $id): RedirectResponse
     {
         $order = $this->orderServiceInterface->update($id);
 
-        if ($order) {
-            session()->flash('message-update-order-success', 'Order has been updated.');
-        } else {
-            session()->flash('message-update-order', 'Order has been updated fail.');
-        }
-
-        return redirect()->route('indexOrder');
+        return $this->handleViewResponse(
+            $order,
+            'indexOrder',
+            Common::ACTION[Common::ACTION_UPDATE]. ' '.$this->action,
+            'Update order successful.'
+        );
     }
 
-    public function cancel($id)
+    /**
+     * @param int $id
+     * @return RedirectResponse
+     */
+    public function cancel(int $id): RedirectResponse
     {
         $order = $this->orderServiceInterface->cancel($id);
 
-        if ($order) {
-            session()->flash('message-update-order-success', 'Cancel order successful.');
-        } else {
-            session()->flash('message-update-order', 'Cancel order fail.');
-        }
-
-        return redirect()->route('indexOrder');
+        return $this->handleViewResponse(
+            $order,
+            'indexOrder',
+            Common::ACTION[Common::ACTION_UPDATE]. ' '.$this->action,
+            'Cancel order successful.'
+        );
     }
-    
-    public function select_delivery(Request $request)
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function select_delivery(Request $request): mixed
     {
         return $this->orderServiceInterface->select_delivery($request->all());
     }
 
-    public function showbyId($id)
+    /**
+     * @param $id
+     * @return Factory|View|Application
+     */
+    public function showbyId($id): Factory|View|Application
     {
-        $categories = $this->categoryServiceInterface->getAll();
-
-        $brands = $this->brandServiceInterface->getAll();
-
-        $order = $this->orderServiceInterface->detail($id);
+        $order     = $this->orderServiceInterface->detail($id);
 
         $itemOrder = $this->orderServiceInterface->showListItem($order);
 
-        return view('admin/order/detail', compact('categories', 'brands', 'order', 'itemOrder'));
+        return view('admin/order/detail', compact('order', 'itemOrder'));
     }
 
-    public function export()
+    /**
+     * @return void
+     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
+    public function export(): void
     {
         $orders = $this->orderServiceInterface->list(Session::get('data'));
         $spreadsheet = new Spreadsheet();
@@ -116,7 +119,7 @@ class OrderController extends Controller
                 'bold' => true,
             ],
             'alignment' => [
-                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'horizontal' => Alignment::HORIZONTAL_CENTER,
             ],
             'borders' => [
                 'outline' => [
@@ -128,7 +131,7 @@ class OrderController extends Controller
 
         $styleArray = [
             'alignment' => [
-                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'horizontal' => Alignment::HORIZONTAL_CENTER,
             ],
             'borders' => [
                 'outline' => [

@@ -26,7 +26,7 @@ class CreateBannerRequest extends FormRequest
         return [
             'title' => 'required|unique:banners',
             'content' => 'required',
-            'sort_order' => 'required|numeric'
+            'sort_order' => 'required|numeric|min:0'
         ];
     }
 }

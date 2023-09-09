@@ -46,7 +46,14 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(UserTempServiceInterface::class, UserTempService::class);
 
         $provinces = DB::table('provinces')->get();
-        view()->share('provinces', $provinces);
+
+        //all category
+        $categories = DB::table('categories')->get();
+
+        //all brand
+        $brands = DB::table('brands')->get();
+
+        view()->share(['provinces' => $provinces, 'categories' => $categories ?? [], 'brands' => $brands ?? []]);
     }
 
     /**
@@ -56,6 +63,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        
+
     }
 }

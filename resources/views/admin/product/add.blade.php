@@ -37,7 +37,7 @@
                                             <div class="controls">
                                                 <select class="form-select" name="category_id">
                                                     <option value="">------</option>
-                                                    @foreach ($categories as $category)
+                                                    @foreach ($getCategories as $category)
                                                     <option value="{{ $category->id }}" {{ (old('category_id') !== "" && old('category_id') == $category->id) ? 'selected' : '' }}>{{ $category->name }}</option>
                                                     @endforeach
                                                 </select>
@@ -52,7 +52,7 @@
                                             <div class="controls">
                                                 <select class="form-select" name="brand_id">
                                                     <option value="">------</option>
-                                                    @foreach ($brands as $brand)
+                                                    @foreach ($getBrands as $brand)
                                                     <option value="{{ $brand->id }}" {{ (old('brand_id') !== "" && old('brand_id') == $brand->id) ? 'selected' : '' }}>{{ $brand->name }}</option>
                                                     @endforeach
                                                 </select>

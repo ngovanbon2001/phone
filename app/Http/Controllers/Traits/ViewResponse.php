@@ -7,20 +7,25 @@ use Illuminate\Http\RedirectResponse;
 trait ViewResponse
 {
     /**
-     * @param  mixed  $data
+     * @param mixed $data
      * @param         $route
      * @param         $action
-     *
+     * @param string $message
+     * @param int|null $id
      * @return RedirectResponse
      */
-    public function handleViewResponse(mixed $data, $route, $action, string $message = ''): RedirectResponse
+    public function handleViewResponse(mixed $data, $route, $action, string $message = '', int $id = null): RedirectResponse
     {
-        $redirect = redirect()->route($route);
+        if ($id) {
+            $redirect = redirect()->route($route, $id);
+        } else {
+            $redirect = redirect()->route($route);
+        }
 
         if ($data){
-            session()->flash('message', 'Success '.$action.'! '.$message);
+            session()->flash('message', $action.' successful! '.$message);
         } else {
-            session()->flash('message-error', 'Fail '.$action.' '.$message);
+            session()->flash('message-error', 'Fail '.$action);
         }
 
         return $redirect;

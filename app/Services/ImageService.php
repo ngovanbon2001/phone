@@ -4,11 +4,12 @@ namespace App\Services;
 
 use App\Repositories\Contracts\ImageRepositoryInterface;
 use App\Services\Contracts\ImageServiceInterface;
-use App\Supports\RespondResource;
+use Exception;
+use Illuminate\Support\Facades\Log;
 
 class ImageService implements ImageServiceInterface
 {
-    protected $imageRepositoryInterface;
+    protected ImageRepositoryInterface $imageRepositoryInterface;
 
     /**
      * @param ImageRepositoryInterface $imageRepositoryInterface
@@ -22,26 +23,36 @@ class ImageService implements ImageServiceInterface
      * @param array $attributes
      * @return mixed
      */
-    public function list(array $attributes)
+    public function list(array $attributes): mixed
     {
-        return $this->imageRepositoryInterface->list($attributes);
+        try {
+            return $this->imageRepositoryInterface->list($attributes);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 
     /**
      * @param array $attributes
      * @return mixed
      */
-    public function create(array $attributes)
+    public function create(array $attributes): mixed
     {
-        $attribute = [];
+        try {
+            $attribute = [];
 
-        foreach ($attributes['image_url'] as $key => $value) {
-            $attribute[] = $attributes;
-            unset($attribute[$key]["_token"]);
-            $attribute[$key]['image_url'] = handleImage($value);
+            foreach ($attributes['image_url'] as $key => $value) {
+                $attribute[] = $attributes;
+                unset($attribute[$key]["_token"]);
+                $attribute[$key]['image_url'] = handleImage($value);
+            }
+
+            return $this->imageRepositoryInterface->insertOrUpdateBatch($attribute);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
         }
-
-        return $this->imageRepositoryInterface->insertOrUpdateBatch($attribute);
     }
 
     /**
@@ -49,43 +60,79 @@ class ImageService implements ImageServiceInterface
      * @param int $id
      * @return mixed
      */
-    public function update(array $attributes, int $id)
+    public function update(array $attributes, int $id): mixed
     {
-        if (isset($attributes['image_url'])) {
-            $image = $attributes['image_url'];
+        try {
+            if (isset($attributes['image_url'])) {
+                $image = $attributes['image_url'];
 
-            $attributes['image_url'] = handleImage($image);
-        } else {
-            $attributes['image_url'] = $attributes['oldImage'];
+                $attributes['image_url'] = handleImage($image);
+            } else {
+                $attributes['image_url'] = $attributes['oldImage'];
+            }
+
+            $images = $this->imageRepositoryInterface->find($id);
+
+            if ($images) {
+                $images->update($attributes);
+            }
+
+            return $images;
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
         }
-
-        return $this->imageRepositoryInterface->update($attributes, $id);
     }
 
     /**
      * @param int $id
-     * @return int
+     * @return mixed|null
      */
-    public function delete(int $id): int
+    public function delete(int $id): mixed
     {
-        return $this->imageRepositoryInterface->delete($id);
+        try {
+            $image = $this->imageRepositoryInterface->find($id);
+
+            if ($image) {
+                $image->delete();
+            }
+
+            return $image;
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 
     /**
      * @param int $id
      * @return mixed
      */
-    public function detail(int $id)
+    public function detail(int $id): mixed
     {
-        return $this->imageRepositoryInterface->find($id);
+        try {
+            return $this->imageRepositoryInterface->find($id);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 
-    public function updateActive(array $attribute) 
+    /**
+     * @param array $attribute
+     * @return mixed
+     */
+    public function updateActive(array $attribute): mixed
     {
-        $value = [
-            "active" => $attribute['status']
-        ];
+        try {
+            $value = [
+                "active" => $attribute['status']
+            ];
 
-        return $this->imageRepositoryInterface->updateActive($attribute['id'], $value);
+            return $this->imageRepositoryInterface->updateActive($attribute['id'], $value);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 }

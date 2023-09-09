@@ -2,114 +2,136 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Constants\Common;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
-use App\Services\Contracts\BrandServiceInterface;
-use App\Services\Contracts\CategoryServiceInterface;
 use App\Services\Contracts\UserServiceInterface;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    protected $brandServiceInterface;
-    protected $categoryServiceInterface;
-    protected $userServiceInterface;
+    protected UserServiceInterface $userServiceInterface;
+    private string $action = 'staff';
 
     /**
-     * @param BannerServiceInterface $bannerServiceInterface
+     * @param UserServiceInterface $userServiceInterface
      */
     public function __construct(
-        BrandServiceInterface    $brandServiceInterface,
-        CategoryServiceInterface $categoryServiceInterface,
-        UserServiceInterface  $userServiceInterface
+        UserServiceInterface $userServiceInterface
     ) {
-        $this->brandServiceInterface    = $brandServiceInterface;
-        $this->categoryServiceInterface = $categoryServiceInterface;
-        $this->userServiceInterface     = $userServiceInterface;
+        $this->userServiceInterface = $userServiceInterface;
     }
 
-    public function index(Request $request)
+    /**
+     * @param Request $request
+     * @return Factory|View|Application
+     */
+    public function index(Request $request): Factory|View|Application
     {
-        //all category
-        $categories = $this->categoryServiceInterface->getAll();
-
-        //all brand
-        $brands = $this->brandServiceInterface->getAll();
-
         $users = $this->userServiceInterface->list($request->all());
 
-        return view('admin/user/show', compact('users', 'categories', 'brands'));
+        return view('admin/user/show', compact('users'));
     }
 
-    public function create()
+    /**
+     * @return Factory|View|Application
+     */
+    public function create(): Factory|View|Application
     {
-        //all category
-        $categories = $this->categoryServiceInterface->getAll();
-
-        //all brand
-        $brands = $this->brandServiceInterface->getAll();
-
-        return view('admin/user/add', compact('categories', 'brands'));
+        return view('admin/user/add');
     }
 
-    public function store(CreateUserRequest $request)
+    /**
+     * @param CreateUserRequest $request
+     * @return RedirectResponse
+     */
+    public function store(CreateUserRequest $request): RedirectResponse
     {
         $staff = $this->userServiceInterface->create($request->all());
 
-        session()->flash('messageAdd', $staff->username . ' has been added.');
-        return redirect()->route('indexUser');
+        return $this->handleViewResponse(
+            $staff,
+            'indexUser',
+            Common::ACTION[Common::ACTION_CREATE]. ' '.$this->action
+        );
     }
 
-    public function edit($id)
+    /**
+     * @param int $id
+     * @return Factory|View|Application
+     */
+    public function edit(int $id): Factory|View|Application
     {
-        //all category
-        $categories = $this->categoryServiceInterface->getAll();
-
-        //all brand
-        $brands = $this->brandServiceInterface->getAll();
-
         // Get Staff
         $staff = $this->userServiceInterface->detail($id);
 
-        return view('admin/user/update', compact('staff', 'categories', 'brands'));
+        return view('admin/user/update', compact('staff'));
     }
 
-    public function update(UpdateUserRequest $request, $id)
+    /**
+     * @param UpdateUserRequest $request
+     * @param int $id
+     * @return RedirectResponse
+     */
+    public function update(UpdateUserRequest $request, int $id): RedirectResponse
     {
         $staff = $this->userServiceInterface->update($request->all(), $id);
 
-        session()->flash('messageUpdate', $staff->name . ' has been updated.');
-        return redirect()->route('indexUser');
+        return $this->handleViewResponse(
+            $staff,
+            'indexUser',
+            Common::ACTION[Common::ACTION_UPDATE]. ' '.$this->action
+        );
     }
 
-    public function show($id)
+    /**
+     * @param int $id
+     * @return Factory|View|Application
+     */
+    public function show(int $id): Factory|View|Application
     {
-        //all category
-        $categories = $this->categoryServiceInterface->getAll();
-
-        //all brand
-        $brands = $this->brandServiceInterface->getAll();
-
         // Get Staff
         $staff = $this->userServiceInterface->detail($id);
 
-        return view('admin/profile/show', compact('staff', 'categories', 'brands'));
+        return view('admin/profile/show', compact('staff'));
     }
 
-    public function updateProfile(UpdateProfileRequest $request, $id)
+    /**
+     * @param UpdateProfileRequest $request
+     * @param int $id
+     * @return RedirectResponse
+     */
+    public function updateProfile(UpdateProfileRequest $request, int $id): RedirectResponse
     {
         $staff = $this->userServiceInterface->update($request->all(), $id);
 
-        session()->flash('messageUpdate', $staff->name . ' has been updated.');
-        return redirect()->route('showUser', $id);
+        return $this->handleViewResponse(
+            $staff,
+            'showUser',
+            Common::ACTION[Common::ACTION_UPDATE]. ' '.$this->action,
+            '',
+            $id
+        );
     }
 
-    public function destroy($id)
+    /**
+     * @param int $id
+     * @return RedirectResponse
+     */
+    public function destroy(int $id): RedirectResponse
     {
-        $this->userServiceInterface->delete($id);
+        $staff = $this->userServiceInterface->delete($id);
 
-        return redirect()->route('indexUser');
+        return $this->handleViewResponse(
+            $staff,
+            'indexUser',
+            Common::ACTION[Common::ACTION_DELETE]. ' '.$this->action
+        );
     }
 }

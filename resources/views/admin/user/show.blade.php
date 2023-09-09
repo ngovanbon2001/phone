@@ -26,28 +26,16 @@
                     <div class="row">
 
                         <div id="message">
-                            @if (session()->has('messageAdd'))
-                            <div class="alert alert-success">
-                                {{ session('messageAdd') }}
-                            </div>
+                            @if (session()->has('message'))
+                                <div class="alert alert-success">
+                                    {{ session('message') }}
+                                </div>
                             @endif
 
-                            @if (session()->has('messageUpdate'))
-                            <div class="alert alert-success">
-                                {{ session('messageUpdate') }}
-                            </div>
-                            @endif
-
-                            @if (session()->has('messageDelete'))
-                            <div class="alert alert-success">
-                                {{ session('messageDelete') }}
-                            </div>
-                            @endif
-
-                            @if (session()->has('messageError'))
-                            <div class="alert alert-danger">
-                                {{ session('messageError') }}
-                            </div>
+                            @if (session()->has('message-error'))
+                                <div class="alert alert-danger">
+                                    {{ session('message-error') }}
+                                </div>
                             @endif
                         </div>
 

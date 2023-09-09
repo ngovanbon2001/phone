@@ -4,40 +4,31 @@ namespace App\Services;
 
 use App\Constants\StatusCodeMessage;
 use App\Exceptions\CartException;
-use App\Repositories\Contracts\BannerRepositoryInterface;
 use App\Repositories\Contracts\ProductReponsitoryInterface;
 use App\Services\Contracts\CartServiceInterface;
 use Exception;
-use Gloudemans\Shoppingcart\Facades\Cart;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
-use PhpOffice\PhpSpreadsheet\Calculation\Logical\Boolean;
 
 class CartService implements CartServiceInterface
 {
-    protected $bannerRepository;
-    protected $productReponsitoryInterface;
+    protected ProductReponsitoryInterface $productReponsitoryInterface;
 
     /**
-     * @param BannerRepositoryInterface $bannerRepository
+     * @param ProductReponsitoryInterface $productReponsitoryInterface
      */
     public function __construct(
-        BannerRepositoryInterface    $bannerRepository,
-        ProductReponsitoryInterface  $productReponsitoryInterface
+        ProductReponsitoryInterface $productReponsitoryInterface
     ) {
-        $this->bannerRepository = $bannerRepository;
         $this->productReponsitoryInterface = $productReponsitoryInterface;
     }
 
     /**
-     * @param array $attributes
+     * @param int $id
      * @return mixed
      */
-    public function list(int $id)
+    public function list(int $id): mixed
     {
-        // Session::flush();
-        // dd(Session::get('cart-' . $id));
         return Session::get('cart-' . $id);
     }
 
@@ -45,14 +36,19 @@ class CartService implements CartServiceInterface
      * @param array $attributes
      * @return mixed
      */
-    public function create(array $attributes)
+    public function create(array $attributes): mixed
     {
         $user_id = auth()->user()->id ?? 0;
 
         return $this->addCart($user_id, $attributes);
     }
 
-    private function addCart($user_id, $attributes)
+    /**
+     * @param int $user_id
+     * @param array $attributes
+     * @return void
+     */
+    private function addCart(int $user_id, array $attributes): void
     {
         $carts = Session::get('cart-' . $user_id) ?? [];
         $cartFilter = array_filter($carts, function ($item) use ($attributes) {
@@ -74,7 +70,7 @@ class CartService implements CartServiceInterface
         } else {
             $cartUpdate = array_map(function ($item) use ($attributes) {
                 if ((int)$item['product_id'] === (int)$attributes['product_id']) {
-                    (int)$item['quantity'] +=  (int)$attributes['quantity'];
+                    $item['quantity'] +=  (int)$attributes['quantity'];
                 }
                 return $item;
             }, $carts);
@@ -83,11 +79,12 @@ class CartService implements CartServiceInterface
     }
 
     /**
-     * @param array $dataCart
+     * @param array $request
      * @param int $id
-     * @return mixed
+     * @return array
+     * @throws CartException
      */
-    public function update(array $request, int $id)
+    public function update(array $request, int $id): array
     {
         try {
             if (!empty($request['data'])) {
@@ -99,36 +96,15 @@ class CartService implements CartServiceInterface
                     'data'    => $carts ?? []
                 ];
             }
+
+            return [
+                'code'    => StatusCodeMessage::CODE_FAIL,
+                'message' => StatusCodeMessage::getMessage(StatusCodeMessage::CODE_FAIL),
+                'data'    => []
+            ];
         } catch (Exception $e) {
             Log::error($e->getMessage());
             throw new CartException($e->getMessage());
         }
-    }
-
-    /**
-     * @param int $id
-     * @return int
-     */
-    public function delete(int $id): int
-    {
-        return $this->bannerRepository->delete($id);
-    }
-
-    /**
-     * @param int $id
-     * @return mixed
-     */
-    public function detail(int $id)
-    {
-        return $this->bannerRepository->find($id);
-    }
-
-    public function updateActive(array $attribute)
-    {
-        $value = [
-            "active" => $attribute['status']
-        ];
-
-        return $this->bannerRepository->updateActive($attribute['id'], $value);
     }
 }

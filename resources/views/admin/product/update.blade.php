@@ -25,7 +25,7 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Add brand form</h5>
+                            <h5 class="card-title">Update product form</h5>
 
                             <!-- General Form Elements -->
                             <form action="{{ route('updateProducts', $product->id) }}" enctype="multipart/form-data" method="post" id="edit-profile" class="form-horizontal">
@@ -37,7 +37,7 @@
                                             <div class="controls">
                                                 <select class="form-select" name="category_id">
                                                     <option value="">-----</option>
-                                                    @foreach ($categories as $categoryList)
+                                                    @foreach ($getCategories as $categoryList)
                                                     <option value="{{ $categoryList->id }}" {{ (old('category_id') ?? $category->id) == $categoryList->id ? 'selected' : '' }}>
                                                         {{ $categoryList->name }}
                                                     </option>
@@ -54,7 +54,7 @@
                                             <div class="controls">
                                                 <select class="form-select" name="brand_id">
                                                     <option value="">-----</option>
-                                                    @foreach ($brands as $brandList)
+                                                    @foreach ($getBrands as $brandList)
                                                     <option value="{{ $brandList->id }}" {{ (old('brand_id') ?? $brand->id) == $brandList->id ? 'selected' : '' }}>
                                                         {{ $brandList->name }}
                                                     </option>

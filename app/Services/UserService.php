@@ -13,13 +13,14 @@ use Illuminate\Support\Facades\Log;
 
 class UserService implements UserServiceInterface
 {
-    protected $userRepository;
-    protected $adminRepositoryInterface;
-    protected $userTempRepository;
+    protected UserRepositoryInterface $userRepository;
+    protected AdminRepositoryInterface $adminRepositoryInterface;
+    protected UserTempRepositoryInterface $userTempRepository;
 
     /**
      * @param UserRepositoryInterface $userRepository
      * @param AdminRepositoryInterface $adminRepositoryInterface
+     * @param UserTempRepositoryInterface $userTempRepository
      */
     public function __construct (
         UserRepositoryInterface     $userRepository,
@@ -36,72 +37,127 @@ class UserService implements UserServiceInterface
      * @param array $attributes
      * @return mixed
      */
-    public function list(array $attributes)
+    public function list(array $attributes): mixed
     {
-        return $this->adminRepositoryInterface->list($attributes);
-    }
-
-    /**
-     * @param array $attributes
-     * @return mixed
-     */
-    public function create(array $attributes)
-    {
-        $attributes["password"] = Hash::make($attributes["password"]);
-        
-        return $this->adminRepositoryInterface->create($attributes);
-    }
-
-    /**
-     * @param array $attributes
-     * @param int $id
-     * @return mixed
-     */
-    public function update(array $attributes, int $id)
-    {
-        if (isset($attributes["password"])) {
-            $attributes["password"] = Hash::make($attributes["password"]);
+        try {
+            return $this->adminRepositoryInterface->list($attributes);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
         }
-        return $this->adminRepositoryInterface->update($attributes, $id);
-    }
-
-    /**
-     * @param int $id
-     * @return int
-     */
-    public function delete(int $id): int
-    {
-        return $this->adminRepositoryInterface->delete($id);
-    }
-
-    /**
-     * @param int $id
-     * @return mixed
-     */
-    public function detail(int $id)
-    {
-        return $this->adminRepositoryInterface->find($id);
-    }
-
-    public function updateActive(array $attribute) 
-    {
-        $value = [
-            "active" => $attribute['status']
-        ];
-
-        return $this->userRepository->updateActive($attribute['id'], $value);
-    }
-
-    public function countUser()
-    {
-        return $this->userRepository->countUser();
     }
 
     /**
      * @param array $attributes
      * @return mixed
      */
-    public function createUser(array $attributes)
+    public function create(array $attributes): mixed
+    {
+        try {
+            $attributes["password"] = Hash::make($attributes["password"]);
+
+            return $this->adminRepositoryInterface->create($attributes);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * @param array $attributes
+     * @param int $id
+     * @return mixed
+     */
+    public function update(array $attributes, int $id): mixed
+    {
+        try {
+            $admin = $this->adminRepositoryInterface->find($id);
+
+            if (isset($attributes["password"])) {
+                $attributes["password"] = Hash::make($attributes["password"]);
+            }
+
+            if ($admin) {
+                $admin->update($attributes);
+            }
+
+            return $admin;
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * @param int $id
+     * @return mixed|null
+     */
+    public function delete(int $id): mixed
+    {
+        try {
+            $admin = $this->adminRepositoryInterface->find($id);
+
+            if ($admin) {
+                $admin->delete();
+            }
+
+            return $admin;
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function detail(int $id): mixed
+    {
+        try {
+            return $this->adminRepositoryInterface->find($id);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * @param array $attribute
+     * @return mixed
+     */
+    public function updateActive(array $attribute): mixed
+    {
+        try {
+            $value = [
+                "active" => $attribute['status']
+            ];
+
+            return $this->userRepository->updateActive($attribute['id'], $value);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function countUser(): mixed
+    {
+        try {
+            return $this->userRepository->countUser();
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * @param array $attributes
+     * @return mixed
+     */
+    public function createUser(array $attributes): mixed
     {
         DB::beginTransaction();
         try {
@@ -111,7 +167,7 @@ class UserService implements UserServiceInterface
             ];
 
             $userTemp = $this->userTempRepository->findWhereFirst($conditions);
-            
+
             if ($userTemp) {
                 $result = $this->userRepository->create($this->handleBuildAttribute($userTemp->toArray()));
                 $userTemp->delete();
@@ -128,7 +184,11 @@ class UserService implements UserServiceInterface
         }
     }
 
-    private function handleBuildAttribute(array $attribute)
+    /**
+     * @param array $attribute
+     * @return array
+     */
+    private function handleBuildAttribute(array $attribute): array
     {
         return [
             'username' => $attribute['username'],

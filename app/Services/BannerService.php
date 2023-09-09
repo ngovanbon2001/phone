@@ -4,10 +4,12 @@ namespace App\Services;
 
 use App\Repositories\Contracts\BannerRepositoryInterface;
 use App\Services\Contracts\BannerServiceInterface;
+use Exception;
+use Illuminate\Support\Facades\Log;
 
 class BannerService implements BannerServiceInterface
 {
-    protected $bannerRepository;
+    protected BannerRepositoryInterface $bannerRepository;
 
     /**
      * @param BannerRepositoryInterface $bannerRepository
@@ -21,26 +23,36 @@ class BannerService implements BannerServiceInterface
      * @param array $attributes
      * @return mixed
      */
-    public function list(array $attributes)
+    public function list(array $attributes): mixed
     {
-        return $this->bannerRepository->list($attributes);
+        try {
+            return $this->bannerRepository->list($attributes);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 
     /**
      * @param array $attributes
      * @return mixed
      */
-    public function create(array $attributes)
+    public function create(array $attributes): mixed
     {
-        if (isset($attributes['image_url'])) {
-            $image = $attributes['image_url'];
+        try {
+            if (isset($attributes['image_url'])) {
+                $image = $attributes['image_url'];
 
-            $attributes['image_url'] = handleImage($image);
-        } else {
-            $attributes['image_url'] = "no-image.png";
+                $attributes['image_url'] = handleImage($image);
+            } else {
+                $attributes['image_url'] = "no-image.png";
+            }
+
+            return $this->bannerRepository->create($attributes);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
         }
-
-        return $this->bannerRepository->create($attributes);
     }
 
     /**
@@ -48,43 +60,79 @@ class BannerService implements BannerServiceInterface
      * @param int $id
      * @return mixed
      */
-    public function update(array $attributes, int $id)
+    public function update(array $attributes, int $id): mixed
     {
-        if (isset($attributes['image_url'])) {
-            $image = $attributes['image_url'];
+        try {
+            if (isset($attributes['image_url'])) {
+                $image = $attributes['image_url'];
 
-            $attributes['image_url'] = handleImage($image);
-        } else {
-            $attributes['image_url'] = $attributes['imageOld'];
+                $attributes['image_url'] = handleImage($image);
+            } else {
+                $attributes['image_url'] = $attributes['imageOld'];
+            }
+
+            $banner = $this->bannerRepository->find($id);
+
+            if ($banner) {
+                $banner->update($attributes);
+            }
+
+            return $banner;
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
         }
-
-        return $this->bannerRepository->update($attributes, $id);
-    }
-
-    /**
-     * @param int $id
-     * @return int
-     */
-    public function delete(int $id): int
-    {
-        return $this->bannerRepository->delete($id);
     }
 
     /**
      * @param int $id
      * @return mixed
      */
-    public function detail(int $id)
+    public function delete(int $id): mixed
     {
-        return $this->bannerRepository->find($id);
+        try {
+            $banner = $this->bannerRepository->find($id);
+
+            if ($banner) {
+                $banner->delete();
+            }
+
+            return $banner;
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 
-    public function updateActive(array $attribute) 
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function detail(int $id): mixed
     {
-        $value = [
-            "active" => $attribute['status']
-        ];
+        try {
+            return $this->bannerRepository->find($id);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
+    }
 
-        return $this->bannerRepository->updateActive($attribute['id'], $value);
+    /**
+     * @param array $attribute
+     * @return mixed
+     */
+    public function updateActive(array $attribute): mixed
+    {
+        try {
+            $value = [
+                "active" => $attribute['status']
+            ];
+
+            return $this->bannerRepository->updateActive($attribute['id'], $value);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 }

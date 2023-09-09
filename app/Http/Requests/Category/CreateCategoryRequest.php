@@ -25,7 +25,7 @@ class CreateCategoryRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:categories',
-            'sort_order' => 'required|numeric'
+            'sort_order' => 'required|numeric|min:0'
         ];
     }
 }

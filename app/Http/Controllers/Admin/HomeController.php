@@ -3,59 +3,58 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Services\Contracts\BrandServiceInterface;
-use App\Services\Contracts\CategoryServiceInterface;
 use App\Services\Contracts\OrderServiceInterface;
 use App\Services\Contracts\ProductServiceInterface;
 use App\Services\Contracts\ReportServiceInterface;
 use App\Services\Contracts\UserServiceInterface;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 
 class HomeController extends Controller
 {
-    protected $brandServiceInterface;
-    protected $categoryServiceInterface;
-    protected $orderServiceInterface;
-    protected $reportServiceInterface;
-    protected $productServiceInterface;
-    protected $userServiceInterface;
+    protected OrderServiceInterface   $orderServiceInterface;
+    protected ReportServiceInterface  $reportServiceInterface;
+    protected ProductServiceInterface $productServiceInterface;
+    protected UserServiceInterface    $userServiceInterface;
 
     /**
-     * @param BannerServiceInterface $bannerServiceInterface
+     * @param OrderServiceInterface   $orderServiceInterface
+     * @param ReportServiceInterface  $reportServiceInterface
+     * @param ProductServiceInterface $productServiceInterface
+     * @param UserServiceInterface    $userServiceInterface
      */
     public function __construct(
-        BrandServiceInterface    $brandServiceInterface,
-        CategoryServiceInterface $categoryServiceInterface,
         OrderServiceInterface    $orderServiceInterface,
         ReportServiceInterface   $reportServiceInterface,
         ProductServiceInterface  $productServiceInterface,
         UserServiceInterface     $userServiceInterface
     ) {
-        $this->brandServiceInterface    = $brandServiceInterface;
-        $this->categoryServiceInterface = $categoryServiceInterface;
         $this->orderServiceInterface    = $orderServiceInterface;
         $this->reportServiceInterface   = $reportServiceInterface;
         $this->productServiceInterface  = $productServiceInterface;
         $this->userServiceInterface     = $userServiceInterface;
     }
-    
-    public function home()
+
+    /**
+     * @return Application|Factory|View
+     */
+    public function home(): View|Factory|Application
     {
-        $categories = $this->categoryServiceInterface->getAll();
-        $brands = $this->brandServiceInterface->getAll();
-        $order = json_encode($this->orderServiceInterface->listItem()->toArray()["data"]);
+        $order     = json_encode($this->orderServiceInterface->listItem()->toArray()["data"]);
         $orderData = json_encode($this->orderServiceInterface->getOrder()->toArray()["data"]);
-        $product = json_encode($this->productServiceInterface->getProduct()->toArray()["data"]);
-        $total = $this->orderServiceInterface->count();
+        $product   = json_encode($this->productServiceInterface->getProduct()->toArray()["data"]);
+        $total     = $this->orderServiceInterface->count();
         $totalUser = $this->userServiceInterface->countUser();
 
-        return view('admin/home', compact('categories', 'brands', 'order', 'orderData', 'total', 'product', 'totalUser'));
+        return view('admin/home', compact('order', 'orderData', 'total', 'product', 'totalUser'));
     }
 
-    public function contact()
+    /**
+     * @return Application|Factory|View
+     */
+    public function contact(): View|Factory|Application
     {
-        $categories = $this->categoryServiceInterface->getAll();
-        $brands = $this->brandServiceInterface->getAll();
-
-        return view('admin.profile.contact', compact('categories', 'brands'));
+        return view('admin.profile.contact');
     }
 }

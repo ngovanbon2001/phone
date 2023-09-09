@@ -3,13 +3,13 @@
 namespace App\Services;
 
 use App\Constants\Common;
-use App\Exceptions\CartException;
 use App\Repositories\Contracts\OrderItemsRepositoryInterface;
 use App\Repositories\Contracts\OrderRepositoryInterface;
 use App\Repositories\Contracts\ProductReponsitoryInterface;
 use App\Services\Contracts\OrderServiceInterface;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -18,12 +18,14 @@ use Illuminate\Support\Facades\Session;
 
 class OrderService implements OrderServiceInterface
 {
-    protected $orderRepository;
-    protected $orderItemsRepositoryInterface;
-    protected $productReponsitoryInterface;
+    protected OrderRepositoryInterface      $orderRepository;
+    protected OrderItemsRepositoryInterface $orderItemsRepositoryInterface;
+    protected ProductReponsitoryInterface   $productReponsitoryInterface;
 
     /**
      * @param OrderRepositoryInterface $orderRepositoryInterface
+     * @param OrderItemsRepositoryInterface $orderItemsRepositoryInterface
+     * @param ProductReponsitoryInterface $productReponsitoryInterface
      */
     public function __construct(
         OrderRepositoryInterface      $orderRepositoryInterface,
@@ -39,22 +41,27 @@ class OrderService implements OrderServiceInterface
      * @param array $attributes
      * @return mixed
      */
-    public function list(array $attributes)
+    public function list(array $attributes): mixed
     {
-        $attributes = [
-            ["customer_name", "LIKE",  Arr::get($attributes, "inputName")],
-            ["customer_phone", "LIKE", Arr::get($attributes, "inputPhone")],
-            ["customer_email", "LIKE", Arr::get($attributes, "inputEmail")],
-        ];
+        try {
+            $attributes = [
+                ["customer_name", "LIKE",  Arr::get($attributes, "inputName")],
+                ["customer_phone", "LIKE", Arr::get($attributes, "inputPhone")],
+                ["customer_email", "LIKE", Arr::get($attributes, "inputEmail")],
+            ];
 
-        return $this->orderItemsRepositoryInterface->list(condition($attributes));
+            return $this->orderItemsRepositoryInterface->list(condition($attributes));
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 
     /**
      * @param array $attributes
      * @return mixed
      */
-    public function create(array $attributes)
+    public function create(array $attributes): mixed
     {
         DB::beginTransaction();
         try {
@@ -68,7 +75,7 @@ class OrderService implements OrderServiceInterface
                 'customer_phone' => $attributes['customer_phone'] ?? null,
                 'customer_email' => $attributes['customer_email'] ?? null,
                 'status'         => Common::IN_ACTIVE ?? 0,
-                'address'        => ($wards->name ?? '') . ' - ' . ($districts->name ?? '') . ' - ' . ($province->name ?? ''),
+                'address' => ($wards->name ?? '') . ' - ' . ($districts->name ?? '') . ' - ' . ($province->name ?? ''),
                 'total_money'    => array_reduce($attributes['items'] ?? [], function ($carry, $item) {
                     return $carry + ((int)$item["product_quantity"] * (float)$item["product_price"]);
                 }, 0),
@@ -80,7 +87,7 @@ class OrderService implements OrderServiceInterface
             $order = $this->orderRepository->create($attribute);
             $items = [];
             if ($order) {
-                foreach ($attributes['items'] as $key => $value) {
+                foreach ($attributes['items'] as $value) {
                     $items[] = [
                         'order_id'         => $order->id,
                         'product_id'       => $value['product_id'],
@@ -94,30 +101,31 @@ class OrderService implements OrderServiceInterface
                 $result = $this->orderItemsRepositoryInterface->insertOrUpdateBatch($items);
 
                 if ($result) {
-                    Mail::send('/error', ['customerName' => $attributes['customer_name'], 'totalMoney' => $attribute['total_money'],], function ($message) {
+                    Mail::send('/error', [
+                        'customerName' => $attributes['customer_name'],
+                        'totalMoney' => $attribute['total_money'],
+                    ], function ($message) {
                         $message->to('bonbon2k1a@gmail.com')->subject('Order');
                     }, 'Bạn đã mua sản phẩm tại Shop');
                     Session::forget('cart-' . (auth()->user()->id ?? 0));
                     DB::commit();
                     return $order;
                 }
-
-                DB::rollBack();
-                return false;
             }
+            DB::rollBack();
+            return $order;
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             DB::rollBack();
-            return false;
+            return null;
         }
     }
 
     /**
-     * @param array $attributes
      * @param int $id
      * @return mixed
      */
-    public function update(int $id)
+    public function update(int $id): mixed
     {
         DB::beginTransaction();
         try {
@@ -126,9 +134,12 @@ class OrderService implements OrderServiceInterface
             if ($order) {
                 $product = $this->productReponsitoryInterface->find($order->product_id);
 
-                if (!$product || ($order->status == Common::IN_ACTIVE && isset($product->amount) && $order->product_quantity > $product->amount)) {
+                if (!$product || ($order->status == Common::IN_ACTIVE
+                        && isset($product->amount)
+                        && $order->product_quantity > $product->amount)
+                ) {
                     Log::error('Fail amount');
-                    return false;
+                    return null;
                 }
 
                 $newAmount = $product->amount - $order->product_quantity;
@@ -152,79 +163,147 @@ class OrderService implements OrderServiceInterface
 
     public function cancel(int $id)
     {
-        $order = $this->orderItemsRepositoryInterface->find($id);
+        try {
+            $order = $this->orderItemsRepositoryInterface->find($id);
 
-        if ($order) {
-            $order->update(['status' => Common::CANCEL]);
+            if ($order) {
+                $order->update(['status' => Common::CANCEL]);
+            }
+
+            return $order;
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
         }
-
-        return $order;
     }
 
     /**
      * @param int $id
-     * @return int
+     * @return mixed|null
      */
-    public function delete(int $id): int
+    public function delete(int $id): mixed
     {
-        return $this->orderRepository->delete($id);
+        try {
+            $order = $this->orderRepository->find($id);
+
+            if ($order) {
+                $order->delete();
+            }
+
+            return $order;
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 
     /**
      * @param int $id
      * @return mixed
      */
-    public function detail(int $id)
+    public function detail(int $id): mixed
     {
-        return $this->orderItemsRepositoryInterface->find($id);
+        try {
+            return $this->orderItemsRepositoryInterface->find($id);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 
-    public function updateActive(array $attribute)
+    /**
+     * @param array $attribute
+     * @return mixed
+     */
+    public function updateActive(array $attribute): mixed
     {
-        $value = [
-            "active" => $attribute['status']
-        ];
+        try {
+            $value = [
+                "active" => $attribute['status']
+            ];
 
-        return $this->orderRepository->updateActive($attribute['id'], $value);
+            return $this->orderRepository->updateActive($attribute['id'], $value);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 
-    public function count()
+    /**
+     * @return mixed|null
+     */
+    public function count(): mixed
     {
-        $month = Carbon::now()->month;
-        $result = DB::table("orders")
-            ->whereMonth('created_at', '=', 10)
-            ->whereYear('created_at', '=', 2022)
-            ->selectRaw('SUM(total_products) as total_products, SUM(total_money) as total_money')
-            ->get();
-        return $result->first();
+        try {
+            $month = Carbon::now()->month;
+            $year = Carbon::now()->year;
+
+            $result = DB::table("orders")
+                ->whereMonth('created_at', '=', $month)
+                ->whereYear('created_at', '=', $year)
+                ->selectRaw('SUM(total_products) as total_products, SUM(total_money) as total_money')
+                ->get();
+
+            return $result->first();
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 
-    public function listItem()
+    /**
+     * @return LengthAwarePaginator|null
+     */
+    public function listItem(): ?LengthAwarePaginator
     {
-        $result = DB::table('order_items')
-            ->groupBy('product_name')
-            ->groupBy('product_id')
-            ->groupBy('product_image')
-            ->select('product_name', DB::raw('SUM(product_quantity) as total'))
-            ->orderBy('total', 'desc')
-            ->paginate(Common::PAGINATE_HOME);
-
-        return $result;
+        try {
+            return DB::table('order_items')
+                ->groupBy('product_name')
+                ->groupBy('product_id')
+                ->groupBy('product_image')
+                ->select('product_name', DB::raw('SUM(product_quantity) as total'))
+                ->orderBy('total', 'desc')
+                ->paginate(Common::PAGINATE_HOME);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 
-    public function getOrder()
+    /**
+     * @return mixed
+     */
+    public function getOrder(): mixed
     {
-        return $this->orderRepository->getOrder();
+        try {
+            return $this->orderRepository->getOrder();
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 
-    public function showListItem(mixed $order)
+    /**
+     * @param mixed $order
+     * @return array|null
+     */
+    public function showListItem(mixed $order): ?array
     {
-        $result = DB::select("SELECT * FROM orders join order_items on orders.id = order_items.order_id WHERE orders.customer_email like '%" . $order->customer_email . "%' and orders.id =" . $order->id);
-
-        return $result;
+        try {
+            return DB::select(
+                "SELECT * FROM orders join order_items on orders.id = order_items.order_id WHERE orders.customer_email like '%" . $order->customer_email . "%' and orders.id =" . $order->id
+            );
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 
-    public function select_delivery(array $data)
+    /**
+     * @param array $data
+     * @return string
+     */
+    public function select_delivery(array $data): string
     {
         $output = "";
         if ($data['action']) {

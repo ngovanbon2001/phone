@@ -3,34 +3,29 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Constants\Common;
-use App\Models\Order_item;
-use App\Services\Contracts\BrandServiceInterface;
-use App\Services\Contracts\CategoryServiceInterface;
 use App\Services\Contracts\OrderServiceInterface;
 use App\Services\Contracts\ProductServiceInterface;
 use App\Services\Contracts\ReportServiceInterface;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 
 class ReportController extends Controller
 {
-    protected $brandServiceInterface;
-    protected $categoryServiceInterface;
-    protected $orderServiceInterface;
-    protected $reportServiceInterface;
-    protected $productServiceInterface;
+    protected OrderServiceInterface $orderServiceInterface;
+    protected ReportServiceInterface $reportServiceInterface;
+    protected ProductServiceInterface $productServiceInterface;
 
     /**
-     * @param BannerServiceInterface $bannerServiceInterface
+     * @param OrderServiceInterface $orderServiceInterface
+     * @param ReportServiceInterface $reportServiceInterface
+     * @param ProductServiceInterface $productServiceInterface
      */
     public function __construct(
-        BrandServiceInterface    $brandServiceInterface,
-        CategoryServiceInterface $categoryServiceInterface,
         OrderServiceInterface    $orderServiceInterface,
         ReportServiceInterface   $reportServiceInterface,
         ProductServiceInterface  $productServiceInterface
     ) {
-        $this->brandServiceInterface    = $brandServiceInterface;
-        $this->categoryServiceInterface = $categoryServiceInterface;
         $this->orderServiceInterface    = $orderServiceInterface;
         $this->reportServiceInterface   = $reportServiceInterface;
         $this->productServiceInterface  = $productServiceInterface;
@@ -38,17 +33,14 @@ class ReportController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return Factory|View|Application
      */
-    public function index()
+    public function index(): Factory|View|Application
     {
-        $categories = $this->categoryServiceInterface->getAll();
-        $brands = $this->brandServiceInterface->getAll();
-        $order = json_encode($this->orderServiceInterface->listItem()->toArray()["data"]);
+        $order     = json_encode($this->orderServiceInterface->listItem()->toArray()["data"]);
         $orderData = json_encode($this->orderServiceInterface->getOrder()->toArray()["data"]);
-        $product = json_encode($this->productServiceInterface->getProduct()->toArray()["data"]);
+        $product   = json_encode($this->productServiceInterface->getProduct()->toArray()["data"]);
 
-        return view('admin/report/report', compact('categories', 'brands', 'order', 'orderData', 'product'));
+        return view('admin/report/report', compact('order', 'orderData', 'product'));
     }
 }

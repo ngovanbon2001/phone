@@ -5,11 +5,13 @@ namespace App\Services;
 use App\Constants\Common;
 use App\Repositories\Contracts\ProductReponsitoryInterface;
 use App\Services\Contracts\ProductServiceInterface;
+use Exception;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 
 class ProductService implements ProductServiceInterface
 {
-    protected $productReponsitory;
+    protected ProductReponsitoryInterface $productReponsitory;
 
     /**
      * @param ProductReponsitoryInterface $repositoryInterface
@@ -23,97 +25,153 @@ class ProductService implements ProductServiceInterface
      * @param array $attributes
      * @return mixed
      */
-    public function list(array $attributes)
+    public function list(array $attributes): mixed
     {
-        $attributes = [
-            ["name", "LIKE", Arr::get($attributes, "name")],
-            ["brand_id", "=", Arr::get($attributes, "brand")],
-            ["category_id", "=", Arr::get($attributes, "category")],
-            ["is_new", "=", Arr::get($attributes, "isNew")],
-            ["is_best_sell", "=", Arr::get($attributes, "bestSell")],
-        ];
+        try {
+            $attributes = [
+                ["name", "LIKE", Arr::get($attributes, "name")],
+                ["brand_id", "=", Arr::get($attributes, "brand")],
+                ["category_id", "=", Arr::get($attributes, "category")],
+                ["is_new", "=", Arr::get($attributes, "isNew")],
+                ["is_best_sell", "=", Arr::get($attributes, "bestSell")],
+            ];
 
-        return $this->productReponsitory->listProduct(condition($attributes));
+            return $this->productReponsitory->listProduct(condition($attributes));
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 
     /**
      * @param array $attributes
      * @return mixed
      */
-    public function create(array $attributes)
+    public function create(array $attributes): mixed
     {
-        if (isset($attributes['image_url'])) {
-            $image = $attributes['image_url'];
+        try {
+            if (isset($attributes['image_url'])) {
+                $image = $attributes['image_url'];
 
-            $attributes['image_url'] = handleImage($image);
-        } else {
-            $attributes['image_url'] = "no-image.png";
+                $attributes['image_url'] = handleImage($image);
+            } else {
+                $attributes['image_url'] = "no-image.png";
+            }
+
+            $attributes['specifications'] = convertJson($attributes['specifications']);
+
+            return $this->productReponsitory->create($attributes);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
         }
-        
-        $attributes['specifications'] = convertJson($attributes['specifications']);
-
-        return $this->productReponsitory->create($attributes);
     }
-
 
     /**
      * @param array $attributes
      * @param int $id
      * @return mixed
      */
-    public function update(array $attributes, int $id)
+    public function update(array $attributes, int $id): mixed
     {
-        if (isset($attributes['image_url'])) {
-            $image = $attributes['image_url'];
+        try {
+            if (isset($attributes['image_url'])) {
+                $image = $attributes['image_url'];
 
-            $attributes['image_url'] = handleImage($image);
-        } else {
-            $attributes['image_url'] = $attributes['oldImage'];
+                $attributes['image_url'] = handleImage($image);
+            } else {
+                $attributes['image_url'] = $attributes['oldImage'];
+            }
+
+            $attributes['specifications'] = convertJson($attributes['specifications']);
+
+            return $this->productReponsitory->update($attributes, $id);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
         }
-
-        $attributes['specifications'] = convertJson($attributes['specifications']);
-
-        return $this->productReponsitory->update($attributes, $id);
     }
 
     /**
      * @param int $id
-     * @return int
+     * @return mixed|null
      */
-    public function delete(int $id): int
+    public function delete(int $id): mixed
     {
-        return $this->productReponsitory->delete($id);
+        try {
+            $product = $this->productReponsitory->find($id);
+
+            if ($product) {
+                $product->delete();
+            }
+
+            return $product;
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 
     /**
      * @param int $id
      * @return mixed
      */
-    public function detail(int $id)
+    public function detail(int $id): mixed
     {
-        $result = $this->productReponsitory->find($id);
+        try {
+            $result = $this->productReponsitory->find($id);
 
-        $result['specifications'] = decodeJson($result['specifications']);
+            $result['specifications'] = decodeJson($result['specifications']);
 
-        return $result;
+            return $result;
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 
-    public function updateActive(array $attribute) 
+    /**
+     * @param array $attribute
+     * @return mixed
+     */
+    public function updateActive(array $attribute): mixed
     {
-        $value = [
-            "active" => $attribute['status']
-        ];
+        try {
+            $value = [
+                "active" => $attribute['status']
+            ];
 
-        return $this->productReponsitory->updateActive($attribute['id'], $value);
+            return $this->productReponsitory->updateActive($attribute['id'], $value);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 
-    public function getProduct()
+    /**
+     * @return mixed
+     */
+    public function getProduct(): mixed
     {
-        return $this->productReponsitory->getProduct();
+        try {
+            return $this->productReponsitory->getProduct();
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 
-    public function getProductFE(array $conditions)
+    /**
+     * @param array $conditions
+     * @return mixed
+     */
+    public function getProductFE(array $conditions): mixed
     {
-        return $this->productReponsitory->listProduct($conditions, Common::PAGINATE_FE);
+        try {
+            return $this->productReponsitory->listProduct($conditions, Common::PAGINATE_FE);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 }

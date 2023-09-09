@@ -163,7 +163,7 @@ abstract class BaseRepository extends L5Repository implements RepositoryInterfac
     /**
      * example param
      * [
-     *      4 => ["name" => "Product Name", "cost" => 1111], 
+     *      4 => ["name" => "Product Name", "cost" => 1111],
      *      2 => ["name" => "Product Name 1", "cost" => 1112]
      * ]
      */
@@ -221,15 +221,15 @@ abstract class BaseRepository extends L5Repository implements RepositoryInterfac
                     ->paginate($paginate);
     }
 
-    public function updateActive(int $id, array $attribute) 
+    public function updateActive(int $id, array $attribute)
     {
         return $this->model
                 ->find($id)
                 ->update($attribute);
     }
 
-    public function getAll() 
+    public function getAll()
     {
-        return $this->model->get();
+        return $this->model->where('active', Common::ACTIVE)->get();
     }
 }

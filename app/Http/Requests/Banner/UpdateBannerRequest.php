@@ -28,7 +28,7 @@ class UpdateBannerRequest extends FormRequest
         return [
             'title' => ['required', Rule::unique('banners')->ignore($id, 'id')],
             'content' => 'required',
-            'sort_order' => 'required|numeric'
+            'sort_order' => 'required|numeric|min:0'
         ];
     }
 }
