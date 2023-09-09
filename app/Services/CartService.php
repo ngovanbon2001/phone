@@ -100,7 +100,6 @@ class CartService implements CartServiceInterface
                 ];
             }
         } catch (Exception $e) {
-            dd($e->getMessage());
             Log::error($e->getMessage());
             throw new CartException($e->getMessage());
         }

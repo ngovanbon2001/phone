@@ -17,4 +17,6 @@ interface UserServiceInterface
     public function updateActive(array $attribute);
 
     public function countUser();
+
+    public function createUser(array $attributes);
 }

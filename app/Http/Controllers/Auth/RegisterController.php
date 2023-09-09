@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin;
 use App\Providers\RouteServiceProvider;
-use App\Models\User;
+use App\Services\Contracts\UserServiceInterface;
+use App\Services\Contracts\UserTempServiceInterface;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -32,14 +31,22 @@ class RegisterController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
+    protected $userTempServiceInterface;
+    protected $userServiceInterface;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(
+        UserTempServiceInterface $userTempServiceInterface,
+        UserServiceInterface     $userServiceInterface
+    )
     {
         $this->middleware('guest');
+        $this->userTempServiceInterface = $userTempServiceInterface;
+        $this->userServiceInterface     = $userServiceInterface;
     }
 
     /**
@@ -51,9 +58,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
 
@@ -63,14 +68,8 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function create(array $data)
+    protected function create($data)
     {
-        return User::create([
-            'username' => $data['name'],
-            // 'phone' => $data['phone'],
-            'phone' => "0398270561",
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        return $this->userServiceInterface->createUser($data);
     }
 }

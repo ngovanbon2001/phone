@@ -17,6 +17,7 @@ use App\Repositories\Contracts\OrderRepositoryInterface;
 use App\Repositories\Contracts\ProductReponsitoryInterface;
 use App\Repositories\Contracts\ReportRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Repositories\Contracts\UserTempRepositoryInterface;
 use App\Repositories\ImageRepository;
 use App\Repositories\OrderItemsRespository;
 use App\Repositories\OrderRespository;
@@ -24,6 +25,7 @@ use App\Repositories\ProductReponsitory;
 use App\Repositories\ReportRepository;
 use App\Repositories\TestRepositoryEloquent;
 use App\Repositories\UserRepository;
+use App\Repositories\UserTempRepository;
 use App\Service\Contract\IExample;
 use App\Service\ExampleService;
 use Illuminate\Support\ServiceProvider;
@@ -48,6 +50,7 @@ class RepositoryProvider extends ServiceProvider
         $this->app->bind(ReportRepositoryInterface::class, ReportRepository::class);
         $this->app->bind(AdminRepositoryInterface::class, AdminRepository::class);
         $this->app->bind(OrderItemsRepositoryInterface::class, OrderItemsRespository::class);
+        $this->app->bind(UserTempRepositoryInterface::class, UserTempRepository::class);
     }
 
     /**

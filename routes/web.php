@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController as AuthLoginController;
+use App\Http\Controllers\Auth\UserTempController;
 use App\Http\Controllers\HomeController as HomeControllerFE;
 use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\OrderController as WebOrderController;
@@ -122,15 +123,20 @@ Route::prefix('/')->group(function () {
     Route::post('cart/update', [CartController::class, 'update'])->name('cart.update');
 
     Route::post('order/store', [WebOrderController::class, 'store'])->name('order.store');
+
+    Route::get('logout', [AuthLoginController::class, 'logout'])->name('user.logout');
+
+    Route::post('select-delivery', [CartController::class, 'delivery'])->name('select-delivery');
+
+    Route::get('cart/destroy', function () {
+        Cart::destroy();
+    })->name('cart.destroy');
+
+    Route::post('save-user', [UserTempController::class, 'create'])->name('save-user');
+
+    Route::get('save-user/{id}', [UserTempController::class, 'show'])->name('user.register');
 });
 
-Route::get('/logout', [AuthLoginController::class, 'logout'])->name('user.logout');
-
-Route::post('/select-delivery', [CartController::class, 'delivery'])->name('select-delivery');
-
-Route::get('cart/destroy', function () {
-    Cart::destroy();
-})->name('cart.destroy');
 
 Route::get('/test', function () {
     return response()->json(['message' => 'loi'], 404);
@@ -140,6 +146,6 @@ Route::get('/test2', function () {
     return Province::where('id', '<', 10)->with('districts.wards')->get();
 });
 
-Route::get('/test3', function() {
+Route::get('/test3', function () {
     dd(Redis::get('request_count'));
 });

@@ -43,7 +43,7 @@
 			<div class="menuextras">
 				<div class="extras">
 					<ul>
-						<li class="shopping-cart-items"><i class="glyphicon glyphicon-shopping-cart icon-white"></i> <a href="{{ route('cart', auth()->user()->id ?? 0) }}"><b>3 items</b></a></li>
+						<li class="shopping-cart-items"><i class="glyphicon glyphicon-shopping-cart icon-white"></i> <a href="{{ route('cart', auth()->user()->id ?? 0) }}"><b>{{ count(session()->get('cart-'. (auth()->user()->id ?? 0)) ?? []) }} items</b></a></li>
 						<li class="{{ isset(auth()->user()->id) ? 'hidden' : '' }}"><a href="{{ route('login') }}">Login</a></li>
 						<li class="nav-item {{ !(isset(auth()->user()->id)) ? 'hidden' : '' }}">
 							<a class="nav-link collapsed" href="{{ route('user.logout') }}">
@@ -68,8 +68,9 @@
 						<a href="features.html">Features</a>
 					</li>
 				</ul>
+				@if(!in_array(Route::currentRouteName(), App\Constants\Common::HIDDEN_SEARCH))
 				<div class="row" style="display: flex; justify-content: center; padding: 10px;">
-					<form method="get" action="{{route('web.product')}}">
+					<form method="get" action="{{ route('web.product') }}">
 						<div class="input-group">
 							<input class="form-control input-md" id="appendedInputButtons" name="name" type="text">
 							<span class="input-group-btn">
@@ -78,6 +79,7 @@
 						</div>
 					</form>
 				</div>
+				@endif
 			</nav>
 		</div>
 	</div>

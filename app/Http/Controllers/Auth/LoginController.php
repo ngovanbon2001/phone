@@ -63,7 +63,11 @@ class LoginController extends Controller
                     $aggregatedProducts[$productId]["quantity"] += $quantity;
                 }
             }
-            
+
+            if (!empty($cart)) {
+                Session::forget('cart-0');
+            }
+
             Session::put('cart-' . auth()->user()->id, $aggregatedProducts);
 
             return redirect()->route('web.home');
