@@ -13,6 +13,21 @@
 </div>
 
 <div class="section">
+
+    <div id="message">
+        @if (session()->has('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @endif
+
+        @if (session()->has('message-error'))
+            <div class="alert alert-danger">
+                {{ session('message-error') }}
+            </div>
+        @endif
+    </div>
+
     <div class="container">
 
         <form id="check-out-form" action="{{ route('order.store') }}" method="post">

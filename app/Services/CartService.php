@@ -29,26 +29,36 @@ class CartService implements CartServiceInterface
      */
     public function list(int $id): mixed
     {
-        return Session::get('cart-' . $id);
+        try {
+            return Session::get('cart-' . $id);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 
     /**
      * @param array $attributes
-     * @return mixed
+     * @return array|null
      */
-    public function create(array $attributes): mixed
+    public function create(array $attributes): ?array
     {
-        $user_id = auth()->user()->id ?? 0;
+        try {
+            $id = auth()->user()->id ?? 0;
 
-        return $this->addCart($user_id, $attributes);
+            return $this->addCart($id, $attributes);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
     }
 
     /**
      * @param int $user_id
      * @param array $attributes
-     * @return void
+     * @return array
      */
-    private function addCart(int $user_id, array $attributes): void
+    private function addCart(int $user_id, array $attributes): array
     {
         $carts = Session::get('cart-' . $user_id) ?? [];
         $cartFilter = array_filter($carts, function ($item) use ($attributes) {
@@ -67,6 +77,7 @@ class CartService implements CartServiceInterface
             ];
 
             Session::push('cart-' . $user_id, $dataCart);
+            return $dataCart;
         } else {
             $cartUpdate = array_map(function ($item) use ($attributes) {
                 if ((int)$item['product_id'] === (int)$attributes['product_id']) {
@@ -75,6 +86,7 @@ class CartService implements CartServiceInterface
                 return $item;
             }, $carts);
             Session::put('cart-' . $user_id, $cartUpdate);
+            return $cartUpdate;
         }
     }
 

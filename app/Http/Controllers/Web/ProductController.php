@@ -4,14 +4,17 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Services\Contracts\ProductServiceInterface;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    protected $productServiceInterface;
+    protected ProductServiceInterface $productServiceInterface;
 
     /**
-     * @param BannerServiceInterface $bannerServiceInterface
+     * @param ProductServiceInterface $productServiceInterface
      */
     public function __construct(
         ProductServiceInterface  $productServiceInterface
@@ -21,10 +24,10 @@ class ProductController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Factory|View|Application
      */
-    public function index(Request $request)
+    public function index(Request $request): Factory|View|Application
     {
         $products = $this->productServiceInterface->getProductFE($request->all());
 
@@ -33,11 +36,10 @@ class ProductController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Factory|View|Application
      */
-    public function show($id)
+    public function show(int $id): Factory|View|Application
     {
         // Products
         $product = $this->productServiceInterface->detail($id);
