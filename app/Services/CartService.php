@@ -119,4 +119,25 @@ class CartService implements CartServiceInterface
             throw new CartException($e->getMessage());
         }
     }
+
+    /**
+     * @param int $id
+     * @return array
+     * @throws CartException
+     */
+    public function delete(int $id): array
+    {
+        try {
+            $cartId = auth()->user()->id ?? 0;
+            $carts = Session::get('cart-' . $cartId);
+            $newCart = array_filter($carts, function ($item) use ($id) {
+                return (int)$item["product_id"] !== $id;
+            });
+            Session::put('cart-' . $cartId, $newCart);
+            return $newCart ?? [];
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            throw new CartException($exception->getMessage());
+        }
+    }
 }

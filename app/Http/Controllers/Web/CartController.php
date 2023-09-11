@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Web;
 
 use App\Constants\Common;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Cart\CreateRequest;
+use App\Http\Requests\Cart\UpdateRequest;
 use App\Services\Contracts\CartServiceInterface;
 use App\Services\Contracts\OrderServiceInterface;
 use Illuminate\Contracts\Foundation\Application;
@@ -42,10 +44,10 @@ class CartController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param CreateRequest $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(CreateRequest $request): RedirectResponse
     {
         $cart = $this->cartServiceInterface->create($request->all());
 
@@ -58,7 +60,11 @@ class CartController extends Controller
         return redirect()->route('cart', auth()->user()->id ?? 0);
     }
 
-    public function update(Request $request): JsonResponse
+    /**
+     * @param UpdateRequest $request
+     * @return JsonResponse
+     */
+    public function update(UpdateRequest $request): JsonResponse
     {
         $carts  = $request->all();
         $result = $this->cartServiceInterface->update($request->all(), $carts['cart_id']);
@@ -72,5 +78,13 @@ class CartController extends Controller
     public function delivery(Request $request): mixed
     {
         return $this->orderServiceInterface->select_delivery($request->all());
+    }
+
+    /**
+     * @param int $id
+     */
+    public function delete(int $id)
+    {
+        return $this->response($this->cartServiceInterface->delete($id));
     }
 }
