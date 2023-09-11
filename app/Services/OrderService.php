@@ -167,15 +167,25 @@ class OrderService implements OrderServiceInterface
      */
     public function cancel(int $id): mixed
     {
+        DB::beginTransaction();
         try {
             $order = $this->orderItemsRepositoryInterface->find($id);
 
             if ($order) {
+                $product = $this->productReponsitoryInterface->find($order->product_id);
+
+                if ($order->status > Common::IN_ACTIVE) {
+                    $newAmount = ($product->amount ?? 0) + ($order->product_quantity ?? 0);
+                    $product->update(['amount' => $newAmount]);
+                }
+
                 $order->update(['status' => Common::CANCEL]);
             }
 
+            DB::commit();
             return $order;
         } catch (Exception $exception) {
+            DB::rollBack();
             Log::error($exception->getMessage());
             return null;
         }

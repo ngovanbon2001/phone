@@ -211,13 +211,13 @@ abstract class BaseRepository extends L5Repository implements RepositoryInterfac
     /**
      * list paginate
      * @param array $conditions
-     * @return array
+     * @param int $paginate
      */
     public function list(array $conditions, int $paginate = Common::PAGINATE_BE)
     {
         $this->applyConditions(condition($conditions));
         return $this->model
-                    ->orderBy('sort_order', 'ASC')
+                    ->orderBy('id', 'DESC')
                     ->paginate($paginate);
     }
 
