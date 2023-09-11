@@ -19,4 +19,6 @@ interface UserServiceInterface
     public function countUser();
 
     public function createUser(array $attributes);
+
+    public function show(int $id);
 }

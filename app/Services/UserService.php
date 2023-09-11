@@ -197,4 +197,25 @@ class UserService implements UserServiceInterface
             'password' => Hash::make($attribute["password"]),
         ];
     }
+
+    /**
+     * show user
+     * @param int $id
+     * @return mixed
+     */
+    public function show(int $id): mixed
+    {
+        try {
+            $user = $this->userRepository->find($id);
+
+            if ($user) {
+                return $user->order()->with('items')->get();
+            }
+
+            return null;
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
+    }
 }

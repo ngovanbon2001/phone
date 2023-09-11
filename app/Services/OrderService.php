@@ -161,7 +161,11 @@ class OrderService implements OrderServiceInterface
         }
     }
 
-    public function cancel(int $id)
+    /**
+     * @param int $id
+     * @return mixed|null
+     */
+    public function cancel(int $id): mixed
     {
         try {
             $order = $this->orderItemsRepositoryInterface->find($id);
@@ -198,6 +202,7 @@ class OrderService implements OrderServiceInterface
     }
 
     /**
+     * show items order
      * @param int $id
      * @return mixed
      */
@@ -205,6 +210,21 @@ class OrderService implements OrderServiceInterface
     {
         try {
             return $this->orderItemsRepositoryInterface->find($id);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * detail order
+     * @param int $id
+     * @return mixed
+     */
+    public function show(int $id): mixed
+    {
+        try {
+            return $this->orderRepository->find($id);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return null;
