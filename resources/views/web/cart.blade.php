@@ -56,7 +56,6 @@
                             <td class="price">${{ $value['price'] ?? 0 }}</td>
                             <!-- Shopping Cart Item Actions -->
                             <td class="actions">
-                                <a href="#" class="btn btn-xs btn-grey"><i class="glyphicon glyphicon-pencil"></i></a>
                                 <a href="#" class="btn btn-xs btn-grey"><i class="glyphicon glyphicon-trash"></i></a>
                             </td>
                         </tr>
