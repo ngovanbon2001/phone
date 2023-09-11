@@ -56,7 +56,7 @@
                             <td class="price">${{ $value['price'] ?? 0 }}</td>
                             <!-- Shopping Cart Item Actions -->
                             <td class="actions">
-                                <a href="#" class="btn btn-xs btn-grey"><i class="glyphicon glyphicon-trash"></i></a>
+                                <button type="button" data-id="{{ $value['product_id'] }}" class="btn btn-xs btn-grey delete-cart"><i class="glyphicon glyphicon-trash"></i></button>
                             </td>
                         </tr>
                         <input type="hidden" name="items[{{ $key }}][product_id]" value="{{ $value['product_id'] ?? '' }}">
@@ -266,6 +266,47 @@
                     $('#' + result).html(data);
                 },
             });
+        });
+
+        $('.delete-cart').on('click', function (){
+            if (confirm('Do you want to delete item?')) {
+                const productId = $(this).data('id');
+                const _this = $(this);
+                var totalNew = 0;
+
+                const updateUrl = '{{ route("cart.destroy", ":productId") }}'.replace(':productId', productId);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    url: updateUrl,
+                    method: 'DELETE',
+                    success: function(response) {
+                        $.each(response.data, function(key, item) {
+                            $("#cart-" + item.product_id).data("qty", parseInt(item.quantity));
+                            $("#quantity-" + item.product_id).prop('value', parseInt(item.quantity));
+                            totalNew = totalNew + (parseInt(item.quantity) * parseFloat(item.price));
+                        });
+                        _this.parent().parent().remove();
+                        setTimeout(function() {
+                            toastr.success('Cart deleted successfully!', 'Success');
+                        }, 2000);
+                        $('#total').text(totalNew);
+                        $('#total-items').text(Object.keys(response.data).length + ' items');
+                    },
+                    error: function(xhr, text, err) {
+                        var responseData = JSON.parse(xhr.responseText);
+                        var errorMessage = responseData.message;
+                        setTimeout(function() {
+                            toastr.error(errorMessage, 'Error');
+                        }, 2000);
+                    }
+                });
+            }
         });
     });
 </script>

@@ -43,7 +43,7 @@
 			<div class="menuextras">
 				<div class="extras">
 					<ul>
-						<li class="shopping-cart-items"><i class="glyphicon glyphicon-shopping-cart icon-white"></i> <a href="{{ route('cart', auth()->user()->id ?? 0) }}"><b>{{ count(session()->get('cart-'. (auth()->user()->id ?? 0)) ?? []) }} items</b></a></li>
+						<li class="shopping-cart-items"><i class="glyphicon glyphicon-shopping-cart icon-white"></i> <a href="{{ route('cart', auth()->user()->id ?? 0) }}"><b id="total-items">{{ count(session()->get('cart-'. (auth()->user()->id ?? 0)) ?? []) }} items</b></a></li>
 						<li class="{{ isset(auth()->user()->id) ? 'hidden' : '' }}"><a href="{{ route('login') }}">Login</a></li>
                         @if(isset(auth()->user()->id))
                         <li class="nav-item">

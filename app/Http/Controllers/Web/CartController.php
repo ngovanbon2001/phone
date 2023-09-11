@@ -79,4 +79,12 @@ class CartController extends Controller
     {
         return $this->orderServiceInterface->select_delivery($request->all());
     }
+
+    /**
+     * @param int $id
+     */
+    public function delete(int $id)
+    {
+        return $this->response($this->cartServiceInterface->delete($id));
+    }
 }
