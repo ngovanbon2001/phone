@@ -27,4 +27,6 @@ interface OrderServiceInterface
     public function select_delivery(array $data);
 
     public function cancel(int $id);
+
+    public function show(int $id);
 }

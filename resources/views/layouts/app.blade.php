@@ -27,7 +27,7 @@
 	<!-- Include Toastr library -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-	
+
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
@@ -51,6 +51,11 @@
 								<span>Logout</span>
 							</a>
 						</li><!-- End Login Page Nav -->
+                        @if(isset(auth()->user()->id))
+                        <li class="nav-item">
+                            <a href="{{ route('order.show', auth()->user()->id) }}">Your order</a>
+                        </li>
+                        @endif
 						<li><p>{{ auth()->user()->username ?? '' }}</p></li>
 					</ul>
 				</div>

@@ -161,17 +161,31 @@ class OrderService implements OrderServiceInterface
         }
     }
 
-    public function cancel(int $id)
+    /**
+     * @param int $id
+     * @return mixed|null
+     */
+    public function cancel(int $id): mixed
     {
+        DB::beginTransaction();
         try {
             $order = $this->orderItemsRepositoryInterface->find($id);
 
             if ($order) {
+                $product = $this->productReponsitoryInterface->find($order->product_id);
+
+                if ($order->status > Common::IN_ACTIVE) {
+                    $newAmount = ($product->amount ?? 0) + ($order->product_quantity ?? 0);
+                    $product->update(['amount' => $newAmount]);
+                }
+
                 $order->update(['status' => Common::CANCEL]);
             }
 
+            DB::commit();
             return $order;
         } catch (Exception $exception) {
+            DB::rollBack();
             Log::error($exception->getMessage());
             return null;
         }
@@ -198,6 +212,7 @@ class OrderService implements OrderServiceInterface
     }
 
     /**
+     * show items order
      * @param int $id
      * @return mixed
      */
@@ -205,6 +220,21 @@ class OrderService implements OrderServiceInterface
     {
         try {
             return $this->orderItemsRepositoryInterface->find($id);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * detail order
+     * @param int $id
+     * @return mixed
+     */
+    public function show(int $id): mixed
+    {
+        try {
+            return $this->orderRepository->find($id);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return null;

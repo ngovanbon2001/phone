@@ -59,6 +59,11 @@ class Common
         self::CANCEL    => 'Cancel',
     ];
 
+    const BUTTON_ORDER = [
+        self::IN_ACTIVE => 'btn-primary',
+        self::ACTIVE    => 'btn-info',
+    ];
+
     const HIDDEN_SEARCH = [
         'login',
         'register'
