@@ -178,6 +178,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
         RepositoryProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
     ],
 
     /*
@@ -233,6 +234,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Repository' => Prettus\Repository\Facades\Repository::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];
