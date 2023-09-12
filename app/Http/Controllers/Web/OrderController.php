@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use PDF;
 
 class OrderController extends Controller
 {
@@ -51,5 +52,30 @@ class OrderController extends Controller
     {
         $order = $this->userService->show($id);
         return view('web/order', compact('order'));
+    }
+
+    /**
+     * @param int $id
+     * @return Factory|View|Application
+     */
+    public function detail(int $id): Factory|View|Application
+    {
+        $order = $this->orderServiceInterface->detail($id);
+        return view('web/detail_order', compact('order'));
+    }
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function exportPdf(int $id): mixed
+    {
+        $order = $this->orderServiceInterface->detail($id);
+        $pdf   = PDF::loadView('web/pdf', compact('order'));
+        $pdf->getDomPDF()->set_option('isHtml5ParserEnabled', true);
+        $pdf->getDomPDF()->set_option('isPhpEnabled', true);
+        $pdf->getDomPDF()->set_option('isFontSubsettingEnabled', true);
+        $pdf->getDomPDF()->set_option('defaultFont', 'DejaVuSans');
+        return $pdf->download('bill.pdf');
     }
 }

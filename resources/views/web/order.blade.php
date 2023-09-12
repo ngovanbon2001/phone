@@ -39,7 +39,9 @@
                                     <!-- Shopping Cart Item -->
                                     <tr>
                                         <!-- Shopping Cart Item Image -->
-                                        <td class="image"><a href="page-product-details.html"><img
+                                        <td class="image">
+                                            <a href="{{ route('order.detail', $val['id']) }}">
+                                                <img
                                                     src="{{ asset('images/'.$val['product_image'] ?? '') }}"
                                                     alt="Item Name"></a></td>
                                         <!-- Shopping Cart Item Description & Features -->

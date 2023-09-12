@@ -126,6 +126,10 @@ Route::prefix('/')->group(function () {
 
     Route::get('order/show/{id}', [WebOrderController::class, 'show'])->name('order.show');
 
+    Route::get('order/detail/{id}', [WebOrderController::class, 'detail'])->name('order.detail');
+
+    Route::get('order/pdf/{id}', [WebOrderController::class, 'exportPdf'])->name('order.pdf');
+
     Route::get('logout', [AuthLoginController::class, 'logout'])->name('user.logout');
 
     Route::post('select-delivery', [CartController::class, 'delivery'])->name('select-delivery');
