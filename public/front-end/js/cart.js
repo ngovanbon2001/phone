@@ -87,7 +87,7 @@ $(document).ready(function() {
     $('.choose').on('change', function() {
         var action = $(this).attr('id');
         var id = $(this).val();
-        var _token = '{{ csrf_token() }}';
+        var _token = token;
         var result = "";
         if (action == 'provinces') {
             result = 'districts';
@@ -95,7 +95,7 @@ $(document).ready(function() {
             result = 'wards';
         }
         $.ajax({
-            url: "{{ route('select-delivery') }}",
+            url: urlAddress,
             method: 'POST',
             data: {
                 action: action,
