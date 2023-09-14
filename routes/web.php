@@ -130,6 +130,8 @@ Route::prefix('/')->group(function () {
 
     Route::get('order/pdf/{id}', [WebOrderController::class, 'exportPdf'])->name('order.pdf');
 
+    Route::post('order/cancel/{id}', [WebOrderController::class, 'cancel'])->name('web.order.cancel');
+
     Route::get('logout', [AuthLoginController::class, 'logout'])->name('user.logout');
 
     Route::post('select-delivery', [CartController::class, 'delivery'])->name('select-delivery');

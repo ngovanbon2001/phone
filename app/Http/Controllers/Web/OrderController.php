@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Constants\Common;
 use App\Http\Controllers\Controller;
 use App\Services\Contracts\OrderServiceInterface;
 use App\Services\Contracts\UserServiceInterface;
@@ -77,5 +78,22 @@ class OrderController extends Controller
         $pdf->getDomPDF()->set_option('isFontSubsettingEnabled', true);
         $pdf->getDomPDF()->set_option('defaultFont', 'DejaVuSans');
         return $pdf->download('bill.pdf');
+    }
+
+    /**
+     * @param int $id
+     * @return RedirectResponse
+     */
+    public function cancel(int $id): RedirectResponse
+    {
+        $order = $this->orderServiceInterface->cancel($id);
+
+        return $this->handleViewResponse(
+            $order,
+            'order.show',
+            Common::ACTION[Common::ACTION_CANCEL]. ' order!',
+            'Cancel order successful.',
+            auth()->user()->id ?? 0
+        );
     }
 }
