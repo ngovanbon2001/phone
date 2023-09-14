@@ -14,18 +14,20 @@
 
     <div class="section">
 
-        <div id="message">
-            @if (session()->has('message'))
-                <div class="alert alert-success">
-                    {{ session('message') }}
-                </div>
-            @endif
+        <div class="col-sm-6" style="padding-left: 3%;">
+            <div id="message">
+                @if (session()->has('message'))
+                    <div class="alert alert-success">
+                        {{ session('message') }}
+                    </div>
+                @endif
 
-            @if (session()->has('message-error'))
-                <div class="alert alert-danger">
-                    {{ session('message-error') }}
-                </div>
-            @endif
+                @if (session()->has('message-error'))
+                    <div class="alert alert-danger">
+                        {{ session('message-error') }}
+                    </div>
+                @endif
+            </div>
         </div>
 
         <div class="container">
@@ -58,10 +60,17 @@
                                         </td>
                                         <!-- Shopping Cart Item Price -->
                                         <td class="price">${{ $val['product_price'] ?? 0 }}</td>
+                                        <td class="price">{{ App\Constants\Common::STATUS_ORDER[($val['status'] ?? 0)] }}</td>
                                         <!-- Shopping Cart Item Actions -->
                                         <td class="actions">
-                                            <a href="#" class="btn btn-xs btn-grey"><i
-                                                    class="glyphicon glyphicon-trash"></i></a>
+                                            @if (($val['status'] ?? 0) < App\Constants\Common::PAID)
+                                                <form action="{{ route('web.order.cancel', $val['id'] ?? 0) }}"
+                                                      method="post">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-xs btn-grey"><i
+                                                            class="glyphicon glyphicon-trash"></i></button>
+                                                </form>
+                                            @endif
                                         </td>
                                     </tr>
                                     <!-- End Shopping Cart Item -->
@@ -75,3 +84,8 @@
         </div>
     </div>
 @endsection
+<script>
+    setTimeout(function () {
+        $(".alert").alert("close");
+    }, 3000);
+</script>

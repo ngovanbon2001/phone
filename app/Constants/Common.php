@@ -73,9 +73,11 @@ class Common
     const ACTION_UPDATE = 'update';
     const ACTION_DELETE = 'delete';
 
+    const ACTION_CANCEL = 'cancel';
     const ACTION = [
         self::ACTION_CREATE => 'Create',
         self::ACTION_UPDATE => 'Update',
         self::ACTION_DELETE => 'Delete',
+        self::ACTION_CANCEL => 'Cancel',
     ];
 }
