@@ -163,5 +163,9 @@
     const deleteUrl = '{{ route("cart.destroy", ":productId") }}';
 
     const updateUrl = '{{ route("cart.update") }}';
+
+    const token = '{{ csrf_token() }}';
+
+    const urlAddress = "{{ route('select-delivery') }}";
 </script>
 <script src="{{asset('front-end/js/cart.js')}}"></script>

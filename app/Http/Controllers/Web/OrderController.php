@@ -42,7 +42,7 @@ class OrderController extends Controller
             return view('web/order_success', compact('order'));
         }
 
-        return redirect()->route('cart');
+        return redirect()->route('cart', (auth()->user()->id ?? 0));
     }
 
     /**

@@ -52,8 +52,12 @@
                         @endif
 						<li><p>{{ auth()->user()->username ?? '' }}</p></li>
                         <li class="nav-item {{ !(isset(auth()->user()->id)) ? 'hidden' : '' }}">
-                            <a class="nav-link collapsed" href="{{ route('user.logout') }}">
-                                <i class="bi bi-box-arrow-in-right"></i>
+							<a class="dropdown-item d-flex align-items-center" href="{{ route('user.logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <form id="logout-form" action="{{ route('user.logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
                                 <span>Logout</span>
                             </a>
                         </li><!-- End Login Page Nav -->

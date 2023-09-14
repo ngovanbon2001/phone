@@ -40,6 +40,7 @@ Route::post('admin/login/submit', [LoginController::class, 'login'])->name('admi
 
 Route::prefix('admin')->middleware('isAdmin')->group(function () {
     Route::get('/', [HomeController::class, 'home'])->name('homeAdmin');
+    Route::post('admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
 
     //Category
     Route::get('/category', [CategoryController::class, 'index'])->name('showCate');
@@ -132,7 +133,7 @@ Route::prefix('/')->group(function () {
 
     Route::post('order/cancel/{id}', [WebOrderController::class, 'cancel'])->name('web.order.cancel');
 
-    Route::get('logout', [AuthLoginController::class, 'logout'])->name('user.logout');
+    Route::post('logout', [AuthLoginController::class, 'logout'])->name('user.logout');
 
     Route::post('select-delivery', [CartController::class, 'delivery'])->name('select-delivery');
 

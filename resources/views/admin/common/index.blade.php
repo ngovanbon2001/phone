@@ -43,10 +43,10 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('logout') }}" onclick="event.preventDefault();
+                            <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                 <i class="bi bi-box-arrow-right"></i>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
                                 <span>Sign Out</span>
@@ -159,10 +159,10 @@
 
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ route('logout') }}" onclick="event.preventDefault();
+                <a class="nav-link collapsed" href="{{ route('admin.logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                     <i class="bi bi-box-arrow-in-right"></i>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>
                     <span>Logout</span>
