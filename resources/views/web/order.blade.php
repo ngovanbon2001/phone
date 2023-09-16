@@ -63,7 +63,7 @@
                                         <td class="price">{{ App\Constants\Common::STATUS_ORDER[($val['status'] ?? 0)] }}</td>
                                         <!-- Shopping Cart Item Actions -->
                                         <td class="actions">
-                                            @if (($val['status'] ?? 0) < App\Constants\Common::PAID)
+                                            @if (($val['status'] ?? 0) < App\Constants\Common::DELIVERY)
                                                 <form action="{{ route('web.order.cancel', $val['id'] ?? 0) }}"
                                                       method="post">
                                                     @csrf

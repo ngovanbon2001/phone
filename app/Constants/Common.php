@@ -28,9 +28,11 @@ class Common
 
     const DELETE = 2;
 
-    const PAID = 2;
+    const PAID = 3;
 
-    const CANCEL = 3;
+    const DELIVERY = 2;
+
+    const CANCEL = 4;
 
     const PAGINATE_BE = 10;
 
@@ -55,6 +57,7 @@ class Common
     const STATUS_ORDER = [
         self::IN_ACTIVE => 'Unconfimred',
         self::ACTIVE    => 'Confirmed',
+        self::DELIVERY  => 'Delivery',
         self::PAID      => 'Paid',
         self::CANCEL    => 'Cancel',
     ];
@@ -62,6 +65,7 @@ class Common
     const BUTTON_ORDER = [
         self::IN_ACTIVE => 'btn-primary',
         self::ACTIVE    => 'btn-info',
+        self::DELIVERY  => 'btn-success',
     ];
 
     const HIDDEN_SEARCH = [
