@@ -131,12 +131,12 @@
                                                     @if (($orderList->status ?? 0) < App\Constants\Common::PAID)
                                                     <form action="{{ route('updateOrder', $orderList->id) }}" method="post">
                                                         @csrf
-                                                        <button class="btn {{ \App\Constants\Common::BUTTON_ORDER[$orderList->status ?? 0] }}" type="submit"><i class="bi bi-coin"></i></button>
+                                                        <button class="btn {{ \App\Constants\Common::BUTTON_ORDER[($orderList->status ?? 0)] }}" type="submit"><i class="bi bi-coin"></i></button>
                                                     </form>
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    @if ((($orderList->status ?? 0) != App\Constants\Common::CANCEL) && (($orderList->status ?? 0) != App\Constants\Common::PAID))
+                                                    @if (($orderList->status ?? 0) < App\Constants\Common::PAID)
                                                     <form action="{{ route('cancel-order', $orderList->id) }}" method="post">
                                                         @csrf
                                                         <button class="btn btn-danger" type="submit"><i class="ri-close-circle-fill"></i></button>
