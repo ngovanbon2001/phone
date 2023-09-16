@@ -36,7 +36,7 @@
                                             <i class="bi bi-cart"></i>
                                         </div>
                                         <div class="ps-3">
-                                            <h6>{{ $total->total_products }}</h6>
+                                            <h6>{{ $total->total_products ?? 0 }}</h6>
                                         </div>
                                     </div>
                                 </div>
@@ -56,7 +56,7 @@
                                             <i class="bi bi-currency-dollar"></i>
                                         </div>
                                         <div class="ps-3">
-                                            <h6>{{ number_format($total->total_money) }}</h6>
+                                            <h6>{{ number_format(($total->total_money ?? 0)) }}</h6>
                                         </div>
                                     </div>
                                 </div>
