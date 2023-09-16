@@ -82,19 +82,19 @@
                         <div class="cart-promo-code">
                             <h6> Name</h6>
                             <div>
-                                <input class="form-control input-sm" name="customer_name" type="text" value="">
+                                <input id="customer_name" class="form-control input-sm" name="customer_name" type="text" value="">
                             </div>
                         </div>
                         <div class="cart-promo-code">
                             <h6> Email</h6>
                             <div>
-                                <input class="form-control input-sm" name="customer_email" type="text" value="">
+                                <input id="customer_email" class="form-control input-sm" name="customer_email" type="text" value="">
                             </div>
                         </div>
                         <div class="cart-promo-code">
                             <h6> Phone</h6>
                             <div>
-                                <input class="form-control input-sm" name="customer_phone" type="text" value="">
+                                <input id="customer_phone" class="form-control input-sm" name="customer_phone" type="text" value="">
                             </div>
                         </div>
                         <div class="cart-shippment-options">

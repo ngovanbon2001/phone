@@ -23,6 +23,12 @@ $(document).ready(function() {
         } else {
             $('#form-order').hide();
             $(this).data('status', 0);
+            $('#customer_name').val(null);
+            $('#customer_email').val(null);
+            $('#customer_phone').val(null);
+            $('#provinces').val(null);
+            $('#districts').val(null);
+            $('#wards').val(null);
         }
     });
 
