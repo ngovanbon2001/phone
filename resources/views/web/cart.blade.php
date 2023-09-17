@@ -101,7 +101,7 @@
                             <h6> Provinces</h6>
                             <div class="input-append">
                                 <select id="provinces" name="provinces" class="form-control input-sm choose provinces">
-                                    <option>---Select provinces---</option>
+                                    <option value="">---Select provinces---</option>
                                     @foreach ($provinces as $value)
                                     <option value="{{ $value->id }}">{{ $value->name }}</option>
                                     @endforeach
@@ -112,7 +112,7 @@
                             <h6> Districts</h6>
                             <div class="input-append">
                                 <select id="districts" name="districts" class="form-control input-sm choose districts">
-                                    <option>---Select districts---</option>
+                                    <option value="">---Select districts---</option>
                                 </select>
                             </div>
                         </div>
@@ -120,7 +120,7 @@
                             <h6> Wards</h6>
                             <div class="input-append">
                                 <select id="wards" name="wards" class="form-control input-sm wards">
-                                    <option>---Select wards---</option>
+                                    <option value="">---Select wards---</option>
                                 </select>
                             </div>
                         </div>

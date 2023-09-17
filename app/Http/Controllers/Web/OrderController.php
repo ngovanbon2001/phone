@@ -36,6 +36,7 @@ class OrderController extends Controller
      */
     public function store(Request $request): View|Factory|Application|RedirectResponse
     {
+        // dd($request->all());
         $order = $this->orderServiceInterface->create($request->all());
 
         if ($order) {

@@ -65,26 +65,35 @@
             <div class="row">
                 @foreach ($newProduct as $item)
                 <div class="col-md-3 col-sm-6">
-                    <!-- Product -->
-                    <div class="shop-item">
-                        <!-- Product Image -->
-                        <div class="shop-item-image">
-                            <a href="page-product-details.html"><img src="{{asset('images/'.$item->image_url ?? '')}}" alt="Item Name"></a>
+                    <form action="{{ route('cart.create') }}" method="post" class="cart">
+                        @csrf
+                        <!-- Product -->
+                        <div class="shop-item">
+                            <!-- Product Image -->
+                            <div class="shop-item-image">
+                                <a href="{{route('web.product.detail', $item->id)}}"><img src="{{asset('images/'.$item->image_url ?? '')}}" alt="Item Name"></a>
+                            </div>
+                            <!-- Product Title -->
+                            <div class="title">
+                                <h3><a href="{{route('web.product.detail', $item->id)}}">{{$item->name ?? ''}}</a></h3>
+                            </div>
+                            <!-- Product Price-->
+                            <div class="price">
+                                ${{ number_format($item->price ?? 0)}}
+                            </div>
+                            <!-- Add to Cart Button -->
+                            <div class="actions">
+                                <button class="btn btn-small add-cart"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                                
+                                <input type="hidden" value="{{ $item->id }}" name="product_id">
+                                <input type="hidden" value="1" name="quantity">
+                                <input type="hidden" value="{{ $item->name }}" name="product_name">
+                                <input type="hidden" value="{{ $item->image_url }}" name="product_image">
+                                <input type="hidden" value="{{ $item->price }}" name="product_price">
+                            </div>
                         </div>
-                        <!-- Product Title -->
-                        <div class="title">
-                            <h3><a href="page-product-details.html">{{$item->name ?? ''}}</a></h3>
-                        </div>
-                        <!-- Product Price-->
-                        <div class="price">
-                            ${{ number_format($item->price ?? 0)}}
-                        </div>
-                        <!-- Add to Cart Button -->
-                        <div class="actions">
-                            <a href="page-product-details.html" class="btn btn-small"><i class="icon-shopping-cart icon-white"></i> Add to Cart</a>
-                        </div>
-                    </div>
-                    <!-- End Product -->
+                        <!-- End Product -->
+                    </form>
                 </div>
                 @endforeach
             </div>
@@ -103,11 +112,11 @@
                     <div class="shop-item">
                         <!-- Product Image -->
                         <div class="shop-item-image">
-                            <a href="page-product-details.html"><img src="{{asset('images/'.$item->image_url ?? '')}}" alt="Item Name"></a>
+                            <a href="{{route('web.product.detail', $item->id)}}"><img src="{{asset('images/'.$item->image_url ?? '')}}" alt="Item Name"></a>
                         </div>
                         <!-- Product Title -->
                         <div class="title">
-                            <h3><a href="page-product-details.html">{{$item->name ?? ""}}</a></h3>
+                            <h3><a href="{{route('web.product.detail', $item->id)}}">{{$item->name ?? ""}}</a></h3>
                         </div>
                         <!-- Product Price-->
                         <div class="price">
