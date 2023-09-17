@@ -48,7 +48,7 @@ Route::prefix('admin')->middleware('isAdmin')->group(function () {
     Route::post('/category/store', [CategoryController::class, 'store'])->name('addCategory');
     Route::get('/category/edit/{id}', [CategoryController::class, 'edit'])->name('editCate');
     Route::post('/category/update/{id}', [CategoryController::class, 'update'])->name('updateCate');
-    Route::get('/category/destroy/{id}', [CategoryController::class, 'destroy'])->name('destroyCate');
+    Route::delete('/category/destroy/{id}', [CategoryController::class, 'destroy'])->name('destroyCate');
     Route::get('/category/active', [CategoryController::class, 'active'])->name('activeCategory');
 
     //product
@@ -57,7 +57,7 @@ Route::prefix('admin')->middleware('isAdmin')->group(function () {
     Route::post('/product/store', [ProductController::class, 'store'])->name('storeProduct');
     Route::get('/product/edit/{id}', [ProductController::class, 'edit'])->name('editProducts');
     Route::post('/product/update/{id}', [ProductController::class, 'update'])->name('updateProducts');
-    Route::get('/product/destroy/{id}', [ProductController::class, 'destroy'])->name('destroyProducts');
+    Route::delete('/product/destroy/{id}', [ProductController::class, 'destroy'])->name('destroyProducts');
     Route::get('/product/active', [ProductController::class, 'active'])->name('active');
     Route::get('/product/show-by-brand/{id}', [ProductController::class, 'showbyBrand'])->name('showbyBrand');
     Route::get('/product/show-by-category/{id}', [ProductController::class, 'showbyCate'])->name('showbyCate');
@@ -68,7 +68,7 @@ Route::prefix('admin')->middleware('isAdmin')->group(function () {
     Route::post('/brand/store', [BrandController::class, 'store'])->name('storeBrand');
     Route::get('/brand/edit/{id}', [BrandController::class, 'edit'])->name('editBrand');
     Route::post('/brand/update/{id}', [BrandController::class, 'update'])->name('updateBrand');
-    Route::get('/brand/destroy/{id}', [BrandController::class, 'destroy'])->name('destroyBrand');
+    Route::delete('/brand/destroy/{id}', [BrandController::class, 'destroy'])->name('destroyBrand');
     Route::get('/brand/active', [BrandController::class, 'active'])->name('activeBrand');
 
     //banners
@@ -77,7 +77,7 @@ Route::prefix('admin')->middleware('isAdmin')->group(function () {
     Route::post('/banner/store', [BannerController::class, 'store'])->name('storeBanners');
     Route::get('/banner/edit/{id}', [BannerController::class, 'edit'])->name('editBanners');
     Route::post('/banner/update/{id}', [BannerController::class, 'update'])->name('updateBanners');
-    Route::get('/banner/destroy/{id}', [BannerController::class, 'destroy'])->name('destroyBanners');
+    Route::delete('/banner/destroy/{id}', [BannerController::class, 'destroy'])->name('destroyBanners');
     Route::get('/banner/active', [BannerController::class, 'active'])->name('activeBanner');
 
     //image
@@ -99,7 +99,7 @@ Route::prefix('admin')->middleware('isAdmin')->group(function () {
     Route::post('/user/store', [UserController::class, 'store'])->name('storeUser');
     Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('editUser');
     Route::post('/user/update/{id}', [UserController::class, 'update'])->name('updateUser');
-    Route::get('/user/destroy/{id}', [UserController::class, 'destroy'])->name('destroyUser');
+    Route::delete('/user/destroy/{id}', [UserController::class, 'destroy'])->name('destroyUser');
     Route::get('/user/show/{id}', [UserController::class, 'show'])->name('showUser');
     Route::post('/user/update-profile/{id}', [UserController::class, 'updateProfile'])->name('updateProfile');
 

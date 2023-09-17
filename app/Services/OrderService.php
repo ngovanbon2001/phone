@@ -68,6 +68,7 @@ class OrderService implements OrderServiceInterface
             $province  = DB::table('provinces')->find($attributes['provinces']);
             $districts = DB::table('districts')->find($attributes['districts']);
             $wards     = DB::table('wards')->find($attributes['wards']);
+            $emailContent = "Bạn đã mua hàng thành công! Dưới đây là danh sách sản phẩm bạn đã mua:\n\n";
 
             $attribute = [
                 'user_id'        => auth()->user()->id ?? null,
@@ -96,17 +97,20 @@ class OrderService implements OrderServiceInterface
                         'product_price'    => $value['product_price'],
                         'product_quantity' => $value['product_quantity'],
                     ];
+                    $emailContent .= "Tên sản phẩm: {$value['product_name']}\n";
+                    $emailContent .= "Số lượng: {$value['product_quantity']}\n";
+                    $emailContent .= "Giá: {$value['product_price']} đ\n";
+                    $emailContent .= "-------------------------\n";
                 }
 
                 $result = $this->orderItemsRepositoryInterface->insertOrUpdateBatch($items);
 
                 if ($result) {
-                    Mail::send('/error', [
-                        'customerName' => $attributes['customer_name'],
-                        'totalMoney' => $attribute['total_money'],
-                    ], function ($message) {
-                        $message->to('bonbon2k1a@gmail.com')->subject('Order');
-                    }, 'Bạn đã mua sản phẩm tại Shop');
+                    // Send email
+                    Mail::raw($emailContent, function ($message) {
+                        $message->to('bonbon2k1a@gmail.com')->subject('Order Confirmation');
+                    });
+
                     Session::forget('cart-' . (auth()->user()->id ?? 0));
                     DB::commit();
                     return $order;
@@ -134,7 +138,8 @@ class OrderService implements OrderServiceInterface
             if ($order) {
                 $product = $this->productReponsitoryInterface->find($order->product_id);
 
-                if (!$product || ($order->status == Common::IN_ACTIVE
+                if (
+                    !$product || ($order->status == Common::IN_ACTIVE
                         && isset($product->amount)
                         && $order->product_quantity > $product->amount)
                 ) {
@@ -145,7 +150,7 @@ class OrderService implements OrderServiceInterface
                 $newAmount = $product->amount - $order->product_quantity;
 
                 if ($order->status == Common::IN_ACTIVE) {
-                    Log::info('Update product '. $newAmount);
+                    Log::info('Update product ' . $newAmount);
                     $product->update(['amount' => $newAmount]);
                 }
 

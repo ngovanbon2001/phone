@@ -62,7 +62,11 @@
                                                 <td style="text-align: center;">
                                                     <a class="btn btn-success" href="{{ route('editUser', $userData->id)  }}"><i class="bi bi-pencil-square"></i></a>
                                                     @if (Auth::guard("admin")->user()->permission == 0)
-                                                    <a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this staff ?');" href="{{ route('destroyUser', $userData->id) }}"><i class="bi bi-trash"></i></a>
+                                                    <a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this staff?') ? document.getElementById('brand-delete-{{ $userData->id }}').submit() : false"><i class="bi bi-trash"></i></a>
+                                                    <form action="{{ route('destroyUser', $userData->id) }}" id="brand-delete-{{ $userData->id }}" method="post">
+                                                        @method('delete')
+                                                        @csrf()
+                                                    </form>
                                                     @endif
                                                 </td>
                                             </tr>

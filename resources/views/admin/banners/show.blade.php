@@ -27,15 +27,15 @@
 
                         <div id="message">
                             @if (session()->has('message'))
-                                <div class="alert alert-success">
-                                    {{ session('message') }}
-                                </div>
+                            <div class="alert alert-success">
+                                {{ session('message') }}
+                            </div>
                             @endif
 
                             @if (session()->has('message-error'))
-                                <div class="alert alert-danger">
-                                    {{ session('message-error') }}
-                                </div>
+                            <div class="alert alert-danger">
+                                {{ session('message-error') }}
+                            </div>
                             @endif
                         </div>
 
@@ -66,7 +66,11 @@
                                                 <td style="text-align: center;">
                                                     <input value="{{ $bannerList->id }}" type="hidden" name="id">
                                                     <a class="btn btn-success" href="{{ route('editBanners', $bannerList->id) }}"><i class="bi bi-pencil-square"></i></a>&emsp;
-                                                    <a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item ?');" href="{{ route('destroyBanners', $bannerList->id) }}"><i class="bi bi-trash"></i></a>
+                                                    <a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?') ? document.getElementById('banner-delete-{{ $bannerList->id }}').submit() : false"><i class="bi bi-trash"></i></a>
+                                                    <form action="{{ route('destroyBanners', $bannerList->id) }}" id="banner-delete-{{ $bannerList->id }}" method="post">
+                                                        @method('delete')
+                                                        @csrf()
+                                                    </form>
                                                 </td>
                                             </tr>
                                             @endforeach

@@ -10,7 +10,7 @@ class Order extends Model
 {
     use HasFactory, SoftDeletes;
     protected $table = 'orders';
-    public $timestamps = false;
+    public $timestamps = true;
     protected $fillable = [
         'user_id',
         'customer_name',

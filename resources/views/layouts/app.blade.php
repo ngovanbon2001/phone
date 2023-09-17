@@ -158,11 +158,17 @@
 	<script src="{{asset('front-end/js/main-menu.js')}}"></script>
 	<script src="{{asset('front-end/js/template.js')}}"></script>
 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+
 </body>
 
 </html>
 <style>
 	.hidden {
 		display: none;
+	}
+
+	label.error {
+		color: #ca1d1d;
 	}
 </style>

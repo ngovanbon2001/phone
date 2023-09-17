@@ -24,7 +24,7 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Add brand form</h5>
+                            <h5 class="card-title">Add category form</h5>
 
                             <!-- General Form Elements -->
                             <form action="{{ route('addCategory') }}" method="post" id="addCategory" class="form-horizontal">

@@ -151,4 +151,29 @@ $(document).ready(function() {
     setTimeout(function () {
         $(".alert").alert("close");
     }, 3000);
+
+    $("#check-out-form").validate({
+        rules: {
+            customer_name: {
+                required: true
+            },
+            customer_email: {
+                required: true,
+                email: true,
+            },
+            customer_phone: {
+                required: true,
+                number: true,
+            },
+            provinces: {
+                required: true
+            },
+            districts: {
+                required: true
+            },
+            wards: {
+                required: true
+            },
+        },
+    });
 });

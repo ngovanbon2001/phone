@@ -159,8 +159,12 @@
                                                 <td style="text-align: center;">
                                                     <input value="{{ $product->id }}" type="hidden" name="id">
                                                     <a class="btn btn-success" href="{{ route('editProducts', $product->id)  }}"><i class="bi bi-pencil-square"></i></a>
-                                                    <a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item ?');" href="{{ route('destroyProducts', $product->id) }}"><i class="bi bi-trash"></i></a>
+                                                    <a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?') ? document.getElementById('product-delete-{{ $product->id }}').submit() : false"><i class="bi bi-trash"></i></a>
                                                     <a class="btn btn-info" href="{{ route('showImage', $product->id) }}"><i class="ri-eye-line"></i></a>
+                                                    <form action="{{ route('destroyProducts', $product->id) }}" id="product-delete-{{ $product->id }}" method="post">
+                                                        @method('delete')
+                                                        @csrf()
+                                                    </form>
                                                 </td>
                                             </tr>
                                             @endforeach

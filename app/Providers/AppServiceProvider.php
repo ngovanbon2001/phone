@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Constants\Common;
 use App\Services\BannerService;
 use App\Services\BrandService;
 use App\Services\CartService;
@@ -48,10 +49,10 @@ class AppServiceProvider extends ServiceProvider
         $provinces = DB::table('provinces')->get();
 
         //all category
-        $categories = DB::table('categories')->get();
+        $categories = DB::table('categories')->whereNull('deleted_at')->get();
 
         //all brand
-        $brands = DB::table('brands')->get();
+        $brands = DB::table('brands')->whereNull('deleted_at')->get();
 
         view()->share(['provinces' => $provinces, 'categories' => $categories ?? [], 'brands' => $brands ?? []]);
     }

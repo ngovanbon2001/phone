@@ -82,26 +82,26 @@
                         <div class="cart-promo-code">
                             <h6> Name</h6>
                             <div>
-                                <input class="form-control input-sm" name="customer_name" type="text" value="">
+                                <input id="customer_name" class="form-control input-sm" name="customer_name" type="text" value="">
                             </div>
                         </div>
                         <div class="cart-promo-code">
                             <h6> Email</h6>
                             <div>
-                                <input class="form-control input-sm" name="customer_email" type="text" value="">
+                                <input id="customer_email" class="form-control input-sm" name="customer_email" type="text" value="">
                             </div>
                         </div>
                         <div class="cart-promo-code">
                             <h6> Phone</h6>
                             <div>
-                                <input class="form-control input-sm" name="customer_phone" type="text" value="">
+                                <input id="customer_phone" class="form-control input-sm" name="customer_phone" type="text" value="">
                             </div>
                         </div>
                         <div class="cart-shippment-options">
                             <h6> Provinces</h6>
                             <div class="input-append">
                                 <select id="provinces" name="provinces" class="form-control input-sm choose provinces">
-                                    <option>---Select provinces---</option>
+                                    <option value="">---Select provinces---</option>
                                     @foreach ($provinces as $value)
                                     <option value="{{ $value->id }}">{{ $value->name }}</option>
                                     @endforeach
@@ -112,7 +112,7 @@
                             <h6> Districts</h6>
                             <div class="input-append">
                                 <select id="districts" name="districts" class="form-control input-sm choose districts">
-                                    <option>---Select districts---</option>
+                                    <option value="">---Select districts---</option>
                                 </select>
                             </div>
                         </div>
@@ -120,7 +120,7 @@
                             <h6> Wards</h6>
                             <div class="input-append">
                                 <select id="wards" name="wards" class="form-control input-sm wards">
-                                    <option>---Select wards---</option>
+                                    <option value="">---Select wards---</option>
                                 </select>
                             </div>
                         </div>

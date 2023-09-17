@@ -65,7 +65,11 @@
                                                 <td style="text-align: center;">
                                                     <input value="{{ $category->id }}" type="hidden" name="id" id="rowId">
                                                     <a class="btn btn-success" href="{{ route('editCate', $category->id) }}"><i class="bi bi-pencil-square"></i></a> &emsp;
-                                                    <a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item ?');" href="{{ route('destroyCate', $category->id) }}"><i class="bi bi-trash"></i></a>
+                                                    <a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?') ? document.getElementById('category-delete-{{ $category->id }}').submit() : false"><i class="bi bi-trash"></i></a>
+                                                    <form action="{{ route('destroyCate', $category->id) }}" id="category-delete-{{ $category->id }}" method="post">
+                                                        @method('delete')
+                                                        @csrf()
+                                                    </form>
                                                 </td>
                                             </tr>
                                             @endforeach
