@@ -1,16 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="section section-breadcrumbs">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>Login</h1>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="section">
     <div class="container">
         <div class="row">
@@ -31,7 +21,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <div class="basic-login">
-                    <form role="form" role="form" method="POST" action="{{ route('login') }}">
+                    <form role="form" role="form" method="POST" action="{{ route('forget.password.post') }}">
                         @csrf
                         <div class="form-group">
                             <label for="login-username"><i class="icon-user"></i> <b>Email</b></label>
@@ -43,17 +33,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="login-password"><i class="icon-lock"></i> <b>Password</b></label>
-                            <input class="form-control" id="login-password" name="password" type="password" placeholder="">
-                            @error('password')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <a href="{{ route('forget.password.get') }}" class="forgot-password">Forgot password?</a>
-                            <button type="submit" class="btn pull-right">Login</button>
+                            <button type="submit" class="btn pull-right"> Send Password Reset Link</button>
                             <div class="clearfix"></div>
                         </div>
                     </form>

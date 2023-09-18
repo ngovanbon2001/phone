@@ -45,22 +45,24 @@
 					<ul>
 						<li class="shopping-cart-items"><i class="glyphicon glyphicon-shopping-cart icon-white"></i> <a href="{{ route('cart', auth()->user()->id ?? 0) }}"><b id="total-items">{{ count(session()->get('cart-'. (auth()->user()->id ?? 0)) ?? []) }} items</b></a></li>
 						<li class="{{ isset(auth()->user()->id) ? 'hidden' : '' }}"><a href="{{ route('login') }}">Login</a></li>
-                        @if(isset(auth()->user()->id))
-                        <li class="nav-item">
-                            <a href="{{ route('order.show', auth()->user()->id) }}">Your order</a>
-                        </li>
-                        @endif
-						<li><p>{{ auth()->user()->username ?? '' }}</p></li>
-                        <li class="nav-item {{ !(isset(auth()->user()->id)) ? 'hidden' : '' }}">
+						@if(isset(auth()->user()->id))
+						<li class="nav-item">
+							<a href="{{ route('order.show', auth()->user()->id) }}">Your order</a>
+						</li>
+						@endif
+						<li>
+							<p>{{ auth()->user()->username ?? '' }}</p>
+						</li>
+						<li class="nav-item {{ !(isset(auth()->user()->id)) ? 'hidden' : '' }}">
 							<a class="dropdown-item d-flex align-items-center" href="{{ route('user.logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                <i class="bi bi-box-arrow-right"></i>
-                                <form id="logout-form" action="{{ route('user.logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                                <span>Logout</span>
-                            </a>
-                        </li><!-- End Login Page Nav -->
+								<i class="bi bi-box-arrow-right"></i>
+								<form id="logout-form" action="{{ route('user.logout') }}" method="POST" class="d-none">
+									@csrf
+								</form>
+								<span>Logout</span>
+							</a>
+						</li><!-- End Login Page Nav -->
 					</ul>
 				</div>
 			</div>
@@ -171,4 +173,13 @@
 	label.error {
 		color: #ca1d1d;
 	}
+
+	span.invalid-feedback {
+		color: #ca1d1d;
+	}
 </style>
+<script>
+	setTimeout(function() {
+		$(".alert").alert("close");
+	}, 3000);
+</script>
