@@ -18,15 +18,15 @@
         <div class="col-sm-6" style="padding-left: 3%;">
             <div id="message">
                 @if (session()->has('message'))
-                    <div class="alert alert-success">
-                        {{ session('message') }}
-                    </div>
+                <div class="alert alert-success">
+                    {{ session('message') }}
+                </div>
                 @endif
 
                 @if (session()->has('message-error'))
-                    <div class="alert alert-danger">
-                        {{ session('message-error') }}
-                    </div>
+                <div class="alert alert-danger">
+                    {{ session('message-error') }}
+                </div>
                 @endif
             </div>
         </div>
@@ -54,7 +54,7 @@
                             <td class="quantity">
                                 <!-- <input type="hidden" name="products[{{ $value['product_id'] }}][id]" value="{{ $value['product_id'] }}">
                                     <input class="form-control input-sm input-micro cart" data-id="{{ $value['product_id'] }}" type="text" name="products[{{ $value['product_id'] }}][quantity]" value="{{ $value['quantity'] }}"> -->
-                                <input id="cart-{{ $value['product_id'] }}" class="form-control input-sm input-micro cart" data-id="{{ $value['product_id'] }}" data-name="{{ $value['name'] }}" data-image="{{ $value['options']['image'] }}" data-price="{{ $value['price'] }}" data-qty="{{ $value['quantity'] }}" type="number" name="quantity" value="{{ $value['quantity'] }}">
+                                <input id="cart-{{ $value['product_id'] }}" class="form-control input-sm input-micro cart" data-cart="{{ auth()->user()->id ?? 0 }}" data-id="{{ $value['product_id'] }}" data-name="{{ $value['name'] }}" data-image="{{ $value['options']['image'] }}" data-price="{{ $value['price'] }}" data-qty="{{ $value['quantity'] }}" type="number" name="quantity" value="{{ $value['quantity'] }}" oninput="checkQuantity(this)">
                             </td>
                             <!-- Shopping Cart Item Price -->
                             <td class="price">${{ $value['price'] ?? 0 }}</td>
@@ -167,5 +167,12 @@
     const token = '{{ csrf_token() }}';
 
     const urlAddress = "{{ route('select-delivery') }}";
+
+    function checkQuantity(input) {
+        var value = parseFloat(input.value);
+        if (value < 1) {
+            input.value = 1;
+        }
+    }
 </script>
 <script src="{{asset('front-end/js/cart.js')}}"></script>
