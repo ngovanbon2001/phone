@@ -15,12 +15,14 @@ use App\Services\Contracts\ImageServiceInterface;
 use App\Services\Contracts\OrderServiceInterface;
 use App\Services\Contracts\ProductServiceInterface;
 use App\Services\Contracts\ReportServiceInterface;
+use App\Services\Contracts\UserExtendServiceInterface;
 use App\Services\Contracts\UserServiceInterface;
 use App\Services\Contracts\UserTempServiceInterface;
 use App\Services\ImageService;
 use App\Services\OrderService;
 use App\Services\ProductService;
 use App\Services\ReportService;
+use App\Services\UserExtendService;
 use App\Services\UserService;
 use App\Services\UserTempService;
 use Illuminate\Support\Facades\DB;
@@ -45,6 +47,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ReportServiceInterface::class, ReportService::class);
         $this->app->bind(CartServiceInterface::class, CartService::class);
         $this->app->bind(UserTempServiceInterface::class, UserTempService::class);
+        $this->app->bind(UserExtendServiceInterface::class, UserExtendService::class);
 
         $provinces = DB::table('provinces')->get();
 

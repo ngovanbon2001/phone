@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Web;
 
 use App\Constants\Common;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Order\CreateRequest;
 use App\Services\Contracts\OrderServiceInterface;
 use App\Services\Contracts\UserServiceInterface;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use PDF;
 
 class OrderController extends Controller
@@ -31,10 +31,10 @@ class OrderController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param CreateRequest $request
      * @return View|Factory|Application|RedirectResponse
      */
-    public function store(Request $request): View|Factory|Application|RedirectResponse
+    public function store(CreateRequest $request): View|Factory|Application|RedirectResponse
     {
         $order = $this->orderServiceInterface->create($request->all());
 

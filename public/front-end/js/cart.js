@@ -27,61 +27,7 @@ $(document).ready(function() {
     });
 
     $('#update-cart').on('click', function() {
-        var cartData = [];
-        var cart_id = $(this).data('cart');
-        var totalNew = 0;
-
-        carts.each(function() {
-            cartData.push({
-                product_id: $(this).data('id'),
-                quantity: $(this).val(),
-                name: $(this).data('name'),
-                price: $(this).data('price'),
-                options: {
-                    image: $(this).data('image')
-                },
-            });
-        });
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $.ajax({
-            url: updateUrl,
-            method: 'POST',
-            data: {
-                cart_id: cart_id,
-                data: cartData,
-            },
-            success: function(response) {
-                console.log(response.data.data);
-                $.each(response.data.data, function(key, item) {
-                    $("#cart-" + item.product_id).data("qty", parseInt(item.quantity));
-                    $("#quantity-" + item.product_id).prop('value', parseInt(item.quantity));
-                    console.log($("#quantity-" + item.product_id).val());
-                    totalNew = totalNew + (parseInt(item.quantity) * parseFloat(item.price));
-                });
-                setTimeout(function() {
-                    toastr.success('Cart updated successfully!', 'Success');
-
-                }, 2000);
-                $('#total').text(totalNew.toFixed(2));
-            },
-            error: function(xhr, text, err) {
-                var responseData = JSON.parse(xhr.responseText);
-                var errorMessage = responseData.message;
-                setTimeout(function() {
-                    toastr.error(errorMessage, 'Error');
-                }, 2000);
-
-                var inputElement = $("#cart-" + responseData.id);
-                var previousQuantity = inputElement.data('qty');
-                inputElement.val(previousQuantity);
-            }
-        });
+        update(this);
     });
 
     $('.choose').on('change', function() {
@@ -136,6 +82,7 @@ $(document).ready(function() {
                     }, 2000);
                     $('#total').text(totalNew.toFixed(2));
                     $('#total-items').text(Object.keys(response.data).length + ' items');
+                    (Object.keys(response.data).length < 1) ? $('#check-out').hide() : $('#check-out').show();
                 },
                 error: function(xhr, text, err) {
                     var responseData = JSON.parse(xhr.responseText);
@@ -176,4 +123,62 @@ $(document).ready(function() {
             },
         },
     });
+
+    $(".cart").on('change', function(){
+        update(this);
+    });
+
+    function update(_this) {
+        var cartData = [];
+        var cart_id = $(_this).data('cart');
+        var totalNew = 0;
+
+        carts.each(function() {
+            cartData.push({
+                product_id: $(this).data('id'),
+                quantity: $(this).val(),
+                name: $(this).data('name'),
+                price: $(this).data('price'),
+                options: {
+                    image: $(this).data('image')
+                },
+            });
+        });
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            url: updateUrl,
+            method: 'POST',
+            data: {
+                cart_id: cart_id,
+                data: cartData,
+            },
+            success: function(response) {
+                $.each(response.data.data, function(key, item) {
+                    $("#cart-" + item.product_id).data("qty", parseInt(item.quantity));
+                    $("#quantity-" + item.product_id).prop('value', parseInt(item.quantity));
+                    totalNew = totalNew + (parseInt(item.quantity) * parseFloat(item.price));
+                });
+                $('#total').text(totalNew.toFixed(2));
+            },
+            error: function(xhr, text, err) {
+                var responseData = JSON.parse(xhr.responseText);
+                var errorMessage = responseData.message;
+                setTimeout(function() {
+                    toastr.error(errorMessage, 'Error');
+                }, 2000);
+
+                var inputElement = $("#cart-" + responseData.id);
+                var previousQuantity = inputElement.data('qty');
+                inputElement.val(previousQuantity);
+            }
+        });
+    }
+
+    (carts.length < 1) ? $('#check-out').hide() : $('#check-out').show();
 });

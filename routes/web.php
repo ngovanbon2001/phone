@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\Product_imageController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController as AuthLoginController;
 use App\Http\Controllers\Auth\UserTempController;
 use App\Http\Controllers\HomeController as HomeControllerFE;
@@ -142,6 +143,11 @@ Route::prefix('/')->group(function () {
     Route::post('save-user', [UserTempController::class, 'create'])->name('save-user');
 
     Route::get('save-user/{id}', [UserTempController::class, 'show'])->name('user.register');
+
+    Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
+    Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
+    Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
+    Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 });
 
 

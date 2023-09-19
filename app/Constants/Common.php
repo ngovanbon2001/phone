@@ -52,7 +52,7 @@ class Common
 
     const PAGINATE_BANNER = 10;
 
-    const PRICE = 100;
+    const PRICE = 500;
 
     const STATUS_ORDER = [
         self::IN_ACTIVE => 'Unconfimred',
