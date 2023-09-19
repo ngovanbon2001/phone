@@ -1,6 +1,4 @@
 $(document).ready(function() {
-    $('#form-order').hide();
-
     toastr.options = {
         "positionClass": "toast-bottom-right",
     };
@@ -18,10 +16,10 @@ $(document).ready(function() {
         var status = $(this).data('status');
 
         if (status == 0) {
-            $('#form-order').show();
+            $('#form-order').css('display', 'block');
             $(this).data('status', 1);
         } else {
-            $('#form-order').hide();
+            $('#form-order').css('display', 'none');
             $(this).data('status', 0);
         }
     });

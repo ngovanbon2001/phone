@@ -87,7 +87,7 @@
             <hr>
             <div class="row">
                 <div class="col-md-4">
-                    <div id="form-order">
+                    <div id="form-order" style="display: none;">
                         <div class="cart-promo-code">
                             <h6> Name</h6>
                             <div>
