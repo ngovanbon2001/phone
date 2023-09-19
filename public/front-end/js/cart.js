@@ -82,6 +82,7 @@ $(document).ready(function() {
                     }, 2000);
                     $('#total').text(totalNew.toFixed(2));
                     $('#total-items').text(Object.keys(response.data).length + ' items');
+                    (Object.keys(response.data).length < 1) ? $('#check-out').hide() : $('#check-out').show();
                 },
                 error: function(xhr, text, err) {
                     var responseData = JSON.parse(xhr.responseText);
@@ -178,4 +179,6 @@ $(document).ready(function() {
             }
         });
     }
+
+    (carts.length < 1) ? $('#check-out').hide() : $('#check-out').show();
 });
