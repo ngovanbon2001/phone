@@ -57,7 +57,7 @@ class CartController extends Controller
             session()->flash('message-error', 'Fail '. Common::ACTION[Common::ACTION_CREATE]. ' '.$this->action);
         }
 
-        return redirect()->route('cart', auth()->user()->id ?? 0);
+        return back();
     }
 
     /**
