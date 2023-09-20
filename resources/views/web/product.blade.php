@@ -44,3 +44,14 @@
     </div>
 </div>
 @endsection
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="{{asset('front-end/js/custom.js')}}"></script>
+<script>
+    const toastrSuccess = '{{ session("success") }}';
+    const toastrError = '{{ session("error") }}';
+    if (toastrSuccess) {
+        showToasrt(toastrSuccess, true);
+    } else if (toastrError) {
+        showToasrt(toastrError, false);
+    }
+</script>

@@ -51,13 +51,11 @@ class CartController extends Controller
     {
         $cart = $this->cartServiceInterface->create($request->all());
 
-        if ($cart){
-            session()->flash('message', Common::ACTION[Common::ACTION_CREATE]. ' '.$this->action.' successful! ');
+        if ($cart) {
+            return redirect()->back()->with('success', 'Cart created successfully!');
         } else {
-            session()->flash('message-error', 'Fail '. Common::ACTION[Common::ACTION_CREATE]. ' '.$this->action);
+            return redirect()->back()->with('error', 'Failed to create cart');
         }
-
-        return back();
     }
 
     /**
