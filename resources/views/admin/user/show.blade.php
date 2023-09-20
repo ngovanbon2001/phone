@@ -46,10 +46,10 @@
                                     <table style="width:100%" class="table table-striped">
                                         <thead>
                                             <tr>
-                                                <th style="width:45%">User's Name</th>
+                                                <th style="width:35%">User's Name</th>
                                                 <th style="width:30%;">Email</th>
                                                 <th style="width:15%; text-align: center;">Phone</th>
-                                                <th style="width:10%">Action</th>
+                                                <th style="width:20%">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
