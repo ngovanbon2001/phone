@@ -1,185 +1,235 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js"> <!--<![endif]-->
+<html lang="en">
 
 <head>
 	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<title>mPurpose - Multipurpose Feature Rich Bootstrap Template</title>
-	<meta name="description" content="">
-	<meta name="viewport" content="width=device-width">
+	<title>E Store - eCommerce HTML Template</title>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<meta content="eCommerce HTML Template Free Download" name="keywords">
+	<meta content="eCommerce HTML Template Free Download" name="description">
 
-	<link rel="stylesheet" href="{{asset('front-end/css/bootstrap.min.css')}}">
-	<link rel="stylesheet" href="{{asset('front-end/css/icomoon-social.css')}}">
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600,800' rel='stylesheet' type='text/css'>
+	<!-- Favicon -->
+	<link href="img/favicon.ico" rel="icon">
 
-	<link rel="stylesheet" href="{{asset('front-end/css/leaflet.css')}}" />
-	<!--[if lte IE 8]>
-		    <link rel="stylesheet" href="css/leaflet.ie.css" />
-		<![endif]-->
-	<link rel="stylesheet" href="{{asset('front-end/css/main.css')}}">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap" rel="stylesheet">
 
-	<script src="{{asset('front-end/js/modernizr-2.6.2-respond-1.1.0.min.js')}}"></script>
+	<!-- CSS Libraries -->
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+	<link href="{{ asset('fe/lib/slick/slick.css') }}" rel="stylesheet">
+	<link href="{{ asset('fe/lib/slick/slick-theme.css') }}" rel="stylesheet">
 
-	<!-- Include Toastr library -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
+	<!-- Template Stylesheet -->
+	<link href="{{ asset('fe/css/style.css') }}" rel="stylesheet">
 	<meta name="csrf-token" content="{{ csrf_token() }}">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
 </head>
 
 <body>
-	<!--[if lt IE 7]>
-            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-        <![endif]-->
-
-
-	<!-- Navigation & Logo-->
-	<div class="mainmenu-wrapper">
-		<div class="container">
-			<div class="menuextras">
-				<div class="extras">
-					<ul>
-						<li class="shopping-cart-items"><i class="glyphicon glyphicon-shopping-cart icon-white"></i> <a href="{{ route('cart', auth()->user()->id ?? 0) }}"><b id="total-items">{{ count(session()->get('cart-'. (auth()->user()->id ?? 0)) ?? []) }} items</b></a></li>
-						<li class="{{ isset(auth()->user()->id) ? 'hidden' : '' }}"><a href="{{ route('login') }}">Login</a></li>
-						@if(isset(auth()->user()->id))
-						<li class="nav-item">
-							<a href="{{ route('order.show', auth()->user()->id) }}">Your order</a>
-						</li>
-						@endif
-						<li>
-							<p>{{ auth()->user()->username ?? '' }}</p>
-						</li>
-						<li class="nav-item {{ !(isset(auth()->user()->id)) ? 'hidden' : '' }}">
-							<a class="dropdown-item d-flex align-items-center" href="{{ route('user.logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-								<i class="bi bi-box-arrow-right"></i>
-								<form id="logout-form" action="{{ route('user.logout') }}" method="POST" style="display: none;" class="d-none">
-									@csrf
-								</form>
-								<span>Logout</span>
-							</a>
-						</li><!-- End Login Page Nav -->
-					</ul>
+	<!-- Top bar Start -->
+	<div class="top-bar">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-6">
+					<i class="fa fa-envelope"></i>
+					support@email.com
+				</div>
+				<div class="col-sm-6">
+					<i class="fa fa-phone-alt"></i>
+					+012-345-6789
 				</div>
 			</div>
-			<nav id="mainmenu" class="mainmenu">
-				<ul>
-					<li class="logo-wrapper"><a href="index.html"><img src="{{ asset('front-end/img/mPurpose-logo.png') }}" alt="Multipurpose Twitter Bootstrap Template"></a></li>
-					<li class="{{(Route::currentRouteName() == 'web.home') ? 'active' : ''}}">
-						<a href="{{ route('web.home') }}">Home</a>
-					</li>
-					<li class="{{(Route::currentRouteName() == 'web.product' || Route::currentRouteName() == 'web.product.detail') ? 'active' : ''}}">
-						<a href="{{ route('web.product') }}">Product</a>
-					</li>
-					<li>
-						<a href="features.html">Features</a>
-					</li>
-				</ul>
-				@if(!in_array(Route::currentRouteName(), App\Constants\Common::HIDDEN_SEARCH))
-				<div class="row" style="display: flex; justify-content: center; padding: 10px;">
-					<form method="get" action="{{ route('web.product') }}">
-						<div class="input-group">
-							<input class="form-control input-md" id="appendedInputButtons" name="name" type="text">
-							<span class="input-group-btn">
-								<button class="btn btn-md" type="submit">Search</button>
-							</span>
-						</div>
-					</form>
-				</div>
-				@endif
-			</nav>
 		</div>
 	</div>
+	<!-- Top bar End -->
 
-	@yield('content')
+	<!-- Nav Bar Start -->
+	<div class="nav">
+		<div class="container-fluid">
+			<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+				<a href="#" class="navbar-brand">MENU</a>
+				<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+					<span class="navbar-toggler-icon"></span>
+				</button>
 
-	<!-- Footer -->
-	<div class="footer">
-		<div class="container">
-			<div class="row">
-				<div class="col-footer col-md-3 col-xs-6">
-					<h3>Our Latest Work</h3>
-					<div class="portfolio-item">
-						<div class="portfolio-image">
-							<a href="page-portfolio-item.html"><img src="{{ asset('front-end/img/portfolio6.jpg') }}" alt="Project Name"></a>
+				<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+					<div class="navbar-nav mr-auto">
+						<a href="index.html" class="nav-item nav-link active">Home</a>
+						<a href="product-list.html" class="nav-item nav-link">Products</a>
+						<a href="product-detail.html" class="nav-item nav-link">Product Detail</a>
+						<a href="cart.html" class="nav-item nav-link">Cart</a>
+						<a href="checkout.html" class="nav-item nav-link">Checkout</a>
+						<a href="my-account.html" class="nav-item nav-link">My Account</a>
+						<div class="nav-item dropdown">
+							<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More Pages</a>
+							<div class="dropdown-menu">
+								<a href="wishlist.html" class="dropdown-item">Wishlist</a>
+								<a href="login.html" class="dropdown-item">Login & Register</a>
+								<a href="contact.html" class="dropdown-item">Contact Us</a>
+							</div>
+						</div>
+					</div>
+					<div class="navbar-nav ml-auto">
+						<div class="nav-item dropdown">
+							<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">User Account</a>
+							<div class="dropdown-menu">
+								<a href="#" class="dropdown-item">Login</a>
+								<a href="#" class="dropdown-item">Register</a>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-footer col-md-3 col-xs-6">
-					<h3>Navigate</h3>
-					<ul class="no-list-style footer-navigate-section">
-						<li><a href="page-blog-posts.html">Blog</a></li>
-						<li><a href="page-portfolio-3-columns-2.html">Portfolio</a></li>
-						<li><a href="page-products-3-columns.html">eShop</a></li>
-						<li><a href="page-services-3-columns.html">Services</a></li>
-						<li><a href="page-pricing.html">Pricing</a></li>
-						<li><a href="page-faq.html">FAQ</a></li>
-					</ul>
-				</div>
+			</nav>
+		</div>
+	</div>
+	<!-- Nav Bar End -->
 
-				<div class="col-footer col-md-4 col-xs-6">
-					<h3>Contacts</h3>
-					<p class="contact-us-details">
-						<b>Address:</b> 123 Fake Street, LN1 2ST, London, United Kingdom<br />
-						<b>Phone:</b> +44 123 654321<br />
-						<b>Fax:</b> +44 123 654321<br />
-						<b>Email:</b> <a href="mailto:getintoutch@yourcompanydomain.com">getintoutch@yourcompanydomain.com</a>
-					</p>
+	<!-- Bottom Bar Start -->
+	<div class="bottom-bar">
+		<div class="container-fluid">
+			<div class="row align-items-center">
+				<div class="col-md-3">
+					<div class="logo">
+						<a href="index.html">
+							<img src="{{ asset('fe/img/logo.png') }}" alt="Logo">
+						</a>
+					</div>
 				</div>
-				<div class="col-footer col-md-2 col-xs-6">
-					<h3>Stay Connected</h3>
-					<ul class="footer-stay-connected no-list-style">
-						<li><a href="#" class="facebook"></a></li>
-						<li><a href="#" class="twitter"></a></li>
-						<li><a href="#" class="googleplus"></a></li>
-					</ul>
+				<div class="col-md-6">
+					<div class="search">
+						<form method="get" action="{{ route('web.product') }}">
+							<input type="text" name="name" placeholder="Search">
+							<button type="submit"><i class="fa fa-search"></i></button>
+						</form>
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<div class="footer-copyright">&copy; 2013 mPurpose. All rights reserved.</div>
+				<div class="col-md-3">
+					<div class="user">
+						<a href="wishlist.html" class="btn wishlist">
+							<i class="fa fa-heart"></i>
+							<span>(0)</span>
+						</a>
+						<a href="cart.html" class="btn cart">
+							<i class="fa fa-shopping-cart"></i>
+							<span>(0)</span>
+						</a>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<!-- Bottom Bar End -->
 
-	<!-- Javascripts -->
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script>
-		window.jQuery || document.write('<script src="{{asset("front-end/js/jquery-1.9.1.min.js")}}"><\/script>')
-	</script>
-	<script src="{{asset('front-end/js/bootstrap.min.js')}}"></script>
-	<script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js"></script>
-	<script src="{{asset('front-end/js/jquery.fitvids.js')}}"></script>
-	<script src="{{asset('front-end/js/jquery.sequence-min.js')}}"></script>
-	<script src="{{asset('front-end/js/jquery.bxslider.js')}}"></script>
-	<script src="{{asset('front-end/js/main-menu.js')}}"></script>
-	<script src="{{asset('front-end/js/template.js')}}"></script>
+	@yield('content')
 
+	<!-- Footer Start -->
+	<div class="footer">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-widget">
+						<h2>Get in Touch</h2>
+						<div class="contact-info">
+							<p><i class="fa fa-map-marker"></i>123 E Store, Los Angeles, USA</p>
+							<p><i class="fa fa-envelope"></i>email@example.com</p>
+							<p><i class="fa fa-phone"></i>+123-456-7890</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-widget">
+						<h2>Follow Us</h2>
+						<div class="contact-info">
+							<div class="social">
+								<a href=""><i class="fab fa-twitter"></i></a>
+								<a href=""><i class="fab fa-facebook-f"></i></a>
+								<a href=""><i class="fab fa-linkedin-in"></i></a>
+								<a href=""><i class="fab fa-instagram"></i></a>
+								<a href=""><i class="fab fa-youtube"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-widget">
+						<h2>Company Info</h2>
+						<ul>
+							<li><a href="#">About Us</a></li>
+							<li><a href="#">Privacy Policy</a></li>
+							<li><a href="#">Terms & Condition</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-widget">
+						<h2>Purchase Info</h2>
+						<ul>
+							<li><a href="#">Pyament Policy</a></li>
+							<li><a href="#">Shipping Policy</a></li>
+							<li><a href="#">Return Policy</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="row payment align-items-center">
+				<div class="col-md-6">
+					<div class="payment-method">
+						<h2>We Accept:</h2>
+						<img src="{{ asset('fe/img/payment-method.png') }}" alt="Payment Method" />
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="payment-security">
+						<h2>Secured By:</h2>
+						<img src="{{ asset('fe/img/godaddy.svg') }}" alt="Payment Security" />
+						<img src="{{ asset('fe/img/norton.svg') }}" alt="Payment Security" />
+						<img src="{{ asset('fe/img/ssl.svg') }}" alt="Payment Security" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Footer End -->
+
+	<!-- Footer Bottom Start -->
+	<div class="footer-bottom">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 copyright">
+					<p>Copyright &copy; <a href="#">Your Site Name</a>. All Rights Reserved</p>
+				</div>
+
+				<div class="col-md-6 template-by">
+					<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+					<p>Designed By <a href="https://htmlcodex.com">HTML Codex</a></p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Footer Bottom End -->
+
+	<!-- Back to Top -->
+	<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+	<!-- JavaScript Libraries -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+	<script src="{{ asset('fe/lib/easing/easing.min.js') }}"></script>
+	<script src="{{ asset('fe/lib/slick/slick.min.js') }}"></script>
+
+	<!-- Template Javascript -->
+	<script src="{{ asset('fe/js/main.js') }}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+	
+	@yield('script-custom')
 </body>
 
 </html>
-<style>
-	.hidden {
-		display: none;
-	}
-
-	label.error {
-		color: #ca1d1d;
-	}
-
-	span.invalid-feedback {
-		color: #ca1d1d;
-	}
-</style>
-<script>
-	setTimeout(function() {
-		$(".alert").alert("close");
-	}, 3000);
-</script>
