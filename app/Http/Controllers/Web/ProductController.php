@@ -43,8 +43,9 @@ class ProductController extends Controller
 
         $brands = $this->brandServiceInterface->list([]);
         $categories = $this->categoryService->list([]);
+        $tags = $this->productServiceInterface->getTags();
 
-        return view('web.product', compact('products', 'brands', 'categories'));
+        return view('web.product', compact('products', 'brands', 'categories', 'tags'));
     }
 
     /**

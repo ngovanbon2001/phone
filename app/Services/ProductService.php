@@ -7,6 +7,7 @@ use App\Repositories\Contracts\ProductReponsitoryInterface;
 use App\Services\Contracts\ProductServiceInterface;
 use Exception;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class ProductService implements ProductServiceInterface
@@ -175,9 +176,23 @@ class ProductService implements ProductServiceInterface
                 ["is_new", "=", Arr::get($conditions, "is_new")],
                 ["active", "=", Arr::get($conditions, "active")],
                 ["price", "<", Arr::get($conditions, "price")],
+                ["tags", "LIKE", Arr::get($conditions, "tags")],
             ];
 
             return $this->productReponsitory->listProduct($conditions, Common::PAGINATE_FE);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
+    }
+
+     /**
+     * @return mixed
+     */
+    public function getTags(): mixed
+    {
+        try {
+            return DB::table('products')->select('tags')->distinct()->get();
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return null;

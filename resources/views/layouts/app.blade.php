@@ -90,7 +90,10 @@
 				<div class="col-md-6">
 					<div class="search">
 						<form method="get" action="{{ route('web.product') }}">
-							<input type="text" name="name" placeholder="Search">
+							<input type="hidden" name="brand_id" value="{{ request('brand_id') ?? '' }}">
+							<input type="hidden" name="category_id" value="{{ request('category_id') ?? '' }}">
+							<input type="hidden" name="tags" value="{{ request('tags') ?? '' }}">
+							<input type="text" name="name" placeholder="Product name" value="{{ request('name') ?? '' }}">
 							<button type="submit"><i class="fa fa-search"></i></button>
 						</form>
 					</div>
@@ -218,7 +221,7 @@
 	<script src="{{ asset('fe/js/custom.js') }}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-	
+
 	@yield('script-custom')
 </body>
 
