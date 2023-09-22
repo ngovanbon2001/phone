@@ -25,29 +25,14 @@
                     <nav class="navbar bg-light">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link" href="#"><i class="fa fa-home"></i>Home</a>
+                                <a class="nav-link" href="{{ route('web.home') }}"><i class="fa fa-home"></i>Home</a>
                             </li>
+
+                            @foreach($categories as $item)
                             <li class="nav-item">
-                                <a class="nav-link" href="#"><i class="fa fa-shopping-bag"></i>Best Selling</a>
+                                <a class="nav-link" href="{{ route('web.product', ['category_id' => $item->id ?? 0]) }}"><i class="fa fa-mobile-alt"></i>{{ $item->name ?? '' }}</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#"><i class="fa fa-plus-square"></i>New Arrivals</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#"><i class="fa fa-female"></i>Fashion & Beauty</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#"><i class="fa fa-child"></i>Kids & Babies Clothes</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#"><i class="fa fa-tshirt"></i>Men & Women Clothes</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#"><i class="fa fa-mobile-alt"></i>Gadgets & Accessories</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#"><i class="fa fa-microchip"></i>Electronics & Accessories</a>
-                            </li>
+                            @endforeach
                         </ul>
                     </nav>
                 </div>
@@ -196,6 +181,21 @@
     </div>
     <!-- Category End-->
 
+    <!-- Call to Action Start -->
+    <div class="call-to-action">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1>call us for any queries</h1>
+                </div>
+                <div class="col-md-6">
+                    <a href="tel:0123456789">+012-345-6789</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Call to Action End -->
+
     <!-- Featured Product Start -->
     <div class="featured-product product">
         <div class="container-fluid">
@@ -244,21 +244,6 @@
         </div>
     </div>
     <!-- Featured Product End -->
-
-    <!-- Call to Action Start -->
-    <div class="call-to-action">
-        <div class="container-fluid">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <h1>call us for any queries</h1>
-                </div>
-                <div class="col-md-6">
-                    <a href="tel:0123456789">+012-345-6789</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Call to Action End -->
 
     <!-- Recent Product Start -->
     <div class="recent-product product">
@@ -312,7 +297,6 @@
 @endsection
 
 @section('script-custom')
-<script src="{{asset('front-end/js/custom.js')}}"></script>
 <script>
     const toastrSuccess = '{{ session("success") }}';
     const toastrError = '{{ session("error") }}';

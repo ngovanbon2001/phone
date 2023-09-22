@@ -57,20 +57,9 @@
 
 				<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
 					<div class="navbar-nav mr-auto">
-						<a href="index.html" class="nav-item nav-link active">Home</a>
-						<a href="product-list.html" class="nav-item nav-link">Products</a>
-						<a href="product-detail.html" class="nav-item nav-link">Product Detail</a>
-						<a href="cart.html" class="nav-item nav-link">Cart</a>
-						<a href="checkout.html" class="nav-item nav-link">Checkout</a>
-						<a href="my-account.html" class="nav-item nav-link">My Account</a>
-						<div class="nav-item dropdown">
-							<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More Pages</a>
-							<div class="dropdown-menu">
-								<a href="wishlist.html" class="dropdown-item">Wishlist</a>
-								<a href="login.html" class="dropdown-item">Login & Register</a>
-								<a href="contact.html" class="dropdown-item">Contact Us</a>
-							</div>
-						</div>
+						<a href="{{ route('web.home') }}" class="nav-item nav-link active">Home</a>
+						<a href="{{ route('web.product') }}" class="nav-item nav-link">Products</a>
+						<a href="{{ route('cart', auth()->user->id ?? 0) }}" class="nav-item nav-link">Cart</a>
 					</div>
 					<div class="navbar-nav ml-auto">
 						<div class="nav-item dropdown">
@@ -226,6 +215,7 @@
 
 	<!-- Template Javascript -->
 	<script src="{{ asset('fe/js/main.js') }}"></script>
+	<script src="{{ asset('fe/js/custom.js') }}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 	
