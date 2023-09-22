@@ -223,6 +223,7 @@
                             </a>
                             <div class="product-action">
                                 <a href="#" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()"><i class="fa fa-cart-plus"></i></a>
+                                <a href="{{route('web.product.detail', $item->id)}}"><i class="fa fa-search"></i></a>
                             </div>
                         </div>
                         <div class="product-price">
@@ -272,6 +273,7 @@
                             </a>
                             <div class="product-action">
                                 <a href="#" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()"><i class="fa fa-cart-plus"></i></a>
+                                <a href="{{route('web.product.detail', $item->id)}}"><i class="fa fa-search"></i></a>
                             </div>
                         </div>
                         <div class="product-price">

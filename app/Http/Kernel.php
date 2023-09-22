@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\CountRequestsMiddleware;
 use App\Http\Middleware\isAdmin;
+use App\Http\Middleware\ProductMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -68,6 +69,7 @@ class Kernel extends HttpKernel
         'jwt.auth' => \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
         'jwt.refresh' => \Tymon\JWTAuth\Http\Middleware\RefreshToken::class,
         'isAdmin' => isAdmin::class,
-        'count_requests' => CountRequestsMiddleware::class
+        'count_requests' => CountRequestsMiddleware::class,
+        'product' => ProductMiddleware::class
     ];
 }

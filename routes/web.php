@@ -114,9 +114,11 @@ Route::get('forget-password', [App\Http\Controllers\Auth\ForgotPasswordControlle
 Route::prefix('/')->group(function () {
     Route::get('/', [HomeControllerFE::class, 'index'])->name('web.home');
 
-    Route::get('/product', [WebProductController::class, 'index'])->name('web.product');
+    Route::prefix('/product')->middleware('product')->group(function () {
+        Route::get('/', [WebProductController::class, 'index'])->name('web.product');
 
-    Route::get('/product/detail/{id}', [WebProductController::class, 'show'])->name('web.product.detail');
+        Route::get('/detail/{id}', [WebProductController::class, 'show'])->name('web.product.detail');
+    });
 
     Route::post('cart/create', [CartController::class, 'store'])->name('cart.create');
 
