@@ -68,8 +68,10 @@
                                     <h2>Grand Total<span id="total">$0</span></h2>
                                 </div>
                                 <div class="cart-btn">
-                                    <button>Checkout</button>
+                                    <button onclick="document.getElementById('check-out-form').submit()">Checkout</button>
                                 </div>
+                                <form id="check-out-form" style="display: none;" action="{{ route('order.create', auth()->user()->id ?? 0) }}" method="get">
+                                </form>
                             </div>
                         </div>
                     </div>

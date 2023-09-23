@@ -18,7 +18,6 @@ use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\OrderController as WebOrderController;
 use App\Http\Controllers\Web\ProductController as WebProductController;
 use App\Models\Province;
-use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
@@ -125,6 +124,8 @@ Route::prefix('/')->group(function () {
     Route::get('cart/{id}', [CartController::class, 'index'])->name('cart');
 
     Route::post('cart/update', [CartController::class, 'update'])->name('cart.update');
+
+    Route::get('order/create/{id}', [WebOrderController::class, 'create'])->name('order.create');
 
     Route::post('order/store', [WebOrderController::class, 'store'])->name('order.store');
 

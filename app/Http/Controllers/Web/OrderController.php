@@ -5,29 +5,46 @@ namespace App\Http\Controllers\Web;
 use App\Constants\Common;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Order\CreateRequest;
+use App\Services\Contracts\CartServiceInterface;
 use App\Services\Contracts\OrderServiceInterface;
 use App\Services\Contracts\UserServiceInterface;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use PDF;
 
 class OrderController extends Controller
 {
+    protected CartServiceInterface $cartServiceInterface;
     protected OrderServiceInterface $orderServiceInterface;
     protected UserServiceInterface  $userService;
 
     /**
+     * @param CartServiceInterface  $cartServiceInterface
      * @param OrderServiceInterface $orderServiceInterface
      * @param UserServiceInterface  $userService
      */
     public function __construct(
+        CartServiceInterface  $cartServiceInterface,
         OrderServiceInterface $orderServiceInterface,
         UserServiceInterface  $userService,
     ) {
+        $this->cartServiceInterface  = $cartServiceInterface;
         $this->orderServiceInterface = $orderServiceInterface;
         $this->userService           = $userService;
+    }
+
+    /**
+     * @param Request $request
+     * @param int $id
+     * @return View|Factory|Application|RedirectResponse
+     */
+    public function create(Request $request, int $id): View|Factory|Application|RedirectResponse
+    {
+        $items = $this->cartServiceInterface->list($id) ?? [];
+        return view('web/check_out', compact('items'));
     }
 
     /**
