@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+<title>NhatMai SHOP - Product detail</title>
+@endsection
 
 @section('content')
 <div class="section section-breadcrumbs">

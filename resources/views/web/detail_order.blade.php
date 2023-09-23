@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+<title>NhatMai SHOP - Order detail</title>
+@endsection
 
 @section('content')
 <!-- Breadcrumb Start -->

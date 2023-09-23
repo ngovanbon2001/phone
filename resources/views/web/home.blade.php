@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+<title>NhatMai SHOP - Home</title>
+@endsection
 
 @section('content')
 

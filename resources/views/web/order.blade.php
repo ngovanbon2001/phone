@@ -1,10 +1,7 @@
-<script>
-    setTimeout(function() {
-        $(".alert").alert("close");
-    }, 3000);
-</script>
-
 @extends('layouts.app')
+@section('title')
+<title>NhatMai SHOP - Order</title>
+@endsection
 
 @section('content')
 <!-- Breadcrumb Start -->
@@ -89,4 +86,11 @@
     </div>
 </div>
 <!-- Cart End -->
+@endsection
+@section('script-custom')
+<script>
+    setTimeout(function() {
+        $(".alert").alert("close");
+    }, 3000);
+</script>
 @endsection
