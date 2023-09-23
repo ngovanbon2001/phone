@@ -57,9 +57,10 @@
 
 				<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
 					<div class="navbar-nav mr-auto">
-						<a href="{{ route('web.home') }}" class="nav-item nav-link active">Home</a>
-						<a href="{{ route('web.product') }}" class="nav-item nav-link">Products</a>
-						<a href="{{ route('cart', auth()->user()->id ?? 0) }}" class="nav-item nav-link">Cart</a>
+						<a href="{{ route('web.home') }}" class="nav-item nav-link {{ (Route::currentRouteName() == 'web.home') ? 'active' : '' }}">Home</a>
+						<a href="{{ route('web.product') }}" class="nav-item nav-link {{ ((Route::currentRouteName() == 'web.product') || (Route::currentRouteName() == 'web.product.detail')) ? 'active' : '' }}">Products</a>
+						<a href="{{ route('order.show', auth()->user()->id) }}" class="nav-item nav-link {{ (Route::currentRouteName() == 'order.show') ? 'active' : '' }}">Your order</a>
+						<a href="{{ route('cart', auth()->user()->id ?? 0) }}" class="nav-item nav-link {{ (Route::currentRouteName() == 'cart' ) ? 'active' : '' }}">Cart</a>
 					</div>
 					<div class="navbar-nav ml-auto">
 						<div class="nav-item dropdown">
