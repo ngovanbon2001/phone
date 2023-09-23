@@ -36,9 +36,6 @@
                     </form>
                 </div>
             </div>
-            <div class="col-sm-6 col-sm-offset-1 social-login">
-                <p>Welcome to Nhat Mai store!</p>
-            </div>
         </div>
     </div>
 </div>

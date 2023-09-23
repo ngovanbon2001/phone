@@ -76,7 +76,7 @@ class OrderService implements OrderServiceInterface
                 'customer_phone' => $attributes['customer_phone'] ?? null,
                 'customer_email' => $attributes['customer_email'] ?? null,
                 'status'         => Common::IN_ACTIVE ?? 0,
-                'address' => ($wards->name ?? '') . ' - ' . ($districts->name ?? '') . ' - ' . ($province->name ?? ''),
+                'address' => ($attributes['address_detail'] ?? '') .' - '. ($wards->name ?? '') . ' - ' . ($districts->name ?? '') . ' - ' . ($province->name ?? ''),
                 'total_money'    => array_reduce($attributes['items'] ?? [], function ($carry, $item) {
                     return $carry + ((int)$item["product_quantity"] * (float)$item["product_price"]);
                 }, 0),

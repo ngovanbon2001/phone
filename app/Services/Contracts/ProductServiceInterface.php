@@ -19,4 +19,6 @@ interface ProductServiceInterface
     public function getProduct();
 
     public function getProductFE(array $conditions);
+
+    public function getTags();
 }
