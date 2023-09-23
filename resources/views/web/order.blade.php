@@ -52,6 +52,7 @@
                                 @if(!empty($order))
                                 @foreach ($order as $value)
                                 @foreach($value->items as $val)
+                                @if(isset($val['status']) && $val['status'] !== App\Constants\Common::CANCEL)
                                 <tr>
                                     <td>
                                         <div class="img">
@@ -74,6 +75,7 @@
                                          @endif
                                     </td>
                                 </tr>
+                                @endif
                                 @endforeach
                                 @endforeach
                                 @endif
@@ -86,11 +88,4 @@
     </div>
 </div>
 <!-- Cart End -->
-@endsection
-@section('script-custom')
-<script>
-    setTimeout(function() {
-        $(".alert").alert("close");
-    }, 3000);
-</script>
 @endsection

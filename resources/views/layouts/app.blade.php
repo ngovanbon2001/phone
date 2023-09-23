@@ -35,7 +35,7 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<i class="fa fa-envelope"></i>
-					support@email.com
+					ngovanbon2001@email.com
 				</div>
 				<div class="col-sm-6">
 					<i class="fa fa-phone-alt"></i>
@@ -95,8 +95,8 @@
 			<div class="row align-items-center">
 				<div class="col-md-3">
 					<div class="logo">
-						<a href="index.html">
-							<img src="{{ asset('fe/img/logo.png') }}" alt="Logo">
+						<a href="{{ route('web.home') }}">
+							<h1>NHAT MAI</h1>
 						</a>
 					</div>
 				</div>
@@ -134,8 +134,8 @@
 					<div class="footer-widget">
 						<h2>Get in Touch</h2>
 						<div class="contact-info">
-							<p><i class="fa fa-map-marker"></i>123 E Store, Los Angeles, USA</p>
-							<p><i class="fa fa-envelope"></i>email@example.com</p>
+							<p><i class="fa fa-map-marker"></i>Thôn Na - Thanh Xuân - Sóc Sơn - Hà Nội</p>
+							<p><i class="fa fa-envelope"></i>ngovanbon2001@example.com</p>
 							<p><i class="fa fa-phone"></i>+123-456-7890</p>
 						</div>
 					</div>
