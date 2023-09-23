@@ -57,13 +57,6 @@
                     </form>
                 </div>
             </div>
-            <div class="col-sm-7 social-login">
-                <p>Welcome to Nhat Mai store!</p>
-                <div class="clearfix"></div>
-                <div class="not-member">
-                    <p>Not a member? <a href="{{ route('register') }}">Register here</a></p>
-                </div>
-            </div>
         </div>
     </div>
 </div>

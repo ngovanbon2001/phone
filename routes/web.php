@@ -121,11 +121,11 @@ Route::prefix('/')->group(function () {
 
     Route::post('cart/create', [CartController::class, 'store'])->name('cart.create');
 
-    Route::get('cart/{id}', [CartController::class, 'index'])->name('cart');
+    Route::get('cart/{id}', [CartController::class, 'index'])->name('cart')->middleware('cart.check_id');
 
     Route::post('cart/update', [CartController::class, 'update'])->name('cart.update');
 
-    Route::get('order/create/{id}', [WebOrderController::class, 'create'])->name('order.create');
+    Route::get('order/create/{id}', [WebOrderController::class, 'create'])->name('order.create')->middleware('cart.check_id');
 
     Route::post('order/store', [WebOrderController::class, 'store'])->name('order.store');
 

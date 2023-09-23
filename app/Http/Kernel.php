@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CheckCartMiddleware;
 use App\Http\Middleware\CountRequestsMiddleware;
 use App\Http\Middleware\isAdmin;
 use App\Http\Middleware\ProductMiddleware;
@@ -70,6 +71,7 @@ class Kernel extends HttpKernel
         'jwt.refresh' => \Tymon\JWTAuth\Http\Middleware\RefreshToken::class,
         'isAdmin' => isAdmin::class,
         'count_requests' => CountRequestsMiddleware::class,
-        'product' => ProductMiddleware::class
+        'product' => ProductMiddleware::class,
+        'cart.check_id' => CheckCartMiddleware::class
     ];
 }

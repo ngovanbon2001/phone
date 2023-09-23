@@ -59,14 +59,26 @@
 					<div class="navbar-nav mr-auto">
 						<a href="{{ route('web.home') }}" class="nav-item nav-link active">Home</a>
 						<a href="{{ route('web.product') }}" class="nav-item nav-link">Products</a>
-						<a href="{{ route('cart', auth()->user->id ?? 0) }}" class="nav-item nav-link">Cart</a>
+						<a href="{{ route('cart', auth()->user()->id ?? 0) }}" class="nav-item nav-link">Cart</a>
 					</div>
 					<div class="navbar-nav ml-auto">
 						<div class="nav-item dropdown">
-							<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">User Account</a>
+							<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ auth()->user()->username ?? 'User Account' }}</a>
 							<div class="dropdown-menu">
-								<a href="#" class="dropdown-item">Login</a>
-								<a href="#" class="dropdown-item">Register</a>
+								@if(!isset(auth()->user()->id))
+								<a href="{{ route('login') }}" class="dropdown-item">Login</a>
+								<a href="{{ route('register') }}" class="dropdown-item">Register</a>
+								@endif
+								@if(isset(auth()->user()->id))
+								<a class="dropdown-item d-flex align-items-center" href="{{ route('user.logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+									<i class="bi bi-box-arrow-right"></i>
+									<form id="logout-form" action="{{ route('user.logout') }}" method="POST" style="display: none;" class="d-none">
+										@csrf
+									</form>
+									<span>Logout</span>
+								</a>
+								@endif
 							</div>
 						</div>
 					</div>
@@ -219,6 +231,20 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 	@yield('script-custom')
+	<style>
+		label.error {
+			color: #ca1d1d;
+		}
+
+		span.invalid-feedback {
+			color: #ca1d1d;
+		}
+	</style>
+	<script>
+		setTimeout(function() {
+			$(".alert").alert("close");
+		}, 3000);
+	</script>
 </body>
 
 </html>
