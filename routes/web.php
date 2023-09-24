@@ -95,10 +95,12 @@ Route::prefix('admin')->middleware('isAdmin')->group(function () {
 
     //user
     Route::get('/user', [UserController::class, 'index'])->name('indexUser');
-    Route::get('/user/create', [UserController::class, 'create'])->name('createUser');
-    Route::post('/user/store', [UserController::class, 'store'])->name('storeUser');
+    Route::prefix('/user')->middleware('check.admin')->group(function () {
+        Route::get('/create', [UserController::class, 'create'])->name('createUser');
+        Route::post('/store', [UserController::class, 'store'])->name('storeUser');
+        Route::post('/update/{id}', [UserController::class, 'update'])->name('updateUser');
+    });
     Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('editUser');
-    Route::post('/user/update/{id}', [UserController::class, 'update'])->name('updateUser');
     Route::delete('/user/destroy/{id}', [UserController::class, 'destroy'])->name('destroyUser');
     Route::get('/user/show/{id}', [UserController::class, 'show'])->name('showUser');
     Route::post('/user/update-profile/{id}', [UserController::class, 'updateProfile'])->name('updateProfile');
