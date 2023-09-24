@@ -46,21 +46,22 @@
                                     <table style="width:100%" class="table table-striped">
                                         <thead>
                                             <tr>
-                                                <th style="width:35%">User's Name</th>
-                                                <th style="width:30%;">Email</th>
+                                                <th style="width:35%; text-align: center;">User's Name</th>
+                                                <th style="width:30%; text-align: center;">Email</th>
                                                 <th style="width:15%; text-align: center;">Phone</th>
-                                                <th style="width:20%">Action</th>
+                                                <th style="width:20%; text-align: center;">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($users as $userData)
-                                            @if ($userData->id != Auth::guard("admin")->user()->id)
                                             <tr>
                                                 <td>{{ $userData->username }}</td>
                                                 <td>{{ $userData->email }}</td>
                                                 <td style="text-align: center;">{{ $userData->phone }}</td>
                                                 <td style="text-align: center;">
+                                                    @if ((Auth::guard("admin")->user()->permission == 0) || (Auth::guard("admin")->user()->id === $userData->id ?? 0))
                                                     <a class="btn btn-success" href="{{ route('editUser', $userData->id)  }}"><i class="bi bi-pencil-square"></i></a>
+                                                    @endif
                                                     @if (Auth::guard("admin")->user()->permission == 0)
                                                     <a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this staff?') ? document.getElementById('brand-delete-{{ $userData->id }}').submit() : false"><i class="bi bi-trash"></i></a>
                                                     <form action="{{ route('destroyUser', $userData->id) }}" id="brand-delete-{{ $userData->id }}" method="post">
@@ -70,7 +71,6 @@
                                                     @endif
                                                 </td>
                                             </tr>
-                                            @endif
                                             @endforeach
                                         </tbody>
                                     </table>
