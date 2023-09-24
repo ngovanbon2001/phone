@@ -59,10 +59,8 @@
                                                 <td>{{ $userData->email }}</td>
                                                 <td style="text-align: center;">{{ $userData->phone }}</td>
                                                 <td style="text-align: center;">
-                                                    @if ((Auth::guard("admin")->user()->permission == 0) || (Auth::guard("admin")->user()->id === $userData->id ?? 0))
-                                                    <a class="btn btn-success" href="{{ route('editUser', $userData->id)  }}"><i class="bi bi-pencil-square"></i></a>
-                                                    @endif
                                                     @if (Auth::guard("admin")->user()->permission == 0)
+                                                    <a class="btn btn-success" href="{{ route('editUser', $userData->id)  }}"><i class="bi bi-pencil-square"></i></a>
                                                     <a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this staff?') ? document.getElementById('brand-delete-{{ $userData->id }}').submit() : false"><i class="bi bi-trash"></i></a>
                                                     <form action="{{ route('destroyUser', $userData->id) }}" id="brand-delete-{{ $userData->id }}" method="post">
                                                         @method('delete')

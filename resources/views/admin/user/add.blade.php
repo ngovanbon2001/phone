@@ -70,24 +70,36 @@
                                         </div> <!-- /control-group -->
                                     </div>
 
-                                    <div class="control-group">
-                                        <label class="control-label">Email <span style="color: red;">*</span></label>
-                                        <div class="controls">
-                                            @if ($errors->any())
-                                            <input type="text" class="form-control" name="email" value="{!! old('email') !!}">
-                                            @else
-                                            @if (isset($staff->username))
-                                            <input type="text" class="form-control" name="email" value="{{ $staff->email }}">
-                                            @else
-                                            <input type="text" class="form-control" name="email" value="{!! old('email') !!}">
-                                            @endif
-                                            @endif
+                                    <div class="row">
+                                        <div class="control-group col-md-6">
+                                            <label class="control-label">Email <span style="color: red;">*</span></label>
+                                            <div class="controls">
+                                                @if ($errors->any())
+                                                <input type="text" class="form-control" name="email" value="{!! old('email') !!}">
+                                                @else
+                                                @if (isset($staff->username))
+                                                <input type="text" class="form-control" name="email" value="{{ $staff->email }}">
+                                                @else
+                                                <input type="text" class="form-control" name="email" value="{!! old('email') !!}">
+                                                @endif
+                                                @endif
 
-                                            @error ('email')
-                                            <label class="error">{{ $message }}</label>
-                                            @enderror
-                                        </div> <!-- /controls -->
-                                    </div> <!-- /control-group -->
+                                                @error ('email')
+                                                <label class="error">{{ $message }}</label>
+                                                @enderror
+                                            </div> <!-- /controls -->
+                                        </div> <!-- /control-group -->
+
+                                        <div class="control-group col-md-6">
+                                            <label class="control-label">Permission</label>
+                                            <div class="controls">
+                                                <select class="form-select" name="permission">
+                                                    <option value="1" {{ (old('permission') !== null && old('permission') == 1) ? 'selected' : '' }}>STAFF</option>
+                                                    <option value="0" {{ (old('permission') !== null && old('permission') == 0) ? 'selected' : '' }}>ADMIN</option>
+                                                </select>
+                                            </div> <!-- /controls -->
+                                        </div> <!-- /control-group -->
+                                    </div>
 
                                     @if (Request::route()->getName() == "createUser")
                                     <div class="control-group">

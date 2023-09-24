@@ -64,20 +64,32 @@
                                         </div> <!-- /control-group -->
                                     </div>
 
-                                    <div class="control-group">
-                                        <label class="control-label">Email <span style="color: red;">*</span></label>
-                                        <div class="controls">
-                                            @if ($errors->any())
-                                            <input type="text" class="form-control" name="email" value="{!! old('email') !!}">
-                                            @else
-                                            <input type="text" class="form-control" name="email" value="{{ $staff->email }}">
-                                            @endif
+                                    <div class="row">
+                                        <div class="control-group col-md-6">
+                                            <label class="control-label">Email <span style="color: red;">*</span></label>
+                                            <div class="controls">
+                                                @if ($errors->any())
+                                                <input type="text" class="form-control" name="email" value="{!! old('email') !!}">
+                                                @else
+                                                <input type="text" class="form-control" name="email" value="{{ $staff->email }}">
+                                                @endif
 
-                                            @error ('email')
-                                            <label class="error">{{ $message }}</label>
-                                            @enderror
-                                        </div> <!-- /controls -->
-                                    </div> <!-- /control-group -->
+                                                @error ('email')
+                                                <label class="error">{{ $message }}</label>
+                                                @enderror
+                                            </div> <!-- /controls -->
+                                        </div> <!-- /control-group -->
+
+                                        <div class="control-group col-md-6">
+                                            <label class="control-label">Permission</label>
+                                            <div class="controls">
+                                                <select class="form-select" name="permission">
+                                                    <option value="0" {{ (old('permission') ?? $staff->permission) == 0 ? 'selected' : '' }}>ADMIN</option>
+                                                    <option value="1" {{ (old('permission') ?? $staff->permission) == 1 ? 'selected' : '' }}>STAFF</option>
+                                                </select>
+                                            </div> <!-- /controls -->
+                                        </div> <!-- /control-group -->
+                                    </div>
 
                                     <div class="form-actions">
                                         <button type="submit" class="btn btn-primary">Save</button>
