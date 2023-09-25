@@ -107,7 +107,7 @@ class OrderController extends Controller
      */
     public function export(): void
     {
-        $orders = $this->orderServiceInterface->list(Session::get('data'));
+        $orders = $this->orderServiceInterface->list(Session::get('data') ?? []);
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         $i = 3;
