@@ -45,9 +45,9 @@ class OrderService implements OrderServiceInterface
     {
         try {
             $attributes = [
-                ["customer_name", "LIKE",  Arr::get($attributes, "inputName")],
-                ["customer_phone", "LIKE", Arr::get($attributes, "inputPhone")],
-                ["customer_email", "LIKE", Arr::get($attributes, "inputEmail")],
+                ["product_name", "LIKE",  Arr::get($attributes, "name")],
+                ["product_price", "=", Arr::get($attributes, "inputPhone")],
+                ["status", "=", Arr::get($attributes, "active")],
             ];
 
             return $this->orderItemsRepositoryInterface->list(condition($attributes));

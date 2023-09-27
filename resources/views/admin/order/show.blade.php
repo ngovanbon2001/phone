@@ -23,15 +23,15 @@
 
                 <div id="message">
                     @if (session()->has('message'))
-                        <div class="alert alert-success">
-                            {{ session('message') }}
-                        </div>
+                    <div class="alert alert-success">
+                        {{ session('message') }}
+                    </div>
                     @endif
 
                     @if (session()->has('message-error'))
-                        <div class="alert alert-danger">
-                            {{ session('message-error') }}
-                        </div>
+                    <div class="alert alert-danger">
+                        {{ session('message-error') }}
+                    </div>
                     @endif
                 </div>
 
@@ -52,37 +52,29 @@
                                                     <div class="control-group col-md-4">
                                                         <label class="control-label">Customer's name</label>
                                                         <div class="controls">
-                                                            <input id='searchInput' class="form-control" name="inputName" type='text' value="{{ request('inputName') }}" placeholder="Customer's name" />
-                                                            @error ('inputName')
+                                                            <input class="form-control" name="name" type='text' value="{{ request('inputName') }}" placeholder="Customer's name" />
+                                                            @error ('name')
                                                             <label class="error">{{ $message }}</label>
                                                             @enderror
                                                         </div>
                                                     </div>
 
                                                     <div class="control-group col-md-4">
-                                                        <label class="control-label">Phone</label>
+                                                        <label class="control-label">Status</label>
                                                         <div class="controls">
-                                                            <input class="form-control" name="inputPhone" type='text' value="{{ request('inputPhone') }}" placeholder='Phone' />
-                                                            @error ('inputPhone')
-                                                            <label class="error">{{ $message }}</label>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="control-group col-md-4">
-                                                        <label class="control-label">Email</label>
-                                                        <div class="controls">
-                                                            <input class="form-control" name="inputEmail" type='text' value="{{ request('inputEmail') }}" placeholder='Email' />
-                                                            @error ('inputEmail')
-                                                            <label class="error">{{ $message }}</label>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
+                                                            <select class="form-select" name="active">
+                                                                <option value="">---Select status---</option>
+                                                                @foreach (App\Constants\Common::STATUS_ORDER as $key => $item)
+                                                                <option value="{{ $key }}" {{ ((request('active') !== null) && (request('active') == $key)) ? 'selected' : '' }}>{{ $item }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div> <!-- /controls -->
+                                                    </div> <!-- /control-group -->
                                                 </div>
 
                                                 <div class="row">
                                                     <div class="control-group col-md-6">
-                                                        <button class="btn btn-secondary" name="btnSearch" value="btnSearch"><i class="ri-search-2-line"></i></button> &emsp;
+                                                        <button class="btn btn-secondary" type="submit"><i class="ri-search-2-line"></i></button> &emsp;
                                                         <a href="{{ route('indexOrder') }}" class="btn btn-secondary"><i class="ri-arrow-go-back-line"></i></a>
                                                         <a href="{{ route('exportOrder') }}" class="btn btn-secondary"><i class="ri-file-excel-2-line"></i></a>
                                                     </div>
@@ -123,25 +115,23 @@
                                                     </a>
                                                 </td>
                                                 @foreach (App\Constants\Common::STATUS_ORDER as $key => $value)
-                                                    @if(($orderList->status ?? 0) == $key)
-                                                        <td>{{ $value }}</td>
-                                                    @endif
+                                                @if(($orderList->status ?? 0) == $key)
+                                                <td>{{ $value }}</td>
+                                                @endif
                                                 @endforeach
                                                 <td>
-                                                    @if (($orderList->status ?? 0) < App\Constants\Common::PAID)
-                                                    <form action="{{ route('updateOrder', $orderList->id) }}" method="post">
+                                                    @if (($orderList->status ?? 0) < App\Constants\Common::PAID) <form action="{{ route('updateOrder', $orderList->id) }}" method="post">
                                                         @csrf
                                                         <button class="btn {{ \App\Constants\Common::BUTTON_ORDER[($orderList->status ?? 0)] }}" type="submit"><i class="bi bi-coin"></i></button>
-                                                    </form>
-                                                    @endif
+                                                        </form>
+                                                        @endif
                                                 </td>
                                                 <td>
-                                                    @if (($orderList->status ?? 0) < App\Constants\Common::PAID)
-                                                    <form action="{{ route('cancel-order', $orderList->id) }}" method="post">
+                                                    @if (($orderList->status ?? 0) < App\Constants\Common::PAID) <form action="{{ route('cancel-order', $orderList->id) }}" method="post">
                                                         @csrf
                                                         <button class="btn btn-danger" type="submit"><i class="ri-close-circle-fill"></i></button>
-                                                    </form>
-                                                    @endif
+                                                        </form>
+                                                        @endif
                                                 </td>
                                             </tr>
                                             @endforeach
