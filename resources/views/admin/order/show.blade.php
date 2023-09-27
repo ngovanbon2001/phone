@@ -70,13 +70,14 @@
                                                             </select>
                                                         </div> <!-- /controls -->
                                                     </div> <!-- /control-group -->
-                                                </div>
 
-                                                <div class="row">
-                                                    <div class="control-group col-md-6">
-                                                        <button class="btn btn-secondary" type="submit"><i class="ri-search-2-line"></i></button> &emsp;
-                                                        <a href="{{ route('indexOrder') }}" class="btn btn-secondary"><i class="ri-arrow-go-back-line"></i></a>
-                                                        <a href="{{ route('exportOrder') }}" class="btn btn-secondary"><i class="ri-file-excel-2-line"></i></a>
+                                                    <div class="control-group col-md-4">
+                                                        <label class="control-label"></label>
+                                                        <div class="controls">
+                                                            <button class="btn btn-secondary" type="submit"><i class="ri-search-2-line"></i></button> &emsp;
+                                                            <a href="{{ route('indexOrder') }}" class="btn btn-secondary"><i class="ri-arrow-go-back-line"></i></a> &emsp;
+                                                            <a href="{{ route('exportOrder') }}" class="btn btn-secondary"><i class="ri-file-excel-2-line"></i></a>
+                                                        </div>
                                                     </div>
                                                 </div>
 
