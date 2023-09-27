@@ -160,13 +160,13 @@ class OrderController extends Controller
 
             $column = $i;
 
-            $sheet->setCellValue("D" . $i, $item->customer_name);
-            $sheet->setCellValue("E" . $i, $item->customer_phone);
-            $sheet->setCellValue("F" . $i, $item->customer_email);
-            $sheet->setCellValue("G" . $i, $item->total_money);
-            $sheet->setCellValue("H" . $i, $item->total_products);
-            $sheet->setCellValue("I" . $i, $item->created_date);
-            $sheet->setCellValue("J" . $i, $item->address);
+            $sheet->setCellValue("D" . $i, $item->order->customer_name);
+            $sheet->setCellValue("E" . $i, $item->order->customer_phone);
+            $sheet->setCellValue("F" . $i, $item->order->customer_email);
+            $sheet->setCellValue("G" . $i, $item->order->total_money);
+            $sheet->setCellValue("H" . $i, $item->order->total_products);
+            $sheet->setCellValue("I" . $i, $item->order->created_date);
+            $sheet->setCellValue("J" . $i, $item->order->address);
         }
 
         $sheet->getStyle('D3:J3')->applyFromArray($styleArrayTitle);
