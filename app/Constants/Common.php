@@ -42,7 +42,6 @@ class Common
 
     const UNSET = [
         null,
-        false,
         ""
     ];
 
