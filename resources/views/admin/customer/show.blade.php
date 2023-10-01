@@ -12,7 +12,7 @@
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{route('homeAdmin')}}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('indexUser')}}">Account</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('indexUser')}}">Customer</a></li>
                     <li class="breadcrumb-item active">List</li>
                 </ol>
             </nav>
@@ -27,15 +27,15 @@
 
                         <div id="message">
                             @if (session()->has('message'))
-                                <div class="alert alert-success">
-                                    {{ session('message') }}
-                                </div>
+                            <div class="alert alert-success">
+                                {{ session('message') }}
+                            </div>
                             @endif
 
                             @if (session()->has('message-error'))
-                                <div class="alert alert-danger">
-                                    {{ session('message-error') }}
-                                </div>
+                            <div class="alert alert-danger">
+                                {{ session('message-error') }}
+                            </div>
                             @endif
                         </div>
 
@@ -59,14 +59,11 @@
                                                 <td>{{ $userData->email }}</td>
                                                 <td style="text-align: center;">{{ $userData->phone }}</td>
                                                 <td style="text-align: center;">
-                                                    @if (Auth::guard("admin")->user()->permission == 0)
-                                                    <a class="btn btn-success" href="{{ route('editUser', $userData->id)  }}"><i class="bi bi-pencil-square"></i></a>
-                                                    <a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this staff?') ? document.getElementById('staff-delete-{{ $userData->id }}').submit() : false"><i class="bi bi-trash"></i></a>
-                                                    <form action="{{ route('destroyUser', $userData->id) }}" id="staff-delete-{{ $userData->id }}" method="post">
+                                                    <a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this customer?') ? document.getElementById('customer-delete-{{ $userData->id }}').submit() : false"><i class="bi bi-trash"></i></a>
+                                                    <form action="{{ route('customer.delete', $userData->id) }}" id="customer-delete-{{ $userData->id }}" method="post">
                                                         @method('delete')
                                                         @csrf()
                                                     </form>
-                                                    @endif
                                                 </td>
                                             </tr>
                                             @endforeach
