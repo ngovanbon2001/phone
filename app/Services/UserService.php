@@ -22,12 +22,11 @@ class UserService implements UserServiceInterface
      * @param AdminRepositoryInterface $adminRepositoryInterface
      * @param UserTempRepositoryInterface $userTempRepository
      */
-    public function __construct (
+    public function __construct(
         UserRepositoryInterface     $userRepository,
         AdminRepositoryInterface    $adminRepositoryInterface,
         UserTempRepositoryInterface $userTempRepository,
-    )
-    {
+    ) {
         $this->userRepository           = $userRepository;
         $this->adminRepositoryInterface = $adminRepositoryInterface;
         $this->userTempRepository       = $userTempRepository;
@@ -213,6 +212,41 @@ class UserService implements UserServiceInterface
             }
 
             return null;
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * @param array $attributes
+     * @return mixed
+     */
+    public function listCustomer(array $attributes): mixed
+    {
+        try {
+            return $this->userRepository->list($attributes);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * delete user
+     * @param int $id
+     * @return mixed|null
+     */
+    public function deleteCustomer(int $id): mixed
+    {
+        try {
+            $user = $this->userRepository->find($id);
+
+            if ($user) {
+                $user->delete();
+            }
+
+            return $user;
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return null;

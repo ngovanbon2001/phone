@@ -21,19 +21,19 @@
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <span class="d-none d-md-block dropdown-toggle ps-2">{{ auth()->guard("admin")->user()->username ? auth()->guard("admin")->user()->username : "" }}</span>
+                        <span class="d-none d-md-block dropdown-toggle ps-2">{{ auth()->guard(App\Constants\Common::GUARD_ADMIN)->user()->username ? auth()->guard(App\Constants\Common::GUARD_ADMIN)->user()->username : "" }}</span>
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>{{ auth()->guard("admin")->user()->username ? auth()->guard("admin")->user()->username : "" }}</h6>
+                            <h6>{{ auth()->guard(App\Constants\Common::GUARD_ADMIN)->user()->username ? auth()->guard(App\Constants\Common::GUARD_ADMIN)->user()->username : "" }}</h6>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('showUser', auth()->guard('admin')->user()->id) }}">
+                            <a class="dropdown-item d-flex align-items-center" href="{{ route('showUser', auth()->guard(App\Constants\Common::GUARD_ADMIN)->user()->id) }}">
                                 <i class="bi bi-person"></i>
                                 <span>My Profile</span>
                             </a>
@@ -134,12 +134,28 @@
                 </a>
             </li><!-- End Order Nav -->
 
+            @if (isset(auth()->guard(App\Constants\Common::GUARD_ADMIN)->user()->permission) && ((int)auth()->guard(App\Constants\Common::GUARD_ADMIN)->user()->permission === App\Constants\Common::ADMIN))
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{route('indexUser')}}">
                     <i class="bi bi-people-fill"></i>
                     <span>Account</span>
                 </a>
             </li><!-- End Account Nav -->
+            @endif
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{route('customer.list')}}">
+                    <i class="ri-user-2-fill"></i>
+                    <span>Customer</span>
+                </a>
+            </li><!-- End Customer Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{route('indexProduct')}}">
+                    <i class="ri-product-hunt-fill"></i>
+                    <span>Product</span>
+                </a>
+            </li><!-- End Product Nav -->
 
             <li class="nav-heading">Pages</li>
 

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\OrderController;
@@ -104,6 +105,10 @@ Route::prefix('admin')->middleware('isAdmin')->group(function () {
     Route::post('/user/update/{id}', [UserController::class, 'update'])->name('updateUser');
     Route::get('/user/show/{id}', [UserController::class, 'show'])->name('showUser');
     Route::post('/user/update-profile/{id}', [UserController::class, 'updateProfile'])->name('updateProfile');
+
+    //customer
+    Route::get('/customer', [CustomerController::class, 'index'])->name('customer.list');
+    Route::delete('/customer/destroy/{id}', [CustomerController::class, 'destroy'])->name('customer.delete');
 
     Route::get('/report', [ReportController::class, 'index'])->name('indexReport');
 
