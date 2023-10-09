@@ -52,7 +52,7 @@
                                                     <div class="control-group col-md-4">
                                                         <label class="control-label">Customer's name</label>
                                                         <div class="controls">
-                                                            <input class="form-control" name="customer_name" type='text' value="{{ request('customer_name') }}" placeholder="Customer's name" />
+                                                            <input class="form-control" name="customer_name" type='text' value="{{ request('customer_name') ?? '' }}" placeholder="Customer's name" />
                                                             @error ('customer_name')
                                                             <label class="error">{{ $message }}</label>
                                                             @enderror
@@ -62,7 +62,7 @@
                                                     <div class="control-group col-md-4">
                                                         <label class="control-label">Phone number</label>
                                                         <div class="controls">
-                                                            <input class="form-control" name="customer_phone" type='text' value="{{ request('customer_phone') }}" placeholder="Phone number" />
+                                                            <input class="form-control" name="customer_phone" type='text' value="{{ request('customer_phone') ?? '' }}" placeholder="Phone number" />
                                                             @error ('customer_phone')
                                                             <label class="error">{{ $message }}</label>
                                                             @enderror
@@ -74,7 +74,7 @@
                                                         <div class="controls">
                                                             <button class="btn btn-secondary" type="submit"><i class="ri-search-2-line"></i></button> &emsp;
                                                             <a href="{{ route('indexOrder') }}" class="btn btn-secondary"><i class="ri-arrow-go-back-line"></i></a> &emsp;
-                                                            <a href="{{ route('exportOrder') }}" class="btn btn-secondary"><i class="ri-file-excel-2-line"></i></a>
+                                                            <a href="{{ route('exportOrder', ['customer_name' => request('customer_name') ?? '', 'customer_phone' => request('customer_phone') ?? '']) }}" class="btn btn-secondary"><i class="ri-file-excel-2-line"></i></a>
                                                         </div>
                                                     </div>
                                                 </div>
