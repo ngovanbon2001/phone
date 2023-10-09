@@ -52,31 +52,29 @@
                                                     <div class="control-group col-md-4">
                                                         <label class="control-label">Customer's name</label>
                                                         <div class="controls">
-                                                            <input class="form-control" name="name" type='text' value="{{ request('inputName') }}" placeholder="Customer's name" />
-                                                            @error ('name')
+                                                            <input class="form-control" name="customer_name" type='text' value="{{ request('customer_name') ?? '' }}" placeholder="Customer's name" />
+                                                            @error ('customer_name')
                                                             <label class="error">{{ $message }}</label>
                                                             @enderror
                                                         </div>
                                                     </div>
 
                                                     <div class="control-group col-md-4">
-                                                        <label class="control-label">Status</label>
+                                                        <label class="control-label">Phone number</label>
                                                         <div class="controls">
-                                                            <select class="form-select" name="active">
-                                                                <option value="">---Select status---</option>
-                                                                @foreach (App\Constants\Common::STATUS_ORDER as $key => $item)
-                                                                <option value="{{ $key }}" {{ ((request('active') !== null) && (request('active') == $key)) ? 'selected' : '' }}>{{ $item }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div> <!-- /controls -->
-                                                    </div> <!-- /control-group -->
+                                                            <input class="form-control" name="customer_phone" type='text' value="{{ request('customer_phone') ?? '' }}" placeholder="Phone number" />
+                                                            @error ('customer_phone')
+                                                            <label class="error">{{ $message }}</label>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
 
                                                     <div class="control-group col-md-4">
                                                         <label class="control-label"></label>
                                                         <div class="controls">
                                                             <button class="btn btn-secondary" type="submit"><i class="ri-search-2-line"></i></button> &emsp;
                                                             <a href="{{ route('indexOrder') }}" class="btn btn-secondary"><i class="ri-arrow-go-back-line"></i></a> &emsp;
-                                                            <a href="{{ route('exportOrder') }}" class="btn btn-secondary"><i class="ri-file-excel-2-line"></i></a>
+                                                            <a href="{{ route('exportOrder', ['customer_name' => request('customer_name') ?? '', 'customer_phone' => request('customer_phone') ?? '']) }}" class="btn btn-secondary"><i class="ri-file-excel-2-line"></i></a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -92,47 +90,26 @@
                                         <thead>
                                             <tr>
                                                 <th style="width:5%; text-align: center;">No</th>
-                                                <th style="width:10%; text-align: left;">Customer's name</th>
+                                                <th style="width:25%; text-align: left;">Customer's name</th>
                                                 <th style="width:10%; text-align: left;">Email</th>
                                                 <th style="width:5%; text-align: center;">Phone</th>
                                                 <th style="width:10%; text-align: center;">Total product</th>
-                                                <th style="width:15%; text-align: center;">Items</th>
-                                                <th style="width:5%; text-align: center;">Status</th>
+                                                <th style="width:15%; text-align: center;">Quantity</th>
                                                 <th style="width:35%; text-align: center;">Action</th>
-                                                <th style="width:5%; text-align: center;"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach($orders as $key => $orderList)
                                             <tr>
-                                                <td style="text-align: center;"><a class="color-text" href="{{ route('showbyId', $orderList->id) }}">{{ $key+1 }} </a></td>
-                                                <td style="text-align: left;"><a class="color-text" href="{{ route('showbyId', $orderList->id) }}">{{ $orderList['order']['customer_name'] ?? ''}}</a></td>
-                                                <td style="text-align: left;"><a class="color-text" href="{{ route('showbyId', $orderList->id) }}">{{ $orderList->order->customer_email ?? '' }}</a></td>
-                                                <td style="text-align: center;"><a class="color-text" href="{{ route('showbyId', $orderList->id) }}">{{ $orderList->order->customer_phone ?? '' }}</a></td>
-                                                <td style="text-align: right;"><a class="color-text" href="{{ route('showbyId', $orderList->id) }}">{{ number_format($orderList->product_quantity ?? 0) }}</a></td>
-                                                <td style="text-align: left;">
-                                                    <a class="color-text" href="{{ route('showbyId', $orderList->id) }}">
-                                                        {{ $orderList->product_name ?? '' }}
-                                                    </a>
-                                                </td>
-                                                @foreach (App\Constants\Common::STATUS_ORDER as $key => $value)
-                                                @if(($orderList->status ?? 0) == $key)
-                                                <td>{{ $value }}</td>
-                                                @endif
-                                                @endforeach
+                                                <td style="text-align: center;">{{ $key+1 }}</td>
+                                                <td style="text-align: left;">{{ $orderList['customer_name'] ?? ''}}</td>
+                                                <td style="text-align: left;">{{ $orderList->customer_email ?? '' }}</td>
+                                                <td style="text-align: center;">{{ $orderList->customer_phone ?? '' }}</td>
+                                                <td style="text-align: right;">{{ number_format($orderList->total_money ?? 0) }}</td>
+                                                <td style="text-align: right;">{{ $orderList->total_products ?? 0 }}</td>
+
                                                 <td>
-                                                    @if (($orderList->status ?? 0) < App\Constants\Common::PAID) <form action="{{ route('updateOrder', $orderList->id) }}" method="post">
-                                                        @csrf
-                                                        <button class="btn {{ \App\Constants\Common::BUTTON_ORDER[($orderList->status ?? 0)] }}" type="submit"><i class="bi bi-coin"></i></button>
-                                                        </form>
-                                                        @endif
-                                                </td>
-                                                <td>
-                                                    @if (($orderList->status ?? 0) < App\Constants\Common::PAID) <form action="{{ route('cancel-order', $orderList->id) }}" method="post">
-                                                        @csrf
-                                                        <button class="btn btn-danger" type="submit"><i class="ri-close-circle-fill"></i></button>
-                                                        </form>
-                                                        @endif
+                                                    <a href="{{ route('showbyId', $orderList->id) }}" class="btn btn-success"><i class="bi bi-eye-fill"></i></a>
                                                 </td>
                                             </tr>
                                             @endforeach

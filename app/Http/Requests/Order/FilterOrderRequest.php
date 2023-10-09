@@ -24,9 +24,9 @@ class FilterOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            "inputName" => "nullable|string",
-            "inputPhone" => "nullable|string",
-            "inputEmail" => "nullable|email",
+            "customer_name" => "nullable|string",
+            "customer_phone" => "nullable|string",
+            "customer_email" => "nullable|email",
         ];
     }
 }

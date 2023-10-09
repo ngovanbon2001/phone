@@ -56,9 +56,10 @@ class OrderController extends Controller
 
         return $this->handleViewResponse(
             $order,
-            'indexOrder',
+            'showbyId',
             Common::ACTION[Common::ACTION_UPDATE]. ' '.$this->action,
-            'Update order successful.'
+            'Update order successful.',
+            $order['order']['id'] ?? 0
         );
     }
 
@@ -72,9 +73,10 @@ class OrderController extends Controller
 
         return $this->handleViewResponse(
             $order,
-            'indexOrder',
+            'showbyId',
             Common::ACTION[Common::ACTION_UPDATE]. ' '.$this->action,
-            'Cancel order successful.'
+            'Cancel order successful.',
+            $order['order']['id'] ?? 0
         );
     }
 
@@ -93,11 +95,9 @@ class OrderController extends Controller
      */
     public function showbyId($id): Factory|View|Application
     {
-        $order     = $this->orderServiceInterface->detail($id);
+        $order = $this->orderServiceInterface->detail($id);
 
-        $itemOrder = $this->orderServiceInterface->showListItem($order);
-
-        return view('admin/order/detail', compact('order', 'itemOrder'));
+        return view('admin/order/detail', compact('order'));
     }
 
     /**
@@ -105,9 +105,9 @@ class OrderController extends Controller
      * @throws Exception
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      */
-    public function export(): void
+    public function export(FilterOrderRequest $request): void
     {
-        $orders = $this->orderServiceInterface->list(Session::get('data') ?? []);
+        $orders = $this->orderServiceInterface->list($request->all());
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         $i = 3;
@@ -155,18 +155,28 @@ class OrderController extends Controller
         $sheet->setCellValue("H3", "Amount");
         $sheet->setCellValue("I3", "Date");
         $sheet->setCellValue("J3", "Address");
+
+        // Set the width of specific columns
+        $sheet->getColumnDimension('D')->setWidth(20); // Adjust the width as needed
+        $sheet->getColumnDimension('E')->setWidth(15);
+        $sheet->getColumnDimension('F')->setWidth(25);
+        $sheet->getColumnDimension('G')->setWidth(15);
+        $sheet->getColumnDimension('H')->setWidth(15);
+        $sheet->getColumnDimension('I')->setWidth(20);
+        $sheet->getColumnDimension('J')->setWidth(30);
+
         foreach ($orders as $item) {
             $i++;
 
             $column = $i;
 
-            $sheet->setCellValue("D" . $i, $item->order->customer_name);
-            $sheet->setCellValue("E" . $i, $item->order->customer_phone);
-            $sheet->setCellValue("F" . $i, $item->order->customer_email);
-            $sheet->setCellValue("G" . $i, $item->order->total_money);
-            $sheet->setCellValue("H" . $i, $item->order->total_products);
-            $sheet->setCellValue("I" . $i, $item->order->created_date);
-            $sheet->setCellValue("J" . $i, $item->order->address);
+            $sheet->setCellValue("D" . $i, $item->customer_name);
+            $sheet->setCellValue("E" . $i, $item->customer_phone);
+            $sheet->setCellValue("F" . $i, $item->customer_email);
+            $sheet->setCellValue("G" . $i, $item->total_money);
+            $sheet->setCellValue("H" . $i, $item->total_products);
+            $sheet->setCellValue("I" . $i, $item->created_at);
+            $sheet->setCellValue("J" . $i, $item->address);
         }
 
         $sheet->getStyle('D3:J3')->applyFromArray($styleArrayTitle);
