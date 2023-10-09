@@ -56,9 +56,10 @@ class OrderController extends Controller
 
         return $this->handleViewResponse(
             $order,
-            'indexOrder',
+            'showbyId',
             Common::ACTION[Common::ACTION_UPDATE]. ' '.$this->action,
-            'Update order successful.'
+            'Update order successful.',
+            $order['order']['id'] ?? 0
         );
     }
 
@@ -72,9 +73,10 @@ class OrderController extends Controller
 
         return $this->handleViewResponse(
             $order,
-            'indexOrder',
+            'showbyId',
             Common::ACTION[Common::ACTION_UPDATE]. ' '.$this->action,
-            'Cancel order successful.'
+            'Cancel order successful.',
+            $order['order']['id'] ?? 0
         );
     }
 
@@ -93,11 +95,9 @@ class OrderController extends Controller
      */
     public function showbyId($id): Factory|View|Application
     {
-        $order     = $this->orderServiceInterface->detail($id);
+        $order = $this->orderServiceInterface->detail($id);
 
-        $itemOrder = $this->orderServiceInterface->showListItem($order);
-
-        return view('admin/order/detail', compact('order', 'itemOrder'));
+        return view('admin/order/detail', compact('order'));
     }
 
     /**
