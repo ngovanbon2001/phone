@@ -59,7 +59,9 @@
 					<div class="navbar-nav mr-auto">
 						<a href="{{ route('web.home') }}" class="nav-item nav-link {{ (Route::currentRouteName() == 'web.home') ? 'active' : '' }}">Home</a>
 						<a href="{{ route('web.product') }}" class="nav-item nav-link {{ ((Route::currentRouteName() == 'web.product') || (Route::currentRouteName() == 'web.product.detail')) ? 'active' : '' }}">Products</a>
+						@if(isset(auth()->user()->id))
 						<a href="{{ route('order.show', auth()->user()->id ?? 0) }}" class="nav-item nav-link {{ (Route::currentRouteName() == 'order.show') ? 'active' : '' }}">Your order</a>
+						@endif
 						<a href="{{ route('cart', auth()->user()->id ?? 0) }}" class="nav-item nav-link {{ (Route::currentRouteName() == 'cart' ) ? 'active' : '' }}">Cart</a>
 					</div>
 					<div class="navbar-nav ml-auto">
