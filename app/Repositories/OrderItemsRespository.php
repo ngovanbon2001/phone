@@ -25,7 +25,7 @@ class OrderItemsRespository extends BaseRepository implements OrderItemsReposito
      */
     public function list(array $conditions, int $paginate = Common::PAGINATE_BE): LengthAwarePaginator
     {
-        $this->applyConditions(condition($conditions));
+        $this->applyConditions($conditions);
         return $this->model
                     ->orderBy('id', 'DESC')
                     ->paginate(Common::PAGINATE_BE);

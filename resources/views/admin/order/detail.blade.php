@@ -31,14 +31,14 @@
                                 <div class="card-header">
 
                                     <div class="product-inner">
-                                        <h2 class="product-name">{{ $order->order->customer_name ?? '' }}</h2>
-                                        <div style="display: flex;"><b>Phone:</b> &ensp; <p>{{ $order->order->customer_phone ?? '' }}</p>
+                                        <h2>{{ $order->customer_name ?? '' }}</h2>
+                                        <div style="display: flex;"><b>Phone:</b> &ensp; <p>{{ $order->customer_phone ?? '' }}</p>
                                         </div>
-                                        <div style="display: flex;"><b>Email:</b> &ensp; <p>{{ $order->order->customer_email ?? '' }}</p>
+                                        <div style="display: flex;"><b>Email:</b> &ensp; <p>{{ $order->customer_email ?? '' }}</p>
                                         </div>
-                                        <div style="display: flex;"><b>Date:</b> &ensp; <p>{{ $order->order->created_at ?? '' }}</p>
+                                        <div style="display: flex;"><b>Date:</b> &ensp; <p>{{ $order->created_at ?? '' }}</p>
                                         </div>
-                                        <div style="display: flex;"><b>Address:</b> &ensp; <p>{{ $order->order->address ?? '' }}</p>
+                                        <div style="display: flex;"><b>Address:</b> &ensp; <p>{{ $order->address ?? '' }}</p>
                                         </div>
                                     </div>
 
@@ -49,21 +49,46 @@
                                     <thead>
                                         <tr>
                                             <th style="width:15%; text-align: center;">Image</th>
-                                            <th style="width:38%;">Product name</th>
+                                            <th style="width:38%; text-align: center;">Product name</th>
                                             <th style="width:12%; text-align: center;">Price</th>
                                             <th style="width:10%; text-align: center;">Quantity</th>
-                                            <th style="width:10%; text-align: center;">Amount</th>
+                                            <th style="width:10%; text-align: center;">Total</th>
+                                            <th style="width:10%; text-align: center;">Status</th>
+                                            <th style="width:10%; text-align: center;">Action</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
+                                        @if (!empty($order['items']))
+                                        @foreach ($order['items'] as $value)
                                         <tr>
-                                            <td style="text-align: center;"><img src="{{ asset('images/' . $order->product_image ?? '') }}" height="50px" width="150px" alt="Khong tai duoc"></td>
-                                            <td>{{ $order->product_name ?? ''}}</td>
-                                            <td style="text-align: right;">${{ number_format($order->product_price ?? 0) }}</td>
-                                            <td style="text-align: center;">{{ $order->product_quantity ?? '' }}</td>
-                                            <td style="text-align: right;">${{ number_format($order->product_price * $order->product_quantity) }}</td>
+                                            <td style="text-align: center;"><img src="{{ asset('images/' . $value->product_image ?? '') }}" style="width: 150px;" alt="Khong tai duoc"></td>
+                                            <td>{{ $value->product_name ?? ''}}</td>
+                                            <td style="text-align: center;">${{ number_format($value->product_price ?? 0) }}</td>
+                                            <td style="text-align: center;">{{ $value->product_quantity ?? '' }}</td>
+                                            <td style="text-align: center;">${{ number_format($value->product_price * $value->product_quantity) }}</td>
+                                            @foreach (App\Constants\Common::STATUS_ORDER as $key => $val)
+                                            @if(($value->status ?? 0) == $key)
+                                            <td>{{ $val }}</td>
+                                            @endif
+                                            @endforeach
+                                            <td>
+                                                @if (($value->status ?? 0) < App\Constants\Common::PAID) <form action="{{ route('updateOrder', $value->id) }}" method="post">
+                                                    @csrf
+                                                    <button class="btn {{ \App\Constants\Common::BUTTON_ORDER[($value->status ?? 0)] }}" type="submit"><i class="bi bi-coin"></i></button>
+                                                    </form>
+                                                    @endif
+                                            </td>
+                                            <td>
+                                                @if (($value->status ?? 0) < App\Constants\Common::PAID) <form action="{{ route('cancel-order', $value->id) }}" method="post">
+                                                    @csrf
+                                                    <button class="btn btn-danger" type="submit"><i class="ri-close-circle-fill"></i></button>
+                                                    </form>
+                                                    @endif
+                                            </td>
                                         </tr>
+                                        @endforeach
+                                        @endif
                                     </tbody>
 
                                 </table>

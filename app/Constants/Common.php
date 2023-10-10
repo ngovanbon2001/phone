@@ -42,7 +42,6 @@ class Common
 
     const UNSET = [
         null,
-        false,
         ""
     ];
 
@@ -84,4 +83,6 @@ class Common
         self::ACTION_DELETE => 'Delete',
         self::ACTION_CANCEL => 'Cancel',
     ];
+
+    const ADMIN = 0;
 }

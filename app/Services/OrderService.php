@@ -45,12 +45,12 @@ class OrderService implements OrderServiceInterface
     {
         try {
             $attributes = [
-                ["customer_name", "LIKE",  Arr::get($attributes, "inputName")],
-                ["customer_phone", "LIKE", Arr::get($attributes, "inputPhone")],
-                ["customer_email", "LIKE", Arr::get($attributes, "inputEmail")],
+                ["customer_name", "LIKE",  Arr::get($attributes, "customer_name")],
+                ["customer_phone", "LIKE", Arr::get($attributes, "customer_phone")],
+                ["customer_email", "LIKE", Arr::get($attributes, "customer_email")],
             ];
 
-            return $this->orderItemsRepositoryInterface->list(condition($attributes));
+            return $this->orderRepository->list(condition($attributes));
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return null;
@@ -76,7 +76,7 @@ class OrderService implements OrderServiceInterface
                 'customer_phone' => $attributes['customer_phone'] ?? null,
                 'customer_email' => $attributes['customer_email'] ?? null,
                 'status'         => Common::IN_ACTIVE ?? 0,
-                'address' => ($wards->name ?? '') . ' - ' . ($districts->name ?? '') . ' - ' . ($province->name ?? ''),
+                'address' => ($attributes['address_detail'] ?? '') .' - '. ($wards->name ?? '') . ' - ' . ($districts->name ?? '') . ' - ' . ($province->name ?? ''),
                 'total_money'    => array_reduce($attributes['items'] ?? [], function ($carry, $item) {
                     return $carry + ((int)$item["product_quantity"] * (float)$item["product_price"]);
                 }, 0),
@@ -224,7 +224,7 @@ class OrderService implements OrderServiceInterface
     public function detail(int $id): mixed
     {
         try {
-            return $this->orderItemsRepositoryInterface->find($id);
+            return $this->orderRepository->find($id);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return null;

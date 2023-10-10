@@ -1,50 +1,73 @@
 @extends('layouts.app')
+@section('title')
+<title>NhatMai SHOP - Order detail</title>
+@endsection
 
 @section('content')
-    <!-- Page Title -->
-    <div class="section section-breadcrumbs">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1>Your Order</h1>
-                </div>
-            </div>
-        </div>
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-wrap">
+    <div class="container-fluid">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ route('web.home') }}">Home</a></li>
+            <li class="breadcrumb-item active">Order Detail</li>
+        </ul>
     </div>
+</div>
+<!-- Breadcrumb End -->
 
-    <div class="section">
-
-        <div class="container">
-            <div class="row">
-                <!-- Image Column -->
-                <div class="col-sm-6">
-                    <div class="portfolio-item">
-                        <div class="portfolio-image">
-                            <a href="#"><img style="width: 50%" src="{{ asset('images/'.$order['product_image'] ?? '') }}" alt="Project Name"></a>
+<!-- Product Detail Start -->
+<div class="product-detail">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="product-detail-top">
+                    <div class="row align-items-center">
+                        <div class="col-md-5">
+                            <div class="product-slider-single">
+                                <img src="{{ asset('images/'.$order['product_image'] ?? '') }}" alt="Product Image">
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="product-content">
+                                <div class="title">
+                                    <h2>Product</h2>
+                                </div>
+                                <div>
+                                    <p><b>Product name: </b> <span>{{ $order['product_name'] ?? '' }}</span></p>
+                                </div>
+                                <div>
+                                    <p><b>Price: </b> <span>{{ number_format($order['product_price'] ?? 0, 2) }}</span></p>
+                                </div>
+                                <div>
+                                    <p><b>Quantity: </b> <span>{{ $order['product_quantity'] ?? 0 }}</span></p>
+                                </div>
+                                <div>
+                                    <p><b>Total: </b> <span>{{ number_format((($order['product_price'] ?? 0) * ($order['product_quantity'] ?? 0)), 2) }}</span></p>
+                                </div>
+                                <div class="title">
+                                    <h2>Customer</h2>
+                                </div>
+                                <div>
+                                    <p><b>Name: </b> <span>{{ $order['order']['customer_name'] ?? '' }}</span></p>
+                                </div>
+                                <div>
+                                    <p><b>Phone: </b> <span>{{ $order['order']['customer_phone'] ?? '' }}</span></p>
+                                </div>
+                                <div>
+                                    <p><b>Email: </b> <span>{{ $order['order']['customer_email'] ?? '' }}</span></p>
+                                </div>
+                                <div>
+                                    <p><b>Address: </b> <span>{{ $order['order']['address'] ?? '' }}</span></p>
+                                </div>
+                                <a href="{{ route('order.pdf', $order['id'] ?? 0) }}" class="btn">Export PDF</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- End Image Column -->
-                <!-- Project Info Column -->
-                <div class="portfolio-item-description col-sm-6">
-                    <h3>Customer</h3>
-                    <ul class="no-list-style">
-                        <li><b>Name:</b> {{ $order['order']['customer_name'] ?? '' }}</li>
-                        <li><b>Phone:</b> {{ $order['order']['customer_phone'] ?? '' }}</li>
-                        <li><b>Email:</b> {{ $order['order']['customer_email'] ?? '' }}</li>
-                        <li><b>Address:</b> {{ $order['order']['address'] ?? '' }}</li>
-                    </ul>
-                    <h3>Product</h3>
-                    <ul class="no-list-style">
-                        <li><b>Product name:</b> {{ $order['product_name'] ?? '' }}</li>
-                        <li><b>Price:</b> {{ $order['product_price'] ?? '' }}</li>
-                        <li><b>Quantity:</b> {{ $order['product_quantity'] ?? '' }}</li>
-                        <li><b>Total:</b> {{ number_format((($order['product_price'] ?? 0) * ($order['product_quantity'] ?? 0)), 2) }}</li>
-                        <li class="portfolio-visit-btn"><a href="{{ route('order.pdf', $order['id'] ?? 0) }}" class="btn">Export PDF</a></li>
-                    </ul>
-                </div>
-                <!-- End Project Info Column -->
             </div>
+            <!-- Side Bar End -->
         </div>
     </div>
+</div>
+<!-- Product Detail End -->
 @endsection

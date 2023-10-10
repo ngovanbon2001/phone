@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\OrderController;
@@ -18,7 +19,6 @@ use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\OrderController as WebOrderController;
 use App\Http\Controllers\Web\ProductController as WebProductController;
 use App\Models\Province;
-use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
@@ -96,13 +96,19 @@ Route::prefix('admin')->middleware('isAdmin')->group(function () {
 
     //user
     Route::get('/user', [UserController::class, 'index'])->name('indexUser');
-    Route::get('/user/create', [UserController::class, 'create'])->name('createUser');
-    Route::post('/user/store', [UserController::class, 'store'])->name('storeUser');
-    Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('editUser');
+    Route::prefix('/user')->middleware('check.admin')->group(function () {
+        Route::get('/create', [UserController::class, 'create'])->name('createUser');
+        Route::post('/store', [UserController::class, 'store'])->name('storeUser');
+        Route::get('/edit/{id}', [UserController::class, 'edit'])->name('editUser');
+        Route::delete('/destroy/{id}', [UserController::class, 'destroy'])->name('destroyUser');
+    });
     Route::post('/user/update/{id}', [UserController::class, 'update'])->name('updateUser');
-    Route::delete('/user/destroy/{id}', [UserController::class, 'destroy'])->name('destroyUser');
     Route::get('/user/show/{id}', [UserController::class, 'show'])->name('showUser');
     Route::post('/user/update-profile/{id}', [UserController::class, 'updateProfile'])->name('updateProfile');
+
+    //customer
+    Route::get('/customer', [CustomerController::class, 'index'])->name('customer.list');
+    Route::delete('/customer/destroy/{id}', [CustomerController::class, 'destroy'])->name('customer.delete');
 
     Route::get('/report', [ReportController::class, 'index'])->name('indexReport');
 
@@ -114,15 +120,19 @@ Route::get('forget-password', [App\Http\Controllers\Auth\ForgotPasswordControlle
 Route::prefix('/')->group(function () {
     Route::get('/', [HomeControllerFE::class, 'index'])->name('web.home');
 
-    Route::get('/product', [WebProductController::class, 'index'])->name('web.product');
+    Route::prefix('/product')->middleware('product')->group(function () {
+        Route::get('/', [WebProductController::class, 'index'])->name('web.product');
 
-    Route::get('/product/detail/{id}', [WebProductController::class, 'show'])->name('web.product.detail');
+        Route::get('/detail/{id}', [WebProductController::class, 'show'])->name('web.product.detail');
+    });
 
     Route::post('cart/create', [CartController::class, 'store'])->name('cart.create');
 
-    Route::get('cart/{id}', [CartController::class, 'index'])->name('cart');
+    Route::get('cart/{id}', [CartController::class, 'index'])->name('cart')->middleware('cart.check_id');
 
     Route::post('cart/update', [CartController::class, 'update'])->name('cart.update');
+
+    Route::get('order/create/{id}', [WebOrderController::class, 'create'])->name('order.create')->middleware('cart.check_id');
 
     Route::post('order/store', [WebOrderController::class, 'store'])->name('order.store');
 

@@ -20,7 +20,7 @@ class ProductReponsitory extends BaseRepository implements ProductReponsitoryInt
     {
         $this->applyConditions(condition($conditions));
         return $this->model
-                    ->orderBy('sort_order', 'ASC')
+                    ->orderBy('id', 'DESC')
                     ->paginate($paginate);
     }
 

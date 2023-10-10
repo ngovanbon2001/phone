@@ -1,64 +1,65 @@
-<h1>Lỗi rồi</h1>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('.add-cart').on('click', function() {
-            var user_id = '{{auth()->user()->id ?? ""}}';
-            var cart = JSON.parse(localStorage.getItem('cart')) ?? [];
-            var productId = $(this).data("id");
-            var productName = $(this).data("name");
-            var productPrice = $(this).data("price");
-            var productImage = $(this).data("image");
-            var amount = parseInt($('#amount').val() ?? 1);
-            var filter = cart.filter(x => x['id'] == productId);
-            if (filter.length == 0) {
-                cart.push({
-                    'id': productId,
-                    'user_id': user_id,
-                    'name': productName,
-                    'price': productPrice,
-                    'amount': amount,
-                    'image': productImage
-                });
-            } else {
-                filter.map(x => {
-                    x['amount'] = parseInt(x['amount']) + parseInt(amount);
-                });
-            }
-            localStorage.setItem('cart', JSON.stringify(cart));
+<!--A Design by W3layouts
+Author: W3layout
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Free 404 White for Iphone, Android & Smartphone Mobile Website Template | Home :: w3layouts</title>
+<style type="text/css">
+body{
+	font-family:Arial, Helvetica, sans-serif;
+}
+.wrap{
+	width:1000px;
+	margin:0 auto;
+}
+.logo{
+	width:430px;
+	position:absolute;
+	top:25%;
+	left:35%;
+}
+p a{
+	color:#eee;
+	font-size:13px;
+	margin-left:30px;
+	padding:5px;
+	background:#FF3366;
+	text-decoration:none;
+	-webkit-border-radius:.3em;
+	   -moz-border-radius:.3em;
+	        border-radius:.3em;
+}
+p a:hover{
+	color: #fff;
+}
+.footer{
+	position:absolute;
+	bottom:10px;
+	right:10px;
+	font-size:12px;
+	color:#aaa;
+}
+.footer a{
+	color:#666;
+	text-decoration:none;
+}
 
-            console.log(JSON.parse(localStorage.getItem('cart')));
-        });
-    });
-</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script>
-    $(document).ready(function() {
-        var user_id = '{{auth()->user()->id ?? ""}}';
-        var cart = JSON.parse(localStorage.getItem('cart')) ?? [];
-        if (cart.length > 0) {
-            cart.map(x => {
-                x['user_id'] =  parseInt(user_id);
-                console.log(x['user_id']);
-            });
-            localStorage.removeItem("cart");
-            localStorage.setItem('cart_login', JSON.stringify(cart));
-        } 
-        console.log(JSON.parse(localStorage.getItem('cart_login')));
-    });
-</script>
-<script>
-    $(document).ready(function() {
-        $.ajax({
-            url: '/test',
-            method: 'GET',
-            success: function(data) {
-                console.log('success');
-            },
-            error: function(xhr, status, error) {
-                console.log(xhr.responseText);
-                console.log('Lỗi:', error);
-            }
-        });
-    });
-</script>
+</style>
+</head>
+<body>
+<div class="wrap">
+    <div class="logo">
+        <img src="{{ asset('images/404.png') }}" alt=""  />
+    </div>
+</div>
+<div class="footer">
+	Design by - <a href="http://w3layouts.com">W3Layouts</a>
+</div>
+
+</body>
+</html>

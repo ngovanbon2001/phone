@@ -38,6 +38,11 @@ class Product extends Model
         return $this->belongsTo('App\Models\Brand');
     }
 
+    public function images()
+    {
+        return $this->hasMany(Product_image::class, 'product_id', 'id');
+    }
+
     // protected $casts = [
     //     'specifications' => 'array',
     // ];

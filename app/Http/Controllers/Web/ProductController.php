@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Constants\Common;
 use App\Http\Controllers\Controller;
 use App\Services\Contracts\ProductServiceInterface;
 use Illuminate\Contracts\Foundation\Application;
@@ -11,13 +12,13 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    protected ProductServiceInterface $productServiceInterface;
+    protected ProductServiceInterface  $productServiceInterface;
 
     /**
      * @param ProductServiceInterface $productServiceInterface
      */
     public function __construct(
-        ProductServiceInterface  $productServiceInterface
+        ProductServiceInterface  $productServiceInterface,
     ) {
         $this->productServiceInterface = $productServiceInterface;
     }
@@ -44,11 +45,18 @@ class ProductController extends Controller
         // Products
         $product = $this->productServiceInterface->detail($id);
 
+        $products = $this->productServiceInterface->getProductFE([]);
+
+        $newProduct = $this->productServiceInterface->getProductFE([
+            'is_new' => Common::ACTIVE,
+            'active' => Common::ACTIVE
+        ]);
+
         //Check exist
         if (!isset($product->id)) {
             return view('error');
         }
 
-        return view('web.detail_product', compact('product'));
+        return view('web.detail_product', compact('product', 'products', 'newProduct'));
     }
 }

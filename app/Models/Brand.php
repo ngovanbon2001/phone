@@ -18,4 +18,9 @@ class Brand extends Model
         'sort_order',
         'active'
     ];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'brand_id', 'id');
+    }
 }

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+@include ('admin.common.head', ['pageTitle' => 'User - Phone Admin'])
+
+<body>
+    @include ('admin.common.index')
+
+    <main id="main" class="main">
+
+        <div class="pagetitle">
+            <h1>Dashboard</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{route('homeAdmin')}}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('indexUser')}}">Customer</a></li>
+                    <li class="breadcrumb-item active">List</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+
+        <section class="section dashboard">
+            <div class="row">
+
+                <!-- Left side columns -->
+                <div class="col-lg-12">
+                    <div class="row">
+
+                        <div id="message">
+                            @if (session()->has('message'))
+                            <div class="alert alert-success">
+                                {{ session('message') }}
+                            </div>
+                            @endif
+
+                            @if (session()->has('message-error'))
+                            <div class="alert alert-danger">
+                                {{ session('message-error') }}
+                            </div>
+                            @endif
+                        </div>
+
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <div class="widget-content">
+                                    <a href="{{route('createUser')}}" class="btn btn-primary"> <i class="ri-add-fill"></i> </a>
+                                    <table style="width:100%" class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:35%; text-align: center;">User's Name</th>
+                                                <th style="width:30%; text-align: center;">Email</th>
+                                                <th style="width:15%; text-align: center;">Phone</th>
+                                                <th style="width:20%; text-align: center;">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($users as $userData)
+                                            <tr>
+                                                <td>{{ $userData->username }}</td>
+                                                <td>{{ $userData->email }}</td>
+                                                <td style="text-align: center;">{{ $userData->phone }}</td>
+                                                <td style="text-align: center;">
+                                                    <a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this customer?') ? document.getElementById('customer-delete-{{ $userData->id }}').submit() : false"><i class="bi bi-trash"></i></a>
+                                                    <form action="{{ route('customer.delete', $userData->id) }}" id="customer-delete-{{ $userData->id }}" method="post">
+                                                        @method('delete')
+                                                        @csrf()
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div><!-- End Left side columns -->
+
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12" style="display: flex; justify-content: center;">
+                    <!-- Basic Pagination -->
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" href="{{$users->previousPageUrl()}}">
+                                    << </a>
+                            </li>
+                            @foreach($users->links()->getData()["elements"][0] as $key => $item)
+                            <li class="page-item"><a class="page-link" href="{{$item}}">{{$key}}</a></li>
+                            @endforeach
+                            <li class="page-item"><a class="page-link" href="{{$users->nextPageUrl()}}">>></a></li>
+                        </ul>
+                    </nav><!-- End Basic Pagination -->
+                </div>
+            </div>
+        </section>
+    </main><!-- End #main -->
+
+    @include ('admin.common.footer')
+</body>
+
+</html>

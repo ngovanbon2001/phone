@@ -21,4 +21,8 @@ interface UserServiceInterface
     public function createUser(array $attributes);
 
     public function show(int $id);
+
+    public function listCustomer(array $attributes);
+
+    public function deleteCustomer(int $id);
 }

@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+<title>NhatMai SHOP - Home</title>
+@endsection
 
 @section('content')
 
@@ -17,129 +20,288 @@
 </div>
 
 <section>
-    <!-- Homepage Slider -->
-    <div class="homepage-slider">
-        <div id="sequence">
-            <ul class="sequence-canvas">
-                @foreach ($banners as $key => $item)
-                <!-- Slide 1 -->
-                <li class="{{'bg'.$key+1}}">
-                    <!-- Slide Title -->
-                    <h2 class="title">{{$item->title ?? ""}}</h2>
-                    <!-- Slide Text -->
-                    <h3 class="subtitle">{!!$item->content ?? ""!!}</h3>
-                    <!-- Slide Image -->
-                    <img class="slide-img" src="{{asset('images/'.$item->image_url ?? '')}}" alt="Slide 1" />
-                </li>
-                <!-- End Slide 1 -->
-                @endforeach
-            </ul>
-            <div class="sequence-pagination-wrapper">
-                <ul class="sequence-pagination">
-                    @foreach ($banners as $key => $item)
-                    <li>{{ $key + 1 ?? 0 }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!-- End Homepage Slider -->
-
-    <!-- Our Brands -->
-    <div class="section">
-        <div class="container">
-            <h2>Brands</h2>
-            <div class="clients-logo-wrapper text-center row">
-                @foreach ($brands as $item)
-                <div class="col-lg-1 col-md-1 col-sm-3 col-xs-6"><a href="#"><img src="{{ asset('images/'.$item->image_url ?? '') }}" alt="Client Name"></a></div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-    <!-- End Our Brands -->
-
-    <!-- New Product -->
-    <div class="section">
-        <div class="container">
-            <h2>New</h2>
+    <!-- Main Slider Start -->
+    <div class="header">
+        <div class="container-fluid">
             <div class="row">
-                @foreach ($newProduct as $item)
-                <div class="col-md-3 col-sm-6">
-                    <form action="{{ route('cart.create') }}" method="post" class="cart">
-                        @csrf
-                        <!-- Product -->
-                        <div class="shop-item">
-                            <!-- Product Image -->
-                            <div class="shop-item-image">
-                                <a href="{{route('web.product.detail', $item->id)}}"><img src="{{asset('images/'.$item->image_url ?? '')}}" alt="Item Name"></a>
-                            </div>
-                            <!-- Product Title -->
-                            <div class="title">
-                                <h3><a href="{{route('web.product.detail', $item->id)}}">{{$item->name ?? ''}}</a></h3>
-                            </div>
-                            <!-- Product Price-->
-                            <div class="price">
-                                ${{ number_format($item->price ?? 0)}}
-                            </div>
-                            <!-- Add to Cart Button -->
-                            <div class="actions">
-                                <button class="btn btn-small add-cart"><i class="fa fa-shopping-cart"></i> Add to cart</button>
-                                
-                                <input type="hidden" value="{{ $item->id }}" name="product_id">
-                                <input type="hidden" value="1" name="quantity">
-                                <input type="hidden" value="{{ $item->name }}" name="product_name">
-                                <input type="hidden" value="{{ $item->image_url }}" name="product_image">
-                                <input type="hidden" value="{{ $item->price }}" name="product_price">
+                <div class="col-md-3">
+                    <nav class="navbar bg-light">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('web.home') }}"><i class="fa fa-home"></i>Home</a>
+                            </li>
+
+                            @foreach($categories as $item)
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('web.product', ['category_id' => $item->id ?? 0]) }}"><i class="fa fa-mobile-alt"></i>{{ $item->name ?? '' }}</a>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-md-6">
+                    <div class="header-slider normal-slider">
+                        @foreach ($banners as $key => $item)
+                        <div class="header-slider-item">
+                            <img src="{{ asset('images/'.$item->image_url ?? '') }}" alt="Slider Image" />
+                            <div class="header-slider-caption">
+                                <p>{{ $item->title ?? "" }}</p>
+                                <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Shop Now</a>
                             </div>
                         </div>
-                        <!-- End Product -->
+                        @endforeach
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="header-img">
+                        <div class="img-item">
+                            <img src="{{ asset('fe/img/chinh-hang-a.png') }}" />
+                            <a class="img-text" href="">
+                                <p>Genuine</p>
+                            </a>
+                        </div>
+                        &emsp14;
+                        <div class="img-item">
+                            <img src="{{ asset('fe/img/van-chuyen-1.png') }}" />
+                            <a class="img-text" href="">
+                                <p>Free ship</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Main Slider End -->
+
+    <!-- Brand Start -->
+    <div class="brand">
+        <div class="container-fluid">
+            <div class="brand-slider">
+                @foreach ($brands as $key => $item)
+                <div class="brand-item"><img src="{{ asset('images/'.$item->image_url ?? '') }}" alt=""></div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+    <!-- Brand End -->
+
+    <!-- Feature Start-->
+    <div class="feature">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-6 feature-col">
+                    <div class="feature-content">
+                        <i class="fab fa-cc-mastercard"></i>
+                        <h2>Secure Payment</h2>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur elit
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 feature-col">
+                    <div class="feature-content">
+                        <i class="fa fa-truck"></i>
+                        <h2>Worldwide Delivery</h2>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur elit
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 feature-col">
+                    <div class="feature-content">
+                        <i class="fa fa-sync-alt"></i>
+                        <h2>90 Days Return</h2>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur elit
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 feature-col">
+                    <div class="feature-content">
+                        <i class="fa fa-comments"></i>
+                        <h2>24/7 Support</h2>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur elit
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Feature End-->
+
+    <!-- Category Start-->
+    <div class="category">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="category-item ch-400">
+                        <img src="{{ asset('fe/img/quang-cao-1.jpg') }}" />
+                        <a class="category-name" href="">
+                            <p>Some text goes here that describes the image</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="category-item ch-250">
+                        <img src="{{ asset('fe/img/quang-cao-3.jpg') }}" />
+                        <a class="category-name" href="">
+                            <p>Some text goes here that describes the image</p>
+                        </a>
+                    </div>
+                    <div class="category-item ch-150">
+                        <img src="{{ asset('fe/img/quang-cao-2.jpg') }}" />
+                        <a class="category-name" href="">
+                            <p>Some text goes here that describes the image</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="category-item ch-150">
+                        <img src="{{ asset('fe/img/quang-cao-4.jpg') }}" />
+                        <a class="category-name" href="">
+                            <p>Some text goes here that describes the image</p>
+                        </a>
+                    </div>
+                    <div class="category-item ch-250">
+                        <img src="{{ asset('fe/img/quang-cao-5.png') }}" />
+                        <a class="category-name" href="">
+                            <p>Some text goes here that describes the image</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="category-item ch-400">
+                        <img src="{{ asset('fe/img/quang-cao-6.png') }}" />
+                        <a class="category-name" href="">
+                            <p>Some text goes here that describes the image</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Category End-->
+
+    <!-- Call to Action Start -->
+    <div class="call-to-action">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1>call us for any queries</h1>
+                </div>
+                <div class="col-md-6">
+                    <a href="tel:0123456789">+012-345-6789</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Call to Action End -->
+
+    <!-- Featured Product Start -->
+    <div class="featured-product product">
+        <div class="container-fluid">
+            <div class="section-header">
+                <h1>New Product</h1>
+            </div>
+            <div class="row align-items-center product-slider product-slider-4">
+                @foreach ($newProduct as $item)
+                <div class="col-lg-3">
+
+                    <div class="product-item">
+                        <div class="product-title">
+                            <a href="#">{{ $item->name ?? ''}}</a>
+                            <div class="ratting">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="product-image">
+                            <a href="product-detail.html">
+                                <img src="{{asset('images/'.$item->image_url ?? '')}}" alt="Product Image">
+                            </a>
+                            <div class="product-action">
+                                <a href="#" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()"><i class="fa fa-cart-plus"></i></a>
+                                <a href="{{route('web.product.detail', $item->id)}}"><i class="fa fa-search"></i></a>
+                            </div>
+                        </div>
+                        <div class="product-price">
+                            <h3><span>$</span>{{ number_format($item->price ?? 0)}}</h3>
+                            <a class="btn" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-shopping-cart"></i>Buy Now</a>
+                        </div>
+                    </div>
+                    <form id="cart-add-{{ $item->id ?? 0 }}" action="{{ route('cart.create') }}" method="post" class="cart">
+                        @csrf
+                        <input type="hidden" value="{{ $item->id ?? 0 }}" name="product_id">
+                        <input type="hidden" value="1" name="quantity">
+                        <input type="hidden" value="{{ $item->name ?? '' }}" name="product_name">
+                        <input type="hidden" value="{{ $item->image_url ?? '' }}" name="product_image">
+                        <input type="hidden" value="{{ $item->price ?? 0 }}" name="product_price">
                     </form>
                 </div>
                 @endforeach
             </div>
         </div>
     </div>
-    <!-- End New Product -->
+    <!-- Featured Product End -->
 
-    <!-- Discount -->
-    <div class="section">
-        <div class="container">
-            <h2>Low price</h2>
-            <div class="row">
+    <!-- Recent Product Start -->
+    <div class="recent-product product">
+        <div class="container-fluid">
+            <div class="section-header">
+                <h1>Low price</h1>
+            </div>
+            <div class="row align-items-center product-slider product-slider-4">
                 @foreach ($discountProduct as $item)
-                <div class="col-md-3 col-sm-6">
-                    <!-- Product -->
-                    <div class="shop-item">
-                        <!-- Product Image -->
-                        <div class="shop-item-image">
-                            <a href="{{route('web.product.detail', $item->id)}}"><img src="{{asset('images/'.$item->image_url ?? '')}}" alt="Item Name"></a>
+                <div class="col-lg-3">
+
+                    <div class="product-item">
+                        <div class="product-title">
+                            <a href="#">{{ $item->name ?? ''}}</a>
+                            <div class="ratting">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
                         </div>
-                        <!-- Product Title -->
-                        <div class="title">
-                            <h3><a href="{{route('web.product.detail', $item->id)}}">{{$item->name ?? ""}}</a></h3>
+                        <div class="product-image">
+                            <a href="product-detail.html">
+                                <img src="{{asset('images/'.$item->image_url ?? '')}}" alt="Product Image">
+                            </a>
+                            <div class="product-action">
+                                <a href="#" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()"><i class="fa fa-cart-plus"></i></a>
+                                <a href="{{route('web.product.detail', $item->id)}}"><i class="fa fa-search"></i></a>
+                            </div>
                         </div>
-                        <!-- Product Price-->
-                        <div class="price">
-                            ${{ number_format($item->price ?? 0)}}
-                        </div>
-                        <!-- Add to Cart Button -->
-                        <div class="actions">
-                            <a href="page-product-details.html" class="btn btn-small"><i class="icon-shopping-cart icon-white"></i> Add to Cart</a>
+                        <div class="product-price">
+                            <h3><span>$</span>{{ number_format($item->price ?? 0)}}</h3>
+                            <a class="btn" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-shopping-cart"></i>Buy Now</a>
                         </div>
                     </div>
-                    <!-- End Product -->
+                    <form id="cart-add-{{ $item->id ?? 0 }}" action="{{ route('cart.create') }}" method="post" class="cart">
+                        @csrf
+                        <input type="hidden" value="{{ $item->id ?? 0 }}" name="product_id">
+                        <input type="hidden" value="1" name="quantity">
+                        <input type="hidden" value="{{ $item->name ?? '' }}" name="product_name">
+                        <input type="hidden" value="{{ $item->image_url ?? '' }}" name="product_image">
+                        <input type="hidden" value="{{ $item->price ?? 0 }}" name="product_price">
+                    </form>
                 </div>
                 @endforeach
             </div>
         </div>
     </div>
-    <!-- End Discount -->
-
+    <!-- Recent Product End -->
 </section> <!-- End Section -->
 @endsection
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="{{asset('front-end/js/custom.js')}}"></script>
+@section('script-custom')
 <script>
     const toastrSuccess = '{{ session("success") }}';
     const toastrError = '{{ session("error") }}';
@@ -149,3 +311,4 @@
         showToasrt(toastrError, false);
     }
 </script>
+@endsection
