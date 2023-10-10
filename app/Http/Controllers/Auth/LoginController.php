@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -41,34 +42,17 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function login(Request $request)
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function login(Request $request): RedirectResponse
     {
         if (Auth::attempt([
-            'email' => $request->email,
-            'password' => $request->password
+            'email' => $request->input('email'),
+            'password' => $request->input('password')
         ])) {
-            $cart      = Session::get('cart-0') ?? [];
-            $cartLogin = Session::get('cart-' . auth()->user()->id) ?? [];
-            $products  = array_merge($cart, $cartLogin);
-
-            $aggregatedProducts = [];
-
-            foreach ($products as $product) {
-                $productId = $product["product_id"];
-                $quantity = intval($product["quantity"]);
-
-                if (!isset($aggregatedProducts[$productId])) {
-                    $aggregatedProducts[$productId] = $product;
-                } else {
-                    $aggregatedProducts[$productId]["quantity"] += $quantity;
-                }
-            }
-
-            if (!empty($cart)) {
-                Session::forget('cart-0');
-            }
-
-            Session::put('cart-' . auth()->user()->id, $aggregatedProducts);
+            loginCart();
 
             return redirect()->route('web.home');
         } else {

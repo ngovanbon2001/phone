@@ -68,6 +68,7 @@
             <div class="col-lg-6">
                 <h3>Welcome to Nhat Mai store!</h3>
                 <div class="clearfix"></div>
+                <a href="{{ route('google.login') }}">Login with google</a>
                 <div class="not-member">
                     <p>Not a member? <a href="{{ route('register') }}">Register here</a></p>
                 </div>

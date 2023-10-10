@@ -18,6 +18,7 @@ use App\Http\Controllers\HomeController as HomeControllerFE;
 use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\OrderController as WebOrderController;
 use App\Http\Controllers\Web\ProductController as WebProductController;
+use App\Http\Controllers\Web\SocialController;
 use App\Models\Province;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
@@ -119,6 +120,9 @@ Route::get('forget-password', [App\Http\Controllers\Auth\ForgotPasswordControlle
 
 Route::prefix('/')->group(function () {
     Route::get('/', [HomeControllerFE::class, 'index'])->name('web.home');
+
+    Route::get('/auth/google',  [SocialController::class, 'redirectToGoogle'])->name('google.login');
+    Route::get('/auth/google/callback',  [SocialController::class, 'handleGoogleCallback']);
 
     Route::prefix('/product')->middleware('product')->group(function () {
         Route::get('/', [WebProductController::class, 'index'])->name('web.product');
