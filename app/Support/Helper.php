@@ -1,6 +1,7 @@
 <?php
 
 use App\Constants\Common;
+use Illuminate\Support\Facades\Session;
 
 if (!function_exists('handleImage')) {
     function handleImage($fileImage): string
@@ -40,5 +41,33 @@ if (!function_exists('decodeJson')) {
     function decodeJson(mixed $attribute)
     {
         return json_decode($attribute);
+    }
+}
+
+if (!function_exists('loginCart')) {
+    function loginCart()
+    {
+        $cart      = Session::get('cart-0') ?? [];
+        $cartLogin = Session::get('cart-' . auth()->user()->id ?? 0) ?? [];
+        $products  = array_merge($cart, $cartLogin);
+
+        $aggregatedProducts = [];
+
+        foreach ($products as $product) {
+            $productId = $product["product_id"];
+            $quantity = intval($product["quantity"]);
+
+            if (!isset($aggregatedProducts[$productId])) {
+                $aggregatedProducts[$productId] = $product;
+            } else {
+                $aggregatedProducts[$productId]["quantity"] += $quantity;
+            }
+        }
+
+        if (!empty($cart)) {
+            Session::forget('cart-0');
+        }
+
+        Session::put('cart-' . auth()->user()->id ?? 0, $aggregatedProducts);
     }
 }

@@ -50,11 +50,15 @@ class HomeController extends Controller
             'price'  => Common::PRICE,
             'active' => Common::ACTIVE
         ]);
-        $brands = $this->brandServiceInterface->list([]);
+        $brands = $this->brandServiceInterface->list([
+            ["active", "=", Common::ACTIVE]
+        ]);
         $banners = $this->bannerServiceInterface->list([
             ["active", "=", Common::ACTIVE]
         ]);
-        $categories = $this->categoryService->list([]);
+        $categories = $this->categoryService->list([
+            ["active", "=", Common::ACTIVE]
+        ]);
         return view('web.home', compact('newProduct', 'discountProduct', 'brands', 'banners', 'categories'));
     }
 }

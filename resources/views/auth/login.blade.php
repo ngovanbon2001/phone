@@ -57,20 +57,22 @@
                                 </span>
                                 @enderror
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <button class="btn">Login</button>
+                            </div>
+                            <div class="col-md-6" style="text-align: right;">
                                 <a href="{{ route('forget.password.get') }}" class="forgot-password">Forgot password?</a>
+                            </div>
+                            <div class="col-md-12" style="text-align: right;">
+                                <p>Not a member? <a href="{{ route('register') }}">Register here</a></p>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <h3>Welcome to Nhat Mai store!</h3>
+            <div class="col-lg-6" style="text-align: center;">
                 <div class="clearfix"></div>
-                <div class="not-member">
-                    <p>Not a member? <a href="{{ route('register') }}">Register here</a></p>
-                </div>
+                <a href="{{ route('google.login') }}" class="google-login">Login with google</a>
             </div>
         </div>
     </div>
