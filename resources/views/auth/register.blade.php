@@ -38,7 +38,7 @@
                     <form role="form" method="POST" action="{{ route('save-user') }}">
                         @csrf
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label>Name</label>
                                 <input class="form-control" type="text" name="username" placeholder="Name">
                             </div>
@@ -68,15 +68,19 @@
                                 <label>Retype Password</label>
                                 <input class="form-control" type="password" name="password_confirmation" placeholder="Password">
                             </div>
-                            <div class="col-md-12">
-                                <button class="btn">Register</button>
+                            <div class="col-md-6">
+                                <button type="submit" class="btn">Register</button>
+                            </div>
+                            <div class="col-md-6" style="text-align: right;">
+                                <p>You have account? <a href="{{ route('login') }}">Sign in</a></p>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <h3>Welcome to Nhat Mai store!</h3>
+            <div class="col-lg-6" style="text-align: center;">
+                <div class="clearfix"></div>
+                <a href="{{ route('google.login') }}" class="google-login">Login with google</a>
             </div>
         </div>
     </div>

@@ -49,7 +49,7 @@
                                             <input id="cart-{{ $value['product_id'] ?? 0 }}" class="cart" data-cart="{{ auth()->user()->id ?? 0 }}" data-id="{{ $value['product_id'] ?? 0}}" data-name="{{ $value['name'] ?? ''}}" data-image="{{ $value['options']['image'] ?? '' }}" data-price="{{ $value['price'] ?? 0 }}" data-qty="{{ $value['quantity'] ?? 0 }}" type="number" name="quantity" value="{{ $value['quantity'] ?? 0 }}" oninput="checkQuantity(this)">
                                         </div>
                                     </td>
-                                    <td id="total-{{ $value['product_id'] ?? 0 }}">${{ ($value['price'] ?? 0) * ($value['quantity'] ?? 0) }}</td>
+                                    <td id="total-{{ $value['product_id'] ?? 0 }}">${{ number_format(($value['price'] ?? 0) * ($value['quantity'] ?? 0), 2) }}</td>
                                     <td><button type="button" data-id="{{ $value['product_id'] ?? 0 }}" class="delete-cart"><i class="fa fa-trash"></i></button></td>
                                 </tr>
                                 @endforeach

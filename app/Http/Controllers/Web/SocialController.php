@@ -40,7 +40,7 @@ class SocialController extends Controller
         $result = $this->userExtendService->callBack($request->all());
 
         if ($result) {
-            auth()->login($result, true);
+            auth()->login($result);
     
             loginCart();
     

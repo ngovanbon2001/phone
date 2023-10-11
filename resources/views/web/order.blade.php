@@ -64,7 +64,7 @@
                                     <td>
                                         <p>{{ $val['product_quantity'] ?? 0 }}</p>
                                     </td>
-                                    <td>${{ ($val['product_price'] ?? 0) * ($val['product_quantity'] ?? 0) }}</td>
+                                    <td>${{ number_format(($val['product_price'] ?? 0) * ($val['product_quantity'] ?? 0), 2) }}</td>
                                     <td>{{ App\Constants\Common::STATUS_ORDER[($val['status'] ?? 0)] }}</td>
                                     <td>
                                         @if (($val['status'] ?? 0) < App\Constants\Common::DELIVERY) 

@@ -22,6 +22,7 @@
 
 	<!-- Template Stylesheet -->
 	<link href="{{ asset('fe/css/style.css') }}" rel="stylesheet">
+	<link href="{{ asset('fe/css/login-google.css') }}" rel="stylesheet">
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
@@ -115,7 +116,7 @@
 				</div>
 				<div class="col-md-3">
 					<div class="user">
-						<a href="cart.html" class="btn cart">
+						<a href="{{ route('cart', auth()->user()->id ?? 0) }}" class="btn cart">
 							<i class="fa fa-shopping-cart"></i>
 							<span id="total-items">{{ count(session()->get('cart-'. (auth()->user()->id ?? 0)) ?? []) }}</span>
 						</a>
