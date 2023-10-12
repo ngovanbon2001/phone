@@ -2,6 +2,7 @@
 
 use App\Constants\Common;
 use Illuminate\Support\Facades\Session;
+use Intervention\Image\ImageManagerStatic as Image;
 
 if (!function_exists('handleImage')) {
     function handleImage($fileImage): string
@@ -10,8 +11,15 @@ if (!function_exists('handleImage')) {
 
         if ($_FILES['image_url']['name']) {
             $image = $fileImage;
-            $imageName = $image->getClientOriginalName();
-            $image->move('images',  $imageName);
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+
+            $destinationPath = public_path('images/');
+
+            $image->move($destinationPath, $imageName);
+
+            $resizedImage = Image::make($destinationPath . $imageName)->fit(400, 400);
+
+            $resizedImage->save($destinationPath . $imageName);
         }
 
         return $imageName;

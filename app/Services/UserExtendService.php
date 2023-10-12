@@ -107,6 +107,7 @@ class UserExtendService implements UserExtendServiceInterface
     public function callBack(array $request)
     {
         try {
+            $password = Str::random(8);
             $userData = Socialite::driver('google')->user();
             $user = $this->userRepository->findWhere([
                 ['email', 'like', $userData['email'] ?? null]
@@ -115,8 +116,14 @@ class UserExtendService implements UserExtendServiceInterface
             if (empty($user)) {
                 $result = $this->userRepository->create([
                     'email' =>  $userData['email'] ?? null,
-                    'password' => Hash::make('12345678')
+                    'password' => Hash::make($password)
                 ]);
+
+                if ($result) {
+                    Mail::raw('Your password is '. $password .'. Please do not share', function ($message) use ($userData) {
+                        $message->to($userData['email'] ?? null)->subject('Register success');
+                    });
+                }
             } else {
                 $result = $user;
             }

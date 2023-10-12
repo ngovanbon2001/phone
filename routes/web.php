@@ -140,7 +140,7 @@ Route::prefix('/')->group(function () {
 
     Route::post('order/store', [WebOrderController::class, 'store'])->name('order.store');
 
-    Route::get('order/show/{id}', [WebOrderController::class, 'show'])->name('order.show');
+    Route::get('order/show/{id}', [WebOrderController::class, 'show'])->name('order.show')->middleware('cart.check_id');
 
     Route::get('order/detail/{id}', [WebOrderController::class, 'detail'])->name('order.detail');
 
