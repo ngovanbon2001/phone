@@ -107,8 +107,8 @@ class OrderService implements OrderServiceInterface
 
                 if ($result) {
                     // Send email
-                    Mail::raw($emailContent, function ($message) {
-                        $message->to('bonbon2k1a@gmail.com')->subject('Order Confirmation');
+                    Mail::raw($emailContent, function ($message) use ($attributes) {
+                        $message->to($attributes['customer_email'] ?? null)->subject('Order Confirmation');
                     });
 
                     Session::forget('cart-' . (auth()->user()->id ?? 0));

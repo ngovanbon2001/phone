@@ -25,6 +25,7 @@ class OrderRespository extends BaseRepository implements OrderRepositoryInterfac
     {
         $this->applyConditions(condition($conditions));
         return $this->model
+                    ->orderBy('id', 'DESC')
                     ->paginate(Common::PAGINATE_BE);
     }
 
