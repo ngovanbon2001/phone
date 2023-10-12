@@ -88,6 +88,7 @@ class OrderService implements OrderServiceInterface
             $order = $this->orderRepository->create($attribute);
             $items = [];
             if ($order) {
+                $total = 0;
                 foreach ($attributes['items'] as $value) {
                     $items[] = [
                         'order_id'         => $order->id,
@@ -97,11 +98,14 @@ class OrderService implements OrderServiceInterface
                         'product_price'    => $value['product_price'],
                         'product_quantity' => $value['product_quantity'],
                     ];
+                    $total = $total + ($value['product_quantity'] * $value['product_price']);
                     $emailContent .= "Tên sản phẩm: {$value['product_name']}\n";
                     $emailContent .= "Số lượng: {$value['product_quantity']}\n";
-                    $emailContent .= "Giá: {$value['product_price']} đ\n";
+                    $emailContent .= "Giá: {$value['product_price']} $\n";
                     $emailContent .= "-------------------------\n";
                 }
+
+                $emailContent .= "Tổng: {$total} $\n";
 
                 $result = $this->orderItemsRepositoryInterface->insertOrUpdateBatch($items);
 
