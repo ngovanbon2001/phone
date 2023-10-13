@@ -11,7 +11,7 @@ if (!function_exists('handleImage')) {
 
         if ($_FILES['image_url']['name']) {
             $image = $fileImage;
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $imageName = time() . '.' . $image->getClientOriginalName();
 
             $destinationPath = public_path('images/');
 
