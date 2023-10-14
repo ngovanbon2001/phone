@@ -65,4 +65,3 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 docker exec -it vaccination-vaccination-1 bash
 docker exec -it vaccination-vaccination-1 php artisan
-update
