@@ -4,22 +4,13 @@ return [
     # Language
     # Home
     'home' => 'Home',
-    'menu' => 'Menu',
-    'administration' => 'Administration',
     'dashboard' => 'Dashboard',
-    'users' => 'Users',
-    'user' => 'User',
-    'tenants' => 'Tenants',
-    'topics' => 'Topics',
-    'prompts' => 'Prompts',
-    'Projects' => 'projects',
-    'admin' => 'Admin',
-    'hello_codluck' => 'Welcome to GPTLuck',
-    'let_start' => 'Let\'s start a new day with lots of energy!',
-    'made_with' => 'Made with',
-    'show_user' => 'Show User',
-    'edit_profile' => 'Edit Profile',
-    'edit_user' => 'Edit user',
+    'sold' => 'Sold',
+    'revenue' => 'Revenue',
+    'customers' => 'Customers',
+    'best_sell' => 'Best sell',
+    'top_order' => 'Top order',
+    'inventory' => 'Inventory',
 
     # Status
     'active' => 'Active',
@@ -88,6 +79,12 @@ return [
     'send' => 'Send',
     'type_message' => 'Type Message',
     'format' => 'File format is .jpg .png .jpeg',
+    'this_month' => 'This Month',
+    'pages' => 'Pages',
+    'profile' => 'Profile',
+    'contact' => 'Contact',
+    'logout' => 'Logout',
+    'sign_out' => 'Sign out',
 
     # Users
     'user_list' => 'Users List',
@@ -119,17 +116,6 @@ return [
     'state' => 'State',
     'change_password' => 'Change password',
 
-    # User Group
-    'group_department_list' => 'Group Department List',
-    'group_department_name' => 'Group Department Name',
-    'create_group_department' => 'Create Group Department',
-    'update_group_department' => 'Update Group Department',
-    'delete_group_department' => 'Delete Group Department',
-    'show_group_department' => 'Show Group Department',
-    'group_department_empty' => 'Group Department Empty',
-    'group_department' => 'Group Department',
-    'group_department_operate' => 'ACTION',
-
     # Form user
     'username' => 'User Name',
     'first_name' => 'First Name',
@@ -154,128 +140,6 @@ return [
     'open_ai_key' => 'Open AI Key',
     'old_password' => 'Old Password',
     'avatar' => 'Avatar',
-
-    # Tenants
-    'project_list' => 'Project List',
-    'tenant_edit' => 'Edit Tenant',
-    'tenant_list' => 'Tenant List',
-    'tenant_detail' => 'Tenant Detail',
-    'tenant' => 'Tenant',
-    'domain' => 'Domain',
-    'database_name' => 'Database Name',
-    'tenant_name' => 'Tenant Name',
-    'tenant_information' => 'Tenant Information',
-    'tenant_confirm_create' => 'The Tenant schema will be added to your database. Are you sure you want to save the Tenant?',
-
-    # Topics
-    'topic' => 'Topic',
-    'topics_list' => 'Topics List',
-    'new_topic' => 'New topic',
-    'topic_name' => 'Topic Name',
-    'select_file' => 'Select file',
-    'file_name' => 'File name',
-    'topic_empty' => 'Topic empty',
-    'show_topic' => 'Show topic',
-    'file_upload' => 'File upload',
-    'delete_topic' => 'Delete topic',
-    'create_topic' => 'Create topic',
-    'update_topic' => 'Update topic',
-    'enter_topic_name' => 'Enter topic name',
-
-    # Prompts
-    'prompt' => 'Prompt',
-    'prompts_list' => 'Prompts List',
-    'prompt_name' => 'Prompt name',
-    'new_prompt' => 'New prompt',
-    'prompt_empty' => 'Prompt empty',
-    'show_prompt' => 'Show prompt',
-    'edit_prompt' => 'Edit prompt',
-    'delete_prompt' => 'Delete prompt',
-    'create_prompt' => 'Create prompt',
-    'update_prompt' => 'Update prompt',
-
-    # Prompt Extends
-    'prompt_extend' => 'Prompt Extend',
-    'prompts_extend_list' => 'Prompts Extend List',
-    'prompt_extend_name' => 'Prompt Extend Name',
-    'new_prompt_extend' => 'New Prompt Extend',
-    'prompt_extend_empty' => 'Prompt Extend Empty',
-    'show_prompt_extend' => 'Show Prompt Extend',
-    'edit_prompt_extend' => 'Edit Prompt Extend',
-    'delete_prompt_extend' => 'Delete Prompt Extend',
-    'create_prompt_extend' => 'Create Prompt Extend',
-    'update_prompt_extend' => 'Update Prompt Extend',
-
-    # Projects
-    'projects_list' => 'Projects List',
-    'project_key' => 'Project Key',
-    'project_name' => 'Project Name',
-    'project' => 'Project',
-    'prompt_type' => 'Prompt Type',
-    'keep_data' => 'Keep data for view',
-    'delete_after' => 'Delete after processing',
-    'response_source' => 'Response Source',
-    'chatbot_message_language' => 'ChatBot Message Language',
-    'chatbot_message_start' => 'ChatBot Message Start',
-    'file_option' => 'File option',
-    'total_data_file' => 'Total Data File',
-    'total_data_index' => 'Total Data Index',
-    'word_index' => 'Word Index',
-    'total_query' => 'Total Query',
-    'project_profile' => 'Project Profile',
-    'data_file' => 'Data file',
-    'data_sitemap' => 'Data Sitemap',
-    'sitemap' => 'Sitemap',
-    'link_sitemap' => 'Link Sitemap',
-    'data_manage' => 'Data manage',
-    'upload_file_data' => 'Data manage',
-    'data_summary' => 'Data Summary',
-    'drag_and_drop' => 'Drag and drop files here or click to select
-    (Only allowed: txt, xlsx, docx, csv, pptx, pdf, zip)',
-    'simple_wizard' => 'Simple Wizard',
-    'keep_data_for_view' => 'Keep data for view',
-    'delete_after_processing' => 'Delete after processing',
-    'select_response_source' => 'Select Response Source',
-    'select_language' => 'Select Language',
-    'chat_widget_iframe' => 'Chat widget iframe',
-    'live_chat' => 'Live Chat',
-    'api' => 'API',
-    'chat_with_me' => 'Chat work',
-    'create_project' => 'Create project',
-    'update_project' => 'Update project',
-    'delete_project' => 'Delete project',
-    'delete_sitemap' => 'Delete Sitemap',
-    'expired_ai_key' => 'Unlock your expired open ai key. Please update the new open ai key',
-    'file_invalid'   => 'Invalid files',
-    'file_or_sitemap' => 'You need to enter 1 of 2 types : File Upload or Linked Sitemap !',
-    'file_max_size' => 'File is too large. Maximum size allowed is 10 MB.',
-    'add_project'  => 'Add Project',
-    'list_user_name' => 'List User',
-    'chat_bot' => 'Enter the chatbot message start.',
-    'placeholder_project_name' => 'Please enter project name.',
-    'placeholder_project_status' => 'Please enter project status.',
-    'placeholder_project_group_department' => 'Please enter a group department.',
-    'placeholder_project_prompt_type' => 'Enter prompt type.',
-    'placeholder_description' => 'Please enter a description.',
-    'placeholder_project_user_view' => 'Please enter your username.',
-    'delete_file' => 'Delete file',
-    'placeholder_project_site_map' => 'Enter link sitemap',
-
-    # Role and Permission
-    'role_permission' => 'Role & Permission',
-    'role_permission_config' => 'System Configuration',
-    'role' => 'Role',
-    'permission' => 'Permission',
-    'add_new_role' => 'Add new role',
-    'add_new_permission' => 'Add new permission',
-
-    # Role and Permission Tenant
-    'tenant_role_permission' => 'Tenant Role & Permission',
-    'tenant_role_permission_config' => 'Tenant Configuration',
-    'tenant_role' => 'Tenant Role',
-    'tenant_permission' => 'TenantPermission',
-    'tenant_add_new_role' => 'Tenant add new role',
-    'tenant_add_new_permission' => 'Tenant add new permission',
 
     # Login
     'sign_in' => 'Sign In',
@@ -324,29 +188,30 @@ return [
     'account' => 'Account',
     'please_contact_admin' => 'Please contact Admin for support.',
 
-    # Tenant
-    'create_tenant' => 'Create Tenant',
-    'update_tenant' => 'Update Tenant',
-    'delete_tenant' => 'Delete Tenant',
+    # Banner
+    'banner' => 'Banner',
 
-    # Role
-    'create_role' => 'Create role',
-    'update_role' => 'Update role',
-    'delete_role' => 'Delete role',
-    'edit_role' => 'Edit role',
+    # Brand
+    'brand' => 'Brand',
+    'list_brand' => 'List Brand',
 
-    # Permission
-    'create_permission' => 'Create permission',
-    'update_permission' => 'Update permission',
-    'delete_permission' => 'Delete permission',
-    'edit_permission' => 'Edit permission',
+    # Category
+    'category' => 'Category',
+    'list_category' => 'List Category',
 
-    # Dashboard
-    'total_file' => 'Total Data Files',
-    'total_word' => 'Total Words',
+    # Report
+    'report' => 'Report',
 
-    'update_sitemap' => 'Update sitemap',
+    # Order
+    'order' => 'Order',
 
-    'upload_sitemap_message' => 'Upload Link Sitemap',
-    'upload_file_message' => 'Upload file or sitemap',
+    # Account
+    'account' => 'Account',
+
+    # Customer
+    'customer' => 'Customer',
+
+    # Product
+    'product' => 'Product',
+
 ];

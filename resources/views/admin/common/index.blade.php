@@ -13,7 +13,6 @@
             <ul class="d-flex align-items-center">
 
                 <li class="nav-item dropdown pe-3">
-
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                         @foreach (config('languages') as $key => $value)
                         @if ($key === session()->get('locale') ?? 'vn')
@@ -59,7 +58,7 @@
                         <li>
                             <a class="dropdown-item d-flex align-items-center" href="{{ route('showUser', auth()->guard(App\Constants\Common::GUARD_ADMIN)->user()->id) }}">
                                 <i class="bi bi-person"></i>
-                                <span>My Profile</span>
+                                <span>@lang('languages.profile')</span>
                             </a>
                         </li>
                         <li>
@@ -73,7 +72,7 @@
                                 <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
-                                <span>Sign Out</span>
+                                <span>@lang('languages.sign_out')</span>
                             </a>
                         </li>
 
@@ -93,32 +92,32 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{route('homeAdmin')}}">
                     <i class="bi bi-grid"></i>
-                    <span>Dashboard</span>
+                    <span>@lang('languages.dashboard')</span>
                 </a>
             </li><!-- End Dashboard Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{route('indexBanners')}}">
                     <i class="ri-bank-card-fill"></i>
-                    <span>Banner</span>
+                    <span>@lang('languages.banner')</span>
                 </a>
             </li><!-- End Banner Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-menu-button-wide"></i><span>Brand</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="bi bi-menu-button-wide"></i><span>@lang('languages.brand')</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     @foreach($brands as $item)
                     <li>
-                        <a href="{{route('indexProduct', ['brand' => $item->id])}}">
-                            <i class="bi bi-circle"></i><span>{{$item->name}}</span>
+                        <a href="{{ route('indexProduct', ['brand' => $item->id ?? '']) }}">
+                            <i class="bi bi-circle"></i><span>{{ $item->name ?? '' }}</span>
                         </a>
                     </li>
                     @endforeach
                     <li>
                         <a href="{{route('showBrand')}}">
-                            <i class="bi bi-circle"></i><span>List Brand</span>
+                            <i class="bi bi-circle"></i><span>@lang('languages.list_brand')</span>
                         </a>
                     </li>
                 </ul>
@@ -126,74 +125,74 @@
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-journal-text"></i><span>Category</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="bi bi-journal-text"></i><span>@lang('languages.category')</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     @foreach($categories as $item)
                     <li>
-                        <a href="{{route('indexProduct', ['category' => $item->id])}}">
-                            <i class="bi bi-circle"></i><span>{{$item->name}}</span>
+                        <a href="{{ route('indexProduct', ['category' => $item->id ?? '']) }}">
+                            <i class="bi bi-circle"></i><span>{{ $item->name ?? '' }}</span>
                         </a>
                     </li>
                     @endforeach
                     <li>
                         <a href="{{route('showCate')}}">
-                            <i class="bi bi-circle"></i><span>List Category</span>
+                            <i class="bi bi-circle"></i><span>@lang('languages.list_category')</span>
                         </a>
                     </li>
                 </ul>
             </li><!-- End Forms Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{route('indexReport')}}">
+                <a class="nav-link collapsed" href="{{ route('indexReport') }}">
                     <i class="bi bi-megaphone"></i>
-                    <span>Report</span>
+                    <span>@lang('languages.report')</span>
                 </a>
             </li><!-- End Report Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{route('indexOrder')}}">
+                <a class="nav-link collapsed" href="{{ route('indexOrder') }}">
                     <i class="bx bxs-cart"></i>
-                    <span>Order</span>
+                    <span>@lang('languages.order')</span>
                 </a>
             </li><!-- End Order Nav -->
 
             @if (isset(auth()->guard(App\Constants\Common::GUARD_ADMIN)->user()->permission) && ((int)auth()->guard(App\Constants\Common::GUARD_ADMIN)->user()->permission === App\Constants\Common::ADMIN))
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{route('indexUser')}}">
+                <a class="nav-link collapsed" href="{{ route('indexUser') }}">
                     <i class="bi bi-people-fill"></i>
-                    <span>Account</span>
+                    <span>@lang('languages.account')</span>
                 </a>
             </li><!-- End Account Nav -->
             @endif
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{route('customer.list')}}">
+                <a class="nav-link collapsed" href="{{ route('customer.list') }}">
                     <i class="ri-user-2-fill"></i>
-                    <span>Customer</span>
+                    <span>@lang('languages.customer')</span>
                 </a>
             </li><!-- End Customer Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{route('indexProduct')}}">
+                <a class="nav-link collapsed" href="{{ route('indexProduct') }}">
                     <i class="ri-product-hunt-fill"></i>
-                    <span>Product</span>
+                    <span>@lang('languages.product')</span>
                 </a>
             </li><!-- End Product Nav -->
 
-            <li class="nav-heading">Pages</li>
+            <li class="nav-heading">@lang('languages.pages')</li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ route('showUser', auth()->guard('admin')->user()->id) }}">
+                <a class="nav-link collapsed" href="{{ route('showUser', auth()->guard('admin')->user()->id ?? '') }}">
                     <i class="bi bi-person"></i>
-                    <span>Profile</span>
+                    <span>@lang('languages.profile')</span>
                 </a>
             </li><!-- End Profile Page Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ route('contact') }}">
                     <i class="bi bi-envelope"></i>
-                    <span>Contact</span>
+                    <span>@lang('languages.contact')</span>
                 </a>
             </li><!-- End Contact Page Nav -->
 
@@ -205,7 +204,7 @@
                     <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>
-                    <span>Logout</span>
+                    <span>@lang('languages.logout')</span>
                 </a>
             </li><!-- End Login Page Nav -->
 

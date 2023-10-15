@@ -20,7 +20,8 @@ class SetLocalMiddleware
         if (session()->has('locale') && array_key_exists(session()->get('locale'), config('languages'))) {
             App::setLocale(session()->get('locale'));
         } else {
-            App::setLocale(config('app.locale'));
+            session()->put('locale', config('app.locale', 'vn'));
+            App::setLocale(config('app.locale', 'vn'));
         }
         return $next($request);
     }
