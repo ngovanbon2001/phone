@@ -7,6 +7,7 @@ use App\Http\Middleware\CheckCartMiddleware;
 use App\Http\Middleware\CountRequestsMiddleware;
 use App\Http\Middleware\isAdmin;
 use App\Http\Middleware\ProductMiddleware;
+use App\Http\Middleware\SetLocalMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -42,6 +43,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            SetLocalMiddleware::class
         ],
 
         'api' => [

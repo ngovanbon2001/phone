@@ -15,6 +15,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController as AuthLoginController;
 use App\Http\Controllers\Auth\UserTempController;
 use App\Http\Controllers\HomeController as HomeControllerFE;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\OrderController as WebOrderController;
 use App\Http\Controllers\Web\ProductController as WebProductController;
@@ -164,6 +165,7 @@ Route::prefix('/')->group(function () {
     Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 });
 
+Route::get('change-language/{locale}', [LanguageController::class, 'changeLanguage'])->name('change.language');
 
 Route::get('/test', function () {
     return response()->json(['message' => 'loi'], 404);
