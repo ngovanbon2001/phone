@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'list_form_title'        => ':form 一覧',
+    'add_form_title'         => '追加 :form',
+    'update_form_title'      => '更新 :form',
+    'delete_form_title'      => '削除 :form',
+    'view_form_title'        => 'ビュー :form',
+    'save_form'              => ':form は正常に保存されました',
+    'update_form'            => ':form は正常に更新されました',
+    'delete_form'            => ':form は正常に削除されました',
+    'delete_alert'           => 'これを削除してもよろしいですか :form?',
+    'add_button_form'        => '新しい追加 :form',
+    'select_name'            => '選択 :select',
+    'status'                 => 'スターテス',
+    'back'                   => '戻る',
+    'close'                  => 'クローズ',
+    'save'                   => '保存',
+    'update'                 => '更新',
+    'cancel'                 => 'キャンセル',
+    'next'                   => '次',
+    'previous'               => '前',
+    'status_success_message' => ':formに成功しました。',
+    'status_fail_message'    => ':form失敗しました。',
+];
