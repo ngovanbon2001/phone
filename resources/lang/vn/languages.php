@@ -205,6 +205,10 @@ return [
     # Thương hiệu
     'brand' => 'Thương hiệu',
     'list_brand' => 'Danh sách thương hiệu',
+    'brand_name' => 'Tên thương hiệu',
+    'link' => 'Đường dẫn',
+    'add_brand' => 'Thêm thương hiệu',
+    'edit_brand' => 'Sửa thương hiệu',
 
     # Danh mục
     'category' => 'Danh mục',
