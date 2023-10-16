@@ -85,6 +85,16 @@ return [
     'contact' => 'Contact',
     'logout' => 'Logout',
     'sign_out' => 'Sign out',
+    'num' => 'No',
+    'image' => 'Image',
+    'title' => 'Title',
+    'status' => 'Status',
+    'sort' => 'Sort',
+    'action' => 'Action',
+    'content' => 'Content',
+    'delete_confirm' => 'Are you sure you want to delete this item?',
+    'yes' => 'Yes',
+    'no' => 'No',
 
     # Users
     'user_list' => 'Users List',
@@ -190,6 +200,8 @@ return [
 
     # Banner
     'banner' => 'Banner',
+    'add_banner' => 'Add banner',
+    'edit_banner' => 'Edit banner',
 
     # Brand
     'brand' => 'Brand',

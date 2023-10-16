@@ -85,6 +85,15 @@ return [
     'contact' => 'Liên hệ',
     'logout' => 'Đăng xuất',
     'sign_out' => 'Đăng xuất',
+    'num' => 'STT',
+    'image' => 'Hình ảnh',
+    'title' => 'Tiêu đề',
+    'status' => 'Trạng thái',
+    'sort' => 'Thứ tự',
+    'content' => 'Nội dung',
+    'delete_confirm' => 'Bạn có muốn xóa mục này?',
+    'yes' => 'Có',
+    'no' => 'Không',
 
     # Người dùng
     'user_list' => 'Danh sách người dùng',
@@ -190,6 +199,8 @@ return [
 
     # Banner
     'banner' => 'Quảng cáo',
+    'add_banner' => 'Thêm quảng cáo',
+    'edit_banner' => 'Sửa quảng cáo',
 
     # Thương hiệu
     'brand' => 'Thương hiệu',

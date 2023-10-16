@@ -8,12 +8,12 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Dashboard</h1>
+            <h1>@lang('languages.dashboard')</h1>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{route('homeAdmin')}}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('indexBanners')}}">Banner</a></li>
-                    <li class="breadcrumb-item active">Edit</li>
+                    <li class="breadcrumb-item"><a href="{{route('homeAdmin')}}">@lang('languages.home')</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('indexBanners')}}">@lang('languages.banner')</a></li>
+                    <li class="breadcrumb-item active">@lang('languages.edit')</li>
                     <li class="breadcrumb-item active">{{ $banner->title ?? "" }}</li>
                 </ol>
             </nav>
@@ -25,7 +25,7 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Edit banner form</h5>
+                            <h5 class="card-title">@lang('languages.edit_banner')</h5>
 
                             <!-- General Form Elements -->
                             <form action="{{ route('updateBanners', $banner->id) }}" enctype="multipart/form-data" method="post" id="edit-profile" class="form-horizontal">
@@ -33,7 +33,7 @@
 
                                 <fieldset>
                                     <div class="control-group col-md-6">
-                                        <label class="control-label">Title <span style="color: red;">*</span></label>
+                                        <label class="control-label">@lang('languages.title') <span style="color: red;">*</span></label>
                                         <div class="controls">
                                             @if ($errors->any())
                                             <input class="form-control" name="title" value="{!! old('title') !!}" type="text" />
@@ -47,7 +47,7 @@
                                     </div> <!-- /control-group -->
 
                                     <div class="control-group col-md-6">
-                                        <label class="control-label">Sort order <span style="color: red;">*</span></label>
+                                        <label class="control-label">@lang('languages.sort') <span style="color: red;">*</span></label>
                                         <div class="controls">
                                             @if ($errors->any())
                                             <input class="form-control" name="sort_order" value="{!! old('sort_order', 0) !!}" type="number" />
@@ -61,17 +61,17 @@
                                     </div> <!-- /control-group -->
 
                                     <div class="control-group col-md-6">
-                                        <label class="control-label">Active</label>
+                                        <label class="control-label">@lang('languages.status')</label>
                                         <div class="controls">
                                             <select class="form-select" name="active">
-                                                <option value="0" {{ (old('active') ?? $banner->active) == 0 ? 'selected' : '' }}>No</option>
-                                                <option value="1" {{ (old('active') ?? $banner->active) == 1 ? 'selected' : '' }}>Yes</option>
+                                                <option value="0" {{ (old('active') ?? $banner->active) == 0 ? 'selected' : '' }}>@lang('languages.no')</option>
+                                                <option value="1" {{ (old('active') ?? $banner->active) == 1 ? 'selected' : '' }}>@lang('languages.yes')</option>
                                             </select>
                                         </div> <!-- /controls -->
                                     </div> <!-- /control-group -->
 
                                     <div class="control-group col-md-6">
-                                        <label class="control-label">Image</label>
+                                        <label class="control-label">@lang('languages.image')</label>
                                         <div class="controls">
                                             <input type="hidden" name="imageOld" value="{{ $banner->image_url }}">
                                             <input id="imageInput" value="" class="form-control" name="image_url" type="file" />
@@ -85,7 +85,7 @@
                                     </div> <!-- /control-group -->
 
                                     <div class="control-group">
-                                        <label class="control-label">Content <span style="color: red;">*</span></label>
+                                        <label class="control-label">@lang('languages.content') <span style="color: red;">*</span></label>
                                         <div class="controls">
                                             @if ($errors->any())
                                             <textarea id="textareaDescription" name="content" class="tinymce-editor">{!! old('content') !!}</textarea>
@@ -99,8 +99,8 @@
                                     </div> <!-- /control-group -->
 
                                     <div class="form-actions">
-                                        <button type="submit" class="btn btn-primary">Save</button>
-                                        <a href="{{ route('indexBanners') }}" class="btn btn-danger">Cancel</a>
+                                        <button type="submit" class="btn btn-primary">@lang('languages.save')</button>
+                                        <a href="{{ route('indexBanners') }}" class="btn btn-danger">@lang('languages.cancel')</a>
                                     </div> <!-- /form-actions -->
                                 </fieldset>
 
