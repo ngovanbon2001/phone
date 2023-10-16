@@ -206,6 +206,10 @@ return [
     # Brand
     'brand' => 'Brand',
     'list_brand' => 'List Brand',
+    'brand_name' => 'Brand name',
+    'link' => 'Link',
+    'add_brand' => 'Add brand',
+    'edit_brand' => 'Edit brand',
 
     # Category
     'category' => 'Category',
