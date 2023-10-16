@@ -214,6 +214,9 @@ return [
     # Category
     'category' => 'Category',
     'list_category' => 'List Category',
+    'category_name' => 'Category name',
+    'add_category' => 'Add category',
+    'edit_category' => 'Edit category',
 
     # Report
     'report' => 'Report',

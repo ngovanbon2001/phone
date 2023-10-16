@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-@include ('admin.common.head', ['pageTitle' => 'Edit category - Phone Admin'])
+@include ('admin.common.head', ['pageTitle' => __('languages.edit_category').' - Phone Admin'])
 
 <body>
     @include ('admin.common.index')
@@ -8,12 +8,12 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Dashboard</h1>
+            <h1>@lang('languages.dashboard')</h1>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{route('homeAdmin')}}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('showCate')}}">Category</a></li>
-                    <li class="breadcrumb-item active">Edit</li>
+                    <li class="breadcrumb-item"><a href="{{route('homeAdmin')}}">@lang('languages.home')</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('showCate')}}">@lang('languages.category')</a></li>
+                    <li class="breadcrumb-item active">@lang('languages.edit')</li>
                     <li class="breadcrumb-item active">{{ $category->name ?? "" }}</li>
                 </ol>
             </nav>
@@ -25,7 +25,7 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Edit category form</h5>
+                            <h5 class="card-title">@lang('languages.edit_category')</h5>
 
                             <!-- General Form Elements -->
                             <form action="{{ route('updateCate', $category->id) }}" method="post" id="edit-profile" class="form-horizontal">
@@ -33,7 +33,7 @@
                                 <fieldset>
 
                                     <div class="control-group col-md-6">
-                                        <label class="control-label">Category's name<span style="color: red;"> *</span></label>
+                                        <label class="control-label">@lang('languages.category_name') <span style="color: red;"> *</span></label>
                                         <div class="controls">
                                             @if ($errors->any())
                                             <input class="form-control" name="name" value="{!! old('name') !!}" type="text" />
@@ -47,7 +47,7 @@
                                     </div> <!-- /control-group -->
 
                                     <div class="control-group col-md-6">
-                                        <label class="control-label">Sort order <span style="color: red;">*</span></label>
+                                        <label class="control-label">@lang('languages.sort') <span style="color: red;">*</span></label>
                                         <div class="controls">
                                             @if ($errors->any())
                                             <input class="form-control" name="sort_order" value="{!! old('sort_order', 0) !!}" type="number" />
@@ -61,18 +61,18 @@
                                     </div> <!-- /control-group -->
 
                                     <div class="control-group col-md-6">
-                                        <label class="control-label">Active</label>
+                                        <label class="control-label">@lang('languages.status')</label>
                                         <div class="controls">
                                             <select class="form-select" name="active">
-                                                <option value="0" {{ (old('active') ?? $category->active) == 0 ? 'selected' : '' }}>No</option>
-                                                <option value="1" {{ (old('active') ?? $category->active) == 1 ? 'selected' : '' }}>Yes</option>
+                                                <option value="0" {{ (old('active') ?? $category->active) == 0 ? 'selected' : '' }}>@lang('languages.no')</option>
+                                                <option value="1" {{ (old('active') ?? $category->active) == 1 ? 'selected' : '' }}>@lang('languages.yes')</option>
                                             </select>
                                         </div> <!-- /controls -->
                                     </div> <!-- /control-group -->
 
                                     <div class="form-actions">
-                                        <button type="submit" class="btn btn-primary">Save</button>
-                                        <a href="{{ route('showCate') }}" class="btn btn-danger">Cancel</a>
+                                        <button type="submit" class="btn btn-primary">@lang('languages.save')</button>
+                                        <a href="{{ route('showCate') }}" class="btn btn-danger">@lang('languages.cancel')</a>
                                     </div> <!-- /form-actions -->
 
                                 </fieldset>
