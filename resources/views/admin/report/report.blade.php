@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-@include ('admin.common.head', ['pageTitle' => 'Report - Phone Admin'])
+@include ('admin.common.head', ['pageTitle' => __('languages.report').' - Phone Admin'])
 
 <body>
     @include ('admin.common.index')
@@ -8,11 +8,11 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Dashboard</h1>
+            <h1>@lang('languages.dashboard')</h1>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{route('homeAdmin')}}">Home</a></li>
-                    <li class="breadcrumb-item">Report</li>
+                    <li class="breadcrumb-item"><a href="{{route('homeAdmin')}}">@lang('languages.home')</a></li>
+                    <li class="breadcrumb-item">@lang('languages.report')</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -29,7 +29,7 @@
                             <div class="card">
 
                                 <div class="card-body">
-                                    <h5 class="card-title">Inventory</h5>
+                                    <h5 class="card-title">@lang('languages.inventory')</h5>
 
                                     <!-- Line Chart -->
                                     <div id="reportsChart"></div>
@@ -82,26 +82,6 @@
                             </div>
                         </div><!-- End Reports -->
 
-                        <!-- Recent Sales -->
-                        <div class="col-12">
-                            <div class="card recent-sales overflow-auto">
-
-                                <div class="filter">
-                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                        <li class="dropdown-header text-start">
-                                            <h6>Filter</h6>
-                                        </li>
-
-                                        <li><a class="dropdown-item" href="#">Today</a></li>
-                                        <li><a class="dropdown-item" href="#">This Month</a></li>
-                                        <li><a class="dropdown-item" href="#">This Year</a></li>
-                                    </ul>
-                                </div>
-
-                            </div>
-                        </div><!-- End Recent Sales -->
-
                     </div>
                 </div><!-- End Left side columns -->
 
@@ -112,7 +92,7 @@
                     <div class="card">
 
                         <div class="card-body pb-0">
-                            <h5 class="card-title">Best sell</h5>
+                            <h5 class="card-title">@lang('languages.best_sell')</h5>
 
                             <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
 
@@ -165,7 +145,7 @@
                     <div class="card">
 
                         <div class="card-body pb-0">
-                            <h5 class="card-title">Top order</h5>
+                            <h5 class="card-title">@lang('languages.top_order')</h5>
 
                             <div id="trafficChart1" style="min-height: 400px;" class="echart"></div>
 
