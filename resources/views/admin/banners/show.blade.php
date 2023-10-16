@@ -8,12 +8,12 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Dashboard</h1>
+            <h1>@lang('languages.dashboard')</h1>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{route('homeAdmin')}}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('indexBanners')}}">Banner</a></li>
-                    <li class="breadcrumb-item active">List</li>
+                    <li class="breadcrumb-item"><a href="{{route('homeAdmin')}}">@lang('languages.home')</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('indexBanners')}}">@lang('languages.banner')</a></li>
+                    <li class="breadcrumb-item active">@lang('languages.list')</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -47,12 +47,12 @@
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
-                                                <th style="width:5%; text-align: center;">No</th>
-                                                <th style="width:18%; text-align: center;">Image</th>
-                                                <th style="width:40%; text-align: left;">Title</th>
-                                                <th style="width:8%; text-align: center;">Active</th>
-                                                <th style="width:8%; text-align: center;">Sort</th>
-                                                <th style="width:20%; text-align: center;">Action</th>
+                                                <th style="width:5%; text-align: center;">@lang('languages.num')</th>
+                                                <th style="width:18%; text-align: center;">@lang('languages.image')</th>
+                                                <th style="width:30%; text-align: left;">@lang('languages.title')</th>
+                                                <th style="width:18%; text-align: center;">@lang('languages.active')</th>
+                                                <th style="width:8%; text-align: center;">@lang('languages.sort')</th>
+                                                <th style="width:20%; text-align: center;">@lang('languages.action')</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -61,12 +61,13 @@
                                                 <td style="text-align: center;">{{ $bannerKey + 1 }}</td>
                                                 <td style="text-align: center;"><img src="{{ asset('images/' . $bannerList->image_url) }}" style="width: 150px" alt="No Image"></td>
                                                 <td style="text-align: left;">{{ $bannerList->title }}</td>
-                                                <td style="text-align: center;"><input type="checkbox" class="toggle-position" value="{{ $bannerList->id }}" data-name="{{ $bannerList->title }}" data-url="{{route('activeBanner')}}" data-id="{{ $bannerList->id }}" data-on="Yes" data-off="No" {{ $bannerList->active == 1 ? 'checked' : '' }} data-toggle="toggle" data-width="20" data-height="10"></td>
+                                                <td style="text-align: center;"><input type="checkbox" class="toggle-position" value="{{ $bannerList->id }}" data-name="{{ $bannerList->title }}" data-url="{{route('activeBanner')}}" data-id="{{ $bannerList->id }}" data-on="{{ __('languages.yes') }}" data-off="{{ __('languages.no') }}" {{ $bannerList->active == 1 ? 'checked' : '' }} data-toggle="toggle" data-width="20" data-height="10"></td>
                                                 <td style="text-align: center;">{{ $bannerList->sort_order }}</td>
                                                 <td style="text-align: center;">
                                                     <input value="{{ $bannerList->id }}" type="hidden" name="id">
                                                     <a class="btn btn-success" href="{{ route('editBanners', $bannerList->id) }}"><i class="bi bi-pencil-square"></i></a>&emsp;
-                                                    <a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?') ? document.getElementById('banner-delete-{{ $bannerList->id }}').submit() : false"><i class="bi bi-trash"></i></a>
+                                                    <?php $message =  __('languages.delete_confirm') ?>
+                                                    <a class="btn btn-danger" onclick="return confirm('{{ $message }}') ? document.getElementById('banner-delete-{{ $bannerList->id }}').submit() : false"><i class="bi bi-trash"></i></a>
                                                     <form action="{{ route('destroyBanners', $bannerList->id) }}" id="banner-delete-{{ $bannerList->id }}" method="post">
                                                         @method('delete')
                                                         @csrf()
