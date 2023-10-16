@@ -213,6 +213,9 @@ return [
     # Danh mục
     'category' => 'Danh mục',
     'list_category' => 'Danh sách danh mục',
+    'category_name' => 'Tên danh mục',
+    'add_category' => 'Thêm danh mục',
+    'edit_category' => 'Sửa danh mục',
 
     # Báo cáo
     'report' => 'Báo cáo',
