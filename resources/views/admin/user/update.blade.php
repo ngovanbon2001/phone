@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-@include ('admin.common.head', ['pageTitle' => 'Edit user - Phone Admin'])
+@include ('admin.common.head', ['pageTitle' => __('languages.edit_staff').' - Phone Admin'])
 
 <body>
     @include ('admin.common.index')
@@ -8,12 +8,12 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Dashboard</h1>
+            <h1>@lang('languages.dashboard')</h1>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{route('homeAdmin')}}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('indexUser')}}">Account</a></li>
-                    <li class="breadcrumb-item active">Edit</li>
+                    <li class="breadcrumb-item"><a href="{{route('homeAdmin')}}">@lang('languages.home')</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('indexUser')}}">@lang('languages.staff')</a></li>
+                    <li class="breadcrumb-item active">@lang('languages.edit')</li>
                     <li class="breadcrumb-item active">{{ $staff->username ?? "" }}</li>
                 </ol>
             </nav>
@@ -25,7 +25,7 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Edit account form</h5>
+                            <h5 class="card-title">@lang('languages.edit_staff')</h5>
 
                             <!-- General Form Elements -->
                             <form action="{{ route('updateUser', $staff->id) }}" method="post" id="edit-profile" class="form-horizontal" enctype="multipart/form-data">
@@ -34,7 +34,7 @@
 
                                     <div class="row">
                                         <div class="control-group col-md-6">
-                                            <label class="control-label">User's name <span style="color: red;">*</span></label>
+                                            <label class="control-label">@lang('languages.staff_name') <span style="color: red;">*</span></label>
                                             <div class="controls">
                                                 @if ($errors->any())
                                                 <input type="text" class="form-control" name="username" value="{!! old('username') !!}">
@@ -49,7 +49,7 @@
                                         </div> <!-- /control-group -->
 
                                         <div class="control-group col-md-6">
-                                            <label class="control-label">Phone <span style="color: red;">*</span></label>
+                                            <label class="control-label">@lang('languages.phone_number') <span style="color: red;">*</span></label>
                                             <div class="controls">
                                                 @if ($errors->any())
                                                 <input type="text" class="form-control" name="phone" value="{!! old('phone') !!}">
@@ -66,7 +66,7 @@
 
                                     <div class="row">
                                         <div class="control-group col-md-6">
-                                            <label class="control-label">Email <span style="color: red;">*</span></label>
+                                            <label class="control-label">@lang('languages.email') <span style="color: red;">*</span></label>
                                             <div class="controls">
                                                 @if ($errors->any())
                                                 <input type="text" class="form-control" name="email" value="{!! old('email') !!}">
@@ -81,19 +81,19 @@
                                         </div> <!-- /control-group -->
 
                                         <div class="control-group col-md-6">
-                                            <label class="control-label">Permission</label>
+                                            <label class="control-label">@lang('languages.permission')</label>
                                             <div class="controls">
                                                 <select class="form-select" name="permission">
-                                                    <option value="0" {{ (old('permission') ?? $staff->permission) == 0 ? 'selected' : '' }}>ADMIN</option>
-                                                    <option value="1" {{ (old('permission') ?? $staff->permission) == 1 ? 'selected' : '' }}>STAFF</option>
+                                                    <option value="0" {{ (old('permission') ?? $staff->permission) == 0 ? 'selected' : '' }}>@lang('languages.admin')</option>
+                                                    <option value="1" {{ (old('permission') ?? $staff->permission) == 1 ? 'selected' : '' }}>@lang('languages.staff')</option>
                                                 </select>
                                             </div> <!-- /controls -->
                                         </div> <!-- /control-group -->
                                     </div>
 
                                     <div class="form-actions">
-                                        <button type="submit" class="btn btn-primary">Save</button>
-                                        <a href="{{ route('indexUser') }}" class="btn btn-danger">Cancel</a>
+                                        <button type="submit" class="btn btn-primary">@lang('languages.save')</button>
+                                        <a href="{{ route('indexUser') }}" class="btn btn-danger">@lang('languages.cancel')</a>
                                     </div> <!-- /form-actions -->
 
                                 </fieldset>

@@ -153,6 +153,14 @@ return [
     'old_password' => 'Old Password',
     'avatar' => 'Avatar',
 
+    # Staff
+    'staff' => 'Staff',
+    'staff_name' => 'Staff name',
+    'create_staff' => 'Create account staff',
+    'edit_staff' => 'Edit account staff',
+    'permission' => 'Permission',
+    'admin' => 'Admin',
+
     # Login
     'sign_in' => 'Sign In',
     'login_to_stay_connected' => 'Login to stay connected.',
