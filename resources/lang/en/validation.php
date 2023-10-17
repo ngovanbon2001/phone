@@ -122,6 +122,7 @@ return [
     'drag_and_drop' => 'Only allowed :attribute: txt, xlsx, docx, csv, pptx, pdf, zip',
     'file_or_sitemap' => 'At least one input is required.',
     'chat_bot' => 'Chatbot message start is a required field.',
+    'password_wrong' => 'Password wrong.',
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

@@ -122,6 +122,7 @@ return [
     'drag_and_drop' => 'Chỉ cho phép tệp tin :attribute có định dạng: txt, xlsx, docx, csv, pptx, pdf, zip',
     'file_or_sitemap' => 'Ít nhất một trong các trường :attribute là bắt buộc.',
     'chat_bot' => 'Trường bắt đầu tin nhắn Chatbot là bắt buộc.',
+    'password_wrong' => 'Mật khẩu cũ sai.',
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Attributes

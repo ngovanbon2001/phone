@@ -107,6 +107,7 @@ Route::prefix('admin')->middleware('isAdmin')->group(function () {
     Route::post('/user/update/{id}', [UserController::class, 'update'])->name('updateUser');
     Route::get('/user/show/{id}', [UserController::class, 'show'])->name('showUser');
     Route::post('/user/update-profile/{id}', [UserController::class, 'updateProfile'])->name('updateProfile');
+    Route::post('/user/change-password/{id}', [UserController::class, 'changePassword'])->name('user.change-password');
 
     //customer
     Route::get('/customer', [CustomerController::class, 'index'])->name('customer.list');

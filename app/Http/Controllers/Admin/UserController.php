@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Constants\Common;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
@@ -108,6 +109,24 @@ class UserController extends Controller
      * @return RedirectResponse
      */
     public function updateProfile(UpdateProfileRequest $request, int $id): RedirectResponse
+    {
+        $staff = $this->userServiceInterface->update($request->all(), $id);
+
+        return $this->handleViewResponse(
+            $staff,
+            'showUser',
+            Common::ACTION[Common::ACTION_UPDATE]. ' '.$this->action,
+            '',
+            $id
+        );
+    }
+
+    /**
+     * @param ChangePasswordRequest $request
+     * @param int $id
+     * @return RedirectResponse
+     */
+    public function changePassword(ChangePasswordRequest $request, int $id): RedirectResponse
     {
         $staff = $this->userServiceInterface->update($request->all(), $id);
 

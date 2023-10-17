@@ -101,8 +101,8 @@ return [
     # Users
     'user_list' => 'Users List',
     'entries' => 'entries',
-    'full_name' => 'FULL NAME',
-    'phone_number' => 'Phone Number',
+    'full_name' => 'Full name',
+    'phone_number' => 'Phone number',
     'email' => 'Email',
     'country' => 'Country',
     'status' => 'Status',
@@ -127,6 +127,12 @@ return [
     'enter_username' => 'Enter Username',
     'state' => 'State',
     'change_password' => 'Change password',
+    'profile_details' => 'Profile details',
+    'overview' => 'Overview',
+    'edit_profile' => 'Edit profile',
+    'current_password' => 'Current password',
+    'new_password' => 'New password',
+    're_enter_password' => 'Re-enter New Password',
 
     # Form user
     'username' => 'User Name',

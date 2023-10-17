@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Rules\CurrentPassword;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateProfileRequest extends FormRequest
+class ChangePasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,9 @@ class UpdateProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => 'nullable|string',
-            'phone'    => 'nullable|string',
+            'curpassword'   => new CurrentPassword,
+            'password'      => 'required|string',
+            'renewpassword' => 'required|string'
         ];
     }
 }

@@ -29,6 +29,6 @@ class CurrentPassword implements Rule
      */
     public function message()
     {
-        return 'Password wrong.';
+        return __('validation.password_wrong');
     }
 }

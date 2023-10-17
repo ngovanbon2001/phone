@@ -100,7 +100,7 @@ return [
     # Người dùng
     'user_list' => 'Danh sách người dùng',
     'entries' => 'mục',
-    'full_name' => 'HỌ TÊN ĐẦY ĐỦ',
+    'full_name' => 'Họ tên đầy đủ',
     'phone_number' => 'Số điện thoại',
     'email' => 'Email',
     'country' => 'Quốc gia',
@@ -126,6 +126,12 @@ return [
     'enter_username' => 'Nhập tên người dùng',
     'state' => 'Trạng thái',
     'change_password' => 'Thay đổi mật khẩu',
+    'profile_details' => 'Chi tiết hồ sơ',
+    'overview' => 'Tổng quan',
+    'edit_profile' => 'Chỉnh sửa hồ sơ',
+    'current_password' => 'Mật khẩu cũ',
+    'new_password' => 'Mật khẩu mới',
+    're_enter_password' => 'Nhập lại mật khẩu mới',
 
     # Nhân viên
     'staff' => 'Nhân viên',
