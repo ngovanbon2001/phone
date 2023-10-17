@@ -268,4 +268,6 @@ return [
     'internal_memory' => 'Internal memory',
     'memory_stick' => 'Memory stick',
     'battery' => 'Battery',
+    'add_image' => 'Add image',
+    'up_load' => 'Upload',
 ];

@@ -267,4 +267,6 @@ return [
     'internal_memory' => 'Bộ nhớ trong',
     'memory_stick' => 'Thẻ nhớ',
     'battery' => 'Pin',
+    'add_image' => 'Thêm hình ảnh',
+    'up_load' => 'Tải lên',
 ];
