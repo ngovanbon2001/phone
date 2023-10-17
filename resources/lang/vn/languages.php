@@ -127,6 +127,14 @@ return [
     'state' => 'Trạng thái',
     'change_password' => 'Thay đổi mật khẩu',
 
+    # Nhân viên
+    'staff' => 'Nhân viên',
+    'staff_name' => 'Tên nhân viên',
+    'create_staff' => 'Create account staff',
+    'edit_staff' => 'Cập nhật tài khoản nhân viên',
+    'permission' => 'Quyền',
+    'admin' => 'Quản trị',
+
     # Form người dùng
     'username' => 'Tên người dùng',
     'first_name' => 'Tên',

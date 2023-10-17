@@ -161,7 +161,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ route('indexUser') }}">
                     <i class="bi bi-people-fill"></i>
-                    <span>@lang('languages.account')</span>
+                    <span>@lang('languages.staff')</span>
                 </a>
             </li><!-- End Account Nav -->
             @endif

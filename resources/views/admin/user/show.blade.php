@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-@include ('admin.common.head', ['pageTitle' => 'User - Phone Admin'])
+@include ('admin.common.head', ['pageTitle' => __('languages.staff').' - Phone Admin'])
 
 <body>
     @include ('admin.common.index')
@@ -8,12 +8,12 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Dashboard</h1>
+            <h1>@lang('languages.dashboard')</h1>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{route('homeAdmin')}}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('indexUser')}}">Account</a></li>
-                    <li class="breadcrumb-item active">List</li>
+                    <li class="breadcrumb-item"><a href="{{route('homeAdmin')}}">@lang('languages.home')</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('indexUser')}}">@lang('languages.staff')</a></li>
+                    <li class="breadcrumb-item active">@lang('languages.list')</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -46,10 +46,10 @@
                                     <table style="width:100%" class="table table-striped">
                                         <thead>
                                             <tr>
-                                                <th style="width:35%; text-align: center;">User's Name</th>
-                                                <th style="width:30%; text-align: center;">Email</th>
-                                                <th style="width:15%; text-align: center;">Phone</th>
-                                                <th style="width:20%; text-align: center;">Action</th>
+                                                <th style="width:30%; text-align: center;">@lang('languages.staff_name')</th>
+                                                <th style="width:30%; text-align: center;">@lang('languages.email')</th>
+                                                <th style="width:20%; text-align: center;">@lang('languages.phone_number')</th>
+                                                <th style="width:20%; text-align: center;">@lang('languages.action')</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -61,7 +61,8 @@
                                                 <td style="text-align: center;">
                                                     @if (Auth::guard("admin")->user()->permission == 0)
                                                     <a class="btn btn-success" href="{{ route('editUser', $userData->id)  }}"><i class="bi bi-pencil-square"></i></a>
-                                                    <a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this staff?') ? document.getElementById('staff-delete-{{ $userData->id }}').submit() : false"><i class="bi bi-trash"></i></a>
+                                                    <?php $message =  __('languages.delete_confirm') ?>
+                                                    <a class="btn btn-danger" onclick="return confirm('{{ $message }}') ? document.getElementById('staff-delete-{{ $userData->id }}').submit() : false"><i class="bi bi-trash"></i></a>
                                                     <form action="{{ route('destroyUser', $userData->id) }}" id="staff-delete-{{ $userData->id }}" method="post">
                                                         @method('delete')
                                                         @csrf()

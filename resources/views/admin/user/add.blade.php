@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-@include ('admin.common.head', ['pageTitle' => 'Create user - Phone Admin'])
+@include ('admin.common.head', ['pageTitle' => __('languages.create_staff').' - Phone Admin'])
 
 <body>
     @include ('admin.common.index')
@@ -8,12 +8,12 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Dashboard</h1>
+            <h1>@lang('languages.dashboard')</h1>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{route('homeAdmin')}}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('indexUser')}}">Account</a></li>
-                    <li class="breadcrumb-item active">Add</li>
+                    <li class="breadcrumb-item"><a href="{{route('homeAdmin')}}">@lang('languages.home')</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('indexUser')}}">@lang('languages.staff')</a></li>
+                    <li class="breadcrumb-item active">@lang('languages.add')</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -24,7 +24,7 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Add account form</h5>
+                            <h5 class="card-title">@lang('languages.create_staff')</h5>
 
                             <!-- General Form Elements -->
                             <form action="{{ route('storeUser') }}" method="post" id="edit-profile" class="form-horizontal" enctype="multipart/form-data">
@@ -32,7 +32,7 @@
                                 <fieldset>
                                     <div class="row">
                                         <div class="control-group col-md-6">
-                                            <label class="control-label">User's name <span style="color: red;">*</span></label>
+                                            <label class="control-label">@lang('languages.staff_name') <span style="color: red;">*</span></label>
                                             <div class="controls">
                                                 @if ($errors->any())
                                                 <input type="text" class="form-control" name="username" value="{!! old('username') !!}">
@@ -51,7 +51,7 @@
                                         </div> <!-- /control-group -->
 
                                         <div class="control-group col-md-6">
-                                            <label class="control-label">Phone <span style="color: red;">*</span></label>
+                                            <label class="control-label">@lang('languages.phone_number') <span style="color: red;">*</span></label>
                                             <div class="controls">
                                                 @if ($errors->any())
                                                 <input type="text" class="form-control" name="phone" value="{!! old('phone') !!}">
@@ -72,7 +72,7 @@
 
                                     <div class="row">
                                         <div class="control-group col-md-6">
-                                            <label class="control-label">Email <span style="color: red;">*</span></label>
+                                            <label class="control-label">@lang('languages.email') <span style="color: red;">*</span></label>
                                             <div class="controls">
                                                 @if ($errors->any())
                                                 <input type="text" class="form-control" name="email" value="{!! old('email') !!}">
@@ -91,11 +91,11 @@
                                         </div> <!-- /control-group -->
 
                                         <div class="control-group col-md-6">
-                                            <label class="control-label">Permission</label>
+                                            <label class="control-label">@lang('languages.permission')</label>
                                             <div class="controls">
                                                 <select class="form-select" name="permission">
-                                                    <option value="1" {{ (old('permission') !== null && old('permission') == 1) ? 'selected' : '' }}>STAFF</option>
-                                                    <option value="0" {{ (old('permission') !== null && old('permission') == 0) ? 'selected' : '' }}>ADMIN</option>
+                                                    <option value="1" {{ (old('permission') !== null && old('permission') == 1) ? 'selected' : '' }}>@lang('languages.staff')</option>
+                                                    <option value="0" {{ (old('permission') !== null && old('permission') == 0) ? 'selected' : '' }}>@lang('languages.admin')</option>
                                                 </select>
                                             </div> <!-- /controls -->
                                         </div> <!-- /control-group -->
@@ -103,7 +103,7 @@
 
                                     @if (Request::route()->getName() == "createUser")
                                     <div class="control-group">
-                                        <label class="control-label">Password <span style="color: red;">*</span></label>
+                                        <label class="control-label">@lang('languages.password') <span style="color: red;">*</span></label>
                                         <div class="controls">
                                             @if ($errors->any())
                                             <input type="password" class="form-control" name="password" value="{!! old('password') !!}">
@@ -123,8 +123,8 @@
                                     @endif
 
                                     <div class="form-actions">
-                                        <button type="submit" class="btn btn-primary">Save</button>
-                                        <a href="{{ route('indexUser') }}" class="btn btn-danger">Cancel</a>
+                                        <button type="submit" class="btn btn-primary">@lang('languages.save')</button>
+                                        <a href="{{ route('indexUser') }}" class="btn btn-danger">@lang('languages.cancel')</a>
                                     </div> <!-- /form-actions -->
 
                                 </fieldset>
