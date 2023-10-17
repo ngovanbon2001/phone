@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-@include ('admin.common.head', ['pageTitle' => 'Product - Phone Admin'])
+@include ('admin.common.head', ['pageTitle' => __('languages.product').' - Phone Admin'])
 
 <body>
     @include ('admin.common.index')
@@ -8,12 +8,12 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Dashboard</h1>
+            <h1>@lang('languages.dashboard')</h1>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{route('homeAdmin')}}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('indexProduct')}}">Product</a></li>
-                    <li class="breadcrumb-item active">List</li>
+                    <li class="breadcrumb-item"><a href="{{route('homeAdmin')}}">@lang('languages.home')</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('indexProduct')}}">@lang('languages.product')</a></li>
+                    <li class="breadcrumb-item active">@lang('languages.list')</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -47,15 +47,15 @@
                                         <div class="search">
                                             <div class="row">
                                                 <div class="control-group col-md-4">
-                                                    <label class="control-label">Product's name</label>
-                                                    <input id='searchInput' class="form-control" name="name" type='text' placeholder="Product's name" value="{{ request('name') }}" />
+                                                    <label class="control-label">@lang('languages.product_name')</label>
+                                                    <input id='searchInput' class="form-control" name="name" type='text' placeholder="{{ __('languages.product_name') }}" value="{{ request('name') }}" />
                                                     @error ('name')
                                                     <label class="error">{{ $message }}</label>
                                                     @enderror
                                                 </div>
 
                                                 <div class="control-group col-md-4">
-                                                    <label class="control-label">Brand</label>
+                                                    <label class="control-label">@lang('languages.brand')</label>
                                                     <select name="brand" class="form-select">
                                                         <option value="">-----</option>
                                                         @foreach ($brands as $brand)
@@ -68,7 +68,7 @@
                                                 </div>
 
                                                 <div class="control-group col-md-4">
-                                                    <label class="control-label">Category</label>
+                                                    <label class="control-label">@lang('languages.category')</label>
                                                     <select class="form-select" name="category">
                                                         <option value="">-----</option>
                                                         @foreach ($categories as $category)
@@ -83,11 +83,11 @@
 
                                             <div class="row">
                                                 <div class="control-group col-md-4">
-                                                    <label class="control-label">Is New</label>
+                                                    <label class="control-label">@lang('languages.new_product')</label>
                                                     <select class="form-select" name="isNew">
                                                         <option value="">-----</option>
-                                                        <option value="0" {{ (request('isNew') == '0') ? 'selected' : '' }}>No</option>
-                                                        <option value="1" {{ (request('isNew') == '1') ? 'selected' : '' }}>Yes</option>
+                                                        <option value="0" {{ (request('isNew') == '0') ? 'selected' : '' }}>@lang('languages.no')</option>
+                                                        <option value="1" {{ (request('isNew') == '1') ? 'selected' : '' }}>@lang('languages.yes')</option>
                                                     </select>
                                                     @error ('isNew')
                                                     <label class="error">{{ $message }}</label>
@@ -95,11 +95,11 @@
                                                 </div>
 
                                                 <div class="control-group col-md-4">
-                                                    <label class="control-label">Best Sell</label>
+                                                    <label class="control-label">@lang('languages.best_sell')</label>
                                                     <select class="form-select" name="bestSell">
                                                         <option value="">-----</option>
-                                                        <option value="0" {{ (request('bestSell') == '0') ? 'selected' : '' }}>No</option>
-                                                        <option value="1" {{ (request('bestSell') == '1') ? 'selected' : '' }}>Yes</option>
+                                                        <option value="0" {{ (request('bestSell') == '0') ? 'selected' : '' }}>@lang('languages.no')</option>
+                                                        <option value="1" {{ (request('bestSell') == '1') ? 'selected' : '' }}>@lang('languages.yes')</option>
                                                     </select>
                                                     @error ('bestSell')
                                                     <label class="error">{{ $message }}</label>
@@ -122,16 +122,16 @@
 
                                         <thead>
                                             <tr>
-                                                <th style="width:2%; text-align: center;">No</th>
-                                                <th style="width:10%; text-align: center;">Image</th>
-                                                <th style="width:10%; text-align: center;">Product's Name</th>
-                                                <th style="width:12%; text-align: center;">Brand</th>
-                                                <th style="width:15%; text-align: center;">Category</th>
-                                                <th style="width:5%; text-align: center;">Price</th>
-                                                <th style="width:7%; text-align: center;">Best sell</th>
-                                                <th style="width:5%; text-align: center;">New</th>
-                                                <th style="width:2%; text-align: center;">Active</th>
-                                                <th style="width:30%; text-align: center;">Action</th>
+                                                <th style="width:2%; text-align: center;">@lang('languages.num')</th>
+                                                <th style="width:10%; text-align: center;">@lang('languages.image')</th>
+                                                <th style="width:10%; text-align: center;">@lang('languages.product_name')</th>
+                                                <th style="width:12%; text-align: center;">@lang('languages.brand')</th>
+                                                <th style="width:15%; text-align: center;">@lang('languages.category')</th>
+                                                <th style="width:5%; text-align: center;">@lang('languages.price')</th>
+                                                <th style="width:7%; text-align: center;">@lang('languages.best_sell')</th>
+                                                <th style="width:5%; text-align: center;">@lang('languages.new_product')</th>
+                                                <th style="width:2%; text-align: center;">@lang('languages.status')</th>
+                                                <th style="width:30%; text-align: center;">@lang('languages.action')</th>
                                             </tr>
                                         </thead>
 
@@ -155,11 +155,12 @@
                                                 <td></td>
                                                 @endif
                                                 <input type="hidden" value="{{ $product->id }}" class="id" id="idp">
-                                                <td style="text-align: center;"><input type="checkbox" class="toggle-position" value="{{ $product->id }}" data-name="{{ $product->name }}" data-url="{{route('active')}}" data-id="{{ $product->id }}" data-on="Yes" data-off="No" data-toggle="toggle" data-width="15" data-height="10" {{ $product->active == 1 ? 'checked' : '' }}></td>
+                                                <td style="text-align: center;"><input type="checkbox" class="toggle-position" value="{{ $product->id }}" data-name="{{ $product->name }}" data-url="{{route('active')}}" data-id="{{ $product->id }}" data-on="{{ __('languages.yes') }}" data-off="{{ __('languages.no') }}" data-toggle="toggle" data-width="15" data-height="10" {{ $product->active == 1 ? 'checked' : '' }}></td>
                                                 <td style="text-align: center;">
                                                     <input value="{{ $product->id }}" type="hidden" name="id">
                                                     <a class="btn btn-success" href="{{ route('editProducts', $product->id)  }}"><i class="bi bi-pencil-square"></i></a>
-                                                    <a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?') ? document.getElementById('product-delete-{{ $product->id }}').submit() : false"><i class="bi bi-trash"></i></a>
+                                                    <?php $message =  __('languages.delete_confirm') ?>
+                                                    <a class="btn btn-danger" onclick="return confirm('{{ $message }}') ? document.getElementById('product-delete-{{ $product->id }}').submit() : false"><i class="bi bi-trash"></i></a>
                                                     <a class="btn btn-info" href="{{ route('showImage', $product->id) }}"><i class="ri-eye-line"></i></a>
                                                     <form action="{{ route('destroyProducts', $product->id) }}" id="product-delete-{{ $product->id }}" method="post">
                                                         @method('delete')
