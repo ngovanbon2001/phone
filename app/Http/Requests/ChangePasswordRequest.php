@@ -26,8 +26,14 @@ class ChangePasswordRequest extends FormRequest
     {
         return [
             'curpassword'   => new CurrentPassword,
-            'password'      => 'required|string',
-            'renewpassword' => 'required|string'
+            'password'      => 'required|string|confirmed',
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'password' => __('languages.password'),
         ];
     }
 }

@@ -118,21 +118,21 @@
                                         <div class="row mb-3">
                                             <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">@lang('languages.current_password')</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="curpassword" type="password" class="form-control" id="currentPassword">
+                                                <input name="curpassword" type="password" value="{!! old('curpassword') !!}" class="form-control" id="currentPassword">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
-                                            <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">@lang('languages.new_password')</label>
+                                            <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">@lang('languages.password')</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="password" type="password" class="form-control" id="newPassword">
+                                                <input name="password" type="password" value="{!! old('password') !!}" class="form-control" id="newPassword">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
-                                            <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">@lang('languages.re_enter_password')</label>
+                                            <label for="password_confirmation" class="col-md-4 col-lg-3 col-form-label">@lang('languages.re_enter_password')</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                                                <input name="password_confirmation" type="password"  value="{!! old('password_confirmation') !!}" class="form-control" id="renewPassword">
                                             </div>
                                         </div>
 
