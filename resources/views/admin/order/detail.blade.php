@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-@include ('admin.common.head', ['pageTitle' => 'Detail order - Phone Admin'])
+@include ('admin.common.head', ['pageTitle' => __('languages.detail_order').' - Phone Admin'])
 
 <body>
     @include ('admin.common.index')
@@ -8,12 +8,12 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Dashboard</h1>
+            <h1>@lang('languages.dashboard')</h1>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{route('homeAdmin')}}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('indexOrder') }}">Order</a></li>
-                    <li class="breadcrumb-item active">Detail</li>
+                    <li class="breadcrumb-item"><a href="{{route('homeAdmin')}}">@lang('languages.home')</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('indexOrder') }}">@lang('languages.order')</a></li>
+                    <li class="breadcrumb-item active">@lang('languages.detail')</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -32,13 +32,13 @@
 
                                     <div class="product-inner">
                                         <h2>{{ $order->customer_name ?? '' }}</h2>
-                                        <div style="display: flex;"><b>Phone:</b> &ensp; <p>{{ $order->customer_phone ?? '' }}</p>
+                                        <div style="display: flex;"><b>@lang('languages.phone_number'):</b> &ensp; <p>{{ $order->customer_phone ?? '' }}</p>
                                         </div>
-                                        <div style="display: flex;"><b>Email:</b> &ensp; <p>{{ $order->customer_email ?? '' }}</p>
+                                        <div style="display: flex;"><b>@lang('languages.email'):</b> &ensp; <p>{{ $order->customer_email ?? '' }}</p>
                                         </div>
-                                        <div style="display: flex;"><b>Date:</b> &ensp; <p>{{ $order->created_at ?? '' }}</p>
+                                        <div style="display: flex;"><b>@lang('languages.date'):</b> &ensp; <p>{{ $order->created_at ?? '' }}</p>
                                         </div>
-                                        <div style="display: flex;"><b>Address:</b> &ensp; <p>{{ $order->address ?? '' }}</p>
+                                        <div style="display: flex;"><b>@lang('languages.address'):</b> &ensp; <p>{{ $order->address ?? '' }}</p>
                                         </div>
                                     </div>
 
@@ -48,13 +48,13 @@
 
                                     <thead>
                                         <tr>
-                                            <th style="width:15%; text-align: center;">Image</th>
-                                            <th style="width:38%; text-align: center;">Product name</th>
-                                            <th style="width:12%; text-align: center;">Price</th>
-                                            <th style="width:10%; text-align: center;">Quantity</th>
-                                            <th style="width:10%; text-align: center;">Total</th>
-                                            <th style="width:10%; text-align: center;">Status</th>
-                                            <th style="width:10%; text-align: center;">Action</th>
+                                            <th style="width:15%; text-align: center;">@lang('languages.image')</th>
+                                            <th style="width:38%; text-align: center;">@lang('languages.product_name')</th>
+                                            <th style="width:12%; text-align: center;">@lang('languages.price')</th>
+                                            <th style="width:10%; text-align: center;">@lang('languages.quantity')</th>
+                                            <th style="width:10%; text-align: center;">@lang('languages.total')</th>
+                                            <th style="width:10%; text-align: center;">@lang('languages.status')</th>
+                                            <th style="width:10%; text-align: center;">@lang('languages.action')</th>
                                         </tr>
                                     </thead>
 
@@ -69,7 +69,7 @@
                                             <td style="text-align: center;">${{ number_format($value->product_price * $value->product_quantity) }}</td>
                                             @foreach (App\Constants\Common::STATUS_ORDER as $key => $val)
                                             @if(($value->status ?? 0) == $key)
-                                            <td>{{ $val }}</td>
+                                            <td>{{ __($val) }}</td>
                                             @endif
                                             @endforeach
                                             <td>

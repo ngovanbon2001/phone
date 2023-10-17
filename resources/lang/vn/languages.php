@@ -94,6 +94,8 @@ return [
     'delete_confirm' => 'Bạn có muốn xóa mục này?',
     'yes' => 'Có',
     'no' => 'Không',
+    'address' => 'Địa chỉ',
+    'date' => 'Ngày',
 
     # Người dùng
     'user_list' => 'Danh sách người dùng',
@@ -222,6 +224,15 @@ return [
 
     # Đơn hàng
     'order' => 'Đơn hàng',
+    'total_product' => 'Tổng sản phẩm',
+    'total' => 'Tổng cộng',
+    'customer_name' => 'Tên khách hàng',
+    'quantity' => 'Số lượng',
+    'detail_order' => 'Chi tiết hóa đơn',
+    'unconfimred' => 'Chưa xác nhận',
+    'confirmed' => 'Đã xác nhận',
+    'delivery' => 'Đang giao hàng',
+    'paid' => 'Đã thanh toán',
 
     # Tài khoản
     'account' => 'Tài khoản',
@@ -231,5 +242,7 @@ return [
 
     # Sản phẩm
     'product' => 'Sản phẩm',
+    'product_name' => 'Tên sản phẩm',
+    'price' => 'Đơn giá',
 
 ];

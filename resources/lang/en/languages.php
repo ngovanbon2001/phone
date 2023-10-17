@@ -95,6 +95,8 @@ return [
     'delete_confirm' => 'Are you sure you want to delete this item?',
     'yes' => 'Yes',
     'no' => 'No',
+    'address' => 'Address',
+    'date' => 'Date',
 
     # Users
     'user_list' => 'Users List',
@@ -223,6 +225,15 @@ return [
 
     # Order
     'order' => 'Order',
+    'total_product' => 'Total product',
+    'total' => 'Total',
+    'customer_name' => 'Customer name',
+    'quantity' => 'Quantity',
+    'detail_order' => 'Detail order',
+    'unconfimred' => 'Unconfimred',
+    'confirmed' => 'Confirmed',
+    'delivery' => 'Delivery',
+    'paid' => 'Paid',
 
     # Account
     'account' => 'Account',
@@ -232,5 +243,7 @@ return [
 
     # Product
     'product' => 'Product',
+    'product_name' => 'Product name',
+    'price' => 'Price',
 
 ];
