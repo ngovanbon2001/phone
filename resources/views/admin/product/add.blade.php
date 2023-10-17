@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-@include ('admin.common.head', ['pageTitle' => 'Create product - Phone Admin'])
+@include ('admin.common.head', ['pageTitle' => __('languages.add_product').' - Phone Admin'])
 
 <body>
     @include ('admin.common.index')
@@ -8,12 +8,12 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Dashboard</h1>
+            <h1>@lang('languages.dashboard')</h1>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{route('homeAdmin')}}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('indexProduct')}}">Product</a></li>
-                    <li class="breadcrumb-item active">Add</li>
+                    <li class="breadcrumb-item"><a href="{{route('homeAdmin')}}">@lang('languages.home')</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('indexProduct')}}">@lang('languages.product')</a></li>
+                    <li class="breadcrumb-item active">@lang('languages.add')</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -24,7 +24,7 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Add product form</h5>
+                            <h5 class="card-title">@lang('languages.add_product')</h5>
 
                             <!-- General Form Elements -->
                             <form action="{{ route('storeProduct') }}" method="post" id="edit-profile" class="form-horizontal" enctype="multipart/form-data">
@@ -33,7 +33,7 @@
 
                                     <div class="row">
                                         <div class="control-group col-md-6">
-                                            <label class="control-label">Category <span style="color: red;">*</span></label>
+                                            <label class="control-label">@lang('languages.category') <span style="color: red;">*</span></label>
                                             <div class="controls">
                                                 <select class="form-select" name="category_id">
                                                     <option value="">------</option>
@@ -48,7 +48,7 @@
                                         </div> <!-- /control-group -->
 
                                         <div class="control-group col-md-6">
-                                            <label class="control-label">Brand <span style="color: red;">*</span></label>
+                                            <label class="control-label">@lang('languages.brand') <span style="color: red;">*</span></label>
                                             <div class="controls">
                                                 <select class="form-select" name="brand_id">
                                                     <option value="">------</option>
@@ -64,7 +64,7 @@
                                     </div>
 
                                     <div class="control-group">
-                                        <label class="control-label">Product name <span style="color: red;">*</span></label>
+                                        <label class="control-label">@lang('languages.product_name') <span style="color: red;">*</span></label>
                                         <div class="controls">
                                             <input type="text" class="form-control" name="name" value="{!! old('name') !!}">
                                             @error ('name')
@@ -75,7 +75,7 @@
 
                                     <div class="row">
                                         <div class="control-group col-md-6">
-                                            <label class="control-label">Price <span style="color: red;">*</span></label>
+                                            <label class="control-label">@lang('languages.price') <span style="color: red;">*</span></label>
                                             <div class="controls">
                                                 <input class="form-control" name="price" type="text" value="{!! old('price') !!}" />
                                                 @error ('price')
@@ -85,7 +85,7 @@
                                         </div> <!-- /control-group -->
 
                                         <div class="control-group col-md-6">
-                                            <label class="control-label">Price old</label>
+                                            <label class="control-label">@lang('languages.old_price')</label>
                                             <div class="controls">
                                                 <input class="form-control" name="old_price" type="text" value="{!! old('old_price') !!}" />
                                             </div> <!-- /controls -->
@@ -93,7 +93,7 @@
                                     </div>
 
                                     <div class="control-group">
-                                        <label class="control-label">Tags</label>
+                                        <label class="control-label">@lang('languages.tags')</label>
                                         <div class="controls">
                                             <input class="form-control" name="tags" type="text" value="{!! old('tags') !!}" />
                                         </div> <!-- /controls -->
@@ -101,27 +101,27 @@
 
                                     <div class="row">
                                         <div class="control-group col-md-4">
-                                            <label class="control-label">Best sell</label>
+                                            <label class="control-label">@lang('languages.best_sell')</label>
                                             <div class="controls">
                                                 <select class="form-select" name="is_best_sell">
-                                                    <option value="0" {{ (old('is_best_sell') == '0') ? 'selected' : '' }}>No</option>
-                                                    <option value="1" {{ (old('is_best_sell') == '1') ? 'selected' : '' }}>Yes</option>
+                                                    <option value="0" {{ (old('is_best_sell') == '0') ? 'selected' : '' }}>@lang('languages.no')</option>
+                                                    <option value="1" {{ (old('is_best_sell') == '1') ? 'selected' : '' }}>@lang('languages.yes')</option>
                                                 </select>
                                             </div> <!-- /controls -->
                                         </div> <!-- /control-group -->
 
                                         <div class="control-group col-md-4">
-                                            <label class="control-label">New</label>
+                                            <label class="control-label">@lang('languages.new_product')</label>
                                             <div class="controls">
                                                 <select class="form-select" name="is_new">
-                                                    <option value="0" {{ (old('is_new') == '0') ? 'selected' : '' }}>No</option>
-                                                    <option value="1" {{ (old('is_new') == '1') ? 'selected' : '' }}>Yes</option>
+                                                    <option value="0" {{ (old('is_new') == '0') ? 'selected' : '' }}>@lang('languages.no')</option>
+                                                    <option value="1" {{ (old('is_new') == '1') ? 'selected' : '' }}>@lang('languages.yes')</option>
                                                 </select>
                                             </div> <!-- /controls -->
                                         </div> <!-- /control-group -->
 
                                         <div class="control-group col-md-4">
-                                            <label class="control-label">Sort order <span style="color: red;">*</span></label>
+                                            <label class="control-label">@lang('languages.sort') <span style="color: red;">*</span></label>
                                             <div class="controls">
                                                 <input type="number" class="form-control" name="sort_order" value="{!! old('sort_order', 0) !!}">
                                                 @error ('sort_order')
@@ -133,7 +133,7 @@
 
                                     <div class="row">
                                         <div class="control-group col-md-6">
-                                            <label class="control-label">Amount <span style="color: red;">*</span></label>
+                                            <label class="control-label">@lang('languages.amount') <span style="color: red;">*</span></label>
                                             <div class="controls">
                                                 <input type="number" class="form-control" name="amount" value="{!! old('amount', 0) !!}">
                                                 @error ('amount')
@@ -142,11 +142,11 @@
                                             </div> <!-- /controls -->
                                         </div> <!-- /control-group -->
                                         <div class="control-group col-md-6">
-                                            <label class="control-label">Active</label>
+                                            <label class="control-label">@lang('languages.status')</label>
                                             <div class="controls">
                                                 <select class="form-select" name="active">
-                                                    <option value="1" {{ (old('active') ?? 1) == 1 ? 'selected' : '' }}>Yes</option>
-                                                    <option value="0" {{ (old('active') ?? 0) == 0 ? 'selected' : '' }}>No</option>
+                                                    <option value="1" {{ (old('active') ?? 1) == 1 ? 'selected' : '' }}>@lang('languages.yes')</option>
+                                                    <option value="0" {{ (old('active') ?? 0) == 0 ? 'selected' : '' }}>@lang('languages.no')</option>
                                                 </select>
                                             </div> <!-- /controls -->
                                         </div> <!-- /control-group -->
@@ -154,7 +154,7 @@
 
                                     <div class="row">
                                         <div class="control-group col-md-6">
-                                            <label class="control-label">Image</label>
+                                            <label class="control-label">@lang('languages.image')</label>
                                             <div class="controls">
                                                 <input id="imageInput" class="form-control" name="image_url" type="file" />
                                             </div> <!-- /controls -->
@@ -170,7 +170,7 @@
                                     <!-- Specifications-->
                                     <div class="row">
                                         <div class="control-group col-md-4">
-                                            <label class="control-label">Screen <span style="color: red;">*</span></label>
+                                            <label class="control-label">@lang('languages.screen') <span style="color: red;">*</span></label>
                                             <div class="controls">
                                                 <input type="text" class="form-control" name="specifications[screen]" value="{{ old('specifications.screen') }}">
                                                 @error ('specifications.screen')
@@ -180,7 +180,7 @@
                                         </div> <!-- /control-group -->
 
                                         <div class="control-group col-md-4">
-                                            <label class="control-label">Operating system <span style="color: red;">*</span></label>
+                                            <label class="control-label">@lang('languages.operating_system') <span style="color: red;">*</span></label>
                                             <div class="controls">
                                                 <input type="text" class="form-control" name="specifications[operating_system]" value="{{ old('specifications.operating_system') }}">
                                                 @error ('specifications.operating_system')
@@ -190,7 +190,7 @@
                                         </div> <!-- /control-group -->
 
                                         <div class="control-group col-md-4">
-                                            <label class="control-label">Rear camera <span style="color: red;">*</span></label>
+                                            <label class="control-label">@lang('languages.rear_camera') <span style="color: red;">*</span></label>
                                             <div class="controls">
                                                 <input type="text" class="form-control" name="specifications[rear_camera]" value="{{ old('specifications.rear_camera') }}">
                                                 @error ('specifications.rear_camera')
@@ -202,7 +202,7 @@
 
                                     <div class="row">
                                         <div class="control-group col-md-4">
-                                            <label class="control-label">Front camera <span style="color: red;">*</span></label>
+                                            <label class="control-label">@lang('languages.front_camera') <span style="color: red;">*</span></label>
                                             <div class="controls">
                                                 <input type="text" class="form-control" name="specifications[front_camera]" value="{{ old('specifications.front_camera') }}">
                                                 @error ('specifications.front_camera')
@@ -212,7 +212,7 @@
                                         </div> <!-- /control-group -->
 
                                         <div class="control-group col-md-4">
-                                            <label class="control-label">CPU <span style="color: red;">*</span></label>
+                                            <label class="control-label">@lang('languages.cpu') <span style="color: red;">*</span></label>
                                             <div class="controls">
                                                 <input type="text" class="form-control" name="specifications[cpu]" value="{{ old('specifications.cpu') }}">
                                                 @error ('specifications.cpu')
@@ -222,7 +222,7 @@
                                         </div> <!-- /control-group -->
 
                                         <div class="control-group col-md-4">
-                                            <label class="control-label">RAM <span style="color: red;">*</span></label>
+                                            <label class="control-label">@lang('languages.ram') <span style="color: red;">*</span></label>
                                             <div class="controls">
                                                 <input type="text" class="form-control" name="specifications[ram]" value="{{ old('specifications.ram') }}">
                                                 @error ('specifications.ram')
@@ -234,7 +234,7 @@
 
                                     <div class="row">
                                         <div class="control-group col-md-4">
-                                            <label class="control-label">Internal memory <span style="color: red;">*</span></label>
+                                            <label class="control-label">@lang('languages.internal_memory') <span style="color: red;">*</span></label>
                                             <div class="controls">
                                                 <input type="text" class="form-control" name="specifications[internal_memory]" value="{{ old('specifications.internal_memory') }}">
                                                 @error ('specifications.internal_memory')
@@ -244,7 +244,7 @@
                                         </div> <!-- /control-group -->
 
                                         <div class="control-group col-md-4">
-                                            <label class="control-label">Memory Stick <span style="color: red;">*</span></label>
+                                            <label class="control-label">@lang('languages.memory_stick') <span style="color: red;">*</span></label>
                                             <div class="controls">
                                                 <input type="text" class="form-control" name="specifications[memory_stick]" value="{{ old('specifications.memory_stick') }}">
                                                 @error ('specifications.memory_stick')
@@ -254,7 +254,7 @@
                                         </div> <!-- /control-group -->
 
                                         <div class="control-group col-md-4">
-                                            <label class="control-label">Battery <span style="color: red;">*</span></label>
+                                            <label class="control-label">@lang('languages.battery') <span style="color: red;">*</span></label>
                                             <div class="controls">
                                                 <input type="text" class="form-control" name="specifications[battery]" value="{{ old('specifications.battery') }}">
                                                 @error ('specifications.battery')
@@ -266,7 +266,7 @@
                                     <!-- End Specifications-->
 
                                     <div class="control-group">
-                                        <label class="control-label">Description</label>
+                                        <label class="control-label">@lang('languages.description')</label>
                                         <div class="controls">
                                             <textarea id="textareaDescription" name="description" class="tinymce-editor">{!! old('description') !!}</textarea>
                                             @error ('description')
@@ -276,8 +276,8 @@
                                     </div> <!-- /control-group -->
 
                                     <div class="form-actions">
-                                        <button type="submit" class="btn btn-primary">Save</button>
-                                        <a href="{{ route('indexProduct') }}" class="btn btn-danger">Cancel</a>
+                                        <button type="submit" class="btn btn-primary">@lang('languages.save')</button>
+                                        <a href="{{ route('indexProduct') }}" class="btn btn-danger">@lang('languages.cancel')</a>
                                     </div> <!-- /form-actions -->
 
                                 </fieldset>
