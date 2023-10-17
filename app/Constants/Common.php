@@ -54,11 +54,11 @@ class Common
     const PRICE = 500;
 
     const STATUS_ORDER = [
-        self::IN_ACTIVE => 'Unconfimred',
-        self::ACTIVE    => 'Confirmed',
-        self::DELIVERY  => 'Delivery',
-        self::PAID      => 'Paid',
-        self::CANCEL    => 'Cancel',
+        self::IN_ACTIVE => 'languages.unconfimred',
+        self::ACTIVE    => 'languages.confirmed',
+        self::DELIVERY  => 'languages.delivery',
+        self::PAID      => 'languages.paid',
+        self::CANCEL    => 'languages.cancel',
     ];
 
     const BUTTON_ORDER = [

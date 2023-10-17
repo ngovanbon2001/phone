@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-@include ('admin.common.head', ['pageTitle' => 'Order - Phone Admin'])
+@include ('admin.common.head', ['pageTitle' => __('languages.order').' - Phone Admin'])
 
 <body>
     @include ('admin.common.index')
@@ -8,12 +8,12 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Dashboard</h1>
+            <h1>@lang('languages.dashboard')</h1>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{route('homeAdmin')}}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('indexOrder') }}">Order</a></li>
-                    <li class="breadcrumb-item active">List</li>
+                    <li class="breadcrumb-item"><a href="{{route('homeAdmin')}}">@lang('languages.home')</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('indexOrder') }}">@lang('languages.order')</a></li>
+                    <li class="breadcrumb-item active">@lang('languages.list')</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -50,9 +50,9 @@
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <div class="control-group col-md-4">
-                                                        <label class="control-label">Customer's name</label>
+                                                        <label class="control-label">@lang('languages.customer_name')</label>
                                                         <div class="controls">
-                                                            <input class="form-control" name="customer_name" type='text' value="{{ request('customer_name') ?? '' }}" placeholder="Customer's name" />
+                                                            <input class="form-control" name="customer_name" type='text' value="{{ request('customer_name') ?? '' }}" placeholder="{{ __('languages.customer_name') }}" />
                                                             @error ('customer_name')
                                                             <label class="error">{{ $message }}</label>
                                                             @enderror
@@ -60,9 +60,9 @@
                                                     </div>
 
                                                     <div class="control-group col-md-4">
-                                                        <label class="control-label">Phone number</label>
+                                                        <label class="control-label">@lang('languages.phone_number')</label>
                                                         <div class="controls">
-                                                            <input class="form-control" name="customer_phone" type='text' value="{{ request('customer_phone') ?? '' }}" placeholder="Phone number" />
+                                                            <input class="form-control" name="customer_phone" type='text' value="{{ request('customer_phone') ?? '' }}" placeholder="{{ __('languages.phone_number') }}" />
                                                             @error ('customer_phone')
                                                             <label class="error">{{ $message }}</label>
                                                             @enderror
@@ -89,13 +89,13 @@
                                     <table style="width:100%; margin-top: 20px;" class="table table-striped">
                                         <thead>
                                             <tr>
-                                                <th style="width:5%; text-align: center;">No</th>
-                                                <th style="width:25%; text-align: left;">Customer's name</th>
-                                                <th style="width:10%; text-align: left;">Email</th>
-                                                <th style="width:5%; text-align: center;">Phone</th>
-                                                <th style="width:10%; text-align: center;">Total product</th>
-                                                <th style="width:15%; text-align: center;">Quantity</th>
-                                                <th style="width:35%; text-align: center;">Action</th>
+                                                <th style="width:5%; text-align: center;">@lang('languages.num')</th>
+                                                <th style="width:25%; text-align: left;">@lang('languages.customer_name')</th>
+                                                <th style="width:10%; text-align: left;">@lang('languages.email')</th>
+                                                <th style="width:5%; text-align: center;">@lang('languages.phone_number')</th>
+                                                <th style="width:10%; text-align: center;">@lang('languages.total')</th>
+                                                <th style="width:15%; text-align: center;">@lang('languages.quantity')</th>
+                                                <th style="width:35%; text-align: center;">@lang('languages.action')</th>
                                             </tr>
                                         </thead>
                                         <tbody>
