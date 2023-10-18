@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-<title>NhatMai SHOP - Login</title>
+<title>NhatMai SHOP - @lang('languages.login')</title>
 @endsection
 
 @section('content')
@@ -8,8 +8,8 @@
 <div class="breadcrumb-wrap">
     <div class="container-fluid">
         <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('web.home') }}">Home</a></li>
-            <li class="breadcrumb-item active">Login</li>
+            <li class="breadcrumb-item"><a href="{{ route('web.home') }}">@lang('languages.home')</a></li>
+            <li class="breadcrumb-item active">@lang('languages.login')</li>
         </ul>
     </div>
 </div>
@@ -40,7 +40,7 @@
                         @csrf
                         <div class="row">
                             <div class="col-md-6">
-                                <label>E-mail</label>
+                                <label>@lang('languages.email')</label>
                                 <input class="form-control" name="email" type="text" placeholder="E-mail">
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -49,7 +49,7 @@
                                 @enderror
                             </div>
                             <div class="col-md-6">
-                                <label>Password</label>
+                                <label>@lang('languages.password')</label>
                                 <input class="form-control" name="password" type="password" placeholder="Password">
                                 @error('password')
                                 <span class="invalid-feedback" role="alert">
@@ -58,21 +58,20 @@
                                 @enderror
                             </div>
                             <div class="col-md-6">
-                                <button class="btn">Login</button>
+                                <button class="btn">@lang('languages.login')</button>
                             </div>
                             <div class="col-md-6" style="text-align: right;">
-                                <a href="{{ route('forget.password.get') }}" class="forgot-password">Forgot password?</a>
+                                <a href="{{ route('forget.password.get') }}" class="forgot-password">@lang('languages.forgot_password')</a>
                             </div>
                             <div class="col-md-12" style="text-align: right;">
-                                <p>Not a member? <a href="{{ route('register') }}">Register here</a></p>
+                                <p>@lang('languages.not_a_member') <a href="{{ route('register') }}">@lang('languages.register_here')</a></p>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
             <div class="col-lg-6" style="text-align: center;">
-                <div class="clearfix"></div>
-                <a href="{{ route('google.login') }}" class="google-login">Login with google</a>
+                <a href="{{ route('google.login') }}" class="google-login">@lang('languages.login_with_google')</a>
             </div>
         </div>
     </div>
