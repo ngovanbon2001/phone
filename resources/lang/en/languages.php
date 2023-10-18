@@ -167,30 +167,6 @@ return [
     'permission' => 'Permission',
     'admin' => 'Admin',
 
-    # Login
-    'sign_in' => 'Sign In',
-    'login_to_stay_connected' => 'Login to stay connected.',
-    'remember_me' => 'Remember Me',
-    'forgot_password' => 'Forgot Password?',
-    'or_sign_in_with_other_accounts' => 'or sign in with other accounts?',
-    'dont_have_an_account' => 'Don’t have an account?',
-    'click_here_to_sign_up' => 'Click here to sign up.',
-    'english' => 'English',
-    'japan' => '日本',
-
-    # Register
-    'sign_up' => 'Sign Up',
-    'create_your_account' => 'Create your account.',
-    'position' => 'Position',
-    'phone_no' => 'Phone No',
-    'confirm_password' => 'Confirm Password',
-    'i_agree_with_the_terms_of_use' => 'I agree with the terms of use',
-    'already_have_an_account' => 'Already have an Account',
-    'sale' => 'Sale',
-    'cio' => 'CIO',
-    'ceo' => 'CEO',
-    'hi' => 'Hi',
-    'sign_up_success' => 'Sign Up Success!',
 
     # Reset password
     'reset' => 'Reset',
@@ -276,4 +252,33 @@ return [
     'battery' => 'Battery',
     'add_image' => 'Add image',
     'up_load' => 'Upload',
+
+    # Web
+    'login' => 'Login',
+    'register' => 'Register',
+    'logout' => 'Logout',
+    'cart' => 'Cart',
+    'user_account' => 'User Account',
+
+    # Footer
+    'get_in_touch' => 'Get in Touch', 
+    'follow_us' => 'Follow Us', 
+    'company_info' => 'Company Info', 
+    'about_us' => 'About Us', 
+    'privacy_policy' => 'Privacy Policy', 
+    'terms_condition' => 'Terms & Condition', 
+    'purchase_info' => 'Purchase Info', 
+    'payment_policy' => 'Payment Policy', 
+    'shipping_policy' => 'Shipping Policy', 
+    'return_policy' => 'Return Policy', 
+    'we_accept' => 'We Accept', 
+    'secured_by' => 'Secured By', 
+
+    # Home
+    'shop_now' => 'Shop Now',
+    'genuine' => 'Genuine',
+    'free_ship' => 'Free ship',
+    'lorem_ipsum' => 'Lorem ipsum dolor sit amet consectetur elit',
+    'call_us' => 'call us for any queries',
+    'low_price' => 'Low price',
 ];

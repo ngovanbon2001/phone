@@ -166,31 +166,6 @@ return [
     'old_password' => 'Mật khẩu cũ',
     'avatar' => 'Hình đại diện',
 
-    # Đăng nhập
-    'sign_in' => 'Đăng nhập',
-    'login_to_stay_connected' => 'Đăng nhập để duy trì kết nối.',
-    'remember_me' => 'Ghi nhớ tôi',
-    'forgot_password' => 'Quên mật khẩu?',
-    'or_sign_in_with_other_accounts' => 'hoặc đăng nhập bằng tài khoản khác?',
-    'dont_have_an_account' => 'Chưa có tài khoản?',
-    'click_here_to_sign_up' => 'Nhấn vào đây để đăng ký.',
-    'english' => 'Tiếng Anh',
-    'japan' => 'Tiếng Nhật',
-
-    # Đăng ký
-    'sign_up' => 'Đăng ký',
-    'create_your_account' => 'Tạo tài khoản của bạn.',
-    'position' => 'Vị trí',
-    'phone_no' => 'Số điện thoại',
-    'confirm_password' => 'Xác nhận mật khẩu',
-    'i_agree_with_the_terms_of_use' => 'Tôi đồng ý với các điều khoản sử dụng',
-    'already_have_an_account' => 'Đã có tài khoản',
-    'sale' => 'Bán hàng',
-    'cio' => 'CIO',
-    'ceo' => 'CEO',
-    'hi' => 'Xin chào',
-    'sign_up_success' => 'Đăng ký thành công!',
-
     # Đặt lại mật khẩu
     'reset' => 'Đặt lại',
     'reset_password' => 'Đặt lại mật khẩu',
@@ -275,4 +250,30 @@ return [
     'battery' => 'Pin',
     'add_image' => 'Thêm hình ảnh',
     'up_load' => 'Tải lên',
+
+    'login' => 'Đăng nhập',
+    'register' => 'Đăng ký',
+    'logout' => 'Đăng xuất',
+    'cart' => 'Giỏ hàng',
+    'user_account' => 'Tài khoản người dùng',
+
+    'get_in_touch' => 'Liên hệ',
+    'follow_us' => 'Theo dõi chúng tôi',
+    'company_info' => 'Thông tin công ty',
+    'about_us' => 'Về chúng tôi',
+    'privacy_policy' => 'Chính sách bảo mật',
+    'terms_condition' => 'Điều khoản và điều kiện',
+    'purchase_info' => 'Thông tin mua hàng',
+    'payment_policy' => 'Chính sách thanh toán',
+    'shipping_policy' => 'Chính sách giao hàng',
+    'return_policy' => 'Chính sách đổi trả',
+    'we_accept' => 'Chấp nhận',
+    'secured_by' => 'Bảo mật bởi',
+
+    'shop_now' => 'Mua ngay',
+    'genuine' => 'Chính hãng',
+    'free_ship' => 'Miễn phí giao hàng',
+    'lorem_ipsum' => 'Lorem ipsum dolor sit amet consectetur elit',
+    'call_us' => 'Gọi cho chúng tôi nếu bạn có bất kỳ câu hỏi nào',
+    'low_price' => 'Giá thấp',
 ];
