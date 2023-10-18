@@ -250,6 +250,8 @@ return [
     'battery' => 'Pin',
     'add_image' => 'Thêm hình ảnh',
     'up_load' => 'Tải lên',
+    'product_list' => 'Danh sách sản phẩm',
+    'product_details' => 'Thông tin chi tiết sản phẩm',
 
     'login' => 'Đăng nhập',
     'register' => 'Đăng ký',
@@ -286,4 +288,12 @@ return [
     'code' => 'Nhập mã xác nhận',
     'confirm_register' => 'Xác nhận đăng ký',
     'send_password_reset_link' => 'Gửi liên kết đặt lại mật khẩu',
+    'buy_now' => 'Mua ngay',
+    'add_to_cart' => 'Thêm vào giỏ hàng',
+    'product_description' => 'Mô tả sản phẩm',
+    'product_specification' => 'Thông số kỹ thuật sản phẩm',
+    'specification' => 'Thông số kỹ thuật',
+    'login_to_your_account' => 'Đăng nhập vào tài khoản của bạn',
+    'username_password' => 'Nhập tên người dùng và mật khẩu của bạn để đăng nhập',
+    'designed_by' => 'Được thiết kế bởi', 
 ];
