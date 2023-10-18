@@ -1,26 +1,17 @@
 @extends('layouts.app')
 @section('title')
-<title>NhatMai SHOP - Product detail</title>
+<title>NhatMai SHOP - @lang('languages.product_details')</title>
 @endsection
 
 @section('content')
-<div class="section section-breadcrumbs">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>Product Details</h1>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- Breadcrumb Start -->
 <div class="breadcrumb-wrap">
     <div class="container-fluid">
         <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('web.home') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('web.product') }}">Products</a></li>
-            <li class="breadcrumb-item active">Product Detail</li>
+            <li class="breadcrumb-item"><a href="{{ route('web.home') }}">@lang('languages.home')</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('web.product') }}">@lang('languages.product')</a></li>
+            <li class="breadcrumb-item active">@lang('languages.product_details')</li>
+            <li class="breadcrumb-item">{{ $product->name ?? '' }}</li>
         </ul>
     </div>
 </div>
@@ -62,11 +53,11 @@
                                         <i class="fa fa-star"></i>
                                     </div>
                                     <div class="price">
-                                        <h4>Price:</h4>
+                                        <h4>@lang('languages.price'):</h4>
                                         <p>${{ number_format(($product->price ?? 0)) }} <span>${{ number_format(($product->old_price ?? 0)) }}</span></p>
                                     </div>
                                     <div class="quantity">
-                                        <h4>Quantity:</h4>
+                                        <h4>@lang('languages.quantity'):</h4>
                                         <div class="qty">
                                             <button type="button" class="btn-minus"><i class="fa fa-minus"></i></button>
                                             <input id="amount" type="text" name="quantity" value="1">
@@ -74,13 +65,13 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <h4>Brand: {{ $product->brand->name ?? '' }}</h4>
+                                        <h4>@lang('languages.brand'): {{ $product->brand->name ?? '' }}</h4>
                                     </div>
                                     <div>
-                                        <h4>Category: {{ $product->category->name ?? '' }}</h4>
+                                        <h4>@lang('languages.category'): {{ $product->category->name ?? '' }}</h4>
                                     </div>
                                     <div class="action">
-                                        <button type="submit" class="btn"><i class="fa fa-shopping-cart"></i>Add to Cart</button>
+                                        <button type="submit" class="btn"><i class="fa fa-shopping-cart"></i> @lang('languages.add_to_cart')</button>
                                     </div>
                                 </div>
                                 <input type="hidden" value="{{ $product->id }}" name="product_id">
@@ -96,30 +87,30 @@
                     <div class="col-lg-12">
                         <ul class="nav nav-pills nav-justified">
                             <li class="nav-item">
-                                <a class="nav-link active" data-toggle="pill" href="#description">Description</a>
+                                <a class="nav-link active" data-toggle="pill" href="#description">@lang('languages.description')</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href="#specification">Specification</a>
+                                <a class="nav-link" data-toggle="pill" href="#specification">@lang('languages.specification')</a>
                             </li>
                         </ul>
 
                         <div class="tab-content">
                             <div id="description" class="container tab-pane active">
-                                <h4>Product description</h4>
+                                <h4>@lang('languages.product_description')</h4>
                                 <p>{!! $product->description ?? '' !!}</p>
                             </div>
                             <div id="specification" class="container tab-pane fade">
-                                <h4>Product specification</h4>
+                                <h4>@lang('languages.product_specification')</h4>
                                 <ul>
-                                    <li><b>Screen: </b>{{ $product->specifications->screen ?? '' }}</li>
-                                    <li><b>Operating system: </b>{{ $product->specifications->operating_system ?? '' }}</li>
-                                    <li><b>Rear camera: </b>{{ $product->specifications->rear_camera ?? '' }}</li>
-                                    <li><b>Front camera: </b>{{ $product->specifications->front_camera ?? '' }}</li>
-                                    <li><b>Cpu: </b>{{ $product->specifications->cpu ?? '' }}</li>
-                                    <li><b>Ram: </b>{{ $product->specifications->ram ?? '' }}</li>
-                                    <li><b>Memory stick: </b>{{ $product->specifications->memory_stick ?? '' }}</li>
-                                    <li><b>Internal memory: </b>{{ $product->specifications->internal_memory ?? '' }}</li>
-                                    <li><b>Battery: </b>{{ $product->specifications->battery ?? '' }}</li>
+                                    <li><b>@lang('languages.screen'): </b>{{ $product->specifications->screen ?? '' }}</li>
+                                    <li><b>@lang('languages.operating_system'): </b>{{ $product->specifications->operating_system ?? '' }}</li>
+                                    <li><b>@lang('languages.rear_camera'): </b>{{ $product->specifications->rear_camera ?? '' }}</li>
+                                    <li><b>@lang('languages.front_camera'): </b>{{ $product->specifications->front_camera ?? '' }}</li>
+                                    <li><b>@lang('languages.cpu'): </b>{{ $product->specifications->cpu ?? '' }}</li>
+                                    <li><b>@lang('languages.ram'): </b>{{ $product->specifications->ram ?? '' }}</li>
+                                    <li><b>@lang('languages.memory_stick'): </b>{{ $product->specifications->memory_stick ?? '' }}</li>
+                                    <li><b>@lang('languages.internal_memory'): </b>{{ $product->specifications->internal_memory ?? '' }}</li>
+                                    <li><b>@lang('languages.battery'): </b>{{ $product->specifications->battery ?? '' }}</li>
                                 </ul>
                             </div>
                         </div>
@@ -128,7 +119,7 @@
 
                 <div class="product">
                     <div class="section-header">
-                        <h1>New Products</h1>
+                        <h1>@lang('languages.new_product')</h1>
                     </div>
 
                     <div class="row align-items-center product-slider product-slider-3">
@@ -156,7 +147,7 @@
                                 </div>
                                 <div class="product-price">
                                     <h3><span>$</span>{{ number_format($item->price) }}</h3>
-                                    <a class="btn" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-shopping-cart"></i>Buy Now</a>
+                                    <a class="btn" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-shopping-cart"></i>@lang('languages.buy_now')</a>
                                 </div>
                             </div>
                             <form id="cart-add-{{ $item->id ?? 0 }}" action="{{ route('cart.create') }}" method="post" class="cart">
@@ -176,7 +167,7 @@
             <!-- Side Bar Start -->
             <div class="col-lg-4 sidebar">
                 <div class="sidebar-widget category">
-                    <h2 class="title">Category</h2>
+                    <h2 class="title">@lang('languages.category')</h2>
                     <nav class="navbar bg-light">
                         <ul class="navbar-nav">
                             @foreach($categories as $item)
@@ -213,7 +204,7 @@
                             </div>
                             <div class="product-price">
                                 <h3><span>$</span>{{ number_format($item->price) }}</h3>
-                                <a class="btn" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-shopping-cart"></i>Buy Now</a>
+                                <a class="btn" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-shopping-cart"></i>@lang('languages.buy_now')</a>
                             </div>
                             <form id="cart-add-{{ $item->id ?? 0 }}" action="{{ route('cart.create') }}" method="post" class="cart">
                                 @csrf
@@ -229,7 +220,7 @@
                 </div>
 
                 <div class="sidebar-widget brands">
-                    <h2 class="title">Our Brands</h2>
+                    <h2 class="title">@lang('languages.brand')</h2>
                     <ul>
                         @foreach($brands as $item)
                         <li><a href="{{ route('web.product', ['brand_id' => $item->id ?? '', 'category_id' => request('category_id') ?? '', 'name' => request('name') ?? '', 'tags' => request('tags') ?? '']) }}">{{ $item->name ?? '' }} </a><span>{{ $item->products->count() }}</span></li>
@@ -238,7 +229,7 @@
                 </div>
 
                 <div class="sidebar-widget tag">
-                    <h2 class="title">Tags Cloud</h2>
+                    <h2 class="title">@lang('languages.tags')</h2>
                     @foreach ($tags as $item)
                     @if($item->tags !== null)
                     <a href="{{ route('web.product', ['category_id' => request('category_id') ?? '', 'brand_id' => request('brand_id') ?? '', 'name' => request('name') ?? '', 'tags' => $item->tags ?? '']) }}">{{ $item->tags }}</a>

@@ -252,6 +252,8 @@ return [
     'battery' => 'Battery',
     'add_image' => 'Add image',
     'up_load' => 'Upload',
+    'product_list' => 'Product list',
+    'product_details' => 'Product details',
 
     # Web
     'login' => 'Login',
@@ -291,4 +293,13 @@ return [
     'code' => 'Enter the confirmation code',
     'confirm_register' => 'Confirm register',
     'send_password_reset_link' => 'Send Password Reset Link',
+    'buy_now' => 'Buy now',
+    'add_to_cart' => 'Add to cart',
+    'product_description' => 'Product description',
+    'product_specification' => 'Product specification',
+    'specification' => 'Specification',
+
+    'login_to_your_account' => 'Login to Your Account',
+    'username_password' => 'Enter your username & password to login',
+    'designed_by' => 'Designed by', 
 ];

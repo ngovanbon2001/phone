@@ -31,8 +31,8 @@ class LoginController extends Controller
         ) {
             return redirect()->route('homeAdmin');
         } else {
-            session()->flash('messageLoginError', 'User account or password incorrect');
-            return redirect()->route('login');
+            session()->flash('message-error', 'User account or password incorrect');
+            return redirect()->route('admin.login');
         }
     }
 

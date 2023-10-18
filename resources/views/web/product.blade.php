@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-<title>NhatMai SHOP - Product</title>
+<title>NhatMai SHOP - @lang('languages.product')</title>
 @endsection
 
 @section('content')
@@ -8,9 +8,9 @@
 <div class="breadcrumb-wrap">
     <div class="container-fluid">
         <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('web.home') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('web.product') }}">Products</a></li>
-            <li class="breadcrumb-item active">Product List</li>
+            <li class="breadcrumb-item"><a href="{{ route('web.home') }}">@lang('languages.home')</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('web.product') }}">@lang('languages.product')</a></li>
+            <li class="breadcrumb-item active">@lang('languages.product_list')</li>
         </ul>
     </div>
 </div>
@@ -31,7 +31,7 @@
                                             <input type="hidden" name="brand_id" value="{{ request('brand_id') ?? '' }}">
                                             <input type="hidden" name="category_id" value="{{ request('category_id') ?? '' }}">
                                             <input type="hidden" name="tags" value="{{ request('tags') ?? '' }}">
-                                            <input type="text" name="name" placeholder="Name" value="{{ request('name') ?? '' }}">
+                                            <input type="text" name="name" placeholder="{{ __('languages.product_name') }}" value="{{ request('name') ?? '' }}">
                                             <button type="submit"><i class="fa fa-search"></i></button>
                                         </form>
                                     </div>
@@ -39,7 +39,7 @@
                                 <div class="col-md-4">
                                     <div class="product-short">
                                         <div class="dropdown">
-                                            <div class="dropdown-toggle" data-toggle="dropdown">Brand</div>
+                                            <div class="dropdown-toggle" data-toggle="dropdown">@lang('languages.brand')</div>
                                             <div class="dropdown-menu dropdown-menu-right">
                                                 @foreach($brands as $item)
                                                 <a href="{{ route('web.product', ['brand_id' => $item->id ?? '', 'category_id' => request('category_id') ?? '', 'name' => request('name') ?? '', 'tags' => request('tags') ?? '']) }}" class="dropdown-item">{{ $item->name ?? '' }}</a>
@@ -51,7 +51,7 @@
                                 <div class="col-md-4">
                                     <div class="product-price-range">
                                         <div class="dropdown">
-                                            <div class="dropdown-toggle" data-toggle="dropdown">Category</div>
+                                            <div class="dropdown-toggle" data-toggle="dropdown">@lang('languages.category')</div>
                                             <div class="dropdown-menu dropdown-menu-right">
                                                 @foreach($categories as $item)
                                                 <li class="nav-item">
@@ -89,7 +89,7 @@
                             </div>
                             <div class="product-price">
                                 <h3><span>$</span>{{ number_format($item->price) }}</h3>
-                                <a class="btn" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-shopping-cart"></i>Buy Now</a>
+                                <a class="btn" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-shopping-cart"></i>@lang('languages.buy_now')</a>
                             </div>
                         </div>
                     </div>
@@ -109,13 +109,13 @@
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-center">
                             <li class="page-item disabled">
-                                <a class="page-link" href="{{ $products->appends(request()->except('page'))->previousPageUrl() }}" tabindex="-1">Previous</a>
+                                <a class="page-link" href="{{ $products->appends(request()->except('page'))->previousPageUrl() }}" tabindex="-1">@lang('languages.previous')</a>
                             </li>
                             @foreach($products->links()->getData()["elements"][0] as $key => $item)
                             <li class="page-item {{(isset(request()->query()['page']) && request()->query()['page'] == $key) ? 'active' : ''}}"><a class="page-link" href="{{ $item }}">{{ $key }}</a></li>
                             @endforeach
                             <li class="page-item">
-                                <a class="page-link" href="{{ $products->appends(request()->except('page'))->nextPageUrl() }}">Next</a>
+                                <a class="page-link" href="{{ $products->appends(request()->except('page'))->nextPageUrl() }}">@lang('languages.next')</a>
                             </li>
                         </ul>
                     </nav>
@@ -126,7 +126,7 @@
             <!-- Side Bar Start -->
             <div class="col-lg-4 sidebar">
                 <div class="sidebar-widget category">
-                    <h2 class="title">Category</h2>
+                    <h2 class="title">@lang('languages.category')</h2>
                     <nav class="navbar bg-light">
                         <ul class="navbar-nav">
                             @foreach($categories as $item)
@@ -163,7 +163,7 @@
                             </div>
                             <div class="product-price">
                                 <h3><span>$</span>{{ number_format($item->price) }}</h3>
-                                <a class="btn" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-shopping-cart"></i>Buy Now</a>
+                                <a class="btn" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-shopping-cart"></i>@lang('languages.buy_now')</a>
                             </div>
                             <form id="cart-add-{{ $item->id ?? 0 }}" action="{{ route('cart.create') }}" method="post" class="cart">
                                 @csrf
@@ -179,7 +179,7 @@
                 </div>
 
                 <div class="sidebar-widget brands">
-                    <h2 class="title">Our Brands</h2>
+                    <h2 class="title">@lang('languages.brand')</h2>
                     <ul>
                         @foreach($brands as $item)
                         <li><a href="{{ route('web.product', ['brand_id' => $item->id ?? '', 'category_id' => request('category_id') ?? '', 'name' => request('name') ?? '', 'tags' => request('tags') ?? '']) }}">{{ $item->name ?? '' }} </a><span>{{ $item->products->count() }}</span></li>
@@ -188,7 +188,7 @@
                 </div>
 
                 <div class="sidebar-widget tag">
-                    <h2 class="title">Tags Cloud</h2>
+                    <h2 class="title">@lang('languages.tags')</h2>
                     @foreach ($tags as $item)
                         @if($item->tags !== null)
                         <a href="{{ route('web.product', ['category_id' => request('category_id') ?? '', 'brand_id' => request('brand_id') ?? '', 'name' => request('name') ?? '', 'tags' => $item->tags ?? '']) }}">{{ $item->tags }}</a>

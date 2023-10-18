@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-@include ('admin.common.head', ['pageTitle' => 'Login - Phone Admin'])
+@include ('admin.common.head', ['pageTitle' => __('languages.login').' - Phone Admin'])
 
 <body>
     <main>
@@ -23,14 +23,14 @@
                                 <div class="card-body">
 
                                     <div class="pt-4 pb-2">
-                                        <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
-                                        <p class="text-center small">Enter your username & password to login</p>
+                                        <h5 class="card-title text-center pb-0 fs-4">@lang('languages.login_to_your_account')</h5>
+                                        <p class="text-center small">@lang('languages.username_password')</p>
                                     </div>
 
                                     <form class="row g-3 needs-validation" action="{{route('admin.login.submit')}}" method="post" novalidate>
                                         @csrf
                                         <div class="col-12">
-                                            <label for="yourUsername" class="form-label">Email</label>
+                                            <label for="yourUsername" class="form-label">@lang('languages.email')</label>
                                             <div class="input-group has-validation">
                                                 <span class="input-group-text" id="inputGroupPrepend">@</span>
                                                 <input type="text" name="email" class="form-control" id="yourUsername" required>
@@ -39,18 +39,22 @@
                                         </div>
 
                                         <div class="col-12">
-                                            <label for="yourPassword" class="form-label">Password</label>
+                                            <label for="yourPassword" class="form-label">@lang('languages.password')</label>
                                             <input type="password" name="password" class="form-control" id="yourPassword" required>
                                             <div class="invalid-feedback">Please enter your password!</div>
                                         </div>
 
                                         <div class="col-12">
-                                            <button class="btn btn-primary w-100" type="submit">Login</button>
-                                        </div>
-                                        <div class="col-12">
-                                            <p class="small mb-0">Don't have account? <a href="pages-register.html">Create an account</a></p>
+                                            <button class="btn btn-primary w-100" type="submit">@lang('languages.login')</button>
                                         </div>
                                     </form>
+
+                                    @if (session()->has('message-error'))
+                                    &emsp;
+                                    <div class="alert alert-danger">
+                                        {{ session('message-error') }}
+                                    </div>
+                                    @endif
 
                                 </div>
                             </div>
@@ -60,7 +64,7 @@
                                 <!-- You can delete the links only if you purchased the pro version. -->
                                 <!-- Licensing information: https://bootstrapmade.com/license/ -->
                                 <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-                                Designed by <a href="https://bootstrapmade.com/">Boot</a>
+                                @lang('languages.designed_by') <a href="https://bootstrapmade.com/">Boot</a>
                             </div>
 
                         </div>

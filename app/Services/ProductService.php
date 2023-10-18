@@ -186,13 +186,19 @@ class ProductService implements ProductServiceInterface
         }
     }
 
-     /**
+    /**
      * @return mixed
      */
     public function getTags(): mixed
     {
         try {
-            return DB::table('products')->select('tags')->distinct()->get();
+            return DB::table('products')
+                        ->select('tags', DB::raw('count(*) as count'))
+                        ->whereNotNull('tags')
+                        ->groupBy('tags')
+                        ->orderBy('count', 'desc')
+                        ->take(Common::PAGINATE_BE)
+                        ->get();
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return null;
