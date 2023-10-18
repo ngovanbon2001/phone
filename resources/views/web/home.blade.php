@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-<title>NhatMai SHOP - Home</title>
+<title>NhatMai SHOP - @lang('languages.home')</title>
 @endsection
 
 @section('content')
@@ -28,7 +28,7 @@
                     <nav class="navbar bg-light">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('web.home') }}"><i class="fa fa-home"></i>Home</a>
+                                <a class="nav-link" href="{{ route('web.home') }}"><i class="fa fa-home"></i>@lang('languages.home')</a>
                             </li>
 
                             @foreach($categories as $item)
@@ -46,7 +46,7 @@
                             <img src="{{ asset('images/'.$item->image_url ?? '') }}" alt="Slider Image" />
                             <div class="header-slider-caption">
                                 <p>{{ $item->title ?? "" }}</p>
-                                <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Shop Now</a>
+                                <a class="btn" href=""><i class="fa fa-shopping-cart"></i>@lang('languages.shop_now')</a>
                             </div>
                         </div>
                         @endforeach
@@ -57,14 +57,14 @@
                         <div class="img-item">
                             <img src="{{ asset('fe/img/chinh-hang-a.png') }}" />
                             <a class="img-text" href="">
-                                <p>Genuine</p>
+                                <p>@lang('languages.genuine')</p>
                             </a>
                         </div>
                         &emsp14;
                         <div class="img-item">
                             <img src="{{ asset('fe/img/van-chuyen-1.png') }}" />
                             <a class="img-text" href="">
-                                <p>Free ship</p>
+                                <p>@lang('languages.free_ship')</p>
                             </a>
                         </div>
                     </div>
@@ -95,7 +95,7 @@
                         <i class="fab fa-cc-mastercard"></i>
                         <h2>Secure Payment</h2>
                         <p>
-                            Lorem ipsum dolor sit amet consectetur elit
+                            @lang('languages.lorem_ipsum')
                         </p>
                     </div>
                 </div>
@@ -104,7 +104,7 @@
                         <i class="fa fa-truck"></i>
                         <h2>Worldwide Delivery</h2>
                         <p>
-                            Lorem ipsum dolor sit amet consectetur elit
+                            @lang('languages.lorem_ipsum')
                         </p>
                     </div>
                 </div>
@@ -113,7 +113,7 @@
                         <i class="fa fa-sync-alt"></i>
                         <h2>90 Days Return</h2>
                         <p>
-                            Lorem ipsum dolor sit amet consectetur elit
+                            @lang('languages.lorem_ipsum')
                         </p>
                     </div>
                 </div>
@@ -122,7 +122,7 @@
                         <i class="fa fa-comments"></i>
                         <h2>24/7 Support</h2>
                         <p>
-                            Lorem ipsum dolor sit amet consectetur elit
+                            @lang('languages.lorem_ipsum')
                         </p>
                     </div>
                 </div>
@@ -139,7 +139,7 @@
                     <div class="category-item ch-400">
                         <img src="{{ asset('fe/img/quang-cao-1.jpg') }}" />
                         <a class="category-name" href="">
-                            <p>Some text goes here that describes the image</p>
+                            <p>@lang('languages.description')</p>
                         </a>
                     </div>
                 </div>
@@ -147,13 +147,13 @@
                     <div class="category-item ch-250">
                         <img src="{{ asset('fe/img/quang-cao-3.jpg') }}" />
                         <a class="category-name" href="">
-                            <p>Some text goes here that describes the image</p>
+                            <p>@lang('languages.description')</p>
                         </a>
                     </div>
                     <div class="category-item ch-150">
                         <img src="{{ asset('fe/img/quang-cao-2.jpg') }}" />
                         <a class="category-name" href="">
-                            <p>Some text goes here that describes the image</p>
+                            <p>@lang('languages.description')</p>
                         </a>
                     </div>
                 </div>
@@ -161,13 +161,13 @@
                     <div class="category-item ch-150">
                         <img src="{{ asset('fe/img/quang-cao-4.jpg') }}" />
                         <a class="category-name" href="">
-                            <p>Some text goes here that describes the image</p>
+                            <p>@lang('languages.description')</p>
                         </a>
                     </div>
                     <div class="category-item ch-250">
                         <img src="{{ asset('fe/img/quang-cao-5.png') }}" />
                         <a class="category-name" href="">
-                            <p>Some text goes here that describes the image</p>
+                            <p>@lang('languages.description')</p>
                         </a>
                     </div>
                 </div>
@@ -175,7 +175,7 @@
                     <div class="category-item ch-400">
                         <img src="{{ asset('fe/img/quang-cao-6.png') }}" />
                         <a class="category-name" href="">
-                            <p>Some text goes here that describes the image</p>
+                            <p>@lang('languages.description')</p>
                         </a>
                     </div>
                 </div>
@@ -189,7 +189,7 @@
         <div class="container-fluid">
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <h1>call us for any queries</h1>
+                    <h1>@lang('languages.call_us')</h1>
                 </div>
                 <div class="col-md-6">
                     <a href="tel:0123456789">+012-345-6789</a>
@@ -203,7 +203,7 @@
     <div class="featured-product product">
         <div class="container-fluid">
             <div class="section-header">
-                <h1>New Product</h1>
+                <h1>@lang('languages.new_product')</h1>
             </div>
             <div class="row align-items-center product-slider product-slider-4">
                 @foreach ($newProduct as $item)
@@ -253,7 +253,7 @@
     <div class="recent-product product">
         <div class="container-fluid">
             <div class="section-header">
-                <h1>Low price</h1>
+                <h1>@lang('languages.low_price')</h1>
             </div>
             <div class="row align-items-center product-slider product-slider-4">
                 @foreach ($discountProduct as $item)

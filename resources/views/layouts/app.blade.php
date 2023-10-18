@@ -58,20 +58,39 @@
 
 				<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
 					<div class="navbar-nav mr-auto">
-						<a href="{{ route('web.home') }}" class="nav-item nav-link {{ (Route::currentRouteName() == 'web.home') ? 'active' : '' }}">Home</a>
-						<a href="{{ route('web.product') }}" class="nav-item nav-link {{ ((Route::currentRouteName() == 'web.product') || (Route::currentRouteName() == 'web.product.detail')) ? 'active' : '' }}">Products</a>
+						<a href="{{ route('web.home') }}" class="nav-item nav-link {{ (Route::currentRouteName() == 'web.home') ? 'active' : '' }}">@lang('languages.home')</a>
+						<a href="{{ route('web.product') }}" class="nav-item nav-link {{ ((Route::currentRouteName() == 'web.product') || (Route::currentRouteName() == 'web.product.detail')) ? 'active' : '' }}">@lang('languages.product')</a>
 						@if(isset(auth()->user()->id))
-						<a href="{{ route('order.show', auth()->user()->id ?? 0) }}" class="nav-item nav-link {{ (Route::currentRouteName() == 'order.show') ? 'active' : '' }}">Your order</a>
+						<a href="{{ route('order.show', auth()->user()->id ?? 0) }}" class="nav-item nav-link {{ (Route::currentRouteName() == 'order.show') ? 'active' : '' }}">@lang('languages.order')</a>
 						@endif
-						<a href="{{ route('cart', auth()->user()->id ?? 0) }}" class="nav-item nav-link {{ (Route::currentRouteName() == 'cart' ) ? 'active' : '' }}">Cart</a>
+						<a href="{{ route('cart', auth()->user()->id ?? 0) }}" class="nav-item nav-link {{ (Route::currentRouteName() == 'cart' ) ? 'active' : '' }}">@lang('languages.cart')</a>
 					</div>
 					<div class="navbar-nav ml-auto">
 						<div class="nav-item dropdown">
-							<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ auth()->user()->username ?? 'User Account' }}</a>
+							<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+								@foreach (config('languages') as $key => $value)
+								@if ($key === session()->get('locale') ?? 'vn')
+								<img src="{{ asset($value['flag-image'] ?? '') }}" alt="no image">
+								<span>{{ $value['display'] ?? '' }}</span>
+								@endif
+								@endforeach
+							</a>
+							<div class="dropdown-menu">
+								@foreach (config('languages') as $key => $value)
+								<a href="{{ route('change.language', $value['flag-icon'] ?? 'vn') }}" class="dropdown-item">
+									<img src="{{ asset($value['flag-image'] ?? '') }}" alt="no image">
+									&emsp14;
+									<span>{{ $value['display'] ?? '' }}</span>
+								</a>
+								@endforeach
+							</div>
+						</div>
+						<div class="nav-item dropdown">
+							<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{{ auth()->user()->username ?? __('languages.user_account') }}</a>
 							<div class="dropdown-menu">
 								@if(!isset(auth()->user()->id))
-								<a href="{{ route('login') }}" class="dropdown-item">Login</a>
-								<a href="{{ route('register') }}" class="dropdown-item">Register</a>
+								<a href="{{ route('login') }}" class="dropdown-item">@lang('languages.login')</a>
+								<a href="{{ route('register') }}" class="dropdown-item">@lang('languages.register')</a>
 								@endif
 								@if(isset(auth()->user()->id))
 								<a class="dropdown-item d-flex align-items-center" href="{{ route('user.logout') }}" onclick="event.preventDefault();
@@ -80,7 +99,7 @@
 									<form id="logout-form" action="{{ route('user.logout') }}" method="POST" style="display: none;" class="d-none">
 										@csrf
 									</form>
-									<span>Logout</span>
+									<span>@lang('languages.logout')</span>
 								</a>
 								@endif
 							</div>
@@ -135,7 +154,7 @@
 			<div class="row">
 				<div class="col-lg-3 col-md-6">
 					<div class="footer-widget">
-						<h2>Get in Touch</h2>
+						<h2>@lang('languages.get_in_touch')</h2>
 						<div class="contact-info">
 							<p><i class="fa fa-map-marker"></i>Thôn Na - Thanh Xuân - Sóc Sơn - Hà Nội</p>
 							<p><i class="fa fa-envelope"></i>ngovanbon2001@example.com</p>
@@ -146,7 +165,7 @@
 
 				<div class="col-lg-3 col-md-6">
 					<div class="footer-widget">
-						<h2>Follow Us</h2>
+						<h2>@lang('languages.follow_us')</h2>
 						<div class="contact-info">
 							<div class="social">
 								<a href=""><i class="fab fa-twitter"></i></a>
@@ -161,22 +180,22 @@
 
 				<div class="col-lg-3 col-md-6">
 					<div class="footer-widget">
-						<h2>Company Info</h2>
+						<h2>@lang('languages.company_info')</h2>
 						<ul>
-							<li><a href="#">About Us</a></li>
-							<li><a href="#">Privacy Policy</a></li>
-							<li><a href="#">Terms & Condition</a></li>
+							<li><a href="#">@lang('languages.about_us')</a></li>
+							<li><a href="#">@lang('languages.privacy_policy')</a></li>
+							<li><a href="#">@lang('languages.terms_condition')</a></li>
 						</ul>
 					</div>
 				</div>
 
 				<div class="col-lg-3 col-md-6">
 					<div class="footer-widget">
-						<h2>Purchase Info</h2>
+						<h2>@lang('languages.purchase_info')</h2>
 						<ul>
-							<li><a href="#">Pyament Policy</a></li>
-							<li><a href="#">Shipping Policy</a></li>
-							<li><a href="#">Return Policy</a></li>
+							<li><a href="#">@lang('languages.payment_policy')</a></li>
+							<li><a href="#">@lang('languages.shipping_policy')</a></li>
+							<li><a href="#">@lang('languages.return_policy')</a></li>
 						</ul>
 					</div>
 				</div>
@@ -185,13 +204,13 @@
 			<div class="row payment align-items-center">
 				<div class="col-md-6">
 					<div class="payment-method">
-						<h2>We Accept:</h2>
+						<h2>@lang('languages.we_accept'):</h2>
 						<img src="{{ asset('fe/img/payment-method.png') }}" alt="Payment Method" />
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="payment-security">
-						<h2>Secured By:</h2>
+						<h2>@lang('languages.secured_by'):</h2>
 						<img src="{{ asset('fe/img/godaddy.svg') }}" alt="Payment Security" />
 						<img src="{{ asset('fe/img/norton.svg') }}" alt="Payment Security" />
 						<img src="{{ asset('fe/img/ssl.svg') }}" alt="Payment Security" />
