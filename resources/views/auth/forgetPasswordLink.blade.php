@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-<title>NhatMai SHOP - Change password</title>
+<title>NhatMai SHOP - @lang('languages.change_password')</title>
 @endsection
 
 @section('content')
@@ -27,7 +27,7 @@
                     <form role="form" role="form" method="POST" action="{{ route('reset.password.post') }}">
                         @csrf
                         <div class="form-group">
-                            <label for="login-username"><i class="icon-user"></i> <b>Email</b></label>
+                            <label for="login-username"><i class="icon-user"></i> <b>@lang('languages.email')</b></label>
                             <input class="form-control" id="login-username" name="email" type="text" placeholder="">
                             @error('email')
                             <span class="invalid-feedback" role="alert">
@@ -36,7 +36,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label><i class="icon-user"></i> <b>Password</b></label>
+                            <label><i class="icon-user"></i> <b>@lang('languages.password')</b></label>
                             <input class="form-control" id="login-username" name="password" type="password" placeholder="">
                             @error('password')
                             <span class="invalid-feedback" role="alert">
@@ -45,7 +45,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label><i class="icon-user"></i> <b>Password confirmation</b></label>
+                            <label><i class="icon-user"></i> <b>@lang('languages.password_confirmation')</b></label>
                             <input class="form-control" id="login-username" name="password_confirmation" type="password" placeholder="">
                             @error('password_confirmation')
                             <span class="invalid-feedback" role="alert">
@@ -54,7 +54,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn pull-right"> Reset Password</button>
+                            <button type="submit" class="btn pull-right"> @lang('languages.reset_password')</button>
                             <div class="clearfix"></div>
                         </div>
                     </form>

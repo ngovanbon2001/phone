@@ -276,4 +276,14 @@ return [
     'lorem_ipsum' => 'Lorem ipsum dolor sit amet consectetur elit',
     'call_us' => 'Gọi cho chúng tôi nếu bạn có bất kỳ câu hỏi nào',
     'low_price' => 'Giá thấp',
+
+    'forgot_password' => 'Quên mật khẩu?',
+    'not_a_member' => 'Chưa có tài khoản?',
+    'register_here' => 'Đăng ký tại đây',
+    'login_with_google' => 'Đăng nhập bằng Google',
+    'you_have_account' => 'Bạn đã có tài khoản?',
+    'sign_in' => 'Đăng nhập',
+    'code' => 'Nhập mã xác nhận',
+    'confirm_register' => 'Xác nhận đăng ký',
+    'send_password_reset_link' => 'Gửi liên kết đặt lại mật khẩu',
 ];

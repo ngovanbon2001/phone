@@ -128,7 +128,7 @@
 							<input type="hidden" name="brand_id" value="{{ request('brand_id') ?? '' }}">
 							<input type="hidden" name="category_id" value="{{ request('category_id') ?? '' }}">
 							<input type="hidden" name="tags" value="{{ request('tags') ?? '' }}">
-							<input type="text" name="name" placeholder="Product name" value="{{ request('name') ?? '' }}">
+							<input type="text" name="name" placeholder="{{ __('languages.product_name') }}" value="{{ request('name') ?? '' }}">
 							<button type="submit"><i class="fa fa-search"></i></button>
 						</form>
 					</div>

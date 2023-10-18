@@ -281,4 +281,14 @@ return [
     'lorem_ipsum' => 'Lorem ipsum dolor sit amet consectetur elit',
     'call_us' => 'call us for any queries',
     'low_price' => 'Low price',
+
+    'forgot_password' => 'Forgot password?',
+    'not_a_member' => 'Not a member?',
+    'register_here' => 'Register here',
+    'login_with_google' => 'Login with google',
+    'you_have_account' => 'You have account?',
+    'sign_in' => 'Sign in',
+    'code' => 'Enter the confirmation code',
+    'confirm_register' => 'Confirm register',
+    'send_password_reset_link' => 'Send Password Reset Link',
 ];

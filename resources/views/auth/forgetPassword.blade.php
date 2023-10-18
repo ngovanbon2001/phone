@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-<title>NhatMai SHOP - Change password</title>
+<title>NhatMai SHOP -  @lang('languages.change_password')</title>
 @endsection
 
 @section('content')
@@ -27,8 +27,7 @@
                     <form role="form" role="form" method="POST" action="{{ route('forget.password.post') }}">
                         @csrf
                         <div class="form-group">
-                            <label for="login-username"><i class="icon-user"></i> <b>Email</b></label>
-                            <input class="form-control" id="login-username" name="email" type="text" placeholder="">
+                            <input class="form-control" id="login-username" name="email" type="text" placeholder="{{ __('languages.email') }}">
                             @error('email')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -36,7 +35,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn pull-right"> Send Password Reset Link</button>
+                            <button type="submit" class="btn pull-right"> @lang('languages.send_password_reset_link')</button>
                             <div class="clearfix"></div>
                         </div>
                     </form>
