@@ -135,7 +135,7 @@ $(document).ready(function() {
     $("button.update-cart").on('click', function(){
         productId = $(this).data('id');
         cart = $('#cart-' + productId);
-        checkQuantity(cart, productId);
+        quantity(cart, productId);
 
         update(cart);
     });
@@ -195,7 +195,7 @@ $(document).ready(function() {
 
     (carts.length < 1) ? $('#check-out').hide() : $('#check-out').show();
 
-    function checkQuantity(input, productId) {
+    function quantity(input, productId) {
         var value = parseFloat(input.val());
         if (value < 1) {
             input.val(1);
