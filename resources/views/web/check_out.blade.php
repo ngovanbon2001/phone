@@ -1,15 +1,14 @@
 @extends('layouts.app')
 @section('title')
-<title>NhatMai SHOP - Checkout</title>
+<title>NhatMai SHOP - @lang('languages.checkout')</title>
 @endsection
 @section('content')
 <!-- Breadcrumb Start -->
 <div class="breadcrumb-wrap">
     <div class="container-fluid">
         <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Products</a></li>
-            <li class="breadcrumb-item active">Checkout</li>
+            <li class="breadcrumb-item"><a href="{{ route('web.home') }}">@lang('languages.home')</a></li>
+            <li class="breadcrumb-item active">@lang('languages.checkout')</li>
         </ul>
     </div>
 </div>
@@ -32,48 +31,48 @@
                 <div class="col-lg-8">
                     <div class="checkout-inner">
                         <div class="billing-address">
-                            <h2>Billing Address</h2>
+                            <h2>@lang('languages.billing_address')</h2>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label>Name</label>
-                                    <input class="form-control" type="text" name="customer_name" placeholder="First Name">
+                                    <label>@lang('languages.name')</label>
+                                    <input class="form-control" type="text" name="customer_name" placeholder="{{ __('languages.name') }}">
                                 </div>
                                 <div class="col-md-6">
-                                    <label>E-mail</label>
-                                    <input class="form-control" type="text" name="customer_email" placeholder="E-mail">
+                                    <label>@lang('languages.email')</label>
+                                    <input class="form-control" type="text" name="customer_email" placeholder="{{ __('languages.email') }}">
                                 </div>
                                 <div class="col-md-6">
-                                    <label>Mobile No</label>
-                                    <input class="form-control" type="text" name="customer_phone" placeholder="Mobile No">
+                                    <label>@lang('languages.phone_number')</label>
+                                    <input class="form-control" type="text" name="customer_phone" placeholder="{{ __('languages.phone_number') }}">
                                 </div>
                                 <div class="col-md-6">
-                                    <label>Provinces</label>
+                                    <label>@lang('languages.provinces')</label>
                                     <select id="provinces" name="provinces" class="form-control input-sm choose provinces">
-                                        <option value="">---Select provinces---</option>
+                                        <option value="">------</option>
                                         @foreach ($provinces as $value)
                                         <option value="{{ $value->id }}">{{ $value->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label>Districts</label>
+                                    <label>@lang('languages.districts')</label>
                                     <div class="input-append">
                                         <select id="districts" name="districts" class="form-control input-sm choose districts">
-                                            <option value="">---Select districts---</option>
+                                            <option value="">------</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label>Wards</label>
+                                    <label>@lang('languages.wards')</label>
                                     <div class="input-append">
                                         <select id="wards" name="wards" class="form-control input-sm wards">
-                                            <option value="">---Select wards---</option>
+                                            <option value="">------</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <label>Address</label>
-                                    <input class="form-control" type="text" name="address_detail" placeholder="Address">
+                                    <label>@lang('languages.address')</label>
+                                    <input class="form-control" type="text" name="address_detail" placeholder="{{ __('languages.address') }}">
                                 </div>
                             </div>
                         </div>
@@ -82,15 +81,15 @@
                 <div class="col-lg-4">
                     <div class="checkout-inner">
                         <div class="checkout-summary">
-                            <h1>Cart Total</h1>
-                            <p class="sub-total">Sub Total<span id="sub_total">$0</span></p>
-                            <p class="ship-cost">Shipping Cost<span>Free</span></p>
-                            <h2>Grand Total<span id="total">$0</span></h2>
+                            <h1>@lang('languages.cart_total')</h1>
+                            <p class="sub-total">@lang('languages.sub_total')<span id="sub_total">$0</span></p>
+                            <p class="ship-cost">@lang('languages.shipping_cost')<span>@lang('languages.free')</span></p>
+                            <h2>@lang('languages.grand_total')<span id="total">$0</span></h2>
                         </div>
 
                         <div class="checkout-payment">
                             <div class="checkout-btn">
-                                <button>Place Order</button>
+                                <button>@lang('languages.place_order')</button>
                             </div>
                         </div>
                     </div>

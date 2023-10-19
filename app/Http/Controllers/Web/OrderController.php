@@ -78,7 +78,7 @@ class OrderController extends Controller
      */
     public function detail(int $id): Factory|View|Application
     {
-        $order = $this->orderServiceInterface->detail($id);
+        $order = $this->orderServiceInterface->detailItem($id);
         return view('web/detail_order', compact('order'));
     }
 
@@ -88,7 +88,7 @@ class OrderController extends Controller
      */
     public function exportPdf(int $id): mixed
     {
-        $order = $this->orderServiceInterface->detail($id);
+        $order = $this->orderServiceInterface->detailItem($id);
         $pdf   = PDF::loadView('web/pdf', compact('order'));
         $pdf->getDomPDF()->set_option('isHtml5ParserEnabled', true);
         $pdf->getDomPDF()->set_option('isPhpEnabled', true);

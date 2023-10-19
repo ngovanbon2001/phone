@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-<title>NhatMai SHOP - Cart</title>
+<title>NhatMai SHOP - @lang('languages.cart')</title>
 @endsection
 
 @section('content')
@@ -8,9 +8,8 @@
 <div class="breadcrumb-wrap">
     <div class="container-fluid">
         <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Products</a></li>
-            <li class="breadcrumb-item active">Cart</li>
+            <li class="breadcrumb-item"><a href="{{ route('web.home') }}">@lang('languages.home')</a></li>
+            <li class="breadcrumb-item active">@lang('languages.cart')</li>
         </ul>
     </div>
 </div>
@@ -26,11 +25,11 @@
                         <table class="table table-bordered">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th>Product</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                    <th>Remove</th>
+                                    <th>@lang('languages.product')</th>
+                                    <th>@lang('languages.price')</th>
+                                    <th>@lang('languages.quantity')</th>
+                                    <th>@lang('languages.total')</th>
+                                    <th>@lang('languages.action')</th>
                                 </tr>
                             </thead>
                             <tbody class="align-middle">
@@ -46,7 +45,9 @@
                                     <td>${{ $value['price'] ?? 0 }}</td>
                                     <td>
                                         <div class="qty">
+                                            <button class="btn-minus update-cart" data-id="{{ $value['product_id'] ?? 0 }}"><i class="fa fa-minus"></i></button>
                                             <input id="cart-{{ $value['product_id'] ?? 0 }}" class="cart" data-cart="{{ auth()->user()->id ?? 0 }}" data-id="{{ $value['product_id'] ?? 0}}" data-name="{{ $value['name'] ?? ''}}" data-image="{{ $value['options']['image'] ?? '' }}" data-price="{{ $value['price'] ?? 0 }}" data-qty="{{ $value['quantity'] ?? 0 }}" type="number" name="quantity" value="{{ $value['quantity'] ?? 0 }}" oninput="checkQuantity(this)">
+                                            <button class="btn-plus update-cart" data-id="{{ $value['product_id'] ?? 0 }}"><i class="fa fa-plus"></i></button>
                                         </div>
                                     </td>
                                     <td id="total-{{ $value['product_id'] ?? 0 }}">${{ number_format(($value['price'] ?? 0) * ($value['quantity'] ?? 0), 2) }}</td>
@@ -65,13 +66,13 @@
                         <div class="col-md-12">
                             <div class="cart-summary">
                                 <div class="cart-content">
-                                    <h1>Cart Summary</h1>
-                                    <p>Sub Total<span id="sub_total">$0</span></p>
-                                    <p>Shipping Cost<span>Free</span></p>
-                                    <h2>Grand Total<span id="total">$0</span></h2>
+                                    <h1>@lang('languages.cart_summary')</h1>
+                                    <p>@lang('languages.sub_total')<span id="sub_total">$0</span></p>
+                                    <p>@lang('languages.shipping_cost')<span>@lang('languages.free')</span></p>
+                                    <h2>@lang('languages.grand_total')<span id="total">$0</span></h2>
                                 </div>
                                 <div class="cart-btn">
-                                    <button onclick="document.getElementById('check-out-form').submit()">Checkout</button>
+                                    <button onclick="document.getElementById('check-out-form').submit()">@lang('languages.checkout')</button>
                                 </div>
                                 <form id="check-out-form" style="display: none;" action="{{ route('order.create', auth()->user()->id ?? 0) }}" method="get">
                                 </form>
