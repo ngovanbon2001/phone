@@ -348,13 +348,13 @@ class OrderService implements OrderServiceInterface
         if ($data['action']) {
             if ($data['action'] == 'provinces') {
                 $huyen = DB::table("districts")->where('province_id', $data['id'])->get();
-                $output .= '<option value="">------</option>';
+                $output .= '<option value="">---'. __('languages.districts') .'---</option>';
                 foreach ($huyen as $h) {
                     $output .= '<option value="' . $h->id . '">' . $h->name . '</option>';
                 }
             } else {
                 $xa = DB::table("wards")->where('district_id', $data['id'])->get();
-                $output .= '<option value="">------</option>';
+                $output .= '<option value="">---'. __('languages.wards') .'---</option>';
                 foreach ($xa as $x) {
                     $output .= '<option value="' . $x->id . '">' . $x->name . '</option>';
                 }

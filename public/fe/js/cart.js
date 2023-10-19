@@ -135,8 +135,7 @@ $(document).ready(function() {
     $("button.update-cart").on('click', function(){
         productId = $(this).data('id');
         cart = $('#cart-' + productId);
-        cost = parseFloat(cart.data('price')) * parseInt(cart.val());
-        $('#total-'+productId).text('$'+cost.toFixed(2));
+        quantity(cart, productId);
 
         update(cart);
     });
@@ -195,4 +194,14 @@ $(document).ready(function() {
     }
 
     (carts.length < 1) ? $('#check-out').hide() : $('#check-out').show();
+
+    function quantity(input, productId) {
+        var value = parseFloat(input.val());
+        if (value < 1) {
+            input.val(1);
+        } else {
+            cost = parseFloat(cart.data('price')) * parseInt(cart.val());
+            $('#total-'+productId).text('$'+cost.toFixed(2));
+        }
+    }
 });
