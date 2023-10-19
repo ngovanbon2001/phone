@@ -103,7 +103,6 @@
     const urlAddress = "{{ route('select-delivery') }}";
 
     function checkQuantity(input) {
-        console.log(input);
         var value = parseFloat(input.value);
         if (value < 1) {
             input.value = 1;
