@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-<title>NhatMai SHOP - Order detail</title>
+<title>NhatMai SHOP - @lang('languages.order_detail')</title>
 @endsection
 
 @section('content')
@@ -8,8 +8,8 @@
 <div class="breadcrumb-wrap">
     <div class="container-fluid">
         <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('web.home') }}">Home</a></li>
-            <li class="breadcrumb-item active">Order Detail</li>
+            <li class="breadcrumb-item"><a href="{{ route('web.home') }}">@lang('languages.home')</a></li>
+            <li class="breadcrumb-item active">@lang('languages.order_detail')</li>
         </ul>
     </div>
 </div>
@@ -30,36 +30,36 @@
                         <div class="col-md-7">
                             <div class="product-content">
                                 <div class="title">
-                                    <h2>Product</h2>
+                                    <h2>@lang('languages.product')</h2>
                                 </div>
                                 <div>
-                                    <p><b>Product name: </b> <span>{{ $order['product_name'] ?? '' }}</span></p>
+                                    <p><b>@lang('languages.product_name'): </b> <span>{{ $order['product_name'] ?? '' }}</span></p>
                                 </div>
                                 <div>
-                                    <p><b>Price: </b> <span>{{ number_format($order['product_price'] ?? 0, 2) }}</span></p>
+                                    <p><b>@lang('languages.price'): </b> <span>{{ number_format($order['product_price'] ?? 0, 2) }}</span></p>
                                 </div>
                                 <div>
-                                    <p><b>Quantity: </b> <span>{{ $order['product_quantity'] ?? 0 }}</span></p>
+                                    <p><b>@lang('languages.quantity'): </b> <span>{{ $order['product_quantity'] ?? 0 }}</span></p>
                                 </div>
                                 <div>
-                                    <p><b>Total: </b> <span>{{ number_format((($order['product_price'] ?? 0) * ($order['product_quantity'] ?? 0)), 2) }}</span></p>
+                                    <p><b>@lang('languages.total'): </b> <span>{{ number_format((($order['product_price'] ?? 0) * ($order['product_quantity'] ?? 0)), 2) }}</span></p>
                                 </div>
                                 <div class="title">
-                                    <h2>Customer</h2>
+                                    <h2>@lang('languages.customer')</h2>
                                 </div>
                                 <div>
-                                    <p><b>Name: </b> <span>{{ $order['order']['customer_name'] ?? '' }}</span></p>
+                                    <p><b>@lang('languages.name'): </b> <span>{{ $order['order']['customer_name'] ?? '' }}</span></p>
                                 </div>
                                 <div>
-                                    <p><b>Phone: </b> <span>{{ $order['order']['customer_phone'] ?? '' }}</span></p>
+                                    <p><b>@lang('languages.phone_number'): </b> <span>{{ $order['order']['customer_phone'] ?? '' }}</span></p>
                                 </div>
                                 <div>
-                                    <p><b>Email: </b> <span>{{ $order['order']['customer_email'] ?? '' }}</span></p>
+                                    <p><b>@lang('languages.email'): </b> <span>{{ $order['order']['customer_email'] ?? '' }}</span></p>
                                 </div>
                                 <div>
-                                    <p><b>Address: </b> <span>{{ $order['order']['address'] ?? '' }}</span></p>
+                                    <p><b>@lang('languages.address'): </b> <span>{{ $order['order']['address'] ?? '' }}</span></p>
                                 </div>
-                                <a href="{{ route('order.pdf', $order['id'] ?? 0) }}" class="btn">Export PDF</a>
+                                <a href="{{ route('order.pdf', $order['id'] ?? 0) }}" class="btn">@lang('languages.export_pdf')</a>
                             </div>
                         </div>
                     </div>

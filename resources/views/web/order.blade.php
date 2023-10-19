@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-<title>NhatMai SHOP - Order</title>
+<title>NhatMai SHOP - @lang('languages.order')</title>
 @endsection
 
 @section('content')
@@ -8,8 +8,8 @@
 <div class="breadcrumb-wrap">
     <div class="container-fluid">
         <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('web.home') }}">Home</a></li>
-            <li class="breadcrumb-item active">Order</li>
+            <li class="breadcrumb-item"><a href="{{ route('web.home') }}">@lang('languages.home')</a></li>
+            <li class="breadcrumb-item active">@lang('languages.order')</li>
         </ul>
     </div>
 </div>
@@ -40,12 +40,12 @@
                         <table class="table table-bordered">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th>Product</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                    <th>Status</th>
-                                    <th>Remove</th>
+                                    <th>@lang('languages.product')</th>
+                                    <th>@lang('languages.price')</th>
+                                    <th>@lang('languages.quantity')</th>
+                                    <th>@lang('languages.total')</th>
+                                    <th>@lang('languages.status')</th>
+                                    <th>@lang('languages.action')</th>
                                 </tr>
                             </thead>
                             <tbody class="align-middle">
@@ -56,7 +56,7 @@
                                 <tr>
                                     <td>
                                         <div class="img">
-                                            <a href="{{ route('order.detail', $val['id']) }}"><img src="{{ asset('images/'.$val['product_image'] ?? '') }}" alt="Image"></a>
+                                            <a href="{{ route('order.detail', $val['id'] ?? '') }}"><img src="{{ asset('images/'.$val['product_image'] ?? '') }}" alt="Image"></a>
                                             <p>{{ $val['product_name'] ?? '' }}</p>
                                         </div>
                                     </td>
@@ -65,14 +65,17 @@
                                         <p>{{ $val['product_quantity'] ?? 0 }}</p>
                                     </td>
                                     <td>${{ number_format(($val['product_price'] ?? 0) * ($val['product_quantity'] ?? 0), 2) }}</td>
-                                    <td>{{ App\Constants\Common::STATUS_ORDER[($val['status'] ?? 0)] }}</td>
+                                    <td>{{ __(App\Constants\Common::STATUS_ORDER[($val['status'] ?? 0)]) }}</td>
                                     <td>
                                         @if (($val['status'] ?? 0) < App\Constants\Common::DELIVERY) 
+                                        <?php $message =  __('languages.delete_confirm') ?>
                                         <form id="order-{{ $val['id'] ?? 0 }}" action="{{ route('web.order.cancel', $val['id'] ?? 0) }}" method="post">
                                             @csrf
                                         </form>
-                                        <a type="button" onclick="return confirm('Are you sure you want to delete this item?') ? document.getElementById('order-{{ $val->id ?? 0 }}').submit() : false" class="delete-cart"><i class="fa fa-trash"></i></a>
+                                        <a type="button" onclick="return confirm('{{ $message }}') ? document.getElementById('order-{{ $val->id ?? 0 }}').submit() : false" class="delete-cart"><i class="fa fa-trash"></i></a>
+                                        &emsp;
                                          @endif
+                                        <a href="{{ route('order.detail', $val['id'] ?? '') }}"><i class="fas fa-eye"></i></a>
                                     </td>
                                 </tr>
                                 @endif

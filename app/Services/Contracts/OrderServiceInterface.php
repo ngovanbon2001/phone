@@ -29,4 +29,6 @@ interface OrderServiceInterface
     public function cancel(int $id);
 
     public function show(int $id);
+
+    public function detailItem(int $id);
 }

@@ -132,6 +132,15 @@ $(document).ready(function() {
         update(this);
     });
 
+    $("button.update-cart").on('click', function(){
+        productId = $(this).data('id');
+        cart = $('#cart-' + productId);
+        cost = parseFloat(cart.data('price')) * parseInt(cart.val());
+        $('#total-'+productId).text('$'+cost.toFixed(2));
+
+        update(cart);
+    });
+
     function update(_this) {
         var cartData = [];
         var cart_id = $(_this).data('cart');
