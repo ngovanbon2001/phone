@@ -48,7 +48,7 @@
                                 <div class="col-md-6">
                                     <label>@lang('languages.provinces')</label>
                                     <select id="provinces" name="provinces" class="form-control input-sm choose provinces">
-                                        <option value="">------</option>
+                                        <option value="">---@lang('languages.provinces')---</option>
                                         @foreach ($provinces as $value)
                                         <option value="{{ $value->id }}">{{ $value->name }}</option>
                                         @endforeach
@@ -58,7 +58,7 @@
                                     <label>@lang('languages.districts')</label>
                                     <div class="input-append">
                                         <select id="districts" name="districts" class="form-control input-sm choose districts">
-                                            <option value="">------</option>
+                                            <option value="">---@lang('languages.districts')---</option>
                                         </select>
                                     </div>
                                 </div>
@@ -66,7 +66,7 @@
                                     <label>@lang('languages.wards')</label>
                                     <div class="input-append">
                                         <select id="wards" name="wards" class="form-control input-sm wards">
-                                            <option value="">------</option>
+                                            <option value="">---@lang('languages.wards')---</option>
                                         </select>
                                     </div>
                                 </div>
