@@ -26,7 +26,10 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-
+	<script>
+		var delete_confirm = "{{ __('languages.delete_confirm') }}";
+		var cart_delete_success = "{{ __('languages.cart_delete_success') }}";
+	</script>
 </head>
 
 <body>

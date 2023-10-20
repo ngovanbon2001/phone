@@ -52,9 +52,9 @@ class CartController extends Controller
         $cart = $this->cartServiceInterface->create($request->all());
 
         if ($cart) {
-            return redirect()->back()->with('success', 'Cart created successfully!');
+            return redirect()->back()->with('success', __('languages.cart_create_success'));
         } else {
-            return redirect()->back()->with('error', 'Failed to create cart');
+            return redirect()->back()->with('error', __('languages.cart_create_error'));
         }
     }
 
