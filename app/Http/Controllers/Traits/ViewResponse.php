@@ -23,9 +23,9 @@ trait ViewResponse
         }
 
         if ($data){
-            session()->flash('message', $action.' successful! '.$message);
+            session()->flash('message', $action.' '. strtolower(__('languages.successful')) .' '. strtolower($message));
         } else {
-            session()->flash('message-error', 'Fail '.$action);
+            session()->flash('message-error', __('languages.fail').' '. strtolower($action));
         }
 
         return $redirect;
@@ -50,5 +50,22 @@ trait ViewResponse
         }
 
         return $redirect;
+    }
+
+    /**
+     * @param mixed $data
+     * @param $action
+     * @param string $message
+     * @return RedirectResponse
+     */
+    public function handleViewResponseToBack(mixed $data, $action, string $message = ''): RedirectResponse
+    {
+        if ($data){
+            session()->flash('message', $action.' '. strtolower(__('languages.successful')) .' '. strtolower($message));
+        } else {
+            session()->flash('message-error', __('languages.fail').' '. strtolower($action));
+        }
+
+        return redirect()->back();
     }
 }

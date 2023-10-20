@@ -20,7 +20,7 @@ class Product_imageController extends Controller
     protected CategoryServiceInterface $categoryServiceInterface;
     protected ProductServiceInterface  $productServiceInterface;
     protected ImageServiceInterface    $imageServiceInterface;
-    private string $action = 'image';
+    private string $action;
 
     /**
      * @param BrandServiceInterface    $brandServiceInterface
@@ -34,6 +34,7 @@ class Product_imageController extends Controller
         ProductServiceInterface  $productServiceInterface,
         ImageServiceInterface    $imageServiceInterface,
     ) {
+        $this->action = strtolower(__('languages.image'));
         $this->brandServiceInterface    = $brandServiceInterface;
         $this->categoryServiceInterface = $categoryServiceInterface;
         $this->productServiceInterface  = $productServiceInterface;
@@ -67,7 +68,7 @@ class Product_imageController extends Controller
         return $this->handleViewResponse(
             $images,
             'showImage',
-            Common::ACTION[Common::ACTION_CREATE]. ' '.$this->action,
+            __('languages.'.Common::ACTION_CREATE). ' '.$this->action,
             '',
             $request->input('product_id') ?? null
         );
@@ -99,7 +100,7 @@ class Product_imageController extends Controller
         return $this->handleViewResponse(
             $images,
             'showImage',
-            Common::ACTION[Common::ACTION_DELETE]. ' '.$this->action,
+            __('languages.'.Common::ACTION_DELETE). ' '.$this->action,
             '',
             $idp
         );

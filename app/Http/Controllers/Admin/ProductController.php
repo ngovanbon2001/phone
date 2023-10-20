@@ -21,7 +21,7 @@ class ProductController extends Controller
     protected BrandServiceInterface $brandServiceInterface;
     protected CategoryServiceInterface $categoryServiceInterface;
     protected ProductServiceInterface $productServiceInterface;
-    private string $action = 'product';
+    private string $action;
 
     /**
      * @param BrandServiceInterface $brandServiceInterface
@@ -33,6 +33,7 @@ class ProductController extends Controller
         CategoryServiceInterface $categoryServiceInterface,
         ProductServiceInterface  $productServiceInterface
     ) {
+        $this->action = strtolower(__('languages.product'));
         $this->brandServiceInterface    = $brandServiceInterface;
         $this->categoryServiceInterface = $categoryServiceInterface;
         $this->productServiceInterface  = $productServiceInterface;
@@ -76,7 +77,7 @@ class ProductController extends Controller
         return $this->handleViewResponse(
             $product,
             'indexProduct',
-            Common::ACTION[Common::ACTION_CREATE]. ' '.$this->action
+            __('languages.'.Common::ACTION_CREATE). ' '.$this->action
         );
     }
 
@@ -119,7 +120,7 @@ class ProductController extends Controller
         return $this->handleViewResponse(
             $product,
             'indexProduct',
-            Common::ACTION[Common::ACTION_UPDATE]. ' '.$this->action
+            __('languages.'.Common::ACTION_UPDATE). ' '.$this->action
         );
     }
 
@@ -135,7 +136,7 @@ class ProductController extends Controller
         return $this->handleViewResponse(
             $product,
             'indexProduct',
-            Common::ACTION[Common::ACTION_DELETE]. ' '.$this->action
+            __('languages.'.Common::ACTION_DELETE). ' '.$this->action
         );
     }
 

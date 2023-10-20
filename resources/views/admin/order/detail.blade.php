@@ -44,6 +44,23 @@
 
                                 </div>
 
+                                <div id="message">
+                                    @if (session()->has('message'))
+                                    &emsp;
+                                    <div class="alert alert-success">
+                                        {{ session('message') }}
+                                    </div>
+                                    @endif
+
+                                    @if (session()->has('message-error'))
+                                    &emsp;
+                                    <div class="alert alert-danger">
+                                        {{ session('message-error') }}
+                                    </div>
+                                    @endif
+                                </div>
+
+                                &emsp;
                                 <table style="width:100%" class="table table-striped">
 
                                     <thead>

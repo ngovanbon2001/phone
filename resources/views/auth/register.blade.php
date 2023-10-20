@@ -43,7 +43,7 @@
                                 <input class="form-control" type="text" name="username" placeholder="{{ __('languages.username') }}">
                             </div>
                             <div class="col-md-6">
-                                <label>@lang('languages.email')</label>
+                                <label>@lang('languages.email') <span style="color: red;">*</span></label>
                                 <input class="form-control" type="text" name="email" placeholder="{{ __('languages.email') }}">
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -56,7 +56,7 @@
                                 <input class="form-control" type="text" name="phone" placeholder="{{ __('languages.phone_number') }}">
                             </div>
                             <div class="col-md-6">
-                                <label>@lang('languages.password')</label>
+                                <label>@lang('languages.password') <span style="color: red;">*</span></label>
                                 <input class="form-control" type="password" name="password" placeholder="{{ __('languages.password') }}">
                                 @error('password')
                                 <span class="invalid-feedback" role="alert">
