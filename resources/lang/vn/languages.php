@@ -318,4 +318,5 @@ return [
     'create' => 'Tạo mới',
     'update' => 'Cập nhật',
     'delete' => 'Xóa',
+    'update_success' => 'đã được cập nhật!',
 ];

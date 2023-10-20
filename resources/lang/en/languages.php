@@ -324,4 +324,5 @@ return [
     'create' => 'Create',
     'update' => 'Update',
     'delete' => 'Delete',
+    'update_success' => 'has been updated!',
 ];
