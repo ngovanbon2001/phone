@@ -24,9 +24,18 @@ class CreateBannerRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|unique:banners',
-            'content' => 'required',
+            'title'      => 'required|unique:banners',
+            'content'    => 'required',
             'sort_order' => 'required|numeric|min:0'
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'title'      => __('languages.title'),
+            'content'    => __('languages.content'),
+            'sort_order' => __('languages.sort')
         ];
     }
 }

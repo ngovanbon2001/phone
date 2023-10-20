@@ -30,4 +30,14 @@ class CreateUserRequest extends FormRequest
             'phone' => 'required|string'
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'username'      => __('languages.username'),
+            'email'         => __('languages.email'),
+            'password'      => __('languages.password'),
+            'phone'         => __('languages.phone_number'),
+        ];
+    }
 }

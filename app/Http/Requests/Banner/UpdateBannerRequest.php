@@ -31,4 +31,13 @@ class UpdateBannerRequest extends FormRequest
             'sort_order' => 'required|numeric|min:0'
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'title'      => __('languages.title'),
+            'content'    => __('languages.content'),
+            'sort_order' => __('languages.sort')
+        ];
+    }
 }

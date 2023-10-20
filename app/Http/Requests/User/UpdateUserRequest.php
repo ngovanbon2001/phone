@@ -31,4 +31,13 @@ class UpdateUserRequest extends FormRequest
             'phone' => 'required|string'
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'username'      => __('languages.username'),
+            'email'         => __('languages.email'),
+            'phone'         => __('languages.phone_number'),
+        ];
+    }
 }

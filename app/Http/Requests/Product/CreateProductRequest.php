@@ -42,4 +42,25 @@ class CreateProductRequest extends FormRequest
             "specifications.battery" => 'required|string',
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'category_id'                     => __('languages.category'),
+            'brand_id'                        => __('languages.brand'),
+            'name'                            => __('languages.name'),
+            'price'                           => __('languages.price'),
+            'sort_order'                      => __('languages.sort'),
+            'amount'                          => __('languages.amount'),
+            'specifications.screen'           => __('languages.screen'),
+            'specifications.operating_system' => __('languages.operating_system'),
+            'specifications.rear_camera'      => __('languages.rear_camera'),
+            'specifications.front_camera'     => __('languages.front_camera'),
+            'specifications.cpu'              => __('languages.cpu'),
+            'specifications.ram'              => __('languages.ram'),
+            'specifications.memory_stick'     => __('languages.memory_stick'),
+            'specifications.internal_memory'  => __('languages.internal_memory'),
+            'specifications.battery'          => __('languages.battery'),
+        ];
+    }
 }

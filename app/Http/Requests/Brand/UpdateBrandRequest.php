@@ -31,4 +31,13 @@ class UpdateBrandRequest extends FormRequest
             'link' => 'required'
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'name'       => __('languages.name'),
+            'link'       => __('languages.link'),
+            'sort_order' => __('languages.sort')
+        ];
+    }
 }
