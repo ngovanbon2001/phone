@@ -28,4 +28,12 @@ class CreateUserRequest extends FormRequest
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'email'         => __('languages.email'),
+            'password'      => __('languages.password'),
+        ];
+    }
 }

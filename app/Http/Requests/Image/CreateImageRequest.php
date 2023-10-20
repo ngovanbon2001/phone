@@ -29,4 +29,11 @@ class CreateImageRequest extends FormRequest
             "image_url.*" => "mimes:jpeg,jpg,png,gif,svg|max:8000",
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'image_url' => __('languages.image'),
+        ];
+    }
 }

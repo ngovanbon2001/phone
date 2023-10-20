@@ -27,4 +27,11 @@ class ResetPassword extends FormRequest
             'email' => 'required|email|exists:users',
         ];
     }
+    
+    public function attributes()
+    {
+        return [
+            'email' => __('languages.email'),
+        ];
+    }
 }

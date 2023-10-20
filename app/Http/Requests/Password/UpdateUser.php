@@ -29,4 +29,13 @@ class UpdateUser extends FormRequest
             'password_confirmation' => 'required'
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'email'                 => __('languages.email'),
+            'password'              => __('languages.password'),
+            'password_confirmation' => __('languages.password_confirmation')
+        ];
+    }
 }

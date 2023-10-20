@@ -30,4 +30,12 @@ class UpdateCategoryRequest extends FormRequest
             'sort_order' => 'required|numeric|min:0'
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'name'       => __('languages.name'),
+            'sort_order' => __('languages.sort')
+        ];
+    }
 }
