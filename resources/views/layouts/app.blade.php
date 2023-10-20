@@ -92,6 +92,7 @@
 								<a href="{{ route('register') }}" class="dropdown-item">@lang('languages.register')</a>
 								@endif
 								@if(isset(auth()->user()->id))
+								<a href="{{ route('web.user.edit', auth()->user()->id) }}" class="dropdown-item">@lang('languages.account')</a>
 								<a class="dropdown-item d-flex align-items-center" href="{{ route('user.logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
 									<i class="bi bi-box-arrow-right"></i>

@@ -68,10 +68,9 @@
                                 <label>@lang('languages.re_enter_password')</label>
                                 <input class="form-control" type="password" name="password_confirmation" placeholder="{{ __('languages.re_enter_password') }}">
                             </div>
-                            <div class="col-md-5">
+                            &emsp;
+                            <div class="col-md-12" style="display: flex; justify-content: space-between;">
                                 <button type="submit" class="btn">@lang('languages.register')</button>
-                            </div>
-                            <div class="col-md-7" style="text-align: right;">
                                 <p>@lang('languages.you_have_account') <a href="{{ route('login') }}">@lang('languages.sign_in')</a></p>
                             </div>
                         </div>

@@ -219,6 +219,7 @@ class UserService implements UserServiceInterface
     }
 
     /**
+     * get list user
      * @param array $attributes
      * @return mixed
      */
@@ -247,6 +248,43 @@ class UserService implements UserServiceInterface
             }
 
             return $user;
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 
+     * update user
+     * @param array $attributes
+     * @param int $id
+     * @return mixed
+     */
+    public function updateCustomer(array $attributes, int $id): mixed
+    {
+        try {
+            $user = $this->userRepository->find($id);
+
+            if ($user) {
+                $user->update($attributes);
+            }
+
+            return $user;
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function detailCustomer(int $id): mixed
+    {
+        try {
+            return $this->userRepository->find($id);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return null;
