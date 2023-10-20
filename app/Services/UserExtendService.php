@@ -58,6 +58,7 @@ class UserExtendService implements UserExtendServiceInterface
     }
 
     /**
+     * change password
      * @param array $attributes
      * @return null
      */

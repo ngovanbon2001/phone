@@ -68,6 +68,7 @@
                                 <label>@lang('languages.re_enter_password')</label>
                                 <input class="form-control" type="password" name="password_confirmation" placeholder="{{ __('languages.re_enter_password') }}">
                             </div>
+                            &emsp;
                             <div class="col-md-5">
                                 <button type="submit" class="btn">@lang('languages.register')</button>
                             </div>

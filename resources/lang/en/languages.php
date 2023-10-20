@@ -328,4 +328,5 @@ return [
     'cart_delete_success' => 'Cart deleted successfully!', 
     'cart_create_success' => 'Cart created successfully!',
     'cart_create_error' => 'Failed to create cart!',
+    'change' => 'Change',
 ];
