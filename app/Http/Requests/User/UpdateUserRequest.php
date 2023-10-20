@@ -26,7 +26,7 @@ class UpdateUserRequest extends FormRequest
     {
         $id = $this->route('id');
         return [
-            'username' => ['required', 'string', Rule::unique('admin')->ignore($id, 'id')],
+            'username' => ['required', 'string'],
             'email' => ['required','email', 'string', Rule::unique('admin')->ignore($id, 'id')],
             'phone' => 'required|string'
         ];
