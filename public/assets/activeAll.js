@@ -14,8 +14,8 @@ $(document).ready(function () {
             },
             success: function () {
                 var alertHTML =
-                    '<div class="alert alert-primary alert-dismissible fade show" role="alert">' + name +
-                    ' has been updated!</div>';
+                    '<div class="alert alert-success alert-dismissible fade show" role="alert">' + name + ' ' + message_update +
+                    '</div>';
 
                 $("#message").append(alertHTML);
 

@@ -324,4 +324,8 @@ return [
     'create' => 'Create',
     'update' => 'Update',
     'delete' => 'Delete',
+    'update_success' => 'has been updated!',
+    'cart_delete_success' => 'Cart deleted successfully!', 
+    'cart_create_success' => 'Cart created successfully!',
+    'cart_create_error' => 'Failed to create cart!',
 ];

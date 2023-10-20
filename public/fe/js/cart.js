@@ -54,7 +54,7 @@ $(document).ready(function() {
     });
 
     $('.delete-cart').on('click', function (){
-        if (confirm('Do you want to delete item?')) {
+        if (confirm(delete_confirm)) {
             const _this = $(this);
             const productId = $(this).data('id');
             const url = deleteUrl.replace(':productId', productId);
@@ -77,7 +77,7 @@ $(document).ready(function() {
                     });
                     _this.parent().parent().remove();
                     setTimeout(function() {
-                        toastr.success('Cart deleted successfully!', 'Success');
+                        toastr.success(cart_delete_success, 'Success');
                     }, 2000);
                     $('#total').text(totalNew.toFixed(2));
                     $('#sub_total').text(totalNew.toFixed(2));

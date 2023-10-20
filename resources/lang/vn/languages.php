@@ -318,4 +318,8 @@ return [
     'create' => 'Tạo mới',
     'update' => 'Cập nhật',
     'delete' => 'Xóa',
+    'update_success' => 'đã được cập nhật!',
+    'cart_delete_success' => 'Giỏ hàng đã được xóa thành công!', 
+    'cart_create_success' => 'Giỏ hàng được thêm thành công!',
+    'cart_create_error' => 'Không tạo được giỏ hàng!',
 ];

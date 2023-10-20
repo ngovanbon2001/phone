@@ -174,7 +174,7 @@ class ProductService implements ProductServiceInterface
                 ["brand_id", "=", Arr::get($conditions, "brand_id")],
                 ["category_id", "=", Arr::get($conditions, "category_id")],
                 ["is_new", "=", Arr::get($conditions, "is_new")],
-                ["active", "=", Arr::get($conditions, "active")],
+                ["active", "=", Common::ACTIVE],
                 ["price", "<", Arr::get($conditions, "price")],
                 ["tags", "LIKE", Arr::get($conditions, "tags")],
             ];
