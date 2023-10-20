@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 class CustomerController extends Controller
 {
     protected UserServiceInterface $userServiceInterface;
-    private string $action = 'customer';
+    private string $action;
 
     /**
      * @param UserServiceInterface $userServiceInterface
@@ -22,6 +22,7 @@ class CustomerController extends Controller
     public function __construct(
         UserServiceInterface $userServiceInterface
     ) {
+        $this->action = strtolower(__('languages.customer'));
         $this->userServiceInterface = $userServiceInterface;
     }
 
@@ -47,7 +48,7 @@ class CustomerController extends Controller
         return $this->handleViewResponse(
             $staff,
             'customer.list',
-            Common::ACTION[Common::ACTION_DELETE]. ' '.$this->action
+            __('languages.'.Common::ACTION_DELETE). ' '.$this->action
         );
     }
 }

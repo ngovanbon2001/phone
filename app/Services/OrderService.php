@@ -166,7 +166,7 @@ class OrderService implements OrderServiceInterface
         } catch (Exception $ex) {
             DB::rollBack();
             Log::error($ex->getMessage());
-            return false;
+            return null;
         }
     }
 

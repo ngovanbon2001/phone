@@ -314,4 +314,8 @@ return [
     'click_here' => 'Nhấn vào đây',
     'order_detail' => 'Chi tiết Đơn hàng',
     'export_pdf' => 'Xuất PDF',
+    'fail' => 'Thất bại',
+    'create' => 'Tạo mới',
+    'update' => 'Cập nhật',
+    'delete' => 'Xóa',
 ];

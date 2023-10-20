@@ -320,4 +320,8 @@ return [
     'click_here' => 'Click here',
     'order_detail' => 'Order Detail',
     'export_pdf' => 'Export PDF',
+    'fail' => 'Fail',
+    'create' => 'Create',
+    'update' => 'Update',
+    'delete' => 'Delete',
 ];
