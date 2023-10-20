@@ -14,12 +14,8 @@
 
                 <li class="nav-item dropdown pe-3">
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        @foreach (config('languages') as $key => $value)
-                        @if ($key === session()->get('locale') ?? 'vn')
-                        <img src="{{ asset($value['flag-image'] ?? '') }}" alt="no image">
-                        <span class="d-none d-md-block dropdown-toggle ps-2">{{ $value['display'] ?? '' }}</span>
-                        @endif
-                        @endforeach
+                        <img src="{{ asset(config('languages')[session()->get('locale') ?? 'vn']['flag-image'] ?? '') }}" alt="no image">
+                        <span class="d-none d-md-block dropdown-toggle ps-2">{{ config('languages')[session()->get('locale') ?? 'vn']['display'] ?? '' }}</span>
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
