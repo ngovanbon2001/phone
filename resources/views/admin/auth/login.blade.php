@@ -64,7 +64,16 @@
                                 <!-- You can delete the links only if you purchased the pro version. -->
                                 <!-- Licensing information: https://bootstrapmade.com/license/ -->
                                 <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-                                @lang('languages.designed_by') <a href="https://bootstrapmade.com/">Boot</a>
+                                <div class="dropdown">
+                                    <button class="dropbtn"><img src="{{ asset(config('languages')[session()->get('locale') ?? 'vn']['flag-image'] ?? '') }}" alt="">&emsp14;<span>{{ config('languages')[session()->get('locale') ?? 'vn']['display'] ?? '' }}</span></button>
+                                    <div class="dropdown-content">
+                                        @foreach (config('languages') as $key => $value)
+                                        <a href="{{ route('change.language', $value['flag-icon'] ?? 'vn') }}"><img src="{{ asset($value['flag-image'] ?? '') }}" alt="no image">
+                                            &emsp14;
+                                            <span>{{ $value['display'] ?? '' }}</span></a>
+                                        @endforeach
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
@@ -78,3 +87,46 @@
 </body>
 
 </html>
+<style>
+    /* Define the button and its appearance */
+    .dropbtn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px;
+        background-color: #0d6efd;
+        border: none;
+    }
+
+    /* Style the container (div) that holds the dropdown */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    /* Define the dropdown content (hidden by default) */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Style the links inside the dropdown */
+    .dropdown-content a {
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        color: #333;
+    }
+
+    /* Change color of links on hover */
+    .dropdown-content a:hover {
+        background-color: #ddd;
+    }
+
+    /* Show the dropdown content when the button is clicked */
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+</style>

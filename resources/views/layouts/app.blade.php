@@ -68,12 +68,8 @@
 					<div class="navbar-nav ml-auto">
 						<div class="nav-item dropdown">
 							<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-								@foreach (config('languages') as $key => $value)
-								@if ($key === session()->get('locale') ?? 'vn')
-								<img src="{{ asset($value['flag-image'] ?? '') }}" alt="no image">
-								<span>{{ $value['display'] ?? '' }}</span>
-								@endif
-								@endforeach
+								<img src="{{ asset(config('languages')[session()->get('locale') ?? 'vn']['flag-image'] ?? '') }}" alt="no image">
+								<span>{{ config('languages')[session()->get('locale') ?? 'vn']['display'] ?? '' }}</span>
 							</a>
 							<div class="dropdown-menu">
 								@foreach (config('languages') as $key => $value)
