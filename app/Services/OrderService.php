@@ -206,15 +206,31 @@ class OrderService implements OrderServiceInterface
      */
     public function delete(int $id): mixed
     {
+        DB::beginTransaction();
         try {
             $order = $this->orderRepository->find($id);
 
             if ($order) {
-                $order->delete();
+                $count = $this->orderItemsRepositoryInterface->findWhere([
+                    ['order_id', '=', $id],
+                    ['status', '<', Common::ORDER_HIDDEN]
+                ])->count();
+
+                if ($count == Common::IN_ACTIVE) {
+                    $this->orderItemsRepositoryInterface->where([
+                        ['order_id', '=', $id],
+                    ])->delete();
+
+                    $order->delete();
+                    DB::commit();
+                } else {
+                    return null;
+                }
             }
 
             return $order;
         } catch (Exception $exception) {
+            DB::rollBack();
             Log::error($exception->getMessage());
             return null;
         }

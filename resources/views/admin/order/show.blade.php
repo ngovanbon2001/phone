@@ -109,7 +109,13 @@
                                                 <td style="text-align: right;">{{ $orderList->total_products ?? 0 }}</td>
 
                                                 <td>
+                                                    <?php $message =  __('languages.delete_confirm') ?>
                                                     <a href="{{ route('showbyId', $orderList->id) }}" class="btn btn-success"><i class="bi bi-eye-fill"></i></a>
+                                                    <a onclick="return confirm('{{ $message }}') ? document.getElementById('order-delete-{{ $orderList->id ?? 0 }}').submit() : false" class="btn btn-danger"><i class="ri-close-circle-fill"></i></a>
+                                                    <form id="order-delete-{{ $orderList['id'] ?? '' }}"  action="{{ route('order.delete', $orderList->id ?? 0) }}" method="post">
+                                                    @method('delete')
+                                                    @csrf
+                                                    </form>
                                                 </td>
                                             </tr>
                                             @endforeach

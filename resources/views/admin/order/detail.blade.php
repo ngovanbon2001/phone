@@ -97,9 +97,11 @@
                                                     @endif
                                             </td>
                                             <td>
-                                                @if (($value->status ?? 0) < App\Constants\Common::PAID) <form action="{{ route('cancel-order', $value->id) }}" method="post">
+                                                @if (($value->status ?? 0) < App\Constants\Common::PAID) 
+                                                <?php $cancel_order =  __('languages.cancel_order') ?>
+                                                <a onclick="return confirm('{{ $cancel_order }}') ? document.getElementById('order-cancel-{{ $value->id ?? 0 }}').submit() : false" class="btn btn-danger"><i class="ri-close-circle-fill"></i></a>
+                                                <form id="order-cancel-{{ $value->id ?? 0 }}" action="{{ route('cancel-order', $value->id) }}" method="post">
                                                     @csrf
-                                                    <button class="btn btn-danger" type="submit"><i class="ri-close-circle-fill"></i></button>
                                                     </form>
                                                     @endif
                                             </td>

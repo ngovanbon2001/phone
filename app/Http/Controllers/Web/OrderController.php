@@ -115,7 +115,7 @@ class OrderController extends Controller
      * @param int $id
      * @return RedirectResponse
      */
-    public function delete(int $id): RedirectResponse
+    public function hide(int $id): RedirectResponse
     {
         $order = $this->orderServiceInterface->deleteItem($id);
 
