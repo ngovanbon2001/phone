@@ -96,6 +96,7 @@ Route::prefix('admin')->middleware('isAdmin')->group(function () {
     Route::post('/order/update/{id}', [OrderController::class, 'update'])->name('updateOrder');
     Route::post('/order/cancel-order/{id}', [OrderController::class, 'cancel'])->name('cancel-order');
     Route::get('/order/export', [OrderController::class, 'export'])->name('exportOrder');
+    Route::delete('order/delete/{id}', [OrderController::class, 'delete'])->name('order.delete');
 
     //user
     Route::get('/user', [UserController::class, 'index'])->name('indexUser');
@@ -151,7 +152,7 @@ Route::prefix('/')->group(function () {
 
     Route::post('order/cancel/{id}', [WebOrderController::class, 'cancel'])->name('web.order.cancel');
 
-    Route::delete('order/delete/{id}', [WebOrderController::class, 'delete'])->name('web.order.delete');
+    Route::post('order/hide/{id}', [WebOrderController::class, 'hide'])->name('web.order.delete');
 
     Route::post('logout', [AuthLoginController::class, 'logout'])->name('user.logout');
 

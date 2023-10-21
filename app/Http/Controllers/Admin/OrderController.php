@@ -76,6 +76,20 @@ class OrderController extends Controller
     }
 
     /**
+     * @param int $id
+     * @return RedirectResponse
+     */
+    public function delete(int $id): RedirectResponse
+    {
+        $order = $this->orderServiceInterface->delete($id);
+
+        return $this->handleViewResponseToBack(
+            $order,
+            __('languages.'.Common::ACTION_DELETE).' '. __('languages.order')
+        );
+    }
+
+    /**
      * @param Request $request
      * @return mixed
      */

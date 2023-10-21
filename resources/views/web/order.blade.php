@@ -90,7 +90,6 @@
                                                             <form id="order-delete-{{ $val['id'] ?? 0 }}"
                                                                   action="{{ route('web.order.delete', $val['id'] ?? 0) }}"
                                                                   method="post">
-                                                                @method('delete')
                                                                 @csrf
                                                             </form>
                                                             <a type="button"
