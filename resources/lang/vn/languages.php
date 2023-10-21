@@ -323,4 +323,6 @@ return [
     'cart_create_success' => 'Giỏ hàng được thêm thành công!',
     'cart_create_error' => 'Không tạo được giỏ hàng!',
     'change' => 'Thay đổi',
+    'cancel_order' => 'Bạn có muốn hủy đơn hàng?',
+    'hidden' => 'Ẩn',
 ];

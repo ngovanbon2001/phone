@@ -232,4 +232,26 @@ abstract class BaseRepository extends L5Repository implements RepositoryInterfac
     {
         return $this->model->where('active', Common::ACTIVE)->get();
     }
+
+    /**
+     * Find data by multiple fields
+     *
+     * @param array $where
+     * @param array $columns
+     *
+     * @return mixed
+     * @throws RepositoryException
+     */
+    public function findWhere(array $where, $columns = ['*']): mixed
+    {
+        $this->applyCriteria();
+        $this->applyScope();
+
+        $this->applyConditions($where);
+
+        $model = $this->model->orderBy('id', 'DESC')->get($columns);
+        $this->resetModel();
+
+        return $this->parserResult($model);
+    }
 }

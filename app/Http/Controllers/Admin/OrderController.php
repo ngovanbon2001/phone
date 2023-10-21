@@ -71,7 +71,7 @@ class OrderController extends Controller
 
         return $this->handleViewResponseToBack(
             $order,
-            __('languages.'.Common::ACTION_UPDATE). ' '.$this->action,
+            __('languages.'.Common::ACTION_CANCEL). ' '.$this->action,
         );
     }
 

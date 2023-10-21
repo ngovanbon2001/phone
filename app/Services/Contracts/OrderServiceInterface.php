@@ -31,4 +31,8 @@ interface OrderServiceInterface
     public function show(int $id);
 
     public function detailItem(int $id);
+
+    public function findByUser(int $id);
+
+    public function deleteItem(int $id);
 }
