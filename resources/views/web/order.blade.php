@@ -52,7 +52,7 @@
                                 @if(!empty($order))
                                     @foreach ($order as $value)
                                         @foreach($value->items as $val)
-                                            @if($val['status'] < \App\Constants\Common::ORDER_HIDDEN)
+                                            @if(isset($val['status']) && $val['status'] < \App\Constants\Common::ORDER_HIDDEN)
                                                 <tr>
                                                     <td>
                                                         <div class="img">
