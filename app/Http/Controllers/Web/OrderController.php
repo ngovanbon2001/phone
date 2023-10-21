@@ -68,7 +68,7 @@ class OrderController extends Controller
      */
     public function show(int $id): View|Factory|Application
     {
-        $order = $this->userService->show($id);
+        $order = $this->orderServiceInterface->findByUser($id);
         return view('web/order', compact('order'));
     }
 
@@ -105,12 +105,23 @@ class OrderController extends Controller
     {
         $order = $this->orderServiceInterface->cancel($id);
 
-        return $this->handleViewResponse(
+        return $this->handleViewResponseToBack(
             $order,
-            'order.show',
-            Common::ACTION[Common::ACTION_CANCEL]. ' order!',
-            'Cancel order successful.',
-            auth()->user()->id ?? 0
+            __('languages.'.Common::ACTION_CANCEL).' '. __('languages.order')
+        );
+    }
+
+    /**
+     * @param int $id
+     * @return RedirectResponse
+     */
+    public function delete(int $id): RedirectResponse
+    {
+        $order = $this->orderServiceInterface->deleteItem($id);
+
+        return $this->handleViewResponseToBack(
+            $order,
+            __('languages.'.Common::ACTION_DELETE).' '. __('languages.order')
         );
     }
 }

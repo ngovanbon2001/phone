@@ -34,6 +34,8 @@ class Common
 
     const CANCEL = 4;
 
+    const ORDER_HIDDEN = 5;
+
     const PAGINATE_BE = 10;
 
     const PAGINATE_FE = 12;
@@ -59,6 +61,7 @@ class Common
         self::DELIVERY  => 'languages.delivery',
         self::PAID      => 'languages.paid',
         self::CANCEL    => 'languages.cancel',
+        self::ORDER_HIDDEN => 'languages.hidden',
     ];
 
     const BUTTON_ORDER = [

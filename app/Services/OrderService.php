@@ -378,4 +378,42 @@ class OrderService implements OrderServiceInterface
             return null;
         }
     }
+
+    /**
+     * delete item
+     * @param int $id
+     * @return mixed|null
+     */
+    public function deleteItem(int $id): mixed
+    {
+        try {
+            $item = $this->orderItemsRepositoryInterface->find($id);
+
+            if ($item) {
+                $item->update(['status' => Common::ORDER_HIDDEN]);
+            }
+
+            return $item;
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * get list order by user
+     * @param int $id
+     * @return mixed|null
+     */
+    public function findByUser(int $id): mixed
+    {
+        try {
+            return $this->orderRepository->findWhere([
+                ['user_id', '=', $id],
+            ]);
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            return null;
+        }
+    }
 }

@@ -151,6 +151,8 @@ Route::prefix('/')->group(function () {
 
     Route::post('order/cancel/{id}', [WebOrderController::class, 'cancel'])->name('web.order.cancel');
 
+    Route::delete('order/delete/{id}', [WebOrderController::class, 'delete'])->name('web.order.delete');
+
     Route::post('logout', [AuthLoginController::class, 'logout'])->name('user.logout');
 
     Route::post('select-delivery', [CartController::class, 'delivery'])->name('select-delivery');

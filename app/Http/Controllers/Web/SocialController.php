@@ -8,7 +8,6 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\Auth;
 
 class SocialController extends Controller
 {
@@ -41,9 +40,9 @@ class SocialController extends Controller
 
         if ($result) {
             auth()->login($result);
-    
+
             loginCart();
-    
+
             return redirect()->route('web.home');
         }
 
