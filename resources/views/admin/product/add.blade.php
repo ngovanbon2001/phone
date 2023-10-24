@@ -167,6 +167,19 @@
                                         </div> <!-- /control-group -->
                                     </div>
 
+                                    <div class="row">
+                                        <div class="control-group col-md-12">
+                                            <label class="control-label">@lang('languages.color')</label>
+                                            <div class="controls">
+                                                <select name="color[]" class="form-control-chosen" multiple="true" data-placeholder="Chọn màu...">
+                                                    @foreach(config('project.color') as $key => $value)
+                                                        <option value="{{ $key }}" {{ in_array($key, old('color') ?? []) ? 'selected' : '' }}>{{ __($value) }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div> <!-- /control-group -->
+                                    </div>
+
                                     <!-- Specifications-->
                                     <div class="row">
                                         <div class="control-group col-md-4">
@@ -293,6 +306,12 @@
     </main><!-- End #main -->
 
     @include ('admin.common.footer')
+    <script type="text/javascript">
+        $('.form-control-chosen').chosen({
+            allow_single_deselect: true,
+            width: '100%'
+        });
+    </script>
 </body>
 
 </html>
