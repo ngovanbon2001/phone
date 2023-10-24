@@ -46,7 +46,6 @@
                             <img src="{{ asset('images/'.$item->image_url ?? '') }}" alt="Slider Image" />
                             <div class="header-slider-caption">
                                 <p>{{ $item->title ?? "" }}</p>
-                                <a class="btn" href=""><i class="fa fa-shopping-cart"></i>@lang('languages.shop_now')</a>
                             </div>
                         </div>
                         @endforeach
