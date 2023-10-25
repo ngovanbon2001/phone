@@ -30,7 +30,9 @@
 	<script>
 		var delete_confirm = "{{ __('languages.delete_confirm') }}";
 		var cart_delete_success = "{{ __('languages.cart_delete_success') }}";
+		var currency = "{{ config('project.currency') }}"
 	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 </head>
 
 <body>
