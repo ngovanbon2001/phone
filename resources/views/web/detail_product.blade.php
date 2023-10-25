@@ -64,11 +64,17 @@
                                             <button type="button" class="btn-plus"><i class="fa fa-plus"></i></button>
                                         </div>
                                     </div>
-                                    <div>
-                                        <h4>@lang('languages.brand'): {{ $product->brand->name ?? '' }}</h4>
-                                    </div>
-                                    <div>
-                                        <h4>@lang('languages.category'): {{ $product->category->name ?? '' }}</h4>
+                                    <div class="p-color">
+                                        <div class="input-append" style="display: flex;">
+                                            <h4 style="padding-top: 1%;">Color:</h4>
+                                            <select name="color" style="width: 50%;" class="form-control input-sm">
+                                                @foreach(config('project.color') as $key => $value)
+                                                    @if (in_array($key, explode(',', $product->color ?? '')))
+                                                        <option value="{{ $key }}">{{ __($value) }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="action">
                                         <button type="submit" class="btn"><i class="fa fa-shopping-cart"></i> @lang('languages.add_to_cart')</button>

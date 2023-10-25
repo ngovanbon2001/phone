@@ -154,6 +154,7 @@ $(document).ready(function() {
                 options: {
                     image: $(this).data('image')
                 },
+                color: $(this).data('color'),
             });
         });
 

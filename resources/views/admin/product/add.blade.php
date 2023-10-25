@@ -171,7 +171,7 @@
                                         <div class="control-group col-md-12">
                                             <label class="control-label">@lang('languages.color')</label>
                                             <div class="controls">
-                                                <select name="color[]" class="form-control-chosen" multiple="true" data-placeholder="Chọn màu...">
+                                                <select name="color[]" class="form-control-chosen" multiple="true" data-placeholder="{{ __('languages.select_color') }}">
                                                     @foreach(config('project.color') as $key => $value)
                                                         <option value="{{ $key }}" {{ in_array($key, old('color') ?? []) ? 'selected' : '' }}>{{ __($value) }}</option>
                                                     @endforeach

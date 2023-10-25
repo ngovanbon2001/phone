@@ -97,6 +97,7 @@ class OrderService implements OrderServiceInterface
                         'product_image'    => $value['product_image'],
                         'product_price'    => $value['product_price'],
                         'product_quantity' => $value['product_quantity'],
+                        'color'            => $value['color'] ?? '',
                     ];
                     $total = $total + ($value['product_quantity'] * $value['product_price']);
                     $emailContent .= "Tên sản phẩm: {$value['product_name']}\n";

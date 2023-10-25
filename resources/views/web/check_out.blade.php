@@ -26,6 +26,7 @@
             <input type="hidden" name="items[{{ $key }}][product_price]" value="{{ $item['price'] ?? '' }}">
             <input type="hidden" name="items[{{ $key }}][product_quantity]" value="{{ $item['quantity'] ?? 0 }}">
             <input type="hidden" name="items[{{ $key }}][product_image]" value="{{ $item['options']['image'] ?? '' }}">
+            <input type="hidden" name="items[{{ $key }}][color]" value="{{ $item['color'] ?? '' }}">
             @endforeach
             <div class="row">
                 <div class="col-lg-8">

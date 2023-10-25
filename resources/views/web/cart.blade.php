@@ -26,6 +26,7 @@
                             <thead class="thead-dark">
                                 <tr>
                                     <th>@lang('languages.product')</th>
+                                    <th>@lang('languages.color')</th>
                                     <th>@lang('languages.price')</th>
                                     <th>@lang('languages.quantity')</th>
                                     <th>@lang('languages.total')</th>
@@ -42,11 +43,12 @@
                                             <p>{{ $value['name'] ?? '' }}</p>
                                         </div>
                                     </td>
+                                    <td>{{ (isset($value['color']) && $value['color'] !== '') ? __(config('project.color')[$value['color']]) : '' }}</td>
                                     <td>${{ $value['price'] ?? 0 }}</td>
                                     <td>
                                         <div class="qty">
                                             <button class="btn-minus update-cart" data-id="{{ $value['product_id'] ?? 0 }}"><i class="fa fa-minus"></i></button>
-                                            <input id="cart-{{ $value['product_id'] ?? 0 }}" class="cart" data-cart="{{ auth()->user()->id ?? 0 }}" data-id="{{ $value['product_id'] ?? 0}}" data-name="{{ $value['name'] ?? ''}}" data-image="{{ $value['options']['image'] ?? '' }}" data-price="{{ $value['price'] ?? 0 }}" data-qty="{{ $value['quantity'] ?? 0 }}" type="number" name="quantity" value="{{ $value['quantity'] ?? 0 }}" oninput="checkQuantity(this)">
+                                            <input id="cart-{{ $value['product_id'] ?? 0 }}" class="cart" data-cart="{{ auth()->user()->id ?? 0 }}" data-id="{{ $value['product_id'] ?? 0}}" data-name="{{ $value['name'] ?? ''}}" data-color="{{ $value['color'] ?? ''}}" data-image="{{ $value['options']['image'] ?? '' }}" data-price="{{ $value['price'] ?? 0 }}" data-qty="{{ $value['quantity'] ?? 0 }}" type="number" name="quantity" value="{{ $value['quantity'] ?? 0 }}" oninput="checkQuantity(this)">
                                             <button class="btn-plus update-cart" data-id="{{ $value['product_id'] ?? 0 }}"><i class="fa fa-plus"></i></button>
                                         </div>
                                     </td>

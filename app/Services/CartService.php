@@ -74,6 +74,7 @@ class CartService implements CartServiceInterface
                 'options'    => [
                     'image'  => $attributes['product_image'],
                 ],
+                'color' => $attributes['color'] ?? '',
             ];
 
             Session::push('cart-' . $user_id, $dataCart);
@@ -82,6 +83,7 @@ class CartService implements CartServiceInterface
             $cartUpdate = array_map(function ($item) use ($attributes) {
                 if ((int)$item['product_id'] === (int)$attributes['product_id']) {
                     $item['quantity'] +=  (int)$attributes['quantity'];
+                    $item['color'] = $attributes['color'] ?? '';
                 }
                 return $item;
             }, $carts);

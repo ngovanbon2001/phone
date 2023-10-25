@@ -59,6 +59,8 @@ class ProductService implements ProductServiceInterface
                 $attributes['image_url'] = "no-image.png";
             }
 
+            $attributes['color'] = implode(",", $attributes['color'] ?? []);
+
             $attributes['specifications'] = convertJson($attributes['specifications']);
 
             return $this->productReponsitory->create($attributes);
@@ -83,6 +85,8 @@ class ProductService implements ProductServiceInterface
             } else {
                 $attributes['image_url'] = $attributes['oldImage'];
             }
+
+            $attributes['color'] = implode(",", $attributes['color'] ?? []);
 
             $attributes['specifications'] = convertJson($attributes['specifications']);
 

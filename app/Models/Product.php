@@ -25,7 +25,8 @@ class Product extends Model
         'sort_order',
         'active',
         'amount',
-        'specifications'
+        'specifications',
+        'color',
     ];
 
     public function category()

@@ -9,5 +9,7 @@ return [
         'languages.gold',
         'languages.gray',
         'languages.orange',
-    ]
+    ],
+    
+    'currency' => 'vnđ',
 ];
