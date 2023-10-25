@@ -7,10 +7,12 @@ use App\Services\BannerService;
 use App\Services\BrandService;
 use App\Services\CartService;
 use App\Services\CategoryService;
+use App\Services\ColorService;
 use App\Services\Contracts\BannerServiceInterface;
 use App\Services\Contracts\BrandServiceInterface;
 use App\Services\Contracts\CartServiceInterface;
 use App\Services\Contracts\CategoryServiceInterface;
+use App\Services\Contracts\ColorServiceInterface;
 use App\Services\Contracts\ImageServiceInterface;
 use App\Services\Contracts\OrderServiceInterface;
 use App\Services\Contracts\ProductServiceInterface;
@@ -48,6 +50,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CartServiceInterface::class, CartService::class);
         $this->app->bind(UserTempServiceInterface::class, UserTempService::class);
         $this->app->bind(UserExtendServiceInterface::class, UserExtendService::class);
+        $this->app->bind(ColorServiceInterface::class, ColorService::class);
 
         $provinces = DB::table('provinces')->get();
 

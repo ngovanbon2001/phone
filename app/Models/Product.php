@@ -24,7 +24,6 @@ class Product extends Model
         'is_new',
         'sort_order',
         'active',
-        'amount',
         'specifications',
         'color',
     ];
@@ -43,6 +42,17 @@ class Product extends Model
     {
         return $this->hasMany(Product_image::class, 'product_id', 'id');
     }
+
+    public function productColor()
+    {
+        return $this->hasMany(Product_color::class, 'product_id', 'id');
+    }
+
+    // public function getAmountAttribute() {
+    //     return $this->productColor->sum('amount_color');
+    // }
+
+    // protected $appends = ['amount'];
 
     // protected $casts = [
     //     'specifications' => 'array',

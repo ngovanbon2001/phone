@@ -169,11 +169,11 @@
 
                                     <div class="row">
                                         <div class="control-group col-md-12">
-                                            <label class="control-label">@lang('languages.color')</label>
+                                            <label class="control-label">@lang('languages.color') <span style="color: red;">*</span></label>
                                             <div class="controls">
-                                                <select name="color[]" class="form-control-chosen" multiple="true" data-placeholder="{{ __('languages.select_color') }}">
+                                                <select name="color" class="form-select" placeholder="{{ __('languages.select_color') }}">
                                                     @foreach(config('project.color') as $key => $value)
-                                                        <option value="{{ $key }}" {{ in_array($key, old('color') ?? []) ? 'selected' : '' }}>{{ __($value) }}</option>
+                                                        <option value="{{ $key }}" {{ ($key == old('color')) ? 'selected' : '' }}>{{ __($value) }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>

@@ -40,6 +40,7 @@ class CreateProductRequest extends FormRequest
             "specifications.memory_stick" => 'required|string',
             "specifications.internal_memory" => 'required|string',
             "specifications.battery" => 'required|string',
+            'color' => 'required|numeric',
         ];
     }
 
@@ -61,6 +62,7 @@ class CreateProductRequest extends FormRequest
             'specifications.memory_stick'     => __('languages.memory_stick'),
             'specifications.internal_memory'  => __('languages.internal_memory'),
             'specifications.battery'          => __('languages.battery'),
+            'color'                           => __('languages.color'),
         ];
     }
 }
