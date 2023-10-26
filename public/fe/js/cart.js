@@ -57,7 +57,8 @@ $(document).ready(function() {
         if (confirm(delete_confirm)) {
             const _this = $(this);
             const productId = $(this).data('id');
-            const url = deleteUrl.replace(':productId', productId);
+            const colorId = $(this).data('color');
+            var url = deleteUrl.replace(':productId', productId).replace(':colorId', colorId);
             var totalNew = 0;
 
             $.ajaxSetup({

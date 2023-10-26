@@ -68,10 +68,8 @@
                                         <div class="input-append" style="display: flex;">
                                             <h4 style="padding-top: 1%;">@lang('languages.color'):</h4>
                                             <select name="color" style="width: 50%;" class="form-control input-sm">
-                                                @foreach(config('project.color') as $key => $value)
-                                                    @if (in_array($key, explode(',', $product->color ?? '')))
-                                                        <option value="{{ $key }}">{{ __($value) }}</option>
-                                                    @endif
+                                                @foreach($product->productColor as $key => $value)
+                                                <option value="{{ $value->id ?? '' }}">{{ (isset($value['color']) && $value['color'] !== '') ? __(config('project.color')[$value['color']]) : '' }}</option>
                                                 @endforeach
                                             </select>
                                         </div>

@@ -43,7 +43,7 @@
                                             <p>{{ $value['name'] ?? '' }}</p>
                                         </div>
                                     </td>
-                                    <td>{{ (isset($value['color']) && $value['color'] !== '') ? __(config('project.color')[$value['color']]) : '' }}</td>
+                                    <td>{{ $value['color'] }}</td>
                                     <td>{{ number_format($value['price'] ?? 0, 2) }}{{ config('project.currency') }}</td>
                                     <td>
                                         <div class="qty">
@@ -53,7 +53,7 @@
                                         </div>
                                     </td>
                                     <td id="total-{{ $value['product_id'] ?? 0 }}">{{ number_format(($value['price'] ?? 0) * ($value['quantity'] ?? 0), 2) }}{{ config('project.currency') }}</td>
-                                    <td><button type="button" data-id="{{ $value['product_id'] ?? 0 }}" class="delete-cart"><i class="fa fa-trash"></i></button></td>
+                                    <td><button type="button" data-id="{{ $value['product_id'] ?? 0 }}" data-color="{{ $value['color'] ?? 0 }}" class="delete-cart"><i class="fa fa-trash"></i></button></td>
                                 </tr>
                                 @endforeach
                                 @endif
@@ -96,7 +96,7 @@
 </style>
 @section('script-custom')
 <script>
-    const deleteUrl = '{{ route("cart.destroy", ":productId") }}';
+    const deleteUrl = '{{ route("cart.destroy", [":productId", ":colorId"]) }}';
 
     const updateUrl = '{{ route("cart.update") }}';
 

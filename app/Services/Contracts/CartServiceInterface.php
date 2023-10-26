@@ -10,5 +10,5 @@ interface CartServiceInterface
 
     public function update(array $request, int $id);
 
-    public function delete(int $id);
+    public function delete(int $id, int $color_id);
 }

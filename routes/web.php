@@ -163,7 +163,7 @@ Route::prefix('/')->group(function () {
 
     Route::post('select-delivery', [CartController::class, 'delivery'])->name('select-delivery');
 
-    Route::delete('cart/destroy/{id}', [CartController::class, 'delete'])->name('cart.destroy');
+    Route::delete('cart/destroy/{id}/{colorId}', [CartController::class, 'delete'])->name('cart.destroy');
 
     Route::post('save-user', [UserTempController::class, 'create'])->name('save-user');
 

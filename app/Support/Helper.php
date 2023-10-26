@@ -63,12 +63,13 @@ if (!function_exists('loginCart')) {
 
         foreach ($products as $product) {
             $productId = $product["product_id"];
+            $color = $product["color"];
             $quantity = intval($product["quantity"]);
 
-            if (!isset($aggregatedProducts[$productId])) {
-                $aggregatedProducts[$productId] = $product;
+            if (!isset($aggregatedProducts[$productId.'-'.$color])) {
+                $aggregatedProducts[$productId.'-'.$color] = $product;
             } else {
-                $aggregatedProducts[$productId]["quantity"] += $quantity;
+                $aggregatedProducts[$productId.'-'.$color]["quantity"] += $quantity;
             }
         }
 
