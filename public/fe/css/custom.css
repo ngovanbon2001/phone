@@ -1,0 +1,16 @@
+div.product-title a{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    width: 100% !important;
+}
+
+div.product-price {
+    display: flex;
+    flex-direction: column;
+}
+
+div.product-price h3 {
+    padding: 2%;
+}

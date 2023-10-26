@@ -23,6 +23,7 @@
 	<!-- Template Stylesheet -->
 	<link href="{{ asset('fe/css/style.css') }}" rel="stylesheet">
 	<link href="{{ asset('fe/css/login-google.css') }}" rel="stylesheet">
+	<link href="{{ asset('fe/css/custom.css') }}" rel="stylesheet">
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
