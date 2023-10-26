@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\Product_imageController;
+use App\Http\Controllers\Admin\ProductColorController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\UserController;
@@ -89,6 +90,10 @@ Route::prefix('admin')->middleware('isAdmin')->group(function () {
     Route::get('/image/create/{id}', [Product_imageController::class, 'create'])->name('createImage');
     Route::post('/image/store', [Product_imageController::class, 'store'])->name('storeImage');
     Route::get('/image/destroy/{id}/{idp}', [Product_imageController::class, 'destroy'])->name('destroyImage');
+
+    //color
+    Route::post('/version/store', [ProductColorController::class, 'store'])->name('version.store');
+    Route::get('/version/destroy/{id}', [ProductColorController::class, 'destroy'])->name('version.destroy');
 
     //order
     Route::get('/order', [OrderController::class, 'index'])->name('indexOrder');

@@ -89,7 +89,11 @@ class ProductService implements ProductServiceInterface
 
             $attribute['image_url'] = handleImage($image);
         } else {
-            $attribute['image_url'] = "no-image.png";
+            if ($attributes['oldImage']) {
+                $attributes['image_url'] = $attributes['oldImage'];
+            } else {
+                $attribute['image_url'] = "no-image.png";
+            }
         }
 
         $attribute['specifications'] = convertJson($attributes['specifications']);
@@ -116,19 +120,9 @@ class ProductService implements ProductServiceInterface
     public function update(array $attributes, int $id): mixed
     {
         try {
-            if (isset($attributes['image_url'])) {
-                $image = $attributes['image_url'];
+            $attribute = $this->convertAttribute($attributes);
 
-                $attributes['image_url'] = handleImage($image);
-            } else {
-                $attributes['image_url'] = $attributes['oldImage'];
-            }
-
-            $attributes['color'] = implode(",", $attributes['color'] ?? []);
-
-            $attributes['specifications'] = convertJson($attributes['specifications']);
-
-            return $this->productReponsitory->update($attributes, $id);
+            return $this->productReponsitory->update($attribute, $id);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return null;
