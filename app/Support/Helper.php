@@ -1,6 +1,7 @@
 <?php
 
 use App\Constants\Common;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\ImageManagerStatic as Image;
 
@@ -78,5 +79,13 @@ if (!function_exists('loginCart')) {
         }
 
         Session::put('cart-' . auth()->user()->id ?? 0, $aggregatedProducts);
+    }
+}
+
+if (!function_exists('colorProduct')) {
+    function colorProduct(int $id)
+    {
+        $color = DB::table('product_color')->find($id);
+        return ($color->color) ? __(config('project.color')[$color->color]) : '';
     }
 }
