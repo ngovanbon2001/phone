@@ -43,7 +43,7 @@
                                             <p>{{ $value['name'] ?? '' }}</p>
                                         </div>
                                     </td>
-                                    <td>{{ colorProduct($value['color']) }}</td>
+                                    <td>{{ isset($value['color']) ? colorProduct($value['color']) : '' }}</td>
                                     <td>{{ number_format($value['price'] ?? 0, 2) }}{{ config('project.currency') }}</td>
                                     <td>
                                         <div class="qty">
