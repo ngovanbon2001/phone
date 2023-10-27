@@ -53,7 +53,7 @@ class Common
 
     const PAGINATE_BANNER = 10;
 
-    const PRICE = 500;
+    const PRICE = 20000000;
 
     const STATUS_ORDER = [
         self::IN_ACTIVE => 'languages.unconfimred',

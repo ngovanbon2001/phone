@@ -10,8 +10,8 @@ $(document).ready(function() {
         total = total + (parseInt($(this).val()) * parseFloat($(this).data('price')));
     });
 
-    $('#total').text(total.toFixed(2));
-    $('#sub_total').text(total.toFixed(2));
+    $('#total').text(numeral(total).format('0,0.00'));
+    $('#sub_total').text(numeral(total).format('0,0.00'));
 
     $('#check-out').on('click', function() {
         var status = $(this).data('status');
@@ -57,7 +57,8 @@ $(document).ready(function() {
         if (confirm(delete_confirm)) {
             const _this = $(this);
             const productId = $(this).data('id');
-            const url = deleteUrl.replace(':productId', productId);
+            const colorId = $(this).data('color');
+            var url = deleteUrl.replace(':productId', productId).replace(':colorId', colorId);
             var totalNew = 0;
 
             $.ajaxSetup({
@@ -79,8 +80,8 @@ $(document).ready(function() {
                     setTimeout(function() {
                         toastr.success(cart_delete_success, 'Success');
                     }, 2000);
-                    $('#total').text(totalNew.toFixed(2));
-                    $('#sub_total').text(totalNew.toFixed(2));
+                    $('#total').text(numeral(totalNew).format('0,0.00'));
+                    $('#sub_total').text(numeral(totalNew).format('0,0.00'));
                     $('#total-items').text(Object.keys(response.data).length);
                     (Object.keys(response.data).length < 1) ? $('#check-out').hide() : $('#check-out').show();
                 },
@@ -154,6 +155,7 @@ $(document).ready(function() {
                 options: {
                     image: $(this).data('image')
                 },
+                color: $(this).data('color'),
             });
         });
 
@@ -176,8 +178,8 @@ $(document).ready(function() {
                     $("#quantity-" + item.product_id).prop('value', parseInt(item.quantity));
                     totalNew = totalNew + (parseInt(item.quantity) * parseFloat(item.price));
                 });
-                $('#total').text(totalNew.toFixed(2));
-                $('#sub_total').text(totalNew.toFixed(2));
+                $('#total').text(numeral(totalNew).format('0,0.00'));
+                $('#sub_total').text(numeral(totalNew).format('0,0.00'));
             },
             error: function(xhr, text, err) {
                 var responseData = JSON.parse(xhr.responseText);
@@ -201,7 +203,7 @@ $(document).ready(function() {
             input.val(1);
         } else {
             cost = parseFloat(cart.data('price')) * parseInt(cart.val());
-            $('#total-'+productId).text('$'+cost.toFixed(2));
+            $('#total-'+productId).text(numeral(cost).format('0,0.00')+currency);
         }
     }
 });

@@ -54,7 +54,7 @@
                                     </div>
                                     <div class="price">
                                         <h4>@lang('languages.price'):</h4>
-                                        <p>${{ number_format(($product->price ?? 0)) }} <span>${{ number_format(($product->old_price ?? 0)) }}</span></p>
+                                        <p>{{ number_format(($product->price ?? 0)) }}{{ config('project.currency') }} <span>{{ number_format(($product->old_price ?? 0)) }}{{ config('project.currency') }}</span></p>
                                     </div>
                                     <div class="quantity">
                                         <h4>@lang('languages.quantity'):</h4>
@@ -64,11 +64,15 @@
                                             <button type="button" class="btn-plus"><i class="fa fa-plus"></i></button>
                                         </div>
                                     </div>
-                                    <div>
-                                        <h4>@lang('languages.brand'): {{ $product->brand->name ?? '' }}</h4>
-                                    </div>
-                                    <div>
-                                        <h4>@lang('languages.category'): {{ $product->category->name ?? '' }}</h4>
+                                    <div class="p-color">
+                                        <div class="input-append" style="display: flex;">
+                                            <h4 style="padding-top: 1%;">@lang('languages.color'):</h4>
+                                            <select name="color" style="width: 50%;" class="form-control input-sm">
+                                                @foreach($product->productColor as $key => $value)
+                                                <option value="{{ $value->id ?? '' }}">{{ (isset($value['color']) && $value['color'] !== '') ? __(config('project.color')[$value['color']]) : '' }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="action">
                                         <button type="submit" class="btn"><i class="fa fa-shopping-cart"></i> @lang('languages.add_to_cart')</button>
@@ -146,7 +150,7 @@
                                     </div>
                                 </div>
                                 <div class="product-price">
-                                    <h3><span>$</span>{{ number_format($item->price) }}</h3>
+                                    <h3>{{ number_format($item->price ?? 0)}}<span>{{ config('project.currency') }}</span></h3>
                                     <a class="btn" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-shopping-cart"></i>@lang('languages.buy_now')</a>
                                 </div>
                             </div>
@@ -203,7 +207,7 @@
                                 </div>
                             </div>
                             <div class="product-price">
-                                <h3><span>$</span>{{ number_format($item->price) }}</h3>
+                                <h3>{{ number_format($item->price ?? 0)}}<span>{{ config('project.currency') }}</span></h3>
                                 <a class="btn" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-shopping-cart"></i>@lang('languages.buy_now')</a>
                             </div>
                             <form id="cart-add-{{ $item->id ?? 0 }}" action="{{ route('cart.create') }}" method="post" class="cart">

@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\Product_imageController;
+use App\Http\Controllers\Admin\ProductColorController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\UserController;
@@ -90,6 +91,10 @@ Route::prefix('admin')->middleware('isAdmin')->group(function () {
     Route::post('/image/store', [Product_imageController::class, 'store'])->name('storeImage');
     Route::get('/image/destroy/{id}/{idp}', [Product_imageController::class, 'destroy'])->name('destroyImage');
 
+    //color
+    Route::post('/version/store', [ProductColorController::class, 'store'])->name('version.store');
+    Route::get('/version/destroy/{id}', [ProductColorController::class, 'destroy'])->name('version.destroy');
+
     //order
     Route::get('/order', [OrderController::class, 'index'])->name('indexOrder');
     Route::get('/order/show-by-id/{id}', [OrderController::class, 'showbyId'])->name('showbyId');
@@ -158,7 +163,7 @@ Route::prefix('/')->group(function () {
 
     Route::post('select-delivery', [CartController::class, 'delivery'])->name('select-delivery');
 
-    Route::delete('cart/destroy/{id}', [CartController::class, 'delete'])->name('cart.destroy');
+    Route::delete('cart/destroy/{id}/{colorId}', [CartController::class, 'delete'])->name('cart.destroy');
 
     Route::post('save-user', [UserTempController::class, 'create'])->name('save-user');
 

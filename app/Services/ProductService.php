@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Constants\Common;
+use App\Repositories\Contracts\ColorRepositoryInterface;
 use App\Repositories\Contracts\ProductReponsitoryInterface;
 use App\Services\Contracts\ProductServiceInterface;
 use Exception;
@@ -13,13 +14,19 @@ use Illuminate\Support\Facades\Log;
 class ProductService implements ProductServiceInterface
 {
     protected ProductReponsitoryInterface $productReponsitory;
+    protected ColorRepositoryInterface    $colorRepositoryInterface;
 
     /**
      * @param ProductReponsitoryInterface $repositoryInterface
+     * @param ColorRepositoryInterface $colorRepositoryInterface
      */
-    public function __construct(ProductReponsitoryInterface $repositoryInterface)
+    public function __construct(
+        ProductReponsitoryInterface $repositoryInterface,
+        ColorRepositoryInterface    $colorRepositoryInterface
+    )
     {
-        return $this->productReponsitory = $repositoryInterface;
+        $this->productReponsitory       = $repositoryInterface;
+        $this->colorRepositoryInterface = $colorRepositoryInterface;
     }
 
     /**
@@ -50,22 +57,59 @@ class ProductService implements ProductServiceInterface
      */
     public function create(array $attributes): mixed
     {
+        DB::beginTransaction();
         try {
-            if (isset($attributes['image_url'])) {
-                $image = $attributes['image_url'];
+           $attribute = $this->convertAttribute($attributes);
 
-                $attributes['image_url'] = handleImage($image);
-            } else {
-                $attributes['image_url'] = "no-image.png";
+            $product = $this->productReponsitory->create($attribute);
+
+            if (!$product) {
+                return null;
             }
 
-            $attributes['specifications'] = convertJson($attributes['specifications']);
+            $this->colorRepositoryInterface->create([
+                'product_id'   => $product['id'] ?? 0,
+                'color'        => $attributes['color'] ?? '',
+                'amount_color' => $attributes['amount'] ?? 0,
+            ]);
 
-            return $this->productReponsitory->create($attributes);
+            DB::commit();
+            return $product;
         } catch (Exception $exception) {
+            DB::rollBack();
             Log::error($exception->getMessage());
             return null;
         }
+    }
+
+    private function convertAttribute(array $attributes)
+    {
+        if (isset($attributes['image_url'])) {
+            $image = $attributes['image_url'];
+
+            $attribute['image_url'] = handleImage($image);
+        } else {
+            if ($attributes['oldImage']) {
+                $attributes['image_url'] = $attributes['oldImage'];
+            } else {
+                $attribute['image_url'] = "no-image.png";
+            }
+        }
+
+        $attribute['specifications'] = convertJson($attributes['specifications']);
+        $attribute['category_id']    = $attributes['category_id'] ?? 0;
+        $attribute['brand_id']       = $attributes['brand_id'] ?? 0;
+        $attribute['name']           = $attributes['name'] ?? '';
+        $attribute['price']          = $attributes['price'] ?? 0;
+        $attribute['old_price']      = $attributes['old_price'] ?? null;
+        $attribute['description']    = $attributes['description'] ?? null;
+        $attribute['tags']           = $attributes['tags'] ?? null;
+        $attribute['is_best_sell']   = $attributes['is_best_sell'] ?? 0;
+        $attribute['is_new']         = $attributes['is_new'] ?? 0;
+        $attribute['sort_order']     = $attributes['sort_order'] ?? 0;
+        $attribute['active']         = $attributes['active'] ?? 0;
+
+        return $attribute ?? [];
     }
 
     /**
@@ -76,17 +120,9 @@ class ProductService implements ProductServiceInterface
     public function update(array $attributes, int $id): mixed
     {
         try {
-            if (isset($attributes['image_url'])) {
-                $image = $attributes['image_url'];
+            $attribute = $this->convertAttribute($attributes);
 
-                $attributes['image_url'] = handleImage($image);
-            } else {
-                $attributes['image_url'] = $attributes['oldImage'];
-            }
-
-            $attributes['specifications'] = convertJson($attributes['specifications']);
-
-            return $this->productReponsitory->update($attributes, $id);
+            return $this->productReponsitory->update($attribute, $id);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return null;

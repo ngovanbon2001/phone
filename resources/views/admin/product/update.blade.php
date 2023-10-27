@@ -121,7 +121,7 @@
                                     </div> <!-- /control-group -->
 
                                     <div class="row">
-                                        <div class="control-group col-md-4">
+                                        <div class="control-group col-md-6">
                                             <label class="control-label">@lang('languages.best_sell')</label>
                                             <div class="controls">
                                                 <select class="form-select" name="is_best_sell">
@@ -131,7 +131,7 @@
                                             </div> <!-- /controls -->
                                         </div> <!-- /control-group -->
 
-                                        <div class="control-group col-md-4">
+                                        <div class="control-group col-md-6">
                                             <label class="control-label">@lang('languages.new_product')</label>
                                             <div class="controls">
                                                 <select class="form-select" name="is_new">
@@ -140,8 +140,10 @@
                                                 </select>
                                             </div> <!-- /controls -->
                                         </div> <!-- /control-group -->
+                                    </div>
 
-                                        <div class="control-group col-md-4">
+                                    <div class="row">
+                                        <div class="control-group col-md-6">
                                             <label class="control-label">@lang('languages.sort') <span style="color: red;">*</span></label>
                                             <div class="controls">
                                                 @if ($errors->any())
@@ -152,19 +154,6 @@
                                                 @error ('sort_order')
                                                 <label class="error">{{ $message }}</label>
                                                 @enderror
-                                            </div> <!-- /controls -->
-                                        </div> <!-- /control-group -->
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="control-group col-md-6">
-                                            <label class="control-label">@lang('languages.amount') <span style="color: red;">*</span></label>
-                                            <div class="controls">
-                                                @if ($errors->any())
-                                                <input class="form-control" name="amount" value="{!! old('amount', 0) !!}" type="number" />
-                                                @else
-                                                <input class="form-control" name="amount" value="{{ $product->amount ?? 0 }}" type="number" />
-                                                @endif
                                             </div> <!-- /controls -->
                                         </div> <!-- /control-group -->
 
@@ -322,6 +311,12 @@
     </main><!-- End #main -->
 
     @include ('admin.common.footer')
+    <script type="text/javascript">
+        $('.form-control-chosen').chosen({
+            allow_single_deselect: true,
+            width: '100%'
+        });
+    </script>
 </body>
 
 </html>

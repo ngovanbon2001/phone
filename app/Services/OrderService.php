@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Constants\Common;
+use App\Repositories\Contracts\ColorRepositoryInterface;
 use App\Repositories\Contracts\OrderItemsRepositoryInterface;
 use App\Repositories\Contracts\OrderRepositoryInterface;
 use App\Repositories\Contracts\ProductReponsitoryInterface;
@@ -21,20 +22,24 @@ class OrderService implements OrderServiceInterface
     protected OrderRepositoryInterface      $orderRepository;
     protected OrderItemsRepositoryInterface $orderItemsRepositoryInterface;
     protected ProductReponsitoryInterface   $productReponsitoryInterface;
+    protected ColorRepositoryInterface   $colorRepositoryInterface;
 
     /**
      * @param OrderRepositoryInterface $orderRepositoryInterface
      * @param OrderItemsRepositoryInterface $orderItemsRepositoryInterface
      * @param ProductReponsitoryInterface $productReponsitoryInterface
+     * @param ColorRepositoryInterface $colorRepositoryInterface
      */
     public function __construct(
         OrderRepositoryInterface      $orderRepositoryInterface,
         OrderItemsRepositoryInterface $orderItemsRepositoryInterface,
-        ProductReponsitoryInterface   $productReponsitoryInterface
+        ProductReponsitoryInterface   $productReponsitoryInterface,
+        ColorRepositoryInterface      $colorRepositoryInterface,
     ) {
         $this->orderItemsRepositoryInterface = $orderItemsRepositoryInterface;
         $this->orderRepository               = $orderRepositoryInterface;
         $this->productReponsitoryInterface   = $productReponsitoryInterface;
+        $this->colorRepositoryInterface      = $colorRepositoryInterface;
     }
 
     /**
@@ -97,6 +102,7 @@ class OrderService implements OrderServiceInterface
                         'product_image'    => $value['product_image'],
                         'product_price'    => $value['product_price'],
                         'product_quantity' => $value['product_quantity'],
+                        'color'            => $value['color'] ?? '',
                     ];
                     $total = $total + ($value['product_quantity'] * $value['product_price']);
                     $emailContent .= "Tên sản phẩm: {$value['product_name']}\n";
@@ -140,22 +146,22 @@ class OrderService implements OrderServiceInterface
             $order = $this->orderItemsRepositoryInterface->find($id);
 
             if ($order) {
-                $product = $this->productReponsitoryInterface->find($order->product_id);
+                $product = $this->colorRepositoryInterface->find($order->color);
 
                 if (
                     !$product || ($order->status == Common::IN_ACTIVE
-                        && isset($product->amount)
-                        && $order->product_quantity > $product->amount)
+                        && isset($product->amount_color)
+                        && $order->product_quantity > $product->amount_color)
                 ) {
                     Log::error('Fail amount');
                     return null;
                 }
 
-                $newAmount = $product->amount - $order->product_quantity;
+                $newAmount = $product->amount_color - $order->product_quantity;
 
                 if ($order->status == Common::IN_ACTIVE) {
                     Log::info('Update product ' . $newAmount);
-                    $product->update(['amount' => $newAmount]);
+                    $product->update(['amount_color' => $newAmount]);
                 }
 
                 $order->update(["status" => ((int)$order->status ?? 0) + 1]);
@@ -181,11 +187,11 @@ class OrderService implements OrderServiceInterface
             $order = $this->orderItemsRepositoryInterface->find($id);
 
             if ($order) {
-                $product = $this->productReponsitoryInterface->find($order->product_id);
+                $product = $this->colorRepositoryInterface->find($order->color);
 
                 if ($order->status > Common::IN_ACTIVE) {
-                    $newAmount = ($product->amount ?? 0) + ($order->product_quantity ?? 0);
-                    $product->update(['amount' => $newAmount]);
+                    $newAmount = ($product->amount_color ?? 0) + ($order->product_quantity ?? 0);
+                    $product->update(['amount_color' => $newAmount]);
                 }
 
                 $order->update(['status' => Common::CANCEL]);
