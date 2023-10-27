@@ -85,7 +85,7 @@ if (!function_exists('loginCart')) {
 if (!function_exists('colorProduct')) {
     function colorProduct(int $id)
     {
-        $color = DB::table('product_color')->find($id);
+        $color = DB::table('product_color')->select('color')->find($id);
         return ($color->color) ? __(config('project.color')[$color->color]) : '';
     }
 }
