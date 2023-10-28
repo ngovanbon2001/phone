@@ -145,7 +145,6 @@
                                         <img src="{{ asset('images/'.$item->image_url) }}" alt="Product Image">
                                     </a>
                                     <div class="product-action">
-                                        <a onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-cart-plus"></i></a>
                                         <a href="{{route('web.product.detail', $item->id)}}"><i class="fa fa-search"></i></a>
                                     </div>
                                 </div>
@@ -154,14 +153,6 @@
                                     <a class="btn" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-shopping-cart"></i>@lang('languages.buy_now')</a>
                                 </div>
                             </div>
-                            <form id="cart-add-{{ $item->id ?? 0 }}" action="{{ route('cart.create') }}" method="post" class="cart">
-                                @csrf
-                                <input type="hidden" value="{{ $item->id ?? 0 }}" name="product_id">
-                                <input type="hidden" value="1" name="quantity">
-                                <input type="hidden" value="{{ $item->name ?? '' }}" name="product_name">
-                                <input type="hidden" value="{{ $item->image_url ?? '' }}" name="product_image">
-                                <input type="hidden" value="{{ $item->price ?? 0 }}" name="product_price">
-                            </form>
                         </div>
                         @endforeach
                     </div>
@@ -188,7 +179,7 @@
                         @foreach ($products as $item)
                         <div class="product-item">
                             <div class="product-title">
-                                <a href="#">{{ $item->name ?? '' }}</a>
+                                <a href="{{route('web.product.detail', $item->id)}}">{{ $item->name ?? '' }}</a>
                                 <div class="ratting">
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
@@ -198,11 +189,10 @@
                                 </div>
                             </div>
                             <div class="product-image">
-                                <a href="product-detail.html">
+                                <a href="{{route('web.product.detail', $item->id)}}">
                                     <img src="{{ asset('images/'.$item->image_url) }}" alt="Product Image">
                                 </a>
                                 <div class="product-action">
-                                    <a onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-cart-plus"></i></a>
                                     <a href="{{route('web.product.detail', $item->id)}}"><i class="fa fa-search"></i></a>
                                 </div>
                             </div>
@@ -210,14 +200,6 @@
                                 <h3>{{ number_format($item->price ?? 0)}}<span>{{ config('project.currency') }}</span></h3>
                                 <a class="btn" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-shopping-cart"></i>@lang('languages.buy_now')</a>
                             </div>
-                            <form id="cart-add-{{ $item->id ?? 0 }}" action="{{ route('cart.create') }}" method="post" class="cart">
-                                @csrf
-                                <input type="hidden" value="{{ $item->id ?? 0 }}" name="product_id">
-                                <input type="hidden" value="1" name="quantity">
-                                <input type="hidden" value="{{ $item->name ?? '' }}" name="product_name">
-                                <input type="hidden" value="{{ $item->image_url ?? '' }}" name="product_image">
-                                <input type="hidden" value="{{ $item->price ?? 0 }}" name="product_price">
-                            </form>
                         </div>
                         @endforeach
                     </div>
