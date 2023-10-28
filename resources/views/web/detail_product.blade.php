@@ -78,10 +78,10 @@
                                         <button type="submit" class="btn"><i class="fa fa-shopping-cart"></i> @lang('languages.add_to_cart')</button>
                                     </div>
                                 </div>
-                                <input type="hidden" value="{{ $product->id }}" name="product_id">
-                                <input type="hidden" value="{{ $product->name }}" name="product_name">
-                                <input type="hidden" value="{{ $product->image_url }}" name="product_image">
-                                <input type="hidden" value="{{ $product->price }}" name="product_price">
+                                <input type="hidden" value="{{ $product->id ?? 0 }}" name="product_id">
+                                <input type="hidden" value="{{ $product->name ?? '' }}" name="product_name">
+                                <input type="hidden" value="{{ $product->image_url ?? '' }}" name="product_image">
+                                <input type="hidden" value="{{ $product->price ?? 0 }}" name="product_price">
                             </form>
                         </div>
                     </div>

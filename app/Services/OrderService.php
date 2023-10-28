@@ -438,4 +438,76 @@ class OrderService implements OrderServiceInterface
             return null;
         }
     }
+
+    /**
+     * @param array $attributes
+     * @return mixed
+     */
+    public function buildNow(array $attributes): mixed
+    {
+        DB::beginTransaction();
+        try {
+            $province  = DB::table('provinces')->find($attributes['provinces']);
+            $districts = DB::table('districts')->find($attributes['districts']);
+            $wards     = DB::table('wards')->find($attributes['wards']);
+            $emailContent = "Bạn đã mua hàng thành công! Dưới đây là danh sách sản phẩm bạn đã mua:\n\n";
+
+            $attribute = [
+                'user_id'        => auth()->user()->id ?? null,
+                'customer_name'  => $attributes['customer_name'] ?? null,
+                'customer_phone' => $attributes['customer_phone'] ?? null,
+                'customer_email' => $attributes['customer_email'] ?? null,
+                'status'         => Common::IN_ACTIVE ?? 0,
+                'address' => ($attributes['address_detail'] ?? '') .' - '. ($wards->name ?? '') . ' - ' . ($districts->name ?? '') . ' - ' . ($province->name ?? ''),
+                'total_money'    => array_reduce($attributes['items'] ?? [], function ($carry, $item) {
+                    return $carry + ((int)$item["product_quantity"] * (float)$item["product_price"]);
+                }, 0),
+                'total_products' => array_reduce($attributes['items'] ?? [], function ($carry, $item) {
+                    return $carry + (int)$item["product_quantity"];
+                })
+            ];
+
+            $order = $this->orderRepository->create($attribute);
+            $items = [];
+            if ($order) {
+                $total = 0;
+                foreach ($attributes['items'] as $value) {
+                    $items[] = [
+                        'order_id'         => $order->id,
+                        'product_id'       => $value['product_id'],
+                        'product_name'     => $value['product_name'],
+                        'product_image'    => $value['product_image'],
+                        'product_price'    => $value['product_price'],
+                        'product_quantity' => $value['product_quantity'],
+                        'color'            => $value['color'] ?? '',
+                    ];
+                    $total = $total + ($value['product_quantity'] * $value['product_price']);
+                    $emailContent .= "Tên sản phẩm: {$value['product_name']}\n";
+                    $emailContent .= "Số lượng: {$value['product_quantity']}\n";
+                    $emailContent .= "Giá: {$value['product_price']} $\n";
+                    $emailContent .= "-------------------------\n";
+                }
+
+                $emailContent .= "Tổng: {$total} $\n";
+
+                $result = $this->orderItemsRepositoryInterface->insertOrUpdateBatch($items);
+
+                if ($result) {
+                    // Send email
+                    Mail::raw($emailContent, function ($message) use ($attributes) {
+                        $message->to($attributes['customer_email'] ?? null)->subject('Order Confirmation');
+                    });
+
+                    DB::commit();
+                    return $order;
+                }
+            }
+            DB::rollBack();
+            return $order;
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            DB::rollBack();
+            return null;
+        }
+    }
 }
