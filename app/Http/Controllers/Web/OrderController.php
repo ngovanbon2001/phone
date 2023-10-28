@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Order\CreateRequest;
 use App\Services\Contracts\CartServiceInterface;
 use App\Services\Contracts\OrderServiceInterface;
+use App\Services\Contracts\ProductServiceInterface;
 use App\Services\Contracts\UserServiceInterface;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -20,20 +21,25 @@ class OrderController extends Controller
     protected CartServiceInterface $cartServiceInterface;
     protected OrderServiceInterface $orderServiceInterface;
     protected UserServiceInterface  $userService;
+    protected ProductServiceInterface $productService;
 
     /**
-     * @param CartServiceInterface  $cartServiceInterface
+     * @param CartServiceInterface $cartServiceInterface
      * @param OrderServiceInterface $orderServiceInterface
-     * @param UserServiceInterface  $userService
+     * @param UserServiceInterface $userService
+     * @param ProductServiceInterface $productService
      */
     public function __construct(
-        CartServiceInterface  $cartServiceInterface,
-        OrderServiceInterface $orderServiceInterface,
-        UserServiceInterface  $userService,
+        CartServiceInterface    $cartServiceInterface,
+        OrderServiceInterface   $orderServiceInterface,
+        UserServiceInterface    $userService,
+        ProductServiceInterface $productService,
     ) {
         $this->cartServiceInterface  = $cartServiceInterface;
         $this->orderServiceInterface = $orderServiceInterface;
         $this->userService           = $userService;
+        $this->productService        = $productService;
+
     }
 
     /**
@@ -123,5 +129,30 @@ class OrderController extends Controller
             $order,
             __('languages.'.Common::ACTION_DELETE).' '. __('languages.order')
         );
+    }
+
+    /**
+     * @param int $id
+     * @return Factory|View|Application
+     */
+    public function buildNow(int $id): Factory|View|Application
+    {
+        $product = $this->productService->detail($id);
+        return view('web/build_now', compact('product'));
+    }
+
+    /**
+     * @param CreateRequest $request
+     * @return View|Factory|Application|RedirectResponse
+     */
+    public function build(CreateRequest $request): View|Factory|Application|RedirectResponse
+    {
+        $order = $this->orderServiceInterface->buildNow($request->all());
+
+        if ($order) {
+            return view('web/order_success', compact('order'));
+        }
+
+        return redirect()->back();
     }
 }

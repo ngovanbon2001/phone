@@ -35,4 +35,6 @@ interface OrderServiceInterface
     public function findByUser(int $id);
 
     public function deleteItem(int $id);
+
+    public function buildNow(array $attributes);
 }

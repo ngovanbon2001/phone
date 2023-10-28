@@ -48,11 +48,15 @@ class Product extends Model
         return $this->hasMany(Product_color::class, 'product_id', 'id');
     }
 
-    // public function getAmountAttribute() {
-    //     return $this->productColor->sum('amount_color');
-    // }
+    public function getCurrencyAttribute() {
+        if (session()->get('locale')) {
+            return $this->price / (int)(config('languages')[session()->get('locale')]['currency'] ?? 1);  
+        }
 
-    // protected $appends = ['amount'];
+        return $this->price;
+    }
+
+    protected $appends = ['currency'];
 
     // protected $casts = [
     //     'specifications' => 'array',
