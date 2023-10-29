@@ -144,7 +144,7 @@ Route::prefix('/')->group(function () {
     Route::post('cart/create', [CartController::class, 'store'])->name('cart.create');
     Route::get('cart/{id}', [CartController::class, 'index'])->name('cart')->middleware('cart.check_id');
     Route::post('cart/update', [CartController::class, 'update'])->name('cart.update');
-    Route::delete('cart/destroy/{id}/{colorId}', [CartController::class, 'delete'])->name('cart.destroy');
+    Route::delete('cart/destroy/{id}', [CartController::class, 'delete'])->name('cart.destroy');
 
     // order
     Route::get('order/create/{id}', [WebOrderController::class, 'create'])->name('order.create')->middleware('cart.check_id');
@@ -170,6 +170,13 @@ Route::prefix('/')->group(function () {
     Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
     Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
     Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
+
+    // user
+    Route::post('save-user', [UserTempController::class, 'create'])->name('save-user');
+    Route::get('save-user/{id}', [UserTempController::class, 'show'])->name('user.register');
+    Route::get('user/show/{id}', [WebUserController::class, 'edit'])->name('web.user.edit');
+    Route::post('user/update/{id}', [WebUserController::class, 'update'])->name('web.user.update');
+    Route::post('logout', [AuthLoginController::class, 'logout'])->name('user.logout');
 });
 
 Route::get('change-language/{locale}', [LanguageController::class, 'changeLanguage'])->name('change.language');

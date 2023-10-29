@@ -105,7 +105,7 @@
                                                 <td style="text-align: left;">{{ $orderList['customer_name'] ?? ''}}</td>
                                                 <td style="text-align: left;">{{ $orderList->customer_email ?? '' }}</td>
                                                 <td style="text-align: center;">{{ $orderList->customer_phone ?? '' }}</td>
-                                                <td style="text-align: right;">{{ number_format($orderList->total_money ?? 0) }}</td>
+                                                <td style="text-align: right;">{{ number_format($orderList->total_money ?? 0, 2) }}</td>
                                                 <td style="text-align: right;">{{ $orderList->total_products ?? 0 }}</td>
 
                                                 <td>
