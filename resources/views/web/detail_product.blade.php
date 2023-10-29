@@ -54,7 +54,7 @@
                                     </div>
                                     <div class="price">
                                         <h4>@lang('languages.price'):</h4>
-                                        <p>${{ number_format(($product->price ?? 0)) }} <span>${{ number_format(($product->old_price ?? 0)) }}</span></p>
+                                        <p>{{ number_format(($product->price ?? 0)) }}{{ config('project.currency') }} <span>{{ number_format(($product->old_price ?? 0)) }}{{ config('project.currency') }}</span></p>
                                     </div>
                                     <div class="quantity">
                                         <h4>@lang('languages.quantity'):</h4>
@@ -146,7 +146,7 @@
                                     </div>
                                 </div>
                                 <div class="product-price">
-                                    <h3><span>$</span>{{ number_format($item->price) }}</h3>
+                                    <h3>{{ number_format($item->price ?? 0)}}<span>{{ config('project.currency') }}</span></h3>
                                     <a class="btn" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-shopping-cart"></i>@lang('languages.buy_now')</a>
                                 </div>
                             </div>
@@ -203,7 +203,7 @@
                                 </div>
                             </div>
                             <div class="product-price">
-                                <h3><span>$</span>{{ number_format($item->price) }}</h3>
+                                <h3>{{ number_format($item->price ?? 0)}}<span>{{ config('project.currency') }}</span></h3>
                                 <a class="btn" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-shopping-cart"></i>@lang('languages.buy_now')</a>
                             </div>
                             <form id="cart-add-{{ $item->id ?? 0 }}" action="{{ route('cart.create') }}" method="post" class="cart">
