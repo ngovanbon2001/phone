@@ -35,15 +35,15 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>@lang('languages.name')</label>
-                                    <input class="form-control" type="text" name="customer_name" placeholder="{{ __('languages.name') }}">
+                                    <input class="form-control" type="text" name="customer_name" value="{{ auth()->user()->username }}" placeholder="{{ __('languages.name') }}">
                                 </div>
                                 <div class="col-md-6">
                                     <label>@lang('languages.email')</label>
-                                    <input class="form-control" type="text" name="customer_email" placeholder="{{ __('languages.email') }}">
+                                    <input class="form-control" type="text" name="customer_email" value="{{ auth()->user()->email }}" placeholder="{{ __('languages.email') }}">
                                 </div>
                                 <div class="col-md-6">
                                     <label>@lang('languages.phone_number')</label>
-                                    <input class="form-control" type="text" name="customer_phone" placeholder="{{ __('languages.phone_number') }}">
+                                    <input class="form-control" type="text" name="customer_phone" value="{{ auth()->user()->phone }}" placeholder="{{ __('languages.phone_number') }}">
                                 </div>
                                 <div class="col-md-6">
                                     <label>@lang('languages.provinces')</label>
