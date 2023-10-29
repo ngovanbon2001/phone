@@ -147,7 +147,7 @@
                                 </div>
                                 <div class="product-price">
                                     <h3>{{ number_format($item->price ?? 0)}}<span>{{ config('project.currency') }}</span></h3>
-                                    <a class="btn" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-shopping-cart"></i>@lang('languages.buy_now')</a>
+                                    <a class="btn" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-shopping-cart"></i>@lang('languages.add_to_cart')</a>
                                 </div>
                             </div>
                             <form id="cart-add-{{ $item->id ?? 0 }}" action="{{ route('cart.create') }}" method="post" class="cart">
@@ -204,7 +204,7 @@
                             </div>
                             <div class="product-price">
                                 <h3>{{ number_format($item->price ?? 0)}}<span>{{ config('project.currency') }}</span></h3>
-                                <a class="btn" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-shopping-cart"></i>@lang('languages.buy_now')</a>
+                                <a class="btn" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-shopping-cart"></i>@lang('languages.add_to_cart')</a>
                             </div>
                             <form id="cart-add-{{ $item->id ?? 0 }}" action="{{ route('cart.create') }}" method="post" class="cart">
                                 @csrf
