@@ -210,7 +210,7 @@
 
                     <div class="product-item">
                         <div class="product-title">
-                            <a href="#">{{ $item->name ?? ''}}</a>
+                            <a href="{{route('web.product.detail', $item->id)}}">{{ $item->name ?? ''}}</a>
                             <div class="ratting">
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
@@ -220,7 +220,7 @@
                             </div>
                         </div>
                         <div class="product-image">
-                            <a href="product-detail.html">
+                            <a href="{{route('web.product.detail', $item->id)}}">
                                 <img src="{{asset('images/'.$item->image_url ?? '')}}" alt="Product Image">
                             </a>
                             <div class="product-action">
@@ -229,7 +229,7 @@
                             </div>
                         </div>
                         <div class="product-price">
-                            <h3><span>$</span>{{ number_format($item->price ?? 0)}}</h3>
+                            <h3>{{ number_format($item->price ?? 0)}}<span>{{ config('project.currency') }}</span></h3>
                             <a class="btn" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-shopping-cart"></i>@lang('languages.buy_now')</a>
                         </div>
                     </div>
@@ -260,7 +260,7 @@
 
                     <div class="product-item">
                         <div class="product-title">
-                            <a href="#">{{ $item->name ?? ''}}</a>
+                            <a href="{{route('web.product.detail', $item->id)}}">{{ $item->name ?? ''}}</a>
                             <div class="ratting">
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
@@ -270,7 +270,7 @@
                             </div>
                         </div>
                         <div class="product-image">
-                            <a href="product-detail.html">
+                            <a href="{{route('web.product.detail', $item->id)}}">
                                 <img src="{{asset('images/'.$item->image_url ?? '')}}" alt="Product Image">
                             </a>
                             <div class="product-action">
@@ -279,7 +279,7 @@
                             </div>
                         </div>
                         <div class="product-price">
-                            <h3><span>$</span>{{ number_format($item->price ?? 0)}}</h3>
+                            <h3>{{ number_format($item->price ?? 0)}}<span>{{ config('project.currency') }}</span></h3>
                             <a class="btn" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-shopping-cart"></i>@lang('languages.buy_now')</a>
                         </div>
                     </div>

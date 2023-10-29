@@ -81,9 +81,9 @@
                                         <tr>
                                             <td style="text-align: center;"><img src="{{ asset('images/' . $value->product_image ?? '') }}" style="width: 150px;" alt="Khong tai duoc"></td>
                                             <td>{{ $value->product_name ?? ''}}</td>
-                                            <td style="text-align: center;">${{ number_format($value->product_price ?? 0) }}</td>
+                                            <td style="text-align: center;">{{ number_format($value->product_price ?? 0, 2) }}{{ config('project.currency') }}</td>
                                             <td style="text-align: center;">{{ $value->product_quantity ?? '' }}</td>
-                                            <td style="text-align: center;">${{ number_format($value->product_price * $value->product_quantity) }}</td>
+                                            <td style="text-align: center;">{{ number_format($value->product_price * $value->product_quantity, 2) }}{{ config('project.currency') }}</td>
                                             @foreach (App\Constants\Common::STATUS_ORDER as $key => $val)
                                             @if(($value->status ?? 0) == $key)
                                             <td>{{ __($val) }}</td>

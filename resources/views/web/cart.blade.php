@@ -42,7 +42,7 @@
                                             <p>{{ $value['name'] ?? '' }}</p>
                                         </div>
                                     </td>
-                                    <td>${{ $value['price'] ?? 0 }}</td>
+                                    <td>{{ number_format($value['price'] ?? 0, 2) }}{{ config('project.currency') }}</td>
                                     <td>
                                         <div class="qty">
                                             <button class="btn-minus update-cart" data-id="{{ $value['product_id'] ?? 0 }}"><i class="fa fa-minus"></i></button>
@@ -50,7 +50,7 @@
                                             <button class="btn-plus update-cart" data-id="{{ $value['product_id'] ?? 0 }}"><i class="fa fa-plus"></i></button>
                                         </div>
                                     </td>
-                                    <td id="total-{{ $value['product_id'] ?? 0 }}">${{ number_format(($value['price'] ?? 0) * ($value['quantity'] ?? 0), 2) }}</td>
+                                    <td id="total-{{ $value['product_id'] ?? 0 }}">{{ number_format(($value['price'] ?? 0) * ($value['quantity'] ?? 0), 2) }}{{ config('project.currency') }}</td>
                                     <td><button type="button" data-id="{{ $value['product_id'] ?? 0 }}" class="delete-cart"><i class="fa fa-trash"></i></button></td>
                                 </tr>
                                 @endforeach
