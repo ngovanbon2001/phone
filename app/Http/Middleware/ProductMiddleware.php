@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Constants\Common;
 use App\Services\Contracts\BrandServiceInterface;
 use App\Services\Contracts\CategoryServiceInterface;
 use App\Services\Contracts\ProductServiceInterface;
@@ -38,8 +39,12 @@ class ProductMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $brands     = $this->brandServiceInterface->list([]);
-        $categories = $this->categoryService->list([]);
+        $brands     = $this->brandServiceInterface->list([
+            ["active", "=", Common::ACTIVE]
+        ]);
+        $categories = $this->categoryService->list([
+            ["active", "=", Common::ACTIVE]
+        ]);
         $tags       = $this->productServiceInterface->getTags();
         view()->share(['brands' => $brands, 'categories' => $categories, 'tags' => $tags]);
         return $next($request);
