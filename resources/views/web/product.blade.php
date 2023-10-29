@@ -88,7 +88,7 @@
                             </div>
                             <div class="product-price">
                                 <h3>{{ number_format($item->price ?? 0)}}<span>{{ config('project.currency') }}</span></h3>
-                                <a class="btn" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-shopping-cart"></i>@lang('languages.buy_now')</a>
+                                <a class="btn" href="{{ route('web.order.build-now', $item->id ?? 0) }}"><i class="fa fa-shopping-cart"></i>@lang('languages.buy_now')</a>
                             </div>
                         </div>
                     </div>
@@ -153,7 +153,7 @@
                             </div>
                             <div class="product-price">
                                 <h3>{{ number_format($item->price ?? 0)}}<span>{{ config('project.currency') }}</span></h3>
-                                <a class="btn" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-shopping-cart"></i>@lang('languages.buy_now')</a>
+                                <a class="btn" href="{{ route('web.order.build-now', $item->id ?? 0) }}"><i class="fa fa-shopping-cart"></i>@lang('languages.buy_now')</a>
                             </div>
                         </div>
                         @endforeach
