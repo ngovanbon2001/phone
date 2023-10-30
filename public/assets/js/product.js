@@ -45,9 +45,8 @@ $(document).ready(function() {
                 location.reload();
             },
             error: function(xhr, text, err) {
-                console.log(xhr)
                 $('label#amount-error').css('display', 'block');
-                $('label#amount-error').text(xhr.responseJSON.errors.amount_color[0]);
+                $('label#amount-error').text(xhr.responseJSON.errors.amount_color[0] ?? '');
             }
         });
     });

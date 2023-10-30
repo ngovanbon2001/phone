@@ -24,7 +24,7 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'amount_color' => 'nullable|integer|min:1',
+            'amount_color' => 'required|integer|min:1',
         ];
     }
 }
