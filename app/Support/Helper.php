@@ -1,6 +1,7 @@
 <?php
 
 use App\Constants\Common;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\ImageManagerStatic as Image;
 
@@ -63,12 +64,13 @@ if (!function_exists('loginCart')) {
 
         foreach ($products as $product) {
             $productId = $product["product_id"];
+            $color = $product["color"];
             $quantity = intval($product["quantity"]);
 
-            if (!isset($aggregatedProducts[$productId])) {
-                $aggregatedProducts[$productId] = $product;
+            if (!isset($aggregatedProducts[$productId.'-'.$color])) {
+                $aggregatedProducts[$productId.'-'.$color] = $product;
             } else {
-                $aggregatedProducts[$productId]["quantity"] += $quantity;
+                $aggregatedProducts[$productId.'-'.$color]["quantity"] += $quantity;
             }
         }
 
@@ -77,5 +79,13 @@ if (!function_exists('loginCart')) {
         }
 
         Session::put('cart-' . auth()->user()->id ?? 0, $aggregatedProducts);
+    }
+}
+
+if (!function_exists('colorProduct')) {
+    function colorProduct(int $id)
+    {
+        $color = DB::table('product_color')->select('color')->find($id);
+        return isset($color->color) ? __(config('project.color')[$color->color]) : '';
     }
 }

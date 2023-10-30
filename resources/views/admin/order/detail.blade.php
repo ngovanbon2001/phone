@@ -66,7 +66,8 @@
                                     <thead>
                                         <tr>
                                             <th style="width:15%; text-align: center;">@lang('languages.image')</th>
-                                            <th style="width:38%; text-align: center;">@lang('languages.product_name')</th>
+                                            <th style="width:28%; text-align: center;">@lang('languages.product_name')</th>
+                                            <th style="width:10%; text-align: center;">@lang('languages.color')</th>
                                             <th style="width:12%; text-align: center;">@lang('languages.price')</th>
                                             <th style="width:10%; text-align: center;">@lang('languages.quantity')</th>
                                             <th style="width:10%; text-align: center;">@lang('languages.total')</th>
@@ -81,6 +82,7 @@
                                         <tr>
                                             <td style="text-align: center;"><img src="{{ asset('images/' . $value->product_image ?? '') }}" style="width: 150px;" alt="Khong tai duoc"></td>
                                             <td>{{ $value->product_name ?? ''}}</td>
+                                            <td>{{ isset($value['color']) ? colorProduct($value['color']) : '' }}</td>
                                             <td style="text-align: center;">{{ number_format($value->product_price ?? 0, 2) }}{{ config('project.currency') }}</td>
                                             <td style="text-align: center;">{{ $value->product_quantity ?? '' }}</td>
                                             <td style="text-align: center;">{{ number_format($value->product_price * $value->product_quantity, 2) }}{{ config('project.currency') }}</td>
@@ -97,7 +99,7 @@
                                                     @endif
                                             </td>
                                             <td>
-                                                @if (($value->status ?? 0) < App\Constants\Common::PAID) 
+                                                @if (($value->status ?? 0) < App\Constants\Common::PAID)
                                                 <?php $cancel_order =  __('languages.cancel_order') ?>
                                                 <a onclick="return confirm('{{ $cancel_order }}') ? document.getElementById('order-cancel-{{ $value->id ?? 0 }}').submit() : false" class="btn btn-danger"><i class="ri-close-circle-fill"></i></a>
                                                 <form id="order-cancel-{{ $value->id ?? 0 }}" action="{{ route('cancel-order', $value->id) }}" method="post">

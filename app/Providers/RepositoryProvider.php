@@ -6,11 +6,13 @@ use App\Repositories\AdminRepository;
 use App\Repositories\BannerRepository;
 use App\Repositories\BrandRepository;
 use App\Repositories\CategoryReponsitory;
+use App\Repositories\ColorRepository;
 use App\Repositories\Contract\TestRepository;
 use App\Repositories\Contracts\AdminRepositoryInterface;
 use App\Repositories\Contracts\BannerRepositoryInterface;
 use App\Repositories\Contracts\BrandRepositoryInterface;
 use App\Repositories\Contracts\CategoryReponsitoryInterface;
+use App\Repositories\Contracts\ColorRepositoryInterface;
 use App\Repositories\Contracts\ImageRepositoryInterface;
 use App\Repositories\Contracts\OrderItemsRepositoryInterface;
 use App\Repositories\Contracts\OrderRepositoryInterface;
@@ -51,6 +53,7 @@ class RepositoryProvider extends ServiceProvider
         $this->app->bind(AdminRepositoryInterface::class, AdminRepository::class);
         $this->app->bind(OrderItemsRepositoryInterface::class, OrderItemsRespository::class);
         $this->app->bind(UserTempRepositoryInterface::class, UserTempRepository::class);
+        $this->app->bind(ColorRepositoryInterface::class, ColorRepository::class);
     }
 
     /**

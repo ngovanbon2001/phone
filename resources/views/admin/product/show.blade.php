@@ -143,7 +143,7 @@
                                                 <td style="text-align: center;">{{ $product->name }}</td>
                                                 <td style="text-align: center;">{{ $product->brand->name }}</td>
                                                 <td style="text-align: center;">{{ $product->category->name }}</td>
-                                                <td style="text-align: right;">${{ number_format($product->price) }}</td>
+                                                <td style="text-align: right;">{{ number_format($product->price) }}{{ config('project.currency') }}</td>
                                                 @if ($product->is_best_sell == 1)
                                                 <td style="text-align: center;"><img src="{{ asset('images/ok-16.png') }}" alt=""></td>
                                                 @else

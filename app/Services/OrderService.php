@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Constants\Common;
+use App\Repositories\Contracts\ColorRepositoryInterface;
 use App\Repositories\Contracts\OrderItemsRepositoryInterface;
 use App\Repositories\Contracts\OrderRepositoryInterface;
 use App\Repositories\Contracts\ProductReponsitoryInterface;
@@ -21,20 +22,24 @@ class OrderService implements OrderServiceInterface
     protected OrderRepositoryInterface      $orderRepository;
     protected OrderItemsRepositoryInterface $orderItemsRepositoryInterface;
     protected ProductReponsitoryInterface   $productReponsitoryInterface;
+    protected ColorRepositoryInterface   $colorRepositoryInterface;
 
     /**
      * @param OrderRepositoryInterface $orderRepositoryInterface
      * @param OrderItemsRepositoryInterface $orderItemsRepositoryInterface
      * @param ProductReponsitoryInterface $productReponsitoryInterface
+     * @param ColorRepositoryInterface $colorRepositoryInterface
      */
     public function __construct(
         OrderRepositoryInterface      $orderRepositoryInterface,
         OrderItemsRepositoryInterface $orderItemsRepositoryInterface,
-        ProductReponsitoryInterface   $productReponsitoryInterface
+        ProductReponsitoryInterface   $productReponsitoryInterface,
+        ColorRepositoryInterface      $colorRepositoryInterface,
     ) {
         $this->orderItemsRepositoryInterface = $orderItemsRepositoryInterface;
         $this->orderRepository               = $orderRepositoryInterface;
         $this->productReponsitoryInterface   = $productReponsitoryInterface;
+        $this->colorRepositoryInterface      = $colorRepositoryInterface;
     }
 
     /**
@@ -97,6 +102,7 @@ class OrderService implements OrderServiceInterface
                         'product_image'    => $value['product_image'],
                         'product_price'    => $value['product_price'],
                         'product_quantity' => $value['product_quantity'],
+                        'color'            => $value['color'] ?? '',
                     ];
                     $total = $total + ($value['product_quantity'] * $value['product_price']);
                     $emailContent .= "Tên sản phẩm: {$value['product_name']}\n";
@@ -140,22 +146,22 @@ class OrderService implements OrderServiceInterface
             $order = $this->orderItemsRepositoryInterface->find($id);
 
             if ($order) {
-                $product = $this->productReponsitoryInterface->find($order->product_id);
+                $product = $this->colorRepositoryInterface->find($order->color);
 
                 if (
                     !$product || ($order->status == Common::IN_ACTIVE
-                        && isset($product->amount)
-                        && $order->product_quantity > $product->amount)
+                        && isset($product->amount_color)
+                        && $order->product_quantity > $product->amount_color)
                 ) {
                     Log::error('Fail amount');
                     return null;
                 }
 
-                $newAmount = $product->amount - $order->product_quantity;
+                $newAmount = $product->amount_color - $order->product_quantity;
 
                 if ($order->status == Common::IN_ACTIVE) {
                     Log::info('Update product ' . $newAmount);
-                    $product->update(['amount' => $newAmount]);
+                    $product->update(['amount_color' => $newAmount]);
                 }
 
                 $order->update(["status" => ((int)$order->status ?? 0) + 1]);
@@ -181,11 +187,11 @@ class OrderService implements OrderServiceInterface
             $order = $this->orderItemsRepositoryInterface->find($id);
 
             if ($order) {
-                $product = $this->productReponsitoryInterface->find($order->product_id);
+                $product = $this->colorRepositoryInterface->find($order->color);
 
                 if ($order->status > Common::IN_ACTIVE) {
-                    $newAmount = ($product->amount ?? 0) + ($order->product_quantity ?? 0);
-                    $product->update(['amount' => $newAmount]);
+                    $newAmount = ($product->amount_color ?? 0) + ($order->product_quantity ?? 0);
+                    $product->update(['amount_color' => $newAmount]);
                 }
 
                 $order->update(['status' => Common::CANCEL]);
@@ -429,6 +435,78 @@ class OrderService implements OrderServiceInterface
             ]);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * @param array $attributes
+     * @return mixed
+     */
+    public function buildNow(array $attributes): mixed
+    {
+        DB::beginTransaction();
+        try {
+            $province  = DB::table('provinces')->find($attributes['provinces']);
+            $districts = DB::table('districts')->find($attributes['districts']);
+            $wards     = DB::table('wards')->find($attributes['wards']);
+            $emailContent = "Bạn đã mua hàng thành công! Dưới đây là danh sách sản phẩm bạn đã mua:\n\n";
+
+            $attribute = [
+                'user_id'        => auth()->user()->id ?? null,
+                'customer_name'  => $attributes['customer_name'] ?? null,
+                'customer_phone' => $attributes['customer_phone'] ?? null,
+                'customer_email' => $attributes['customer_email'] ?? null,
+                'status'         => Common::IN_ACTIVE ?? 0,
+                'address' => ($attributes['address_detail'] ?? '') .' - '. ($wards->name ?? '') . ' - ' . ($districts->name ?? '') . ' - ' . ($province->name ?? ''),
+                'total_money'    => array_reduce($attributes['items'] ?? [], function ($carry, $item) {
+                    return $carry + ((int)$item["product_quantity"] * (float)$item["product_price"]);
+                }, 0),
+                'total_products' => array_reduce($attributes['items'] ?? [], function ($carry, $item) {
+                    return $carry + (int)$item["product_quantity"];
+                })
+            ];
+
+            $order = $this->orderRepository->create($attribute);
+            $items = [];
+            if ($order) {
+                $total = 0;
+                foreach ($attributes['items'] as $value) {
+                    $items[] = [
+                        'order_id'         => $order->id,
+                        'product_id'       => $value['product_id'],
+                        'product_name'     => $value['product_name'],
+                        'product_image'    => $value['product_image'],
+                        'product_price'    => $value['product_price'],
+                        'product_quantity' => $value['product_quantity'],
+                        'color'            => $value['color'] ?? '',
+                    ];
+                    $total = $total + ($value['product_quantity'] * $value['product_price']);
+                    $emailContent .= "Tên sản phẩm: {$value['product_name']}\n";
+                    $emailContent .= "Số lượng: {$value['product_quantity']}\n";
+                    $emailContent .= "Giá: {$value['product_price']} $\n";
+                    $emailContent .= "-------------------------\n";
+                }
+
+                $emailContent .= "Tổng: {$total} $\n";
+
+                $result = $this->orderItemsRepositoryInterface->insertOrUpdateBatch($items);
+
+                if ($result) {
+                    // Send email
+                    Mail::raw($emailContent, function ($message) use ($attributes) {
+                        $message->to($attributes['customer_email'] ?? null)->subject('Order Confirmation');
+                    });
+
+                    DB::commit();
+                    return $order;
+                }
+            }
+            DB::rollBack();
+            return $order;
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            DB::rollBack();
             return null;
         }
     }

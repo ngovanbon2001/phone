@@ -32,8 +32,9 @@ class ProductReponsitory extends BaseRepository implements ProductReponsitoryInt
     public function getProduct()
     {
         return $this->model
-                    ->select('id', 'name', 'amount')
-                    ->orderBy('amount','DESC')
-                    ->paginate(Common::PAGINATE_HOME);
+        ->select('id', 'name')
+        ->selectRaw('(SELECT SUM(amount_color) FROM product_color WHERE product_color.product_id = products.id) AS amount')
+        ->orderBy('amount', 'DESC')
+        ->paginate(Common::PAGINATE_HOME);
     }
 }

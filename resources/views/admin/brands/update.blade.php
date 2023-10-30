@@ -28,7 +28,7 @@
                             <h5 class="card-title">@lang('languages.edit_brand')</h5>
 
                             <!-- General Form Elements -->
-                            <form action="{{ route('updateBrand', $brand->id) }}" enctype="multipart/form-data" method="post" id="edit-profile" class="form-horizontal">
+                            <form action="{{ route('updateBrand', $brand->id ?? '') }}" enctype="multipart/form-data" method="post" id="edit-profile" class="form-horizontal">
                                 @csrf
                                 <fieldset>
 
@@ -38,7 +38,7 @@
                                             @if ($errors->any())
                                             <input class="form-control" name="name" value="{!! old('name') !!}" type="text" />
                                             @else
-                                            <input type="text" class="form-control" name="name" value="{{ $brand->name }}">
+                                            <input type="text" class="form-control" name="name" value="{{ $brand->name ?? ''}}">
                                             @endif
                                             @error ('name')
                                             <label class="error">{{ $message }}</label>
@@ -52,7 +52,7 @@
                                             @if ($errors->any())
                                             <input class="form-control" name="link" value="{!! old('link') !!}" type="text" />
                                             @else
-                                            <input type="text" class="form-control" name="link" value="{{ $brand->link }}">
+                                            <input type="text" class="form-control" name="link" value="{{ $brand->link ?? '' }}">
                                             @endif
                                             @error ('link')
                                             <label class="error">{{ $message }}</label>
@@ -78,8 +78,8 @@
                                         <label class="control-label">@lang('languages.status') </label>
                                         <div class="controls">
                                             <select class="form-select" name="active">
-                                                <option value="0" {{ (old('active') ?? $brand->active) == 0 ? 'selected' : '' }}>@lang('languages.no')</option>
-                                                <option value="1" {{ (old('active') ?? $brand->active) == 1 ? 'selected' : '' }}>@lang('languages.yes')</option>
+                                                <option value="0" {{ (old('active') ?? $brand->active ?? 0) == 0 ? 'selected' : '' }}>@lang('languages.no')</option>
+                                                <option value="1" {{ (old('active') ?? $brand->active ?? 0) == 1 ? 'selected' : '' }}>@lang('languages.yes')</option>
                                             </select>
                                         </div> <!-- /controls -->
                                     </div> <!-- /control-group -->
@@ -87,14 +87,14 @@
                                     <div class="control-group col-md-6">
                                         <label class="control-label">@lang('languages.image')</label>
                                         <div class="controls">
-                                            <input type="hidden" name="imageOld" value="{{ $brand->image_url }}">
+                                            <input type="hidden" name="imageOld" value="{{ $brand->image_url ?? '' }}">
                                             <input class="form-control" name="image_url" type="file" />
                                         </div> <!-- /controls -->
                                     </div> <!-- /control-group -->
 
                                     <div>
                                         <div>
-                                            <img width="150px" src="{{ asset('images/' . $brand->image_url) }}" alt="">
+                                            <img width="150px" src="{{ asset('images/' . ($brand->image_url ?? '')) }}" alt="">
                                         </div> <!-- /controls -->
                                     </div> <!-- /control-group -->
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\Product_imageController;
+use App\Http\Controllers\Admin\ProductColorController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\UserController;
@@ -90,6 +91,11 @@ Route::prefix('admin')->middleware('isAdmin')->group(function () {
     Route::post('/image/store', [Product_imageController::class, 'store'])->name('storeImage');
     Route::get('/image/destroy/{id}/{idp}', [Product_imageController::class, 'destroy'])->name('destroyImage');
 
+    //color
+    Route::post('/version/store', [ProductColorController::class, 'store'])->name('version.store');
+    Route::post('/version/update/{id}', [ProductColorController::class, 'update'])->name('version.update');
+    Route::get('/version/destroy/{id}', [ProductColorController::class, 'destroy'])->name('version.destroy');
+
     //order
     Route::get('/order', [OrderController::class, 'index'])->name('indexOrder');
     Route::get('/order/show-by-id/{id}', [OrderController::class, 'showbyId'])->name('showbyId');
@@ -128,6 +134,7 @@ Route::prefix('/')->group(function () {
     Route::get('/auth/google',  [SocialController::class, 'redirectToGoogle'])->name('google.login');
     Route::get('/auth/google/callback',  [SocialController::class, 'handleGoogleCallback']);
 
+    // product
     Route::prefix('/product')->middleware('product')->group(function () {
         Route::get('/', [WebProductController::class, 'index'])->name('web.product');
 
@@ -148,7 +155,16 @@ Route::prefix('/')->group(function () {
     Route::get('order/pdf/{id}', [WebOrderController::class, 'exportPdf'])->name('order.pdf');
     Route::post('order/cancel/{id}', [WebOrderController::class, 'cancel'])->name('web.order.cancel');
     Route::post('order/hide/{id}', [WebOrderController::class, 'hide'])->name('web.order.delete');
+    Route::get('order/build-now/{id}', [WebOrderController::class, 'buildNow'])->name('web.order.build-now');
+    Route::post('order/build-now', [WebOrderController::class, 'build'])->name('web.order.build');
     Route::post('select-delivery', [CartController::class, 'delivery'])->name('select-delivery');
+
+    // user
+    Route::post('logout', [AuthLoginController::class, 'logout'])->name('user.logout');
+    Route::post('save-user', [UserTempController::class, 'create'])->name('save-user');
+    Route::get('save-user/{id}', [UserTempController::class, 'show'])->name('user.register');
+    Route::get('user/show/{id}', [WebUserController::class, 'edit'])->name('web.user.edit');
+    Route::post('user/update/{id}', [WebUserController::class, 'update'])->name('web.user.update');
 
     // change password
     Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');

@@ -81,8 +81,8 @@ class CartController extends Controller
     /**
      * @param int $id
      */
-    public function delete(int $id)
+    public function delete(int $id, int $colorID)
     {
-        return $this->response($this->cartServiceInterface->delete($id));
+        return $this->response($this->cartServiceInterface->delete($id, $colorID));
     }
 }

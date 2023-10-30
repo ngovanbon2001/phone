@@ -28,7 +28,7 @@
                             <h5 class="card-title">@lang('languages.edit_staff')</h5>
 
                             <!-- General Form Elements -->
-                            <form action="{{ route('updateUser', $staff->id) }}" method="post" id="edit-profile" class="form-horizontal" enctype="multipart/form-data">
+                            <form action="{{ route('updateUser', $staff->id ?? '') }}" method="post" id="edit-profile" class="form-horizontal" enctype="multipart/form-data">
                                 @csrf
                                 <fieldset>
 
@@ -39,7 +39,7 @@
                                                 @if ($errors->any())
                                                 <input type="text" class="form-control" name="username" value="{!! old('username') !!}">
                                                 @else
-                                                <input type="text" class="form-control" name="username" value="{{ $staff->username }}">
+                                                <input type="text" class="form-control" name="username" value="{{ $staff->username ?? '' }}">
                                                 @endif
 
                                                 @error ('username')
@@ -54,7 +54,7 @@
                                                 @if ($errors->any())
                                                 <input type="text" class="form-control" name="phone" value="{!! old('phone') !!}">
                                                 @else
-                                                <input type="text" class="form-control" name="phone" value="{{ $staff->phone }}">
+                                                <input type="text" class="form-control" name="phone" value="{{ $staff->phone ?? '' }}">
                                                 @endif
 
                                                 @error ('phone')
@@ -71,7 +71,7 @@
                                                 @if ($errors->any())
                                                 <input type="text" class="form-control" name="email" value="{!! old('email') !!}">
                                                 @else
-                                                <input type="text" class="form-control" name="email" value="{{ $staff->email }}">
+                                                <input type="text" class="form-control" name="email" value="{{ $staff->email ?? '' }}">
                                                 @endif
 
                                                 @error ('email')
@@ -84,8 +84,8 @@
                                             <label class="control-label">@lang('languages.permission')</label>
                                             <div class="controls">
                                                 <select class="form-select" name="permission">
-                                                    <option value="0" {{ (old('permission') ?? $staff->permission) == 0 ? 'selected' : '' }}>@lang('languages.admin')</option>
-                                                    <option value="1" {{ (old('permission') ?? $staff->permission) == 1 ? 'selected' : '' }}>@lang('languages.staff')</option>
+                                                    <option value="0" {{ (old('permission') ?? $staff->permission ?? 0) == 0 ? 'selected' : '' }}>@lang('languages.admin')</option>
+                                                    <option value="1" {{ (old('permission') ?? $staff->permission ?? 0) == 1 ? 'selected' : '' }}>@lang('languages.staff')</option>
                                                 </select>
                                             </div> <!-- /controls -->
                                         </div> <!-- /control-group -->

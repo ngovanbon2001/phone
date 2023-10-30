@@ -62,7 +62,10 @@ class CartService implements CartServiceInterface
     {
         $carts = Session::get('cart-' . $user_id) ?? [];
         $cartFilter = array_filter($carts, function ($item) use ($attributes) {
-            return ((int)$item['product_id'] ?? null) === (int)$attributes['product_id'];
+            return (
+                ((int)$item['product_id'] ?? null) === (int)$attributes['product_id'] &&
+                (int)$item['color'] === (int)$attributes['color']
+            );
         });
 
         if (count($cartFilter) === 0) {
@@ -74,14 +77,19 @@ class CartService implements CartServiceInterface
                 'options'    => [
                     'image'  => $attributes['product_image'],
                 ],
+                'color' => $attributes['color'] ?? '',
             ];
 
             Session::push('cart-' . $user_id, $dataCart);
             return $dataCart;
         } else {
             $cartUpdate = array_map(function ($item) use ($attributes) {
-                if ((int)$item['product_id'] === (int)$attributes['product_id']) {
+                if (
+                    (int)$item['product_id'] === (int)$attributes['product_id'] && 
+                    (int)$item['color'] === (int)$attributes['color']
+                ) {
                     $item['quantity'] +=  (int)$attributes['quantity'];
+                    $item['color'] = $attributes['color'] ?? '';
                 }
                 return $item;
             }, $carts);
@@ -125,14 +133,17 @@ class CartService implements CartServiceInterface
      * @return array
      * @throws CartException
      */
-    public function delete(int $id): array
+    public function delete(int $id, int $color_id): array
     {
         try {
             $cartId = auth()->user()->id ?? 0;
             $carts = Session::get('cart-' . $cartId);
-            $newCart = array_filter($carts, function ($item) use ($id) {
-                return (int)$item["product_id"] !== $id;
-            });
+            $newCart = [];
+            foreach($carts as $value) {
+                if (((int)$value["product_id"] !== $id) || ((int)$value["product_id"] === $id && (int)$value["color"] !== $color_id)) {
+                    $newCart[] = $value;
+                }
+            }
             Session::put('cart-' . $cartId, $newCart);
             return $newCart ?? [];
         } catch (Exception $exception) {

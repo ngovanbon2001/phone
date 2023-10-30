@@ -24,8 +24,8 @@ class Product extends Model
         'is_new',
         'sort_order',
         'active',
-        'amount',
-        'specifications'
+        'specifications',
+        'color',
     ];
 
     public function category()
@@ -42,6 +42,21 @@ class Product extends Model
     {
         return $this->hasMany(Product_image::class, 'product_id', 'id');
     }
+
+    public function productColor()
+    {
+        return $this->hasMany(Product_color::class, 'product_id', 'id');
+    }
+
+    public function getCurrencyAttribute() {
+        if (session()->get('locale')) {
+            return $this->price / (int)(config('languages')[session()->get('locale')]['currency'] ?? 1);  
+        }
+
+        return $this->price;
+    }
+
+    protected $appends = ['currency'];
 
     // protected $casts = [
     //     'specifications' => 'array',

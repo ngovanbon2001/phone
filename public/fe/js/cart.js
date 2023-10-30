@@ -57,7 +57,8 @@ $(document).ready(function() {
         if (confirm(delete_confirm)) {
             const _this = $(this);
             const productId = $(this).data('id');
-            const url = deleteUrl.replace(':productId', productId);
+            const colorId = $(this).data('color');
+            var url = deleteUrl.replace(':productId', productId).replace(':colorId', colorId);
             var totalNew = 0;
 
             $.ajaxSetup({
@@ -154,6 +155,7 @@ $(document).ready(function() {
                 options: {
                     image: $(this).data('image')
                 },
+                color: $(this).data('color'),
             });
         });
 
@@ -201,7 +203,7 @@ $(document).ready(function() {
             input.val(1);
         } else {
             cost = parseFloat(cart.data('price')) * parseInt(cart.val());
-            $('#total-'+productId).text(numeral(cost).format('0,0.00') + currency);
+            $('#total-'+productId).text(numeral(cost).format('0,0.00')+currency);
         }
     }
 });

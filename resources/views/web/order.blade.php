@@ -41,6 +41,7 @@
                                 <thead class="thead-dark">
                                 <tr>
                                     <th>@lang('languages.product')</th>
+                                    <th>@lang('languages.color')</th>
                                     <th>@lang('languages.price')</th>
                                     <th>@lang('languages.quantity')</th>
                                     <th>@lang('languages.total')</th>
@@ -62,6 +63,7 @@
                                                             <p>{{ $val['product_name'] ?? '' }}</p>
                                                         </div>
                                                     </td>
+                                                    <td>{{ isset($val['color']) ? colorProduct((int)$val['color']) : '' }}</td>
                                                     <td>{{ number_format($val['product_price'] ?? 0, 2) }}{{ config('project.currency') }}</td>
                                                     <td>
                                                         <p>{{ $val['product_quantity'] ?? 0 }}</p>
