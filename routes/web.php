@@ -93,6 +93,7 @@ Route::prefix('admin')->middleware('isAdmin')->group(function () {
 
     //color
     Route::post('/version/store', [ProductColorController::class, 'store'])->name('version.store');
+    Route::post('/version/update/{id}', [ProductColorController::class, 'update'])->name('version.update');
     Route::get('/version/destroy/{id}', [ProductColorController::class, 'destroy'])->name('version.destroy');
 
     //order

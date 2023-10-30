@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Constants\Common;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Color\CreateRequest;
+use App\Http\Requests\Color\UpdateRequest;
 use App\Services\Contracts\ColorServiceInterface;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 
 class ProductColorController extends Controller
@@ -33,7 +35,7 @@ class ProductColorController extends Controller
         $color = $this->colorServiceInterface->create($request->all());
 
         return $this->handleViewResponseToBack(
-            $color, 
+            $color,
             __('languages.'.Common::ACTION_CREATE). ' '.$this->action
         );
     }
@@ -41,7 +43,6 @@ class ProductColorController extends Controller
     /**
      * Remove the specified resource from storage.
      * @param int $id
-     * @param int $idp
      * @return RedirectResponse
      */
     public function destroy(int $id): RedirectResponse
@@ -52,5 +53,15 @@ class ProductColorController extends Controller
             $color,
             __('languages.'.Common::ACTION_DELETE). ' '.$this->action,
         );
+    }
+
+    /**
+     * @param UpdateRequest $request
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function update(UpdateRequest $request, int $id): JsonResponse
+    {
+        return $this->handleResponse($this->colorServiceInterface->update($request->all(), $id)->toArray());
     }
 }
