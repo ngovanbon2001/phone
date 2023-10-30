@@ -26,12 +26,12 @@
                     <div class="col-lg-12">
                         <div class="row">
                             <div class="col-lg-12">
-                                <img src="{{ asset('images/' . $product->image_url) }}" style="width: 150px;" class="card-img-top" alt="...">
+                                <img src="{{ asset('images/' . ($product->image_url ?? '')) }}" style="width: 150px;" class="card-img-top" alt="...">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ $product->name }}</h5>
-                                    <div><b>@lang('languages.category'): </b>{{ $product->category->name }}</div>
-                                    <div><b>@lang('languages.brand'): </b>{{ $product->brand->name }}</div>
-                                    <p class="card-text">{!! $product->description !!}</p>
+                                    <h5 class="card-title">{{ $product->name ?? '' }}</h5>
+                                    <div><b>@lang('languages.category'): </b>{{ $product->category->name ?? '' }}</div>
+                                    <div><b>@lang('languages.brand'): </b>{{ $product->brand->name ?? '' }}</div>
+                                    <p class="card-text">{!! $product->description ?? '' !!}</p>
                                 </div>
                             </div>
                         </div>
@@ -161,9 +161,9 @@
                             <div class="control-group col-md-6">
                                 <label class="control-label">@lang('languages.color') <span style="color: red;">*</span></label>
                                 <div class="controls">
-                                    <?php ($product->productColor) ? $color = array_map(function ($item) {
+                                    <?php !empty($product->productColor) ? $color = array_map(function ($item) {
                                         return $item['color'];
-                                    }, $product->productColor->toArray() ?? []) : [];
+                                    }, $product->productColor->toArray() ?? []) : $color = [];
                                     ?>
                                     <select name="color" class="form-select" placeholder="{{ __('languages.select_color') }}">
                                         @foreach(config('project.color') as $key => $value)
@@ -208,7 +208,7 @@
                                     </thead>
 
                                     <tbody>
-                                        @if($product->productColor)
+                                        @if(!empty($product->productColor))
                                         @foreach ($product->productColor as $key => $value)
                                         <tr>
                                             <td style="text-align: center;">{{ $key + 1 }}</td>

@@ -99,10 +99,10 @@ class ProductController extends Controller
         $product  = $this->productServiceInterface->detail($id);
 
         // Selected category
-        $category = $this->categoryServiceInterface->detail($product->category_id);
+        $category = $this->categoryServiceInterface->detail($product->category_id ?? 0);
 
         // Selected brand
-        $brand    = $this->brandServiceInterface->detail($product->brand_id);
+        $brand    = $this->brandServiceInterface->detail($product->brand_id ?? 0);
 
         return view('admin/product/update', compact('product', 'category', 'brand', 'getCategories', 'getBrands'));
     }
@@ -133,11 +133,13 @@ class ProductController extends Controller
     {
         $product = $this->productServiceInterface->delete($id);
 
-        return $this->handleViewResponse(
-            $product,
-            'indexProduct',
-            __('languages.'.Common::ACTION_DELETE). ' '.$this->action
-        );
+        if ($product){
+            session()->flash('message', __('languages.'.Common::ACTION_DELETE). ' '.$this->action.' '. strtolower(__('languages.successful')));
+        } else {
+            session()->flash('message-error', __('languages.fail').' '. strtolower(__('languages.'.Common::ACTION_DELETE). ' '.$this->action).'! '.__('languages.product_sold'));
+        }
+
+        return redirect()->route('indexProduct');
     }
 
     /**

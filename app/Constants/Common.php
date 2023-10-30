@@ -87,5 +87,6 @@ class Common
         self::ACTION_CANCEL => 'Cancel',
     ];
 
+    const COUNT_DELETE = 0;
     const ADMIN = 0;
 }
