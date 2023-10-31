@@ -43,7 +43,7 @@
                     <div class="header-slider normal-slider">
                         @foreach ($banners as $key => $item)
                         <div class="header-slider-item">
-                            <img src="{{ asset('images/'.$item->image_url ?? '') }}" alt="Slider Image" />
+                            <img src="{{ asset($item->image_url ?? '') }}" alt="Slider Image" />
                             <div class="header-slider-caption">
                                 <p>{{ $item->title ?? "" }}</p>
                             </div>
@@ -78,7 +78,7 @@
         <div class="container-fluid">
             <div class="brand-slider">
                 @foreach ($brands as $key => $item)
-                <div class="brand-item"><img src="{{ asset('images/'.$item->image_url ?? '') }}" alt=""></div>
+                <div class="brand-item"><img src="{{ asset($item->image_url ?? '') }}" alt=""></div>
                 @endforeach
             </div>
         </div>
@@ -221,7 +221,7 @@
                         </div>
                         <div class="product-image">
                             <a href="{{route('web.product.detail', $item->id)}}">
-                                <img src="{{asset('images/'.$item->image_url ?? '')}}" alt="Product Image">
+                                <img src="{{asset($item->image_url ?? '')}}" alt="Product Image">
                             </a>
                             <div class="product-action">
                                 <a href="{{route('web.product.detail', $item->id)}}"><i class="fa fa-search"></i></a>
@@ -262,7 +262,7 @@
                         </div>
                         <div class="product-image">
                             <a href="{{route('web.product.detail', $item->id)}}">
-                                <img src="{{asset('images/'.$item->image_url ?? '')}}" alt="Product Image">
+                                <img src="{{asset($item->image_url ?? '')}}" alt="Product Image">
                             </a>
                             <div class="product-action">
                                 <a href="{{route('web.product.detail', $item->id)}}"><i class="fa fa-search"></i></a>

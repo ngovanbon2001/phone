@@ -69,7 +69,7 @@
                     <div class="col-md-4">
                         <div class="product-item">
                             <div class="product-title">
-                                <a href="{{route('web.product.detail', $item->id)}}">{{ $item->name }}</a>
+                                <a href="{{route('web.product.detail', $item->id ?? '')}}">{{ $item->name ?? '' }}</a>
                                 <div class="ratting">
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
@@ -79,11 +79,11 @@
                                 </div>
                             </div>
                             <div class="product-image">
-                                <a href="{{route('web.product.detail', $item->id)}}">
-                                    <img src="{{ asset('images/'.$item->image_url) }}" alt="Product Image">
+                                <a href="{{route('web.product.detail', $item->id ?? '')}}">
+                                    <img src="{{ asset($item->image_url ?? '') }}" alt="Product Image">
                                 </a>
                                 <div class="product-action">
-                                    <a href="{{route('web.product.detail', $item->id)}}"><i class="fa fa-search"></i></a>
+                                    <a href="{{route('web.product.detail', $item->id ?? '')}}"><i class="fa fa-search"></i></a>
                                 </div>
                             </div>
                             <div class="product-price">
@@ -134,7 +134,7 @@
                         @foreach ($products as $item)
                         <div class="product-item">
                             <div class="product-title">
-                                <a href="{{route('web.product.detail', $item->id)}}">{{ $item->name ?? '' }}</a>
+                                <a href="{{route('web.product.detail', $item->id ?? '')}}">{{ $item->name ?? '' }}</a>
                                 <div class="ratting">
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
@@ -144,11 +144,11 @@
                                 </div>
                             </div>
                             <div class="product-image">
-                                <a href="{{route('web.product.detail', $item->id)}}">
-                                    <img src="{{ asset('images/'.$item->image_url) }}" alt="Product Image">
+                                <a href="{{route('web.product.detail', $item->id ?? '')}}">
+                                    <img src="{{ asset($item->image_url ?? '') }}" alt="Product Image">
                                 </a>
                                 <div class="product-action">
-                                    <a href="{{route('web.product.detail', $item->id)}}"><i class="fa fa-search"></i></a>
+                                    <a href="{{route('web.product.detail', $item->id ?? '')}}"><i class="fa fa-search"></i></a>
                                 </div>
                             </div>
                             <div class="product-price">
@@ -189,7 +189,7 @@
     <div class="container-fluid">
         <div class="brand-slider">
             @foreach($brands as $item)
-            <div class="brand-item"><img src="{{ asset('images/'.$item->image_url) }}" alt=""></div>
+            <div class="brand-item"><img src="{{ asset($item->image_url ?? '') }}" alt=""></div>
             @endforeach
         </div>
     </div>

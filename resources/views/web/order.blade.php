@@ -58,7 +58,7 @@
                                                     <td>
                                                         <div class="img">
                                                             <a href="{{ route('order.detail', $val['id'] ?? '') }}"><img
-                                                                    src="{{ asset('images/'.$val['product_image'] ?? '') }}"
+                                                                    src="{{ asset($val['product_image'] ?? '') }}"
                                                                     alt="Image"></a>
                                                             <p>{{ $val['product_name'] ?? '' }}</p>
                                                         </div>

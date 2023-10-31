@@ -26,7 +26,7 @@
                     <div class="col-lg-12">
                         <div class="row">
                             <div class="col-lg-12">
-                                <img src="{{ asset('images/' . ($product->image_url ?? '')) }}" style="width: 150px;" class="card-img-top" alt="...">
+                                <img src="{{ asset($product->image_url ?? '') }}" style="width: 40%" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $product->name ?? '' }}</h5>
                                     <div><b>@lang('languages.category'): </b>{{ $product->category->name ?? '' }}</div>
@@ -123,7 +123,7 @@
                                         @foreach ($images as $key => $imageList)
                                         <tr>
                                             <td style="text-align: center;">{{ $key + 1 }}</td>
-                                            <td style="text-align: center;"><img src="{{ asset('images/' . $imageList->image_url) }}" width="150px" alt="Khong tai duoc"></td>
+                                            <td style="text-align: center;"><img src="{{ asset($imageList->image_url ?? '') }}" width="150px" alt="Khong tai duoc"></td>
                                             <td></td>
                                             <td style="text-align: center;">{{ $imageList->sort_order }}</td>
                                             <td style="text-align: center;">

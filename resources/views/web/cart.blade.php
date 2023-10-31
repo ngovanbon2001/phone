@@ -39,7 +39,7 @@
                                 <tr>
                                     <td>
                                         <div class="img">
-                                            <a href="{{route('web.product.detail', $value['product_id'])}}"><img src="{{ asset('images/'.$value['options']['image'] ?? '') }}" alt="Image"></a>
+                                            <a href="{{route('web.product.detail', $value['product_id'])}}"><img src="{{ asset($value['options']['image'] ?? '') }}" alt="Image"></a>
                                             <p>{{ $value['name'] ?? '' }}</p>
                                         </div>
                                     </td>
