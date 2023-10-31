@@ -80,7 +80,7 @@
                                         @if (!empty($order['items']))
                                         @foreach ($order['items'] as $value)
                                         <tr>
-                                            <td style="text-align: center;"><img src="{{ asset('images/' . $value->product_image ?? '') }}" style="width: 150px;" alt="Khong tai duoc"></td>
+                                            <td style="text-align: center;"><img src="{{ asset($value->product_image ?? '') }}" style="width: 150px;" alt="Khong tai duoc"></td>
                                             <td>{{ $value->product_name ?? ''}}</td>
                                             <td>{{ isset($value['color']) ? colorProduct($value['color']) : '' }}</td>
                                             <td style="text-align: center;">{{ number_format($value->product_price ?? 0, 2) }}{{ config('project.currency') }}</td>
