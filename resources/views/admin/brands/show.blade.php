@@ -61,7 +61,7 @@
                                             @foreach ($brandList as $brandKey => $brandData)
                                             <tr>
                                                 <td style="text-align: center;">{{ $brandKey + 1 }}</td>
-                                                <td style="text-align: center;"><img src="{{ asset('images/' . $brandData->image_url) }}" width="150px" alt="No image"></td>
+                                                <td style="text-align: center;"><img src="{{ asset($brandData->image_url ?? '') }}" width="150px" alt="No image"></td>
                                                 <td style="text-align: left;">{{ $brandData->name }}</td>
                                                 <td style="text-align: center;"><a href="{{ $brandData->link }}" target="_blank">{{ $brandData->link }}</a>
                                                 </td>

@@ -139,7 +139,7 @@
                                             @foreach ($products as $productKey => $product)
                                             <tr>
                                                 <td style="text-align: center;"> {{ $productKey + 1 }} </td>
-                                                <td style="text-align: center;"><img src="{{ asset('images/' . $product->image_url) }}" width="100px" alt="No Image"></td>
+                                                <td style="text-align: center;"><img src="{{ asset($product->image_url ?? '') }}" width="100px" alt="No Image"></td>
                                                 <td style="text-align: center;">{{ $product->name }}</td>
                                                 <td style="text-align: center;">{{ $product->brand->name }}</td>
                                                 <td style="text-align: center;">{{ $product->category->name }}</td>

@@ -173,13 +173,13 @@
                                             <label class="control-label">@lang('languages.image')</label>
                                             <div class="controls">
                                                 <input type="hidden" name="oldImage" value="{{ $product->image_url ?? 0 }}">
-                                                <input class="form-control" name="image_url" type="file" />
+                                                <input id="imageInput" class="form-control" name="image_url" type="file" />
                                             </div> <!-- /controls -->
                                         </div> <!-- /control-group -->
 
                                         <div class="control-group col-md-6">
                                             <div class="controls">
-                                                <img width="150px" src="{{ asset('images/' . ($product->image_url ?? '')) }}" alt="">
+                                                <img id="imagePreview" width="150px" src="{{ asset($product->image_url ?? '') }}" alt="">
                                             </div> <!-- /controls -->
                                         </div> <!-- /control-group -->
                                     </div>

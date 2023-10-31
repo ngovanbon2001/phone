@@ -80,7 +80,7 @@
 
                                     <div class="control-group">
                                         <div class="controls">
-                                            <img id="imagePreview" width="150px" src="{{ asset('images/' . ($banner->image_url ?? '')) }}" alt="">
+                                            <img id="imagePreview" width="150px" src="{{ asset($banner->image_url ?? '') }}" alt="">
                                         </div> <!-- /controls -->
                                     </div> <!-- /control-group -->
 

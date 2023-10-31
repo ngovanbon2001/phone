@@ -94,7 +94,7 @@
 
                                     <div>
                                         <div>
-                                            <img width="150px" src="{{ asset('images/' . ($brand->image_url ?? '')) }}" alt="">
+                                            <img width="150px" src="{{ asset($brand->image_url ?? '') }}" alt="">
                                         </div> <!-- /controls -->
                                     </div> <!-- /control-group -->
 
