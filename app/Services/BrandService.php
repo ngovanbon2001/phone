@@ -50,7 +50,7 @@ class BrandService implements BrandServiceInterface
             if (isset($attributes['image_url'])) {
                 $image = $attributes['image_url'];
 
-                $attributes['image_url'] = handleImage($image);
+                $attributes['image_url'] = handleBuildImage($image);
             } else {
                 $attributes['image_url'] = "no-image.png";
             }
@@ -73,7 +73,7 @@ class BrandService implements BrandServiceInterface
             if (isset($attributes['image_url'])) {
                 $image = $attributes['image_url'];
 
-                $attributes['image_url'] = handleImage($image);
+                $attributes['image_url'] = handleBuildImage($image);
             } else {
                 $attributes['image_url'] = $attributes['imageOld'];
             }

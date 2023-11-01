@@ -88,13 +88,13 @@
                                         <label class="control-label">@lang('languages.image')</label>
                                         <div class="controls">
                                             <input type="hidden" name="imageOld" value="{{ $brand->image_url ?? '' }}">
-                                            <input class="form-control" name="image_url" type="file" />
+                                            <input id="imageInput" class="form-control" name="image_url" type="file" />
                                         </div> <!-- /controls -->
                                     </div> <!-- /control-group -->
 
                                     <div>
                                         <div>
-                                            <img width="150px" src="{{ asset($brand->image_url ?? '') }}" alt="">
+                                            <img id="imagePreview" width="150px" src="{{ asset($brand->image_url ?? '') }}" alt="">
                                         </div> <!-- /controls -->
                                     </div> <!-- /control-group -->
 
