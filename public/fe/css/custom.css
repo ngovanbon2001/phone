@@ -14,3 +14,7 @@ div.product-price {
 div.product-price h3 {
     padding: 2%;
 }
+
+select.select-search {
+    border: solid #353535 1px;
+}

@@ -38,28 +38,22 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="product-short">
-                                        <div class="dropdown">
-                                            <div class="dropdown-toggle" data-toggle="dropdown">@lang('languages.brand')</div>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                @foreach($brands as $item)
-                                                <a href="{{ route('web.product', ['brand_id' => $item->id ?? '', 'category_id' => request('category_id') ?? '', 'name' => request('name') ?? '', 'tags' => request('tags') ?? '']) }}" class="dropdown-item">{{ $item->name ?? '' }}</a>
-                                                @endforeach
-                                            </div>
-                                        </div>
+                                        <select id="brandSelect" class="form-control input-sm select-search">
+                                            <option value="">@lang('languages.brand')</option>
+                                            @foreach($brands as $item)
+                                            <option value="{{ $item->id ?? '' }}" {{ ((request('brand_id') ?? '') == $item->id) ? 'selected' : ''  }}>{{ $item->name ?? '' }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="product-price-range">
-                                        <div class="dropdown">
-                                            <div class="dropdown-toggle" data-toggle="dropdown">@lang('languages.category')</div>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                @foreach($categories as $item)
-                                                <li class="nav-item">
-                                                    <a href="{{ route('web.product', ['category_id' => $item->id ?? '', 'brand_id' => request('brand_id') ?? '', 'name' => request('name') ?? '', 'tags' => request('tags') ?? '']) }}" class="dropdown-item">{{ $item->name ?? '' }}</a>
-                                                </li>
-                                                @endforeach
-                                            </div>
-                                        </div>
+                                        <select id="categorySelect" class="form-control input-sm select-search">
+                                            <option value="">@lang('languages.category')</option>
+                                            @foreach($categories as $item)
+                                            <option value="{{ $item->id ?? '' }}" {{ ((request('category_id') ?? '') == $item->id) ? 'selected' : ''  }}>{{ $item->name ?? '' }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -172,9 +166,9 @@
                 <div class="sidebar-widget tag">
                     <h2 class="title">@lang('languages.tags')</h2>
                     @foreach ($tags as $item)
-                        @if($item->tags !== null)
-                        <a href="{{ route('web.product', ['category_id' => request('category_id') ?? '', 'brand_id' => request('brand_id') ?? '', 'name' => request('name') ?? '', 'tags' => $item->tags ?? '']) }}">{{ $item->tags }}</a>
-                        @endif
+                    @if($item->tags !== null)
+                    <a href="{{ route('web.product', ['category_id' => request('category_id') ?? '', 'brand_id' => request('brand_id') ?? '', 'name' => request('name') ?? '', 'tags' => $item->tags ?? '']) }}">{{ $item->tags }}</a>
+                    @endif
                     @endforeach
                 </div>
             </div>
@@ -206,5 +200,41 @@
     } else if (toastrError) {
         showToasrt(toastrError, false);
     }
+
+    $(document).ready(function() {
+        $("#brandSelect").change(function() {
+            var selectedBrandId = $(this).val();
+
+            var url = "{{ route('web.product') }}";
+            var queryParams = {
+                category_id: "{{ request('category_id') }}",
+                brand_id: selectedBrandId,
+                name: "{{ request('name') }}",
+                tags: "{{ request('tags') }}"
+            };
+
+            var queryString = $.param(queryParams);
+            url += '?' + queryString;
+
+            window.location.href = url;
+        });
+
+        $("#categorySelect").change(function() {
+            var selectedCategoryId = $(this).val();
+
+            var url = "{{ route('web.product') }}";
+            var queryParams = {
+                category_id: selectedCategoryId,
+                brand_id: "{{ request('brand_id') }}",
+                name: "{{ request('name') }}",
+                tags: "{{ request('tags') }}"
+            };
+
+            var queryString = $.param(queryParams);
+            url += '?' + queryString;
+
+            window.location.href = url;
+        });
+    });
 </script>
 @endsection
