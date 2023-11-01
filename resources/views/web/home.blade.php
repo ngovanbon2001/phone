@@ -42,10 +42,10 @@
                 <div class="col-md-6">
                     <div class="header-slider normal-slider">
                         @foreach ($banners as $key => $item)
-                        <div class="header-slider-item">
-                            <img style="width: 100%;" src="{{ asset($item->image_url ?? '') }}" alt="Slider Image" />
+                        <div class="header-slider-item" title="{{ $item->title ?? '' }}">
+                            <img style="width: 100%;" src="{{ asset($item->image_url ?? '') }}" alt="Slider Image"/>
                             <div class="header-slider-caption">
-                                <p>{{ $item->title ?? "" }}</p>
+                                <p>{!! $item->content ?? "" !!}</p>
                             </div>
                         </div>
                         @endforeach
