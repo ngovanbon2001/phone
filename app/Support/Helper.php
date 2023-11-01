@@ -35,6 +35,28 @@ if (!function_exists('handleImage')) {
     }
 }
 
+if (!function_exists('handleBuildImage')) {
+    function handleBuildImage($fileImage): string
+    {
+        $currentYear = Carbon::now()->year;
+        $currentMonth = Carbon::now()->month;
+        $currentDay = Carbon::now()->day;
+        $timeNow = Carbon::now()->format('Y-m-d_H-i-s');
+        $path = '/images/' . $currentYear . '/' . $currentMonth . '/' . $currentDay;
+        Storage::makeDirectory('/public' . $path);
+    
+        if (isset($fileImage)) {
+            $name = $timeNow . '_' . $fileImage->getClientOriginalName();
+            $fileImage->storeAs('/public/' . $path, $name);
+            $pathFile =  '/storage' .$path . '/' . $name;
+    
+            return $pathFile;
+        }
+    
+        return '';
+    }
+}
+
 if (!function_exists('condition')) {
     function condition(array $conditions): array
     {
