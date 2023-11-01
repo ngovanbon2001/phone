@@ -43,7 +43,7 @@
                     <div class="header-slider normal-slider">
                         @foreach ($banners as $key => $item)
                         <div class="header-slider-item">
-                            <img src="{{ asset($item->image_url ?? '') }}" alt="Slider Image" />
+                            <img style="width: 100%;" src="{{ asset($item->image_url ?? '') }}" alt="Slider Image" />
                             <div class="header-slider-caption">
                                 <p>{{ $item->title ?? "" }}</p>
                             </div>
