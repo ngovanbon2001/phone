@@ -145,7 +145,7 @@ Route::prefix('/')->group(function () {
     Route::post('cart/create', [CartController::class, 'store'])->name('cart.create');
     Route::get('cart/{id}', [CartController::class, 'index'])->name('cart')->middleware('cart.check_id');
     Route::post('cart/update', [CartController::class, 'update'])->name('cart.update');
-    Route::delete('cart/destroy/{id}', [CartController::class, 'delete'])->name('cart.destroy');
+    Route::delete('cart/destroy/{id}/{colorId}', [CartController::class, 'delete'])->name('cart.destroy');
 
     // order
     Route::get('order/create/{id}', [WebOrderController::class, 'create'])->name('order.create')->middleware('cart.check_id');
