@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Constants\Common;
 use App\Models\Product;
 use App\Repositories\Contracts\ProductReponsitoryInterface;
+use Illuminate\Support\Facades\Log;
 
 class ProductReponsitory extends BaseRepository implements ProductReponsitoryInterface
 {
@@ -18,8 +19,7 @@ class ProductReponsitory extends BaseRepository implements ProductReponsitoryInt
 
     public function listProduct(array $conditions, int $paginate = Common::PAGINATE_BE)
     {
-        $this->applyConditions(condition($conditions));
-        return $this->model
+        return $this->model->where($conditions)
                     ->orderBy('id', 'DESC')
                     ->paginate($paginate);
     }

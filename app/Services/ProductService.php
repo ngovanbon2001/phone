@@ -230,7 +230,7 @@ class ProductService implements ProductServiceInterface
                 ["tags", "LIKE", Arr::get($conditions, "tags")],
             ];
 
-            return $this->productReponsitory->listProduct($conditions, Common::PAGINATE_FE);
+            return $this->productReponsitory->listProduct(condition($conditions), Common::PAGINATE_FE);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return null;
