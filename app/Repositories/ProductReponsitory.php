@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\Constants\Common;
 use App\Models\Product;
 use App\Repositories\Contracts\ProductReponsitoryInterface;
-use Illuminate\Support\Facades\Log;
 
 class ProductReponsitory extends BaseRepository implements ProductReponsitoryInterface
 {
