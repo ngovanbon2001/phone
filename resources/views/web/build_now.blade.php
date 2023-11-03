@@ -25,11 +25,11 @@
                         <div class="row align-items-center">
                             <div class="col-md-4">
                                 <div class="product-slider-single normal-slider">
-                                    <img src="{{ asset('images/'. ($product->image_url ?? '')) }}" alt="Product Image">
+                                    <img src="{{ asset($product->image_url ?? '') }}" alt="Product Image">
                                 </div>
                             </div>
                             <div class="col-md-8">
-                                <form action="{{ route('web.order.build') }}" method="post">
+                                <form id="check-out-form" action="{{ route('web.order.build') }}" method="post">
                                     @csrf
                                     <div class="product-content">
                                         <div class="title">
@@ -165,5 +165,5 @@
 
         const urlAddress = "{{ route('select-delivery') }}";
     </script>
-    <script src="{{ asset('fe/js/cart.js') }}"></script>
+    <script src="{{ asset('fe/js/check-out.js') }}"></script>
 @endsection
