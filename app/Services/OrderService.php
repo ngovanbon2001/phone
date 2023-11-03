@@ -107,11 +107,11 @@ class OrderService implements OrderServiceInterface
                     $total = $total + ($value['product_quantity'] * $value['product_price']);
                     $emailContent .= "Tên sản phẩm: {$value['product_name']}\n";
                     $emailContent .= "Số lượng: {$value['product_quantity']}\n";
-                    $emailContent .= "Giá: {$value['product_price']} $\n";
+                    $emailContent .= "Giá: {$value['product_price']} ". config('project.currency') ." \n";
                     $emailContent .= "-------------------------\n";
                 }
 
-                $emailContent .= "Tổng: {$total} $\n";
+                $emailContent .= "Tổng: {$total} ". config('project.currency');
 
                 $result = $this->orderItemsRepositoryInterface->insertOrUpdateBatch($items);
 
@@ -484,11 +484,11 @@ class OrderService implements OrderServiceInterface
                     $total = $total + ($value['product_quantity'] * $value['product_price']);
                     $emailContent .= "Tên sản phẩm: {$value['product_name']}\n";
                     $emailContent .= "Số lượng: {$value['product_quantity']}\n";
-                    $emailContent .= "Giá: {$value['product_price']} $\n";
+                    $emailContent .= "Giá: {$value['product_price']} ". config('project.currency') ." \n";
                     $emailContent .= "-------------------------\n";
                 }
 
-                $emailContent .= "Tổng: {$total} $\n";
+                $emailContent .= "Tổng: {$total} ". config('project.currency');
 
                 $result = $this->orderItemsRepositoryInterface->insertOrUpdateBatch($items);
 

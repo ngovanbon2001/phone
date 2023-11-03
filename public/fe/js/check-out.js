@@ -56,5 +56,26 @@ $(document).ready(function() {
                 required: true
             },
         },
+        messages: {
+            customer_name: {
+                required: messages.customer_name,
+            },
+            customer_email: {
+                required: messages.customer_email_required,
+                email: messages.customer_email,
+            },
+            customer_phone: {
+                required: messages.customer_phone,
+            },
+            provinces: {
+                required: messages.provinces,
+            },            
+            districts: {
+                required: messages.districts,
+            },            
+            wards: {
+                required: messages.wards,
+            },
+        },
     });
 });
