@@ -22,7 +22,8 @@
             <div class="col-lg-8">
                 <div class="cart-page-inner">
                     <div class="table-responsive">
-                        <table class="table table-bordered">
+                        @if(!empty($carts))
+                        <table id="list-cart" class="table table-bordered">
                             <thead class="thead-dark">
                                 <tr>
                                     <th>@lang('languages.product')</th>
@@ -34,7 +35,6 @@
                                 </tr>
                             </thead>
                             <tbody class="align-middle">
-                                @if(!empty($carts))
                                 @foreach ($carts as $key => $value)
                                 <tr>
                                     <td>
@@ -56,9 +56,11 @@
                                     <td><button type="button" data-id="{{ $value['product_id'] ?? 0 }}" data-color="{{ $value['color'] ?? 0 }}" class="delete-cart"><i class="fa fa-trash"></i></button></td>
                                 </tr>
                                 @endforeach
-                                @endif
                             </tbody>
                         </table>
+                        @else
+                            <div><p>@lang('languages.cart_empty')</p></div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -73,11 +75,13 @@
                                     <p>@lang('languages.shipping_cost')<span>@lang('languages.free')</span></p>
                                     <h2>@lang('languages.grand_total')<span id="total">$0</span></h2>
                                 </div>
-                                <div class="cart-btn">
+                                @if(!empty($carts))
+                                <div id="check-out" class="cart-btn">
                                     <button onclick="document.getElementById('check-out-form').submit()">@lang('languages.checkout')</button>
+                                    <form id="check-out-form" style="display: none;" action="{{ route('order.create', auth()->user()->id ?? 0) }}" method="get">
+                                    </form>
                                 </div>
-                                <form id="check-out-form" style="display: none;" action="{{ route('order.create', auth()->user()->id ?? 0) }}" method="get">
-                                </form>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -103,6 +107,8 @@
     const token = '{{ csrf_token() }}';
 
     const urlAddress = "{{ route('select-delivery') }}";
+
+    const cart_empty = "{{ __('languages.cart_empty') }}";
 
     function checkQuantity(input) {
         var value = parseFloat(input.value);

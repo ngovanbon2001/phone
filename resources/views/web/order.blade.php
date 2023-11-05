@@ -37,6 +37,7 @@
                 <div class="col-lg-12">
                     <div class="cart-page-inner">
                         <div class="table-responsive">
+                            @if(!empty($order->toArray()))
                             <table class="table table-bordered">
                                 <thead class="thead-dark">
                                 <tr>
@@ -50,7 +51,6 @@
                                 </tr>
                                 </thead>
                                 <tbody class="align-middle">
-                                @if(!empty($order))
                                     @foreach ($order as $value)
                                         @foreach($value->items as $val)
                                             @if(isset($val['status']) && $val['status'] < \App\Constants\Common::ORDER_HIDDEN)
@@ -106,9 +106,11 @@
                                             @endif
                                         @endforeach
                                     @endforeach
-                                @endif
                                 </tbody>
                             </table>
+                            @else
+                            <div><p>@lang('languages.order_empty')</p></div>
+                            @endif
                         </div>
                     </div>
                 </div>

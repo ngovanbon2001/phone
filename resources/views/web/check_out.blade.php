@@ -105,6 +105,15 @@
 <script>
     const token = '{{ csrf_token() }}';
     const urlAddress = "{{ route('select-delivery') }}";
+    const messages = {
+        customer_name: "{{ __('validation.required', ['attribute' => __('languages.name')]) }}",
+        customer_email_required: "{{ __('validation.required', ['attribute' => __('languages.email')]) }}",
+        customer_email: "{{ __('validation.email', ['attribute' => __('languages.email')]) }}",
+        customer_phone: "{{ __('validation.required', ['attribute' => __('languages.provinces')]) }}",
+        provinces: "{{ __('validation.required', ['attribute' => __('languages.provinces')]) }}",
+        districts: "{{ __('validation.required', ['attribute' => __('languages.districts')]) }}",
+        wards: "{{ __('validation.required', ['attribute' => __('languages.wards')]) }}",
+    };
 </script>
 <script src="{{ asset('fe/js/check-out.js') }}"></script>
 @endsection

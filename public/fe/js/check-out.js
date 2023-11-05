@@ -6,8 +6,8 @@ $(document).ready(function() {
         total = total + (parseInt($(this).val()) * parseFloat($(this).data('price')));
     });
 
-    $('#total').text(total.toFixed(2));
-    $('#sub_total').text(total.toFixed(2));
+    $('#total').text(numeral(total).format('0,0.00'));
+    $('#sub_total').text(numeral(total).format('0,0.00'));
 
     $('.choose').on('change', function() {
         var action = $(this).attr('id');
@@ -54,6 +54,27 @@ $(document).ready(function() {
             },
             wards: {
                 required: true
+            },
+        },
+        messages: {
+            customer_name: {
+                required: messages.customer_name,
+            },
+            customer_email: {
+                required: messages.customer_email_required,
+                email: messages.customer_email,
+            },
+            customer_phone: {
+                required: messages.customer_phone,
+            },
+            provinces: {
+                required: messages.provinces,
+            },            
+            districts: {
+                required: messages.districts,
+            },            
+            wards: {
+                required: messages.wards,
             },
         },
     });
