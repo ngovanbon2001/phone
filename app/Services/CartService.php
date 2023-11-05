@@ -107,6 +107,7 @@ class CartService implements CartServiceInterface
     public function update(array $request, int $id): array
     {
         try {
+            Log::info($request['data']);
             if (!empty($request['data'])) {
                 Session::put('cart-' . $id, $request['data']);
                 $carts = Session::get('cart-' . $id);

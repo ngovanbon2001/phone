@@ -3,7 +3,7 @@ $(document).ready(function() {
         "positionClass": "toast-bottom-right",
     };
 
-    const carts = $('input.cart');
+    var carts = $('input.cart');
     var total = 0;
 
     carts.each(function() {
@@ -71,6 +71,7 @@ $(document).ready(function() {
                 url: url,
                 method: 'DELETE',
                 success: function(response) {
+                    carts = $('input.cart');
                     $.each(response.data, function(key, item) {
                         $("#cart-" + item.product_id + '-' + item.color).data("qty", parseInt(item.quantity));
                         $("#quantity-" + item.product_id).prop('value', parseInt(item.quantity));
@@ -90,6 +91,7 @@ $(document).ready(function() {
                     }
                 },
                 error: function(xhr, text, err) {
+                    console.log('1111222321 lỗi');
                     var responseData = JSON.parse(xhr.responseText);
                     var errorMessage = responseData.message;
                     setTimeout(function() {
@@ -148,6 +150,7 @@ $(document).ready(function() {
     });
 
     function update(_this) {
+        carts = $('input.cart');
         var cartData = [];
         var cart_id = $(_this).data('cart');
         var totalNew = 0;
