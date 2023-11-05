@@ -72,7 +72,7 @@ $(document).ready(function() {
                 method: 'DELETE',
                 success: function(response) {
                     $.each(response.data, function(key, item) {
-                        $("#cart-" + item.product_id).data("qty", parseInt(item.quantity));
+                        $("#cart-" + item.product_id + '-' + item.color).data("qty", parseInt(item.quantity));
                         $("#quantity-" + item.product_id).prop('value', parseInt(item.quantity));
                         totalNew = totalNew + (parseInt(item.quantity) * parseFloat(item.price));
                     });
@@ -131,16 +131,18 @@ $(document).ready(function() {
 
     $("input.cart").on('change', function(){
         productId = $(this).data('id');
+        color = $(this).data('color');
         cost = parseFloat($(this).data('price')) * parseInt($(this).val());
-        $('#total-'+productId).text('$'+cost.toFixed(2));
+        $('#total-' + productId + '-' + color).text(numeral(cost).format('0,0.00') + currency);
 
         update(this);
     });
 
     $("button.update-cart").on('click', function(){
         productId = $(this).data('id');
-        cart = $('#cart-' + productId);
-        quantity(cart, productId);
+        color = $(this).data('color');
+        cart = $('#cart-' + productId + '-' + color);
+        quantity(cart, productId, color);
 
         update(cart);
     });
@@ -178,7 +180,7 @@ $(document).ready(function() {
             },
             success: function(response) {
                 $.each(response.data.data, function(key, item) {
-                    $("#cart-" + item.product_id).data("qty", parseInt(item.quantity));
+                    $("#cart-" + item.product_id + '-' + item.color).data("qty", parseInt(item.quantity));
                     $("#quantity-" + item.product_id).prop('value', parseInt(item.quantity));
                     totalNew = totalNew + (parseInt(item.quantity) * parseFloat(item.price));
                 });
@@ -192,20 +194,20 @@ $(document).ready(function() {
                     toastr.error(errorMessage, 'Error');
                 }, 2000);
 
-                var inputElement = $("#cart-" + responseData.id);
+                var inputElement = $("#cart-" + responseData.id + '-' + responseData.color);
                 var previousQuantity = inputElement.data('qty');
                 inputElement.val(previousQuantity);
             }
         });
     }
 
-    function quantity(input, productId) {
+    function quantity(input, productId, color) {
         var value = parseFloat(input.val());
         if (value < 1) {
             input.val(1);
         } else {
             cost = parseFloat(cart.data('price')) * parseInt(cart.val());
-            $('#total-'+productId).text(numeral(cost).format('0,0.00')+currency);
+            $('#total-'+productId+ '-' +color).text(numeral(cost).format('0,0.00')+currency);
         }
     }
 });

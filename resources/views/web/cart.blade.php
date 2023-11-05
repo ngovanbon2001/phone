@@ -47,12 +47,12 @@
                                     <td>{{ number_format($value['price'] ?? 0, 2) }}{{ config('project.currency') }}</td>
                                     <td>
                                         <div class="qty">
-                                            <button class="btn-minus update-cart" data-id="{{ $value['product_id'] ?? 0 }}"><i class="fa fa-minus"></i></button>
-                                            <input id="cart-{{ $value['product_id'] ?? 0 }}" class="cart" data-cart="{{ auth()->user()->id ?? 0 }}" data-id="{{ $value['product_id'] ?? 0}}" data-name="{{ $value['name'] ?? ''}}" data-color="{{ $value['color'] ?? ''}}" data-image="{{ $value['options']['image'] ?? '' }}" data-price="{{ $value['price'] ?? 0 }}" data-qty="{{ $value['quantity'] ?? 0 }}" type="number" name="quantity" value="{{ $value['quantity'] ?? 0 }}" oninput="checkQuantity(this)">
-                                            <button class="btn-plus update-cart" data-id="{{ $value['product_id'] ?? 0 }}"><i class="fa fa-plus"></i></button>
+                                            <button class="btn-minus update-cart" data-id="{{ $value['product_id'] ?? 0 }}" data-color="{{ $value['color'] ?? 0 }}"><i class="fa fa-minus"></i></button>
+                                            <input id="cart-{{ $value['product_id'] ?? 0 }}-{{ $value['color'] ?? 0 }}" class="cart" data-cart="{{ auth()->user()->id ?? 0 }}" data-id="{{ $value['product_id'] ?? 0}}" data-name="{{ $value['name'] ?? ''}}" data-color="{{ $value['color'] ?? ''}}" data-image="{{ $value['options']['image'] ?? '' }}" data-price="{{ $value['price'] ?? 0 }}" data-qty="{{ $value['quantity'] ?? 0 }}" type="number" name="quantity" value="{{ $value['quantity'] ?? 0 }}" oninput="checkQuantity(this)">
+                                            <button class="btn-plus update-cart" data-id="{{ $value['product_id'] ?? 0 }}" data-color="{{ $value['color'] ?? 0 }}"><i class="fa fa-plus"></i></button>
                                         </div>
                                     </td>
-                                    <td id="total-{{ $value['product_id'] ?? 0 }}">{{ number_format(($value['price'] ?? 0) * ($value['quantity'] ?? 0), 2) }}{{ config('project.currency') }}</td>
+                                    <td id="total-{{ $value['product_id'] ?? 0 }}-{{ $value['color'] ?? 0 }}">{{ number_format(($value['price'] ?? 0) * ($value['quantity'] ?? 0), 2) }}{{ config('project.currency') }}</td>
                                     <td><button type="button" data-id="{{ $value['product_id'] ?? 0 }}" data-color="{{ $value['color'] ?? 0 }}" class="delete-cart"><i class="fa fa-trash"></i></button></td>
                                 </tr>
                                 @endforeach
