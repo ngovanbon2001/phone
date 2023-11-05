@@ -341,5 +341,7 @@ return [
     'orange' => 'Orange',
     'gold' => 'Gold',
     'gray' => 'Gray',
-    'product_sold' => 'This product has been sold!'
+    'product_sold' => 'This product has been sold!',
+    'cart_empty' => 'Your shopping cart is empty!',
+    'order_empty' => 'Please purchase at the shop!',
 ];
