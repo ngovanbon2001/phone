@@ -13,5 +13,7 @@ php artisan config:cache
 # Tạo khóa ứng dụng
 php artisan key:generate
 
+composer require laravel/framework
+
 # Tạo lại autoload file
 composer dump-autoload --no-scripts
