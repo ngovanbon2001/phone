@@ -31,6 +31,4 @@ COPY startup.sh /var/www/html/startup.sh
 RUN chmod +x /var/www/html/startup.sh
 RUN /var/www/html/startup.sh
 
-RUN composer update
-
 CMD apache2-foreground

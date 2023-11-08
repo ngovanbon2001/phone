@@ -2,7 +2,7 @@
 cp .env.example .env
 
 # Cài đặt Composer Dependencies
-composer install
+composer update
 
 # Làm sạch cache
 php artisan cache:clear
