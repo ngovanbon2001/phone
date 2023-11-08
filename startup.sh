@@ -11,3 +11,5 @@ php artisan key:generate
 # php artisan migrate
 
 composer dump-autoload --no-scripts --optimize
+
+php artisan optmize
