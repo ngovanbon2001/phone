@@ -1,15 +1,17 @@
-!/bin/sh
-
-#copy env
+# Sao chép tệp .env
 cp .env.example .env
-# install
+
+# Cài đặt Composer Dependencies
 composer install
+
+# Làm sạch cache
 php artisan cache:clear
+
+# Tạo lại cache cấu hình
 php artisan config:cache
 
-# secret
+# Tạo khóa ứng dụng
 php artisan key:generate
 
-# php artisan migrate
-
+# Tạo lại autoload file
 composer dump-autoload --no-scripts
