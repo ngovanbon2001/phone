@@ -24,4 +24,11 @@ ADD 000-default.conf /etc/apache2/sites-available/000-default.conf
 RUN a2ensite 000-default.conf
 RUN a2enmod rewrite
 
+# Sao chép tệp startup.sh vào container
+COPY startup.sh /var/www/html/startup.sh
+
+# Thực thi tệp startup.sh
+RUN chmod +x /var/www/html/startup.sh
+RUN /var/www/html/startup.sh
+
 CMD apache2-foreground
