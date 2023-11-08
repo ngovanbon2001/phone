@@ -31,9 +31,6 @@ COPY startup.sh /var/www/html/startup.sh
 RUN chmod +x /var/www/html/startup.sh
 RUN /var/www/html/startup.sh
 
-RUN composer install
-
-php artisan cache:clear
-php artisan config:cache
+RUN composer update
 
 CMD apache2-foreground
