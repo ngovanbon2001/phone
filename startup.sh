@@ -15,7 +15,5 @@ php artisan key:generate
 
 php artisan storage:link
 
-composer require laravel/framework
-
 # Tạo lại autoload file
 composer dump-autoload
