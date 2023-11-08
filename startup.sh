@@ -3,12 +3,12 @@
 #copy env
 cp .env.example .env
 # install
-composer install --prefer-dist --no-scripts --no-autoloader
+composer install
+php artisan cache:clear
+php artisan config:cache
 
 # secret
 php artisan key:generate
-php artisan cache:clear
-php artisan config:cache
 
 # php artisan migrate
 
