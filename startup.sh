@@ -13,6 +13,8 @@ php artisan config:cache
 # Tạo khóa ứng dụng
 php artisan key:generate
 
+php artisan storage:link
+
 composer require laravel/framework
 
 # Tạo lại autoload file
