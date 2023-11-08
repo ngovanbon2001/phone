@@ -2,7 +2,7 @@
 cp .env.example .env
 
 # Cài đặt Composer Dependencies
-composer update
+composer install --no-scripts
 
 # Làm sạch cache
 php artisan cache:clear
@@ -18,4 +18,4 @@ php artisan storage:link
 composer require laravel/framework
 
 # Tạo lại autoload file
-composer dump-autoload --no-scripts
+composer dump-autoload
