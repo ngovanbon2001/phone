@@ -11,3 +11,6 @@ php artisan key:generate
 # php artisan migrate
 
 composer dump-autoload --no-scripts
+
+php artisan cache:clear
+php artisan config:cache
