@@ -2,7 +2,7 @@
 cp .env.example .env
 
 # Cài đặt Composer Dependencies
-composer install --no-scripts
+composer install --ignore-platform-req=ext-gd
 
 # Làm sạch cache
 php artisan cache:clear
@@ -14,6 +14,8 @@ php artisan config:cache
 php artisan key:generate
 
 php artisan storage:link
+
+php artisan migrate
 
 # Tạo lại autoload file
 composer dump-autoload --no-scripts
