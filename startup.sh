@@ -7,10 +7,9 @@ composer install --prefer-dist --no-scripts --no-autoloader
 
 # secret
 php artisan key:generate
+php artisan cache:clear
+php artisan config:cache
 
 # php artisan migrate
 
 composer dump-autoload --no-scripts
-
-php artisan cache:clear
-php artisan config:cache
