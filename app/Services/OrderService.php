@@ -300,9 +300,11 @@ class OrderService implements OrderServiceInterface
             $year = Carbon::now()->year;
 
             $result = DB::table("orders")
-                ->whereMonth('created_at', '=', $month)
-                ->whereYear('created_at', '=', $year)
-                ->selectRaw('SUM(total_products) as total_products, SUM(total_money) as total_money')
+                ->join('order_items', 'orders.id', '=', 'order_items.order_id')
+                ->where('order_items.status', '=', Common::PAID)
+                ->whereMonth('orders.created_at', '=', $month)
+                ->whereYear('orders.created_at', '=', $year)
+                ->selectRaw('SUM(order_items.product_quantity) as total_products, SUM(order_items.product_price * order_items.product_quantity) as total_money')
                 ->get();
 
             return $result->first();
