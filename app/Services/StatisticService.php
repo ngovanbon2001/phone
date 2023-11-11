@@ -20,7 +20,6 @@ class StatisticService implements StatisticServiceInterface
     {
         try {
             return DB::table('order_items')
-                ->where(condition($condition))
                 ->groupBy('product_name')
                 ->groupBy('product_id')
                 ->groupBy('product_image')
@@ -41,8 +40,12 @@ class StatisticService implements StatisticServiceInterface
     public function getOrder(array $condition = [], int $paginate = Common::PAGINATE_HOME): ?LengthAwarePaginator
     {
         try {
-            return DB::table('orders')
-                ->where(condition($condition))
+            $query = DB::table('orders');
+            if (isset($condition['start-date-order']) && isset($condition['end-date-order'])) {
+                $query = DB::table('orders')
+                    ->whereBetween('created_at', [$condition['start-date-order'], $condition['end-date-order']]);
+            }
+            return $query
                 ->orderBy('total_money','DESC')
                 ->paginate($paginate);
         } catch (Exception $exception) {
@@ -59,7 +62,12 @@ class StatisticService implements StatisticServiceInterface
     public function getProduct(array $condition = [], int $paginate = Common::PAGINATE_HOME): ?LengthAwarePaginator
     {
         try {
-            return DB::table('products')
+            $query = DB::table('products');
+            if (isset($condition['start-date-product']) && isset($condition['end-date-product'])) {
+                $query = DB::table('products')
+                        ->whereBetween('created_at', [$condition['start-date-product'], $condition['end-date-product']]);
+            }
+            return $query
                 ->select('id', 'name', 'created_at')
                 ->selectRaw('(SELECT SUM(amount_color) FROM product_color WHERE product_color.product_id = products.id) AS amount')
                 ->orderBy('amount', 'DESC')

@@ -23,6 +23,11 @@
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="card-body">
+                            <form action="{{ route('indexReport') }}" method="get">
+                                <input type="date" name="start-date-product">
+                                <input type="date" name="end-date-product">
+                                <button type="submit">Search</button>
+                            </form>
                             <div class="table-responsive">
                                 <div class="widget-content">
                                     <table class="table table-striped">
@@ -83,7 +88,7 @@
                                                 height: 350
                                             },
                                             series: [{
-                                                name: "Series 1",
+                                                name: "Quantity",
                                                 data: dataSeries
                                             }],
                                             xaxis: {
@@ -171,7 +176,7 @@
                                         height: 350
                                     },
                                     series: [{
-                                        name: "Series 1",
+                                        name: "Quantity",
                                         data: dataSeries
                                     }],
                                     xaxis: {
@@ -201,6 +206,34 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-8">
+                        <form action="{{ route('indexReport') }}" method="get">
+                            <div class="row">
+                                <div class="control-group col-md-4">
+                                    <label class="control-label">@lang('languages.price')</label>
+                                    <div class="controls">
+                                        <input class="form-control" name="start-date-order" type="date" value="{!! old('price') !!}" />
+                                    </div> <!-- /controls -->
+                                </div> <!-- /control-group -->
+                                <div class="control-group col-md-4">
+                                    <label class="control-label">@lang('languages.price')</label>
+                                    <div class="controls">
+                                        <input class="form-control" name="end-date-order" type="date" value="{!! old('price') !!}" />
+                                    </div> <!-- /controls -->
+                                </div> <!-- /control-group -->
+                                <div class="control-group col-md-2">
+                                    <label class="control-label">@lang('languages.price')</label>
+                                    <div class="controls">
+                                        <input class="form-control" name="end-date-order" type="date" value="{!! old('price') !!}" />
+                                    </div> <!-- /controls -->
+                                </div> <!-- /control-group -->
+                                <div class="control-group col-md-2">
+                                    <label class="control-label"></label>
+                                    <div class="controls">
+                                        <button type="submit" class="btn btn-primary"><i class="ri-search-2-line"></i></button>
+                                    </div> <!-- /controls -->
+                                </div> <!-- /control-group -->
+                            </div>
+                        </form>
                         <div class="table-responsive">
                             <div class="widget-content">
                                 <table class="table table-striped">
@@ -258,10 +291,11 @@
                                         height: 350
                                     },
                                     series: [{
-                                        name: "Series 1",
+                                        name: "Total",
                                         data: dataSeries
                                     }],
                                     xaxis: {
+                                        name: 'name',
                                         categories: dataLabels
                                     },
                                     emphasis: {

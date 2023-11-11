@@ -7,6 +7,7 @@ use App\Services\Contracts\StatisticServiceInterface;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
@@ -23,13 +24,14 @@ class ReportController extends Controller
 
     /**
      * Display a listing of the resource.
+     * @param Request $request
      * @return Factory|View|Application
      */
-    public function index(): Factory|View|Application
+    public function index(Request $request): Factory|View|Application
     {
-        $listItem  = $this->statisticService->listItem();
-        $listOrder = $this->statisticService->getOrder();
-        $listProduct = $this->statisticService->getProduct();
+        $listItem  = $this->statisticService->listItem($request->all());
+        $listOrder = $this->statisticService->getOrder($request->all());
+        $listProduct = $this->statisticService->getProduct($request->all());
         $order     = json_encode($listItem->toArray()["data"] ?? []);
         $orderData = json_encode($listOrder->toArray()["data"] ?? []);
         $product   = json_encode($listProduct->toArray()["data"] ?? []);
