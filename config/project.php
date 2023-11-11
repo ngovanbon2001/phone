@@ -12,4 +12,6 @@ return [
     ],
     
     'currency' => 'vnđ',
+
+    'paginate' => [10, 25, 50],
 ];

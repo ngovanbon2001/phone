@@ -338,4 +338,7 @@ return [
     'product_sold' => 'Sản phẩm này đã được bán!',
     'cart_empty' => 'Giỏ hàng của bạn còn trống!',
     'order_empty' => "Hãy mua hàng tại shop!",
+    'start_date' => "Ngày bắt đầu",
+    'end_date' => "Ngày kết thúc",
+    'paginate' => 'Phân trang',
 ];
