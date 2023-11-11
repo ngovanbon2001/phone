@@ -3,32 +3,22 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Services\Contracts\OrderServiceInterface;
-use App\Services\Contracts\ProductServiceInterface;
-use App\Services\Contracts\ReportServiceInterface;
+use App\Services\Contracts\StatisticServiceInterface;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 
 class ReportController extends Controller
 {
-    protected OrderServiceInterface $orderServiceInterface;
-    protected ReportServiceInterface $reportServiceInterface;
-    protected ProductServiceInterface $productServiceInterface;
+    protected StatisticServiceInterface $statisticService;
 
     /**
-     * @param OrderServiceInterface $orderServiceInterface
-     * @param ReportServiceInterface $reportServiceInterface
-     * @param ProductServiceInterface $productServiceInterface
+     * @param StatisticServiceInterface $statisticService
      */
     public function __construct(
-        OrderServiceInterface    $orderServiceInterface,
-        ReportServiceInterface   $reportServiceInterface,
-        ProductServiceInterface  $productServiceInterface
+        StatisticServiceInterface $statisticService
     ) {
-        $this->orderServiceInterface    = $orderServiceInterface;
-        $this->reportServiceInterface   = $reportServiceInterface;
-        $this->productServiceInterface  = $productServiceInterface;
+        $this->statisticService = $statisticService;
     }
 
     /**
@@ -37,10 +27,15 @@ class ReportController extends Controller
      */
     public function index(): Factory|View|Application
     {
-        $order     = json_encode($this->orderServiceInterface->listItem()->toArray()["data"]);
-        $orderData = json_encode($this->orderServiceInterface->getOrder()->toArray()["data"]);
-        $product   = json_encode($this->productServiceInterface->getProduct()->toArray()["data"]);
+        $listItem  = $this->statisticService->listItem();
+        $listOrder = $this->statisticService->getOrder();
+        $listProduct = $this->statisticService->getProduct();
+        $order     = json_encode($listItem->toArray()["data"] ?? []);
+        $orderData = json_encode($listOrder->toArray()["data"] ?? []);
+        $product   = json_encode($listProduct->toArray()["data"] ?? []);
 
-        return view('admin/report/report', compact('order', 'orderData', 'product'));
+        return view('admin/report/report',
+            compact('order', 'orderData', 'product', 'listItem', 'listOrder', 'listProduct')
+        );
     }
 }
