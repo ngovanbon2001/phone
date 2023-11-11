@@ -344,4 +344,7 @@ return [
     'product_sold' => 'This product has been sold!',
     'cart_empty' => 'Your shopping cart is empty!',
     'order_empty' => 'Please purchase at the shop!',
+    'start_date' => "Start date",
+    'end_date' => "End date",
+    'paginate' => 'Paginate',
 ];
