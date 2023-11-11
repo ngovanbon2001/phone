@@ -18,3 +18,40 @@ div.product-price h3 {
 select.select-search {
     border: solid #353535 1px;
 }
+
+.list-order .nav-tabs {
+    display: flex;
+    justify-content: space-between;
+    background: white !important;
+    border-bottom: none;
+    position: relative;
+}
+
+.list-order .nav-tabs::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    border-top: 2px solid #007bff;
+    z-index: -1;
+}
+
+.list-order .nav-item {
+    flex: 1;
+    text-align: center;
+}
+
+.list-order .nav-link {
+    border: none;
+    border-radius: 0;
+}
+
+.list-order .nav-link.active {
+    background-color: transparent !important;
+}
+
+.list-order .tab-content {
+    margin-top: -1px;
+    /* Giữ nội dung tránh chạm vào đường thẳng */
+}
