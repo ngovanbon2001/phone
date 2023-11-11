@@ -117,7 +117,7 @@
                                                     height: 350
                                                 },
                                                 series: [{
-                                                    name: "Series 1",
+                                                    name: "Quantity",
                                                     data: dataSeries
                                                 }],
                                                 xaxis: {
@@ -180,7 +180,7 @@
                                             height: 350
                                         },
                                         series: [{
-                                            name: "Series 1",
+                                            name: "Quantity",
                                             data: dataSeries
                                         }],
                                         xaxis: {
@@ -233,7 +233,7 @@
                                             height: 350
                                         },
                                         series: [{
-                                            name: "Series 1",
+                                            name: "Total",
                                             data: dataSeries
                                         }],
                                         xaxis: {
