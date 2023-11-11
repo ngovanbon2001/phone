@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Statistic\FilterRequest;
 use App\Services\Contracts\StatisticServiceInterface;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
@@ -24,10 +24,10 @@ class ReportController extends Controller
 
     /**
      * Display a listing of the resource.
-     * @param Request $request
+     * @param FilterRequest $request
      * @return Factory|View|Application
      */
-    public function index(Request $request): Factory|View|Application
+    public function index(FilterRequest $request): Factory|View|Application
     {
         $listItem  = $this->statisticService->listItem($request->all());
         $listOrder = $this->statisticService->getOrder($request->all());

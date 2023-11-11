@@ -18,6 +18,16 @@
         </div><!-- End Page Title -->
 
         <section class="section dashboard">
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+
             <div class="card">
                 <div class="card-body">
                     <div class="row">
@@ -35,6 +45,17 @@
                                             <label class="control-label">@lang('languages.end_date')</label>
                                             <div class="controls">
                                                 <input class="form-control" name="end-date-product" type="date" value="{{ request('end-date-product') ?? '' }}" />
+                                            </div> <!-- /controls -->
+                                        </div> <!-- /control-group -->
+                                        <div class="control-group col-md-2">
+                                            <label class="control-label"></label>
+                                            <div class="controls">
+                                                <select name="paginate-product" class="form-select" data-form="product" data-start-date="{{ request('start-date-product') ?? null }}" data-end-date="{{ request('end-date-product') ?? null }}" onchange="paginate(this)">
+                                                    <option value="5">5</option>
+                                                    @foreach (config('project.paginate') as $item)
+                                                    <option value="{{ $item }}" {{ (request('paginate-product') == $item) ? 'selected' : '' }}>{{ $item }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div> <!-- /controls -->
                                         </div> <!-- /control-group -->
                                         <div class="control-group col-md-2">
@@ -139,6 +160,17 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-8">
+                            <div class="control-group col-md-2">
+                                <label class="control-label"></label>
+                                <div class="controls">
+                                    <select name="paginate-item" class="form-select" data-form="item" onchange="paginate(this)">
+                                        <option value="5">5</option>
+                                        @foreach (config('project.paginate') as $item)
+                                        <option value="{{ $item }}" {{ (request('paginate-item') == $item) ? 'selected' : '' }}>{{ $item }}</option>
+                                        @endforeach
+                                    </select>
+                                </div> <!-- /controls -->
+                            </div> <!-- /control-group -->
                             <div class="table-responsive">
                                 <div class="widget-content">
                                     <table class="table table-striped">
@@ -240,6 +272,17 @@
                                     <div class="control-group col-md-2">
                                         <label class="control-label"></label>
                                         <div class="controls">
+                                            <select name="paginate-order" class="form-select" data-form="order" data-start-date="{{ request('start-date-order') ?? null }}" data-end-date="{{ request('end-date-order') ?? null }}" onchange="paginate(this)">
+                                                <option value="5">5</option>
+                                                @foreach (config('project.paginate') as $item)
+                                                <option value="{{ $item }}" {{ (request('paginate-order') == $item) ? 'selected' : '' }}>{{ $item }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div> <!-- /controls -->
+                                    </div> <!-- /control-group -->
+                                    <div class="control-group col-md-2">
+                                        <label class="control-label"></label>
+                                        <div class="controls">
                                             <button type="submit" class="btn btn-primary"><i class="ri-search-2-line"></i></button>
                                         </div> <!-- /controls -->
                                     </div> <!-- /control-group -->
@@ -330,6 +373,29 @@
         </section>
     </main><!-- End #main -->
 
+    <script>
+        function paginate(select) {
+            var selectedValue = $(select).val();
+            var form = $(select).data('form');
+            var startDate = $(select).data('start-date');
+            var endDate = $(select).data('end-date');
+
+            var url = "{{ route('indexReport') }}";
+            var queryParams = {};
+
+            if (startDate && endDate) {
+                queryParams['start-date-' + form] = startDate;
+                queryParams['end-date-' + form] = endDate;
+            }
+
+            queryParams['paginate-' + form] = selectedValue;
+
+            var queryString = $.param(queryParams);
+            url += '?' + queryString;
+
+            window.location.href = url;
+        }
+    </script>
     @include ('admin.common.footer')
 </body>
 

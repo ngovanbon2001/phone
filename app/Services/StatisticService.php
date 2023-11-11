@@ -13,10 +13,9 @@ class StatisticService implements StatisticServiceInterface
 {
     /**
      * @param array $condition
-     * @param int $paginate
      * @return LengthAwarePaginator|null
      */
-    public function listItem(array $condition = [], int $paginate = Common::PAGINATE_HOME): ?LengthAwarePaginator
+    public function listItem(array $condition = []): ?LengthAwarePaginator
     {
         try {
             return DB::table('order_items')
@@ -25,7 +24,7 @@ class StatisticService implements StatisticServiceInterface
                 ->groupBy('product_image')
                 ->select('product_name', DB::raw('SUM(product_quantity) as total'))
                 ->orderBy('total', 'desc')
-                ->paginate($paginate);
+                ->paginate($condition['paginate-item'] ?? Common::PAGINATE_HOME);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return null;
@@ -34,10 +33,9 @@ class StatisticService implements StatisticServiceInterface
 
     /**
      * @param array $condition
-     * @param int $paginate
      * @return LengthAwarePaginator|null
      */
-    public function getOrder(array $condition = [], int $paginate = Common::PAGINATE_HOME): ?LengthAwarePaginator
+    public function getOrder(array $condition = []): ?LengthAwarePaginator
     {
         try {
             $query = DB::table('orders');
@@ -47,7 +45,7 @@ class StatisticService implements StatisticServiceInterface
             }
             return $query
                 ->orderBy('total_money','DESC')
-                ->paginate($paginate);
+                ->paginate($condition['paginate-order'] ?? Common::PAGINATE_HOME);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return null;
@@ -56,10 +54,9 @@ class StatisticService implements StatisticServiceInterface
 
     /**
      * @param array $condition
-     * @param int $paginate
      * @return LengthAwarePaginator|null
      */
-    public function getProduct(array $condition = [], int $paginate = Common::PAGINATE_HOME): ?LengthAwarePaginator
+    public function getProduct(array $condition = []): ?LengthAwarePaginator
     {
         try {
             $query = DB::table('products');
@@ -71,7 +68,7 @@ class StatisticService implements StatisticServiceInterface
                 ->select('id', 'name', 'created_at')
                 ->selectRaw('(SELECT SUM(amount_color) FROM product_color WHERE product_color.product_id = products.id) AS amount')
                 ->orderBy('amount', 'DESC')
-                ->paginate($paginate);
+                ->paginate($condition['paginate-product'] ?? Common::PAGINATE_HOME);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return null;
