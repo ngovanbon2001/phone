@@ -71,9 +71,9 @@
                             <div class="cart-summary">
                                 <div class="cart-content">
                                     <h1>@lang('languages.cart_summary')</h1>
-                                    <p>@lang('languages.sub_total')<span id="sub_total">$0</span></p>
+                                    <p>@lang('languages.sub_total') ({{ config('project.currency') }})<span id="sub_total">$0</span></p>
                                     <p>@lang('languages.shipping_cost')<span>@lang('languages.free')</span></p>
-                                    <h2>@lang('languages.grand_total')<span id="total">$0</span></h2>
+                                    <h2>@lang('languages.grand_total') ({{ config('project.currency') }})<span id="total">$0</span></h2>
                                 </div>
                                 @if(!empty($carts))
                                 <div id="check-out" class="cart-btn">
