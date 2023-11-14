@@ -20,7 +20,7 @@ class UserTempController extends Controller
     {
         $userTemp = $this->userTempServiceInterface->create($request->all());
 
-        return $this->handleViewResponse($userTemp, 'register', Common::ACTION[Common::ACTION_CREATE], 'Please confirm registration');
+        return $this->handleViewResponse($userTemp, 'register', __('languages.register'), __('languages.confirm_register'));
     }
 
     public function show($id)
