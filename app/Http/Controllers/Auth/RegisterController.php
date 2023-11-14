@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\Rules\CheckCodeRule;
 use App\Services\Contracts\UserServiceInterface;
 use App\Services\Contracts\UserTempServiceInterface;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -59,6 +61,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'code' => ['required', 'string', new CheckCodeRule($data['email'])],
         ]);
     }
 
