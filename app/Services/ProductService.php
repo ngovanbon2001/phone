@@ -98,7 +98,7 @@ class ProductService implements ProductServiceInterface
 
             $attribute['image_url'] = handleImage($image);
         } else {
-            if ($attributes['oldImage']) {
+            if (isset($attributes['oldImage'])) {
                 $attributes['image_url'] = $attributes['oldImage'];
             } else {
                 $attribute['image_url'] = "no-image.png";
