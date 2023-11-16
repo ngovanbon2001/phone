@@ -296,7 +296,7 @@
                                                 <th style="width:5%; text-align: center;">@lang('languages.num')</th>
                                                 <th style="width:25%; text-align: center;">@lang('languages.date')</th>
                                                 <th style="width:10%; text-align: left;">@lang('languages.amount')</th>
-                                                <th style="width:10%; text-align: left;">@lang('languages.total')</th>
+                                                <th style="width:10%; text-align: left;">@lang('languages.total') ({{ config('project.currency') }})</th>
                                             </tr>
                                         </thead>
                                         <tbody>
