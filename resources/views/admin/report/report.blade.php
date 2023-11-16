@@ -294,20 +294,18 @@
                                         <thead>
                                             <tr>
                                                 <th style="width:5%; text-align: center;">@lang('languages.num')</th>
-                                                <th style="width:50%; text-align: center;">@lang('languages.name')</th>
+                                                <th style="width:25%; text-align: center;">@lang('languages.date')</th>
                                                 <th style="width:10%; text-align: left;">@lang('languages.amount')</th>
                                                 <th style="width:10%; text-align: left;">@lang('languages.total')</th>
-                                                <th style="width:25%; text-align: center;">@lang('languages.date')</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($listOrder as $key => $item)
                                             <tr>
                                                 <td style="text-align: center;">{{ $key + 1 }}</td>
-                                                <td style="text-align: left;">{{ $item->customer_name ?? '' }}</td>
-                                                <td style="text-align: left;">{{ $item->total_products ?? '' }}</td>
-                                                <td style="text-align: left;">{{ number_format(($item->total_money ?? 0), 2) }}</td>
-                                                <td style="text-align: left;">{{ $item->created_at ?? '' }}</td>
+                                                <td style="text-align: center;">{{ $item->date ?? '' }}</td>
+                                                <td style="text-align: left;">{{ $item->amount ?? '' }}</td>
+                                                <td style="text-align: left;">{{ number_format(($item->total ?? 0), 2) }}</td>
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -331,17 +329,17 @@
                                     var data = JSON.parse('{!! $orderData !!}');
 
                                     var dataSeries = data.map(function(item) {
-                                        return item.total_money;
+                                        return item.total;
                                     });
 
                                     var dataLabels = data.map(function(item) {
-                                        return item.customer_name;
+                                        return item.date;
                                     });
 
                                     // Tạo biểu đồ bằng ApexCharts
                                     var chartOptions = {
                                         chart: {
-                                            type: "bar",
+                                            type: "line", // Chuyển thành loại đường
                                             height: 350
                                         },
                                         series: [{
