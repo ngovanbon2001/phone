@@ -43,8 +43,9 @@ class StatisticService implements StatisticServiceInterface
                 $query = DB::table('orders')
                     ->whereBetween('created_at', [$condition['start-date-order'], $condition['end-date-order']]);
             }
-            return $query
-                ->orderBy('total_money','DESC')
+            return $query->selectRaw('DATE(created_at) as date, MONTH(created_at) as month, SUM(total_money) as total, SUM(total_products) as amount')
+                ->groupBy('date', 'month')
+                ->orderBy('date','ASC')
                 ->paginate($condition['paginate-order'] ?? Common::PAGINATE_HOME);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
