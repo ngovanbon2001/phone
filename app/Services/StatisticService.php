@@ -45,7 +45,7 @@ class StatisticService implements StatisticServiceInterface
             }
             return $query->selectRaw('DATE(created_at) as date, MONTH(created_at) as month, SUM(total_money) as total, SUM(total_products) as amount')
                 ->groupBy('date', 'month')
-                ->orderBy('date','DESC')
+                ->orderBy('date','ASC')
                 ->paginate($condition['paginate-order'] ?? Common::PAGINATE_HOME);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
