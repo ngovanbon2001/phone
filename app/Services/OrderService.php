@@ -151,7 +151,7 @@ class OrderService implements OrderServiceInterface
                 if (
                     !$product || ($order->status == Common::IN_ACTIVE
                         && isset($product->amount_color)
-                        && $order->product_quantity > $product->amount_color)
+                        && $order->product_quantity > $product->amount_color) || ($order->status > Common::PAID)
                 ) {
                     Log::error('Fail amount');
                     return null;
@@ -187,6 +187,10 @@ class OrderService implements OrderServiceInterface
             $order = $this->orderItemsRepositoryInterface->find($id);
 
             if ($order) {
+                if ($order->status > Common::PAID) {
+                    return null;
+                }
+
                 $product = $this->colorRepositoryInterface->find($order->color);
 
                 if ($order->status > Common::IN_ACTIVE) {
