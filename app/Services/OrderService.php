@@ -15,6 +15,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
 class OrderService implements OrderServiceInterface
@@ -187,7 +188,10 @@ class OrderService implements OrderServiceInterface
             $order = $this->orderItemsRepositoryInterface->find($id);
 
             if ($order) {
-                if ($order->status > Common::PAID) {
+                if (
+                    (Route::currentRouteName() === 'cancel-order' && $order->status > Common::PAID) 
+                        || (!(Route::currentRouteName() === 'cancel-order') && $order->status > Common::ACTIVE)
+                ) {
                     return null;
                 }
 
