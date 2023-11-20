@@ -93,8 +93,8 @@
                                                 <th style="width:25%; text-align: left;">@lang('languages.customer_name')</th>
                                                 <th style="width:10%; text-align: left;">@lang('languages.email')</th>
                                                 <th style="width:5%; text-align: center;">@lang('languages.phone_number')</th>
-                                                <th style="width:10%; text-align: center;">@lang('languages.total')</th>
-                                                <th style="width:15%; text-align: center;">@lang('languages.quantity')</th>
+                                                <th style="width:15%; text-align: center;">@lang('languages.total') ({{ config('project.currency') }})</th>
+                                                <th style="width:10%; text-align: center;">@lang('languages.quantity')</th>
                                                 <th style="width:35%; text-align: center;">@lang('languages.action')</th>
                                             </tr>
                                         </thead>
