@@ -55,11 +55,11 @@
                                         <tbody>
                                             @foreach ($users as $userData)
                                             <tr>
-                                                <td>{{ $userData->username }}</td>
-                                                <td>{{ $userData->email }}</td>
-                                                <td style="text-align: center;">{{ $userData->phone }}</td>
+                                                <td>{{ $userData->username ?? '' }}</td>
+                                                <td>{{ $userData->email ?? '' }}</td>
+                                                <td style="text-align: center;">{{ $userData->phone ?? '' }}</td>
                                                 <td style="text-align: center;">
-                                                    @if (Auth::guard("admin")->user()->permission == 0)
+                                                    @if (Auth::guard("admin")->user()->permission == 0 && Auth::guard("admin")->user()->id !== $userData->id)
                                                     <a class="btn btn-success" href="{{ route('editUser', $userData->id)  }}"><i class="bi bi-pencil-square"></i></a>
                                                     <?php $message =  __('languages.delete_confirm') ?>
                                                     <a class="btn btn-danger" onclick="return confirm('{{ $message }}') ? document.getElementById('staff-delete-{{ $userData->id }}').submit() : false"><i class="bi bi-trash"></i></a>
