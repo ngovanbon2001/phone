@@ -22,7 +22,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class OrderController extends Controller
 {
     protected OrderServiceInterface $orderServiceInterface;
-    private string $action;
+    private string $action = 'languages.order';
 
     /**
      * @param OrderServiceInterface $orderServiceInterface
@@ -30,7 +30,6 @@ class OrderController extends Controller
     public function __construct(
         OrderServiceInterface    $orderServiceInterface,
     ) {
-        $this->action = strtolower(__('languages.order'));
         $this->orderServiceInterface    = $orderServiceInterface;
     }
 
@@ -71,7 +70,7 @@ class OrderController extends Controller
 
         return $this->handleViewResponseToBack(
             $order,
-            __('languages.'.Common::ACTION_CANCEL). ' '.$this->action,
+            __('languages.'.Common::ACTION_CANCEL). ' '.strtolower(__($this->action)),
         );
     }
 
@@ -85,7 +84,7 @@ class OrderController extends Controller
 
         return $this->handleViewResponseToBack(
             $order,
-            __('languages.'.Common::ACTION_DELETE).' '. __('languages.order')
+            __('languages.'.Common::ACTION_DELETE).' '.strtolower(__($this->action))
         );
     }
 

@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 class BrandController extends Controller
 {
     protected BrandServiceInterface $brandServiceInterface;
-    private string $action;
+    private string $action = 'languages.brand';
 
     /**
      * @param BrandServiceInterface $brandServiceInterface
@@ -24,7 +24,6 @@ class BrandController extends Controller
     public function __construct(
         BrandServiceInterface $brandServiceInterface,
     ) {
-        $this->action = strtolower(__('languages.brand'));
         $this->brandServiceInterface = $brandServiceInterface;
     }
 
@@ -63,7 +62,7 @@ class BrandController extends Controller
         return $this->handleViewResponse(
             $brand,
             'showBrand',
-            __('languages.'.Common::ACTION_CREATE). ' '.$this->action
+            __('languages.'.Common::ACTION_CREATE). ' '.strtolower(__($this->action))
         );
     }
 
@@ -94,7 +93,7 @@ class BrandController extends Controller
         return $this->handleViewResponse(
             $brand,
             'showBrand',
-            __('languages.'.Common::ACTION_UPDATE). ' '.$this->action
+            __('languages.'.Common::ACTION_UPDATE). ' '.strtolower(__($this->action))
         );
     }
 
@@ -110,7 +109,7 @@ class BrandController extends Controller
         return $this->handleViewResponse(
             $brand,
             'showBrand',
-            __('languages.'.Common::ACTION_DELETE). ' '.$this->action
+            __('languages.'.Common::ACTION_DELETE). ' '.strtolower(__($this->action))
         );
     }
 

@@ -12,7 +12,7 @@ use Illuminate\Http\RedirectResponse;
 
 class ProductColorController extends Controller
 {
-    private string $action;
+    private string $action = 'languages.color';
     protected ColorServiceInterface    $colorServiceInterface;
 
     /**
@@ -21,7 +21,6 @@ class ProductColorController extends Controller
     public function __construct(
         ColorServiceInterface $colorServiceInterface,
     ) {
-        $this->action = strtolower(__('languages.color'));
         $this->colorServiceInterface = $colorServiceInterface;
     }
 
@@ -36,7 +35,7 @@ class ProductColorController extends Controller
 
         return $this->handleViewResponseToBack(
             $color,
-            __('languages.'.Common::ACTION_CREATE). ' '.$this->action
+            __('languages.'.Common::ACTION_CREATE). ' '.strtolower(__($this->action))
         );
     }
 
@@ -51,7 +50,7 @@ class ProductColorController extends Controller
 
         return $this->handleViewResponseToBack(
             $color,
-            __('languages.'.Common::ACTION_DELETE). ' '.$this->action,
+            __('languages.'.Common::ACTION_DELETE). ' '.strtolower(__($this->action)),
         );
     }
 

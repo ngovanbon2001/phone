@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 class BannerController extends Controller
 {
     protected BannerServiceInterface $bannerServiceInterface;
-    private string $action;
+    private string $action = 'languages.banner';
 
     /**
      * @param BannerServiceInterface $bannerServiceInterface
@@ -24,7 +24,6 @@ class BannerController extends Controller
     public function __construct(
         BannerServiceInterface   $bannerServiceInterface,
     ) {
-        $this->action = strtolower(__('languages.banner'));
         $this->bannerServiceInterface   = $bannerServiceInterface;
     }
 
@@ -63,7 +62,7 @@ class BannerController extends Controller
         return $this->handleViewResponse(
             $banner,
             'indexBanners',
-            __('languages.'.Common::ACTION_CREATE). ' '.$this->action
+            __('languages.'.Common::ACTION_CREATE). ' '.strtolower(__($this->action))
         );
     }
 
@@ -95,7 +94,7 @@ class BannerController extends Controller
         return $this->handleViewResponse(
             $banner,
             'indexBanners',
-            __('languages.'.Common::ACTION_UPDATE). ' '.$this->action
+            __('languages.'.Common::ACTION_UPDATE). ' '.strtolower(__($this->action))
         );
     }
 
@@ -112,7 +111,7 @@ class BannerController extends Controller
         return $this->handleViewResponse(
             $banner,
             'indexBanners',
-            __('languages.'.Common::ACTION_DELETE). ' ' .$this->action
+            __('languages.'.Common::ACTION_DELETE). ' ' .strtolower(__($this->action))
         );
     }
 
