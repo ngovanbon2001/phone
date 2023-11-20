@@ -21,7 +21,7 @@ class ProductController extends Controller
     protected BrandServiceInterface $brandServiceInterface;
     protected CategoryServiceInterface $categoryServiceInterface;
     protected ProductServiceInterface $productServiceInterface;
-    private string $action;
+    private string $action = 'languages.product';
 
     /**
      * @param BrandServiceInterface $brandServiceInterface
@@ -33,7 +33,6 @@ class ProductController extends Controller
         CategoryServiceInterface $categoryServiceInterface,
         ProductServiceInterface  $productServiceInterface
     ) {
-        $this->action = strtolower(__('languages.product'));
         $this->brandServiceInterface    = $brandServiceInterface;
         $this->categoryServiceInterface = $categoryServiceInterface;
         $this->productServiceInterface  = $productServiceInterface;
@@ -77,7 +76,7 @@ class ProductController extends Controller
         return $this->handleViewResponse(
             $product,
             'indexProduct',
-            __('languages.'.Common::ACTION_CREATE). ' '.$this->action
+            __('languages.'.Common::ACTION_CREATE). ' '.strtolower(__($this->action))
         );
     }
 
@@ -120,7 +119,7 @@ class ProductController extends Controller
         return $this->handleViewResponse(
             $product,
             'indexProduct',
-            __('languages.'.Common::ACTION_UPDATE). ' '.$this->action
+            __('languages.'.Common::ACTION_UPDATE). ' '.strtolower(__($this->action))
         );
     }
 
@@ -134,9 +133,9 @@ class ProductController extends Controller
         $product = $this->productServiceInterface->delete($id);
 
         if ($product){
-            session()->flash('message', __('languages.'.Common::ACTION_DELETE). ' '.$this->action.' '. strtolower(__('languages.successful')));
+            session()->flash('message', __('languages.'.Common::ACTION_DELETE). ' '.strtolower(__($this->action)).' '. strtolower(__('languages.successful')));
         } else {
-            session()->flash('message-error', __('languages.fail').' '. strtolower(__('languages.'.Common::ACTION_DELETE). ' '.$this->action).'! '.__('languages.product_sold'));
+            session()->flash('message-error', __('languages.fail').' '. strtolower(__('languages.'.Common::ACTION_DELETE). ' '.strtolower(__($this->action))).'! '.__('languages.product_sold'));
         }
 
         return redirect()->route('indexProduct');
