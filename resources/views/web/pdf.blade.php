@@ -15,23 +15,23 @@
     <div class="section">
         <div class="container">
             <div class="row">
-                <div style="display: flex; justify-content: center;"><h1>Your Bill</h1></div>
+                <div style="display: flex; justify-content: center;"><h1>@lang('languages.order')</h1></div>
                 <!-- End Image Column -->
                 <!-- Project Info Column -->
                 <div class="portfolio-item-description col-sm-6">
-                    <h3>Customer</h3>
+                    <h3>@lang('languages.customer')</h3>
                     <ul class="no-list-style">
-                        <li><b>Name:</b> {{ $order['order']['customer_name'] ?? '' }}</li>
-                        <li><b>Phone:</b> {{ $order['order']['customer_phone'] ?? '' }}</li>
-                        <li><b>Email:</b> {{ $order['order']['customer_email'] ?? '' }}</li>
-                        <li><b>Address:</b> {{ $order['order']['address'] ?? '' }}</li>
+                        <li><b>@lang('languages.name'):</b> {{ $order['order']['customer_name'] ?? '' }}</li>
+                        <li><b>@lang('languages.phone_number'):</b> {{ $order['order']['customer_phone'] ?? '' }}</li>
+                        <li><b>@lang('languages.email'):</b> {{ $order['order']['customer_email'] ?? '' }}</li>
+                        <li><b>@lang('languages.address'):</b> {{ $order['order']['address'] ?? '' }}</li>
                     </ul>
-                    <h3>Product</h3>
+                    <h3>@lang('languages.product')</h3>
                     <ul class="no-list-style">
-                        <li><b>Product name:</b> {{ $order['product_name'] ?? '' }}</li>
-                        <li><b>Price:</b> {{ $order['product_price'] ?? '' }}</li>
-                        <li><b>Quantity:</b> {{ $order['product_quantity'] ?? '' }}</li>
-                        <li><b>Total:</b> {{ number_format((($order['product_price'] ?? 0) * ($order['product_quantity'] ?? 0)), 2) }}</li>
+                        <li><b>@lang('languages.product_name'):</b> {{ $order['product_name'] ?? '' }}</li>
+                        <li><b>@lang('languages.price'):</b> {{ $order['product_price'] ?? '' }}</li>
+                        <li><b>@lang('languages.quantity'):</b> {{ $order['product_quantity'] ?? '' }}</li>
+                        <li><b>@lang('languages.total') ({{ config('project.currency') }}):</b> {{ number_format((($order['product_price'] ?? 0) * ($order['product_quantity'] ?? 0)), 2) }}</li>
                     </ul>
                 </div>
                 <!-- End Project Info Column -->
