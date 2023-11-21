@@ -219,7 +219,7 @@
                                                 <?php $message =  __('languages.delete_confirm') ?>
                                                 <form method="post" action="">
                                                     <input value="{{ $value->id }}" type="hidden" name="id" id="imageId">
-                                                    <a class="btn btn-danger" href="{{ route('destroyImage', [$value->id, $product->id]) }}" onclick="return confirm('{{ $message }}');"><i class="bi bi-trash"></i></a>
+                                                    <a class="btn btn-danger" href="{{ route('version.destroy', $value->id ?? '') }}" onclick="return confirm('{{ $message }}');"><i class="bi bi-trash"></i></a>
                                                 </form>
                                             </td>
                                             <td style="text-align: center;">
