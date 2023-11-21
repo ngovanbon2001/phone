@@ -1,29 +1,59 @@
 <?php
 
 use App\Constants\Common;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
 
 if (!function_exists('handleImage')) {
     function handleImage($fileImage): string
     {
-        $imageName = "";
-
-        if ($_FILES['image_url']['name']) {
-            $image = $fileImage;
-            $imageName = time() . '.' . $image->getClientOriginalName();
-
-            $destinationPath = public_path('images/');
-
-            $image->move($destinationPath, $imageName);
-
-            $resizedImage = Image::make($destinationPath . $imageName)->fit(400, 400);
-
-            $resizedImage->save($destinationPath . $imageName);
+        $currentYear = Carbon::now()->year;
+        $currentMonth = Carbon::now()->month;
+        $currentDay = Carbon::now()->day;
+        $timeNow = Carbon::now()->format('Y-m-d_H-i-s');
+        $path = '/images/' . $currentYear . '/' . $currentMonth . '/' . $currentDay;
+        Storage::makeDirectory('/public' . $path);
+    
+        if (isset($fileImage)) {
+            $name = $timeNow . '_' . $fileImage->getClientOriginalName();
+            $fileImage->storeAs('/public/' . $path, $name);
+            $pathFile =  '/storage' .$path . '/' . $name;
+    
+            $publicPath = public_path($pathFile);
+    
+            $image = Image::make($publicPath);
+            $image->fit(400, 400);
+            $image->save();
+    
+            return $pathFile;
         }
+    
+        return '';
+    }
+}
 
-        return $imageName;
+if (!function_exists('handleBuildImage')) {
+    function handleBuildImage($fileImage): string
+    {
+        $currentYear = Carbon::now()->year;
+        $currentMonth = Carbon::now()->month;
+        $currentDay = Carbon::now()->day;
+        $timeNow = Carbon::now()->format('Y-m-d_H-i-s');
+        $path = '/images/' . $currentYear . '/' . $currentMonth . '/' . $currentDay;
+        Storage::makeDirectory('/public' . $path);
+    
+        if (isset($fileImage)) {
+            $name = $timeNow . '_' . $fileImage->getClientOriginalName();
+            $fileImage->storeAs('/public/' . $path, $name);
+            $pathFile =  '/storage' .$path . '/' . $name;
+    
+            return $pathFile;
+        }
+    
+        return '';
     }
 }
 

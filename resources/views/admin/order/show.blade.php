@@ -93,8 +93,8 @@
                                                 <th style="width:25%; text-align: left;">@lang('languages.customer_name')</th>
                                                 <th style="width:10%; text-align: left;">@lang('languages.email')</th>
                                                 <th style="width:5%; text-align: center;">@lang('languages.phone_number')</th>
-                                                <th style="width:10%; text-align: center;">@lang('languages.total')</th>
-                                                <th style="width:15%; text-align: center;">@lang('languages.quantity')</th>
+                                                <th style="width:15%; text-align: center;">@lang('languages.total') ({{ config('project.currency') }})</th>
+                                                <th style="width:10%; text-align: center;">@lang('languages.quantity')</th>
                                                 <th style="width:35%; text-align: center;">@lang('languages.action')</th>
                                             </tr>
                                         </thead>
@@ -105,7 +105,7 @@
                                                 <td style="text-align: left;">{{ $orderList['customer_name'] ?? ''}}</td>
                                                 <td style="text-align: left;">{{ $orderList->customer_email ?? '' }}</td>
                                                 <td style="text-align: center;">{{ $orderList->customer_phone ?? '' }}</td>
-                                                <td style="text-align: right;">{{ number_format($orderList->total_money ?? 0) }}</td>
+                                                <td style="text-align: right;">{{ number_format($orderList->total_money ?? 0, 2) }}</td>
                                                 <td style="text-align: right;">{{ $orderList->total_products ?? 0 }}</td>
 
                                                 <td>

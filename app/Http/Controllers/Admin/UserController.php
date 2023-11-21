@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     protected UserServiceInterface $userServiceInterface;
-    private string $action;
+    private string $action = 'languages.staff';
 
     /**
      * @param UserServiceInterface $userServiceInterface
@@ -26,7 +26,6 @@ class UserController extends Controller
     public function __construct(
         UserServiceInterface $userServiceInterface
     ) {
-        $this->action = strtolower(__('languages.staff'));
         $this->userServiceInterface = $userServiceInterface;
     }
 
@@ -60,7 +59,7 @@ class UserController extends Controller
         return $this->handleViewResponse(
             $staff,
             'indexUser',
-            __('languages.'.Common::ACTION_CREATE). ' '.$this->action
+            __('languages.'.Common::ACTION_CREATE). ' '.strtolower(__($this->action))
         );
     }
 
@@ -88,7 +87,7 @@ class UserController extends Controller
         return $this->handleViewResponse(
             $staff,
             'indexUser',
-            __('languages.'.Common::ACTION_UPDATE). ' '.$this->action
+            __('languages.'.Common::ACTION_UPDATE). ' '.strtolower(__($this->action))
         );
     }
 
@@ -116,7 +115,7 @@ class UserController extends Controller
         return $this->handleViewResponse(
             $staff,
             'showUser',
-            __('languages.'.Common::ACTION_UPDATE). ' '.$this->action,
+            __('languages.'.Common::ACTION_UPDATE). ' '.strtolower(__($this->action)),
             '',
             $id
         );
@@ -134,7 +133,7 @@ class UserController extends Controller
         return $this->handleViewResponse(
             $staff,
             'showUser',
-            __('languages.'.Common::ACTION_UPDATE). ' '.$this->action,
+            __('languages.'.Common::ACTION_UPDATE). ' '.strtolower(__($this->action)),
             '',
             $id
         );
@@ -151,7 +150,7 @@ class UserController extends Controller
         return $this->handleViewResponse(
             $staff,
             'indexUser',
-            __('languages.'.Common::ACTION_DELETE). ' '.$this->action
+            __('languages.'.Common::ACTION_DELETE). ' '.strtolower(__($this->action))
         );
     }
 }

@@ -24,7 +24,7 @@
                     <div class="row align-items-center">
                         <div class="col-md-5">
                             <div class="product-slider-single">
-                                <img src="{{ asset('images/'.$order['product_image'] ?? '') }}" alt="Product Image">
+                                <img src="{{ asset($order['product_image'] ?? '') }}" alt="Product Image">
                             </div>
                         </div>
                         <div class="col-md-7">

@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 class CategoryController extends Controller
 {
     protected CategoryServiceInterface $categoryServiceInterface;
-    private string $action;
+    private string $action = 'languages.category';
 
     /**
      * @param CategoryServiceInterface $categoryServiceInterface
@@ -24,7 +24,6 @@ class CategoryController extends Controller
     public function __construct(
         CategoryServiceInterface $categoryServiceInterface
     ) {
-        $this->action = strtolower(__('languages.category'));
         $this->categoryServiceInterface = $categoryServiceInterface;
     }
 
@@ -63,7 +62,7 @@ class CategoryController extends Controller
         return $this->handleViewResponse(
             $category,
             'showCate',
-            __('languages.'.Common::ACTION_CREATE). ' '.$this->action
+            __('languages.'.Common::ACTION_CREATE). ' '.strtolower(__($this->action))
         );
     }
 
@@ -94,7 +93,7 @@ class CategoryController extends Controller
         return $this->handleViewResponse(
             $category,
             'showCate',
-            __('languages.'.Common::ACTION_UPDATE). ' '.$this->action
+            __('languages.'.Common::ACTION_UPDATE). ' '.strtolower(__($this->action))
         );
     }
 
@@ -110,7 +109,7 @@ class CategoryController extends Controller
         return $this->handleViewResponse(
             $category,
             'showCate',
-            __('languages.'.Common::ACTION_DELETE). ' '.$this->action
+            __('languages.'.Common::ACTION_DELETE). ' '.strtolower(__($this->action))
         );
     }
 

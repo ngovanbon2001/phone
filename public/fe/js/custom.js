@@ -13,3 +13,13 @@ function showToasrt(message, status) {
         }, 2000);
     }
 }
+
+function hiddenTable(tabs)
+{
+    const countOrder = $(tabs + ' tr').length;
+    
+    if (countOrder <= 1) {
+        $(tabs + ' div.table-responsive').empty();
+        $(tabs + ' div.table-responsive').append("<div><p>" + order_empty + "</p></div>");
+    }
+}

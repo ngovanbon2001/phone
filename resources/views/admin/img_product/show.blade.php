@@ -26,12 +26,12 @@
                     <div class="col-lg-12">
                         <div class="row">
                             <div class="col-lg-12">
-                                <img src="{{ asset('images/' . $product->image_url) }}" style="width: 150px;" class="card-img-top" alt="...">
+                                <img src="{{ asset($product->image_url ?? '') }}" style="width: 40%" class="card-img-top" alt="...">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ $product->name }}</h5>
-                                    <div><b>@lang('languages.category'): </b>{{ $product->category->name }}</div>
-                                    <div><b>@lang('languages.brand'): </b>{{ $product->brand->name }}</div>
-                                    <p class="card-text">{!! $product->description !!}</p>
+                                    <h5 class="card-title">{{ $product->name ?? '' }}</h5>
+                                    <div><b>@lang('languages.category'): </b>{{ $product->category->name ?? '' }}</div>
+                                    <div><b>@lang('languages.brand'): </b>{{ $product->brand->name ?? '' }}</div>
+                                    <p class="card-text">{!! $product->description ?? '' !!}</p>
                                 </div>
                             </div>
                         </div>
@@ -63,7 +63,7 @@
             </div>
         </div>
 
-        <section class="section image">
+        <section class="section image" style="display: none;">
             &emsp;
             <div class="row">
                 <div class="col-lg-12">
@@ -123,7 +123,7 @@
                                         @foreach ($images as $key => $imageList)
                                         <tr>
                                             <td style="text-align: center;">{{ $key + 1 }}</td>
-                                            <td style="text-align: center;"><img src="{{ asset('images/' . $imageList->image_url) }}" width="150px" alt="Khong tai duoc"></td>
+                                            <td style="text-align: center;"><img src="{{ asset($imageList->image_url ?? '') }}" width="150px" alt="Khong tai duoc"></td>
                                             <td></td>
                                             <td style="text-align: center;">{{ $imageList->sort_order }}</td>
                                             <td style="text-align: center;">
@@ -147,7 +147,7 @@
 
             </div>
         </section>
-        <section class="section color">
+        <section class="section color" style="display: none;">
             &emsp;
             <div class="row">
                 <div class="col-lg-12">
@@ -161,9 +161,9 @@
                             <div class="control-group col-md-6">
                                 <label class="control-label">@lang('languages.color') <span style="color: red;">*</span></label>
                                 <div class="controls">
-                                    <?php ($product->productColor) ? $color = array_map(function($item) {
+                                    <?php !empty($product->productColor) ? $color = array_map(function ($item) {
                                         return $item['color'];
-                                    }, $product->productColor->toArray() ?? []) : []; 
+                                    }, $product->productColor->toArray() ?? []) : $color = [];
                                     ?>
                                     <select name="color" class="form-select" placeholder="{{ __('languages.select_color') }}">
                                         @foreach(config('project.color') as $key => $value)
@@ -208,7 +208,7 @@
                                     </thead>
 
                                     <tbody>
-                                        @if($product->productColor)
+                                        @if(!empty($product->productColor))
                                         @foreach ($product->productColor as $key => $value)
                                         <tr>
                                             <td style="text-align: center;">{{ $key + 1 }}</td>
@@ -222,6 +222,9 @@
                                                     <a class="btn btn-danger" href="{{ route('destroyImage', [$value->id, $product->id]) }}" onclick="return confirm('{{ $message }}');"><i class="bi bi-trash"></i></a>
                                                 </form>
                                             </td>
+                                            <td style="text-align: center;">
+                                                <button type="button" class="btn btn-primary edit-button" data-color-id="{{ $value->id ?? 0 }}" data-amount="{{ $value->amount_color ?? '' }}" data-color="{{ (isset($value['color']) && $value['color'] !== '') ? __(config('project.color')[$value->color]) : '' }}"><i class="bi bi-pencil"></i></button>
+                                            </td>
                                         </tr>
                                         @endforeach
                                         @endif
@@ -234,7 +237,28 @@
 
                     </div>
                 </div><!-- End Left side columns -->
-
+                <div id="editModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <input type="text" id="color" hidden name="color">
+                            <div class="modal-padding-left">
+                                <label class="control-label">@lang('languages.color'): <span id="color-name"></span></label>
+                            </div>
+                            <div class="modal-padding-left">
+                                <div style="display: flex; align-items: center;">
+                                    <label class="control-label">@lang('languages.amount') <span style="color: red;">*</span></label>
+                                    <div class="controls">
+                                        <input type="number" id="amount_color" class="form-control" name="amount_color" value="{!! old('amount_color', 0) !!}">
+                                    </div> <!-- /controls -->
+                                </div>
+                                <label id="amount-error" class="error" style="display: none;"></label>
+                            </div> <!-- /control-group -->
+                            <div class="modal-padding-left">
+                                <button id="update-color" type="button" class="btn btn-primary">@lang('languages.save')</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </main><!-- End #main -->
@@ -244,28 +268,7 @@
 
 </html>
 <script>
-    $(document).ready(function() {
-        $('section.image').hide();
-        $('section.color').hide();
-        var image = 0;
-        var color = 0;
-        $('#btn-image').on('click', function() {
-            if (image == 0) {
-                image = 1;
-                $('section.image').show();
-            } else {
-                image = 0;
-                $('section.image').hide();
-            }
-        });
-        $('#btn-color').on('click', function() {
-            if (color == 0) {
-                color = 1;
-                $('section.color').show();
-            } else {
-                color = 0;
-                $('section.color').hide();
-            }
-        });
-    });
+    const url = "{{ route('version.update', ':colorId') }}";
+    const token = "{{ csrf_token() }}";
 </script>
+<script type="text/javascript" src="{{asset('assets/js/product.js')}}"></script>

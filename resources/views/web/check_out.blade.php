@@ -83,9 +83,9 @@
                     <div class="checkout-inner">
                         <div class="checkout-summary">
                             <h1>@lang('languages.cart_total')</h1>
-                            <p class="sub-total">@lang('languages.sub_total')<span id="sub_total">$0</span></p>
+                            <p class="sub-total">@lang('languages.sub_total') ({{ config('project.currency') }})<span id="sub_total">$0</span></p>
                             <p class="ship-cost">@lang('languages.shipping_cost')<span>@lang('languages.free')</span></p>
-                            <h2>@lang('languages.grand_total')<span id="total">$0</span></h2>
+                            <h2>@lang('languages.grand_total') ({{ config('project.currency') }})<span id="total">$0</span></h2>
                         </div>
 
                         <div class="checkout-payment">
@@ -105,6 +105,15 @@
 <script>
     const token = '{{ csrf_token() }}';
     const urlAddress = "{{ route('select-delivery') }}";
+    const messages = {
+        customer_name: "{{ __('validation.required', ['attribute' => __('languages.name')]) }}",
+        customer_email_required: "{{ __('validation.required', ['attribute' => __('languages.email')]) }}",
+        customer_email: "{{ __('validation.email', ['attribute' => __('languages.email')]) }}",
+        customer_phone: "{{ __('validation.required', ['attribute' => __('languages.provinces')]) }}",
+        provinces: "{{ __('validation.required', ['attribute' => __('languages.provinces')]) }}",
+        districts: "{{ __('validation.required', ['attribute' => __('languages.districts')]) }}",
+        wards: "{{ __('validation.required', ['attribute' => __('languages.wards')]) }}",
+    };
 </script>
 <script src="{{ asset('fe/js/check-out.js') }}"></script>
 @endsection

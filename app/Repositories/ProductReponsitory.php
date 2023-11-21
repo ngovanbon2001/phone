@@ -18,8 +18,7 @@ class ProductReponsitory extends BaseRepository implements ProductReponsitoryInt
 
     public function listProduct(array $conditions, int $paginate = Common::PAGINATE_BE)
     {
-        $this->applyConditions(condition($conditions));
-        return $this->model
+        return $this->model->where($conditions)
                     ->orderBy('id', 'DESC')
                     ->paginate($paginate);
     }

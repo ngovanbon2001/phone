@@ -59,7 +59,7 @@
                                             @foreach ($banners as $bannerKey => $bannerList)
                                             <tr>
                                                 <td style="text-align: center;">{{ $bannerKey + 1 }}</td>
-                                                <td style="text-align: center;"><img src="{{ asset('images/' . $bannerList->image_url) }}" style="width: 150px" alt="No Image"></td>
+                                                <td style="text-align: center;"><img src="{{ asset($bannerList->image_url) }}" style="width: 150px" alt="No Image"></td>
                                                 <td style="text-align: left;">{{ $bannerList->title }}</td>
                                                 <td style="text-align: center;"><input type="checkbox" class="toggle-position" value="{{ $bannerList->id }}" data-name="{{ $bannerList->title }}" data-url="{{route('activeBanner')}}" data-id="{{ $bannerList->id }}" data-on="{{ __('languages.yes') }}" data-off="{{ __('languages.no') }}" {{ $bannerList->active == 1 ? 'checked' : '' }} data-toggle="toggle" data-width="20" data-height="10"></td>
                                                 <td style="text-align: center;">{{ $bannerList->sort_order }}</td>

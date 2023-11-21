@@ -53,7 +53,7 @@
 
                                     <div class="d-flex align-items-center">
                                         <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-currency-dollar"></i>
+                                            {{ config('project.currency') }}
                                         </div>
                                         <div class="ps-3">
                                             <h6>{{ number_format(($total->total_money ?? 0)) }}</h6>
@@ -117,7 +117,7 @@
                                                     height: 350
                                                 },
                                                 series: [{
-                                                    name: "Series 1",
+                                                    name: "Quantity",
                                                     data: dataSeries
                                                 }],
                                                 xaxis: {
@@ -180,7 +180,7 @@
                                             height: 350
                                         },
                                         series: [{
-                                            name: "Series 1",
+                                            name: "Quantity",
                                             data: dataSeries
                                         }],
                                         xaxis: {
@@ -233,7 +233,7 @@
                                             height: 350
                                         },
                                         series: [{
-                                            name: "Series 1",
+                                            name: "Total",
                                             data: dataSeries
                                         }],
                                         xaxis: {

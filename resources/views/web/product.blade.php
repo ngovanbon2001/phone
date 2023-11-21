@@ -38,28 +38,22 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="product-short">
-                                        <div class="dropdown">
-                                            <div class="dropdown-toggle" data-toggle="dropdown">@lang('languages.brand')</div>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                @foreach($brands as $item)
-                                                <a href="{{ route('web.product', ['brand_id' => $item->id ?? '', 'category_id' => request('category_id') ?? '', 'name' => request('name') ?? '', 'tags' => request('tags') ?? '']) }}" class="dropdown-item">{{ $item->name ?? '' }}</a>
-                                                @endforeach
-                                            </div>
-                                        </div>
+                                        <select id="brandSelect" class="form-control input-sm select-search">
+                                            <option value="">@lang('languages.brand')</option>
+                                            @foreach($brands as $item)
+                                            <option value="{{ $item->id ?? '' }}" {{ ((request('brand_id') ?? '') == $item->id) ? 'selected' : ''  }}>{{ $item->name ?? '' }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="product-price-range">
-                                        <div class="dropdown">
-                                            <div class="dropdown-toggle" data-toggle="dropdown">@lang('languages.category')</div>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                @foreach($categories as $item)
-                                                <li class="nav-item">
-                                                    <a href="{{ route('web.product', ['category_id' => $item->id ?? '', 'brand_id' => request('brand_id') ?? '', 'name' => request('name') ?? '', 'tags' => request('tags') ?? '']) }}" class="dropdown-item">{{ $item->name ?? '' }}</a>
-                                                </li>
-                                                @endforeach
-                                            </div>
-                                        </div>
+                                        <select id="categorySelect" class="form-control input-sm select-search">
+                                            <option value="">@lang('languages.category')</option>
+                                            @foreach($categories as $item)
+                                            <option value="{{ $item->id ?? '' }}" {{ ((request('category_id') ?? '') == $item->id) ? 'selected' : ''  }}>{{ $item->name ?? '' }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -69,7 +63,7 @@
                     <div class="col-md-4">
                         <div class="product-item">
                             <div class="product-title">
-                                <a href="{{route('web.product.detail', $item->id)}}">{{ $item->name }}</a>
+                                <a href="{{route('web.product.detail', $item->id ?? '')}}">{{ $item->name ?? '' }}</a>
                                 <div class="ratting">
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
@@ -79,28 +73,19 @@
                                 </div>
                             </div>
                             <div class="product-image">
-                                <a href="{{route('web.product.detail', $item->id)}}">
-                                    <img src="{{ asset('images/'.$item->image_url) }}" alt="Product Image">
+                                <a href="{{route('web.product.detail', $item->id ?? '')}}">
+                                    <img src="{{ asset($item->image_url ?? '') }}" alt="Product Image">
                                 </a>
                                 <div class="product-action">
-                                    <a onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-cart-plus"></i></a>
-                                    <a href="{{route('web.product.detail', $item->id)}}"><i class="fa fa-search"></i></a>
+                                    <a href="{{route('web.product.detail', $item->id ?? '')}}"><i class="fa fa-search"></i></a>
                                 </div>
                             </div>
                             <div class="product-price">
                                 <h3>{{ number_format($item->price ?? 0)}}<span>{{ config('project.currency') }}</span></h3>
-                                <a class="btn" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-shopping-cart"></i>@lang('languages.buy_now')</a>
+                                <a class="btn" href="{{ route('web.order.build-now', $item->id ?? 0) }}"><i class="fa fa-shopping-cart"></i>@lang('languages.buy_now')</a>
                             </div>
                         </div>
                     </div>
-                    <form id="cart-add-{{ $item->id ?? 0 }}" action="{{ route('cart.create') }}" method="post" class="cart">
-                        @csrf
-                        <input type="hidden" value="{{ $item->id ?? 0 }}" name="product_id">
-                        <input type="hidden" value="1" name="quantity">
-                        <input type="hidden" value="{{ $item->name ?? '' }}" name="product_name">
-                        <input type="hidden" value="{{ $item->image_url ?? '' }}" name="product_image">
-                        <input type="hidden" value="{{ $item->price ?? 0 }}" name="product_price">
-                    </form>
                     @endforeach
                 </div>
 
@@ -143,7 +128,7 @@
                         @foreach ($products as $item)
                         <div class="product-item">
                             <div class="product-title">
-                                <a href="#">{{ $item->name ?? '' }}</a>
+                                <a href="{{route('web.product.detail', $item->id ?? '')}}">{{ $item->name ?? '' }}</a>
                                 <div class="ratting">
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
@@ -153,26 +138,17 @@
                                 </div>
                             </div>
                             <div class="product-image">
-                                <a href="product-detail.html">
-                                    <img src="{{ asset('images/'.$item->image_url) }}" alt="Product Image">
+                                <a href="{{route('web.product.detail', $item->id ?? '')}}">
+                                    <img src="{{ asset($item->image_url ?? '') }}" alt="Product Image">
                                 </a>
                                 <div class="product-action">
-                                    <a onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-cart-plus"></i></a>
-                                    <a href="{{route('web.product.detail', $item->id)}}"><i class="fa fa-search"></i></a>
+                                    <a href="{{route('web.product.detail', $item->id ?? '')}}"><i class="fa fa-search"></i></a>
                                 </div>
                             </div>
                             <div class="product-price">
                                 <h3>{{ number_format($item->price ?? 0)}}<span>{{ config('project.currency') }}</span></h3>
-                                <a class="btn" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-shopping-cart"></i>@lang('languages.buy_now')</a>
+                                <a class="btn" href="{{ route('web.order.build-now', $item->id ?? 0) }}"><i class="fa fa-shopping-cart"></i>@lang('languages.buy_now')</a>
                             </div>
-                            <form id="cart-add-{{ $item->id ?? 0 }}" action="{{ route('cart.create') }}" method="post" class="cart">
-                                @csrf
-                                <input type="hidden" value="{{ $item->id ?? 0 }}" name="product_id">
-                                <input type="hidden" value="1" name="quantity">
-                                <input type="hidden" value="{{ $item->name ?? '' }}" name="product_name">
-                                <input type="hidden" value="{{ $item->image_url ?? '' }}" name="product_image">
-                                <input type="hidden" value="{{ $item->price ?? 0 }}" name="product_price">
-                            </form>
                         </div>
                         @endforeach
                     </div>
@@ -190,9 +166,9 @@
                 <div class="sidebar-widget tag">
                     <h2 class="title">@lang('languages.tags')</h2>
                     @foreach ($tags as $item)
-                        @if($item->tags !== null)
-                        <a href="{{ route('web.product', ['category_id' => request('category_id') ?? '', 'brand_id' => request('brand_id') ?? '', 'name' => request('name') ?? '', 'tags' => $item->tags ?? '']) }}">{{ $item->tags }}</a>
-                        @endif
+                    @if($item->tags !== null)
+                    <a href="{{ route('web.product', ['category_id' => request('category_id') ?? '', 'brand_id' => request('brand_id') ?? '', 'name' => request('name') ?? '', 'tags' => $item->tags ?? '']) }}">{{ $item->tags }}</a>
+                    @endif
                     @endforeach
                 </div>
             </div>
@@ -207,7 +183,7 @@
     <div class="container-fluid">
         <div class="brand-slider">
             @foreach($brands as $item)
-            <div class="brand-item"><img src="{{ asset('images/'.$item->image_url) }}" alt=""></div>
+            <div class="brand-item"><img src="{{ asset($item->image_url ?? '') }}" alt=""></div>
             @endforeach
         </div>
     </div>
@@ -224,5 +200,41 @@
     } else if (toastrError) {
         showToasrt(toastrError, false);
     }
+
+    $(document).ready(function() {
+        $("#brandSelect").change(function() {
+            var selectedBrandId = $(this).val();
+
+            var url = "{{ route('web.product') }}";
+            var queryParams = {
+                category_id: "{{ request('category_id') }}",
+                brand_id: selectedBrandId,
+                name: "{{ request('name') }}",
+                tags: "{{ request('tags') }}"
+            };
+
+            var queryString = $.param(queryParams);
+            url += '?' + queryString;
+
+            window.location.href = url;
+        });
+
+        $("#categorySelect").change(function() {
+            var selectedCategoryId = $(this).val();
+
+            var url = "{{ route('web.product') }}";
+            var queryParams = {
+                category_id: selectedCategoryId,
+                brand_id: "{{ request('brand_id') }}",
+                name: "{{ request('name') }}",
+                tags: "{{ request('tags') }}"
+            };
+
+            var queryString = $.param(queryParams);
+            url += '?' + queryString;
+
+            window.location.href = url;
+        });
+    });
 </script>
 @endsection

@@ -42,10 +42,10 @@
                 <div class="col-md-6">
                     <div class="header-slider normal-slider">
                         @foreach ($banners as $key => $item)
-                        <div class="header-slider-item">
-                            <img src="{{ asset('images/'.$item->image_url ?? '') }}" alt="Slider Image" />
+                        <div class="header-slider-item" title="{{ $item->title ?? '' }}">
+                            <img style="width: 100%;" src="{{ asset($item->image_url ?? '') }}" alt="Slider Image"/>
                             <div class="header-slider-caption">
-                                <p>{{ $item->title ?? "" }}</p>
+                                <p>{!! $item->content ?? "" !!}</p>
                             </div>
                         </div>
                         @endforeach
@@ -78,7 +78,7 @@
         <div class="container-fluid">
             <div class="brand-slider">
                 @foreach ($brands as $key => $item)
-                <div class="brand-item"><img src="{{ asset('images/'.$item->image_url ?? '') }}" alt=""></div>
+                <div class="brand-item"><img src="{{ asset($item->image_url ?? '') }}" alt=""></div>
                 @endforeach
             </div>
         </div>
@@ -210,7 +210,7 @@
 
                     <div class="product-item">
                         <div class="product-title">
-                            <a href="#">{{ $item->name ?? ''}}</a>
+                            <a href="{{route('web.product.detail', $item->id)}}">{{ $item->name ?? ''}}</a>
                             <div class="ratting">
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
@@ -220,27 +220,18 @@
                             </div>
                         </div>
                         <div class="product-image">
-                            <a href="product-detail.html">
-                                <img src="{{asset('images/'.$item->image_url ?? '')}}" alt="Product Image">
+                            <a href="{{route('web.product.detail', $item->id)}}">
+                                <img src="{{asset($item->image_url ?? '')}}" alt="Product Image">
                             </a>
                             <div class="product-action">
-                                <a href="#" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()"><i class="fa fa-cart-plus"></i></a>
                                 <a href="{{route('web.product.detail', $item->id)}}"><i class="fa fa-search"></i></a>
                             </div>
                         </div>
                         <div class="product-price">
                             <h3>{{ number_format($item->price ?? 0)}}<span>{{ config('project.currency') }}</span></h3>
-                            <a class="btn" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-shopping-cart"></i>@lang('languages.buy_now')</a>
+                            <a class="btn" href="{{ route('web.order.build-now', $item->id ?? 0) }}"><i class="fa fa-shopping-cart"></i>@lang('languages.buy_now')</a>
                         </div>
                     </div>
-                    <form id="cart-add-{{ $item->id ?? 0 }}" action="{{ route('cart.create') }}" method="post" class="cart">
-                        @csrf
-                        <input type="hidden" value="{{ $item->id ?? 0 }}" name="product_id">
-                        <input type="hidden" value="1" name="quantity">
-                        <input type="hidden" value="{{ $item->name ?? '' }}" name="product_name">
-                        <input type="hidden" value="{{ $item->image_url ?? '' }}" name="product_image">
-                        <input type="hidden" value="{{ $item->price ?? 0 }}" name="product_price">
-                    </form>
                 </div>
                 @endforeach
             </div>
@@ -260,7 +251,7 @@
 
                     <div class="product-item">
                         <div class="product-title">
-                            <a href="#">{{ $item->name ?? ''}}</a>
+                            <a href="{{route('web.product.detail', $item->id)}}">{{ $item->name ?? ''}}</a>
                             <div class="ratting">
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
@@ -270,27 +261,18 @@
                             </div>
                         </div>
                         <div class="product-image">
-                            <a href="product-detail.html">
-                                <img src="{{asset('images/'.$item->image_url ?? '')}}" alt="Product Image">
+                            <a href="{{route('web.product.detail', $item->id)}}">
+                                <img src="{{asset($item->image_url ?? '')}}" alt="Product Image">
                             </a>
                             <div class="product-action">
-                                <a href="#" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()"><i class="fa fa-cart-plus"></i></a>
                                 <a href="{{route('web.product.detail', $item->id)}}"><i class="fa fa-search"></i></a>
                             </div>
                         </div>
                         <div class="product-price">
                             <h3>{{ number_format($item->price ?? 0)}}<span>{{ config('project.currency') }}</span></h3>
-                            <a class="btn" onclick="document.getElementById('cart-add-{{ $item->id ?? 0 }}').submit()" href="#"><i class="fa fa-shopping-cart"></i>@lang('languages.buy_now')</a>
+                            <a class="btn" href="{{ route('web.order.build-now', $item->id ?? 0) }}"><i class="fa fa-shopping-cart"></i>@lang('languages.buy_now')</a>
                         </div>
                     </div>
-                    <form id="cart-add-{{ $item->id ?? 0 }}" action="{{ route('cart.create') }}" method="post" class="cart">
-                        @csrf
-                        <input type="hidden" value="{{ $item->id ?? 0 }}" name="product_id">
-                        <input type="hidden" value="1" name="quantity">
-                        <input type="hidden" value="{{ $item->name ?? '' }}" name="product_name">
-                        <input type="hidden" value="{{ $item->image_url ?? '' }}" name="product_image">
-                        <input type="hidden" value="{{ $item->price ?? 0 }}" name="product_price">
-                    </form>
                 </div>
                 @endforeach
             </div>

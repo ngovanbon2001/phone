@@ -28,7 +28,7 @@
                             <h5 class="card-title">@lang('languages.edit_category')</h5>
 
                             <!-- General Form Elements -->
-                            <form action="{{ route('updateCate', $category->id) }}" method="post" id="edit-profile" class="form-horizontal">
+                            <form action="{{ route('updateCate', $category->id ?? '') }}" method="post" id="edit-profile" class="form-horizontal">
                                 @csrf
                                 <fieldset>
 
@@ -38,7 +38,7 @@
                                             @if ($errors->any())
                                             <input class="form-control" name="name" value="{!! old('name') !!}" type="text" />
                                             @else
-                                            <input type="text" class="form-control" name="name" value="{{ $category->name }}">
+                                            <input type="text" class="form-control" name="name" value="{{ $category->name ?? '' }}">
                                             @endif
                                             @error ('name')
                                             <label class="error">{{ $message }}</label>
@@ -64,8 +64,8 @@
                                         <label class="control-label">@lang('languages.status')</label>
                                         <div class="controls">
                                             <select class="form-select" name="active">
-                                                <option value="0" {{ (old('active') ?? $category->active) == 0 ? 'selected' : '' }}>@lang('languages.no')</option>
-                                                <option value="1" {{ (old('active') ?? $category->active) == 1 ? 'selected' : '' }}>@lang('languages.yes')</option>
+                                                <option value="0" {{ (old('active') ?? $category->active ?? 0) == 0 ? 'selected' : '' }}>@lang('languages.no')</option>
+                                                <option value="1" {{ (old('active') ?? $category->active ?? 0) == 1 ? 'selected' : '' }}>@lang('languages.yes')</option>
                                             </select>
                                         </div> <!-- /controls -->
                                     </div> <!-- /control-group -->

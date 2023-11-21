@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Contract;
 
-use App\Repositories\Contract\RepositoryInterface;
+use App\Repositories\Contracts\RepositoryInterface;
 
 /**
  * Interface TestRepository.

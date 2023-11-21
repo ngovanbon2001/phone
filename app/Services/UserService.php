@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class UserService implements UserServiceInterface
 {
@@ -170,6 +171,9 @@ class UserService implements UserServiceInterface
             if ($userTemp) {
                 $result = $this->userRepository->create($this->handleBuildAttribute($userTemp->toArray()));
                 $userTemp->delete();
+                $cart = Session::get('cart-0');
+                Session::forget('cart-0');
+                Session::put('cart-' . $result->id ?? 0, $cart);
                 DB::commit();
                 return $result;
             }

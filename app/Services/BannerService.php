@@ -43,7 +43,7 @@ class BannerService implements BannerServiceInterface
             if (isset($attributes['image_url'])) {
                 $image = $attributes['image_url'];
 
-                $attributes['image_url'] = handleImage($image);
+                $attributes['image_url'] = handleBuildImage($image);
             } else {
                 $attributes['image_url'] = "no-image.png";
             }
@@ -66,7 +66,7 @@ class BannerService implements BannerServiceInterface
             if (isset($attributes['image_url'])) {
                 $image = $attributes['image_url'];
 
-                $attributes['image_url'] = handleImage($image);
+                $attributes['image_url'] = handleBuildImage($image);
             } else {
                 $attributes['image_url'] = $attributes['imageOld'];
             }

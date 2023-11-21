@@ -41,9 +41,9 @@ class HomeController extends Controller
      */
     public function home(): View|Factory|Application
     {
-        $order     = json_encode($this->orderServiceInterface->listItem()->toArray()["data"]);
-        $orderData = json_encode($this->orderServiceInterface->getOrder()->toArray()["data"]);
-        $product   = json_encode($this->productServiceInterface->getProduct()->toArray()["data"]);
+        $order     = json_encode($this->orderServiceInterface->listItem()->toArray()["data"] ?? []);
+        $orderData = json_encode($this->orderServiceInterface->getOrder()->toArray()["data"] ?? []);
+        $product   = json_encode($this->productServiceInterface->getProduct()->toArray()["data"] ?? []);
         $total     = $this->orderServiceInterface->count();
         $totalUser = $this->userServiceInterface->countUser();
 

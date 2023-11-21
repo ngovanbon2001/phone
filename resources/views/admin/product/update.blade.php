@@ -28,7 +28,7 @@
                             <h5 class="card-title">@lang('languages.edit_product')</h5>
 
                             <!-- General Form Elements -->
-                            <form action="{{ route('updateProducts', $product->id) }}" enctype="multipart/form-data" method="post" id="edit-profile" class="form-horizontal">
+                            <form action="{{ route('updateProducts', $product->id ?? '') }}" enctype="multipart/form-data" method="post" id="edit-profile" class="form-horizontal">
                                 @csrf
                                 <fieldset>
                                     <div class="row">
@@ -38,7 +38,7 @@
                                                 <select class="form-select" name="category_id">
                                                     <option value="">-----</option>
                                                     @foreach ($getCategories as $categoryList)
-                                                    <option value="{{ $categoryList->id }}" {{ (old('category_id') ?? $category->id) == $categoryList->id ? 'selected' : '' }}>
+                                                    <option value="{{ $categoryList->id ?? '' }}" {{ (old('category_id') ?? $category->id ?? '') == $categoryList->id ? 'selected' : '' }}>
                                                         {{ $categoryList->name }}
                                                     </option>
                                                     @endforeach
@@ -55,7 +55,7 @@
                                                 <select class="form-select" name="brand_id">
                                                     <option value="">-----</option>
                                                     @foreach ($getBrands as $brandList)
-                                                    <option value="{{ $brandList->id }}" {{ (old('brand_id') ?? $brand->id) == $brandList->id ? 'selected' : '' }}>
+                                                    <option value="{{ $brandList->id ?? '' }}" {{ (old('brand_id') ?? $brand->id ?? '') == $brandList->id ? 'selected' : '' }}>
                                                         {{ $brandList->name }}
                                                     </option>
                                                     @endforeach
@@ -73,7 +73,7 @@
                                             @if ($errors->any())
                                             <input type="text" class="form-control" name="name" value="{!! old('name') !!}">
                                             @else
-                                            <input type="text" class="form-control" name="name" value="{{ $product->name }}">
+                                            <input type="text" class="form-control" name="name" value="{{ $product->name ?? '' }}">
                                             @endif
 
                                             @error ('name')
@@ -89,7 +89,7 @@
                                                 @if ($errors->any())
                                                 <input class="form-control" name="price" value="{!! old('price') !!}" type="text" />
                                                 @else
-                                                <input class="form-control" name="price" value="{{ $product->price }}" type="text" />
+                                                <input class="form-control" name="price" value="{{ $product->price ?? '' }}" type="text" />
                                                 @endif
                                                 @error ('price')
                                                 <label class="error">{{ $message }}</label>
@@ -103,7 +103,7 @@
                                                 @if ($errors->any())
                                                 <input class="form-control" name="old_price" value="{!! old('old_price') !!}" type="text" />
                                                 @else
-                                                <input class="form-control" name="old_price" value="{{ $product->old_price }}" type="text" />
+                                                <input class="form-control" name="old_price" value="{{ $product->old_price ?? '' }}" type="text" />
                                                 @endif
                                             </div> <!-- /controls -->
                                         </div> <!-- /control-group -->
@@ -115,7 +115,7 @@
                                             @if ($errors->any())
                                             <input class="form-control" name="tags" value="{!! old('tags') !!}" type="text" />
                                             @else
-                                            <input class="form-control" name="tags" value="{{ $product->tags }}" type="text" />
+                                            <input class="form-control" name="tags" value="{{ $product->tags ?? '' }}" type="text" />
                                             @endif
                                         </div> <!-- /controls -->
                                     </div> <!-- /control-group -->
@@ -125,8 +125,8 @@
                                             <label class="control-label">@lang('languages.best_sell')</label>
                                             <div class="controls">
                                                 <select class="form-select" name="is_best_sell">
-                                                    <option value="0" {{ (old('is_best_sell') ?? $product->is_best_sell) == 0 ? 'selected' : '' }}>@lang('languages.no')</option>
-                                                    <option value="1" {{ (old('is_best_sell') ?? $product->is_best_sell) == 1 ? 'selected' : '' }}>@lang('languages.yes')</option>
+                                                    <option value="0" {{ (old('is_best_sell') ?? $product->is_best_sell ?? 0) == 0 ? 'selected' : '' }}>@lang('languages.no')</option>
+                                                    <option value="1" {{ (old('is_best_sell') ?? $product->is_best_sell ?? 0) == 1 ? 'selected' : '' }}>@lang('languages.yes')</option>
                                                 </select>
                                             </div> <!-- /controls -->
                                         </div> <!-- /control-group -->
@@ -135,8 +135,8 @@
                                             <label class="control-label">@lang('languages.new_product')</label>
                                             <div class="controls">
                                                 <select class="form-select" name="is_new">
-                                                    <option value="0" {{ (old('is_new') ?? $product->is_new) == 0 ? 'selected' : '' }}>@lang('languages.no')</option>
-                                                    <option value="1" {{ (old('is_new') ?? $product->is_new) == 1 ? 'selected' : '' }}>@lang('languages.yes')</option>
+                                                    <option value="0" {{ (old('is_new') ?? $product->is_new ?? 0) == 0 ? 'selected' : '' }}>@lang('languages.no')</option>
+                                                    <option value="1" {{ (old('is_new') ?? $product->is_new ?? 0) == 1 ? 'selected' : '' }}>@lang('languages.yes')</option>
                                                 </select>
                                             </div> <!-- /controls -->
                                         </div> <!-- /control-group -->
@@ -161,8 +161,8 @@
                                             <label class="control-label">@lang('languages.status')</label>
                                             <div class="controls">
                                                 <select class="form-select" name="active">
-                                                    <option value="0" {{ (old('active') ?? $product->active) == 0 ? 'selected' : '' }}>@lang('languages.no')</option>
-                                                    <option value="1" {{ (old('active') ?? $product->active) == 1 ? 'selected' : '' }}>@lang('languages.yes')</option>
+                                                    <option value="0" {{ (old('active') ?? $product->active ?? 0) == 0 ? 'selected' : '' }}>@lang('languages.no')</option>
+                                                    <option value="1" {{ (old('active') ?? $product->active ?? 0) == 1 ? 'selected' : '' }}>@lang('languages.yes')</option>
                                                 </select>
                                             </div> <!-- /controls -->
                                         </div> <!-- /control-group -->
@@ -172,14 +172,14 @@
                                         <div class="control-group col-md-6">
                                             <label class="control-label">@lang('languages.image')</label>
                                             <div class="controls">
-                                                <input type="hidden" name="oldImage" value="{{ $product->image_url }}">
-                                                <input class="form-control" name="image_url" type="file" />
+                                                <input type="hidden" name="oldImage" value="{{ $product->image_url ?? 0 }}">
+                                                <input id="imageInput" class="form-control" name="image_url" type="file" />
                                             </div> <!-- /controls -->
                                         </div> <!-- /control-group -->
 
                                         <div class="control-group col-md-6">
                                             <div class="controls">
-                                                <img width="150px" src="../images/{{ $product->image_url }}" alt="">
+                                                <img id="imagePreview" width="150px" src="{{ asset($product->image_url ?? '') }}" alt="">
                                             </div> <!-- /controls -->
                                         </div> <!-- /control-group -->
                                     </div>
@@ -288,7 +288,7 @@
                                             @if ($errors->any())
                                             <textarea id="textareaDescription" name="description" class="tinymce-editor">{!! old('description') !!}</textarea>
                                             @else
-                                            <textarea id="textareaDescription" name="description" class="tinymce-editor">{{ $product->description }}</textarea>
+                                            <textarea id="textareaDescription" name="description" class="tinymce-editor">{{ $product->description ?? '' }}</textarea>
                                             @endif
                                         </div> <!-- /controls -->
                                     </div> <!-- /control-group -->

@@ -75,10 +75,15 @@
                             </div>
                         </div>
                     </form>
+                    &emsp;
+                    <a href="{{ route('google.login') }}" class="google-login">
+                        <img style="width: 5%;" src="{{ asset('images/google.png') }}" alt="">
+                        @lang('languages.login_with_google')
+                    </a>
                 </div>
             </div>
             <div class="col-lg-6" style="text-align: center;">
-                <a href="{{ route('google.login') }}" class="google-login">@lang('languages.login_with_google')</a>
+                <img src="" alt="">
             </div>
         </div>
     </div>

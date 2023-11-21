@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Constants\Common;
 use App\Repositories\Contracts\ColorRepositoryInterface;
+use App\Repositories\Contracts\OrderItemsRepositoryInterface;
 use App\Repositories\Contracts\ProductReponsitoryInterface;
 use App\Services\Contracts\ProductServiceInterface;
 use Exception;
@@ -13,20 +14,24 @@ use Illuminate\Support\Facades\Log;
 
 class ProductService implements ProductServiceInterface
 {
-    protected ProductReponsitoryInterface $productReponsitory;
-    protected ColorRepositoryInterface    $colorRepositoryInterface;
+    protected ProductReponsitoryInterface   $productReponsitory;
+    protected ColorRepositoryInterface      $colorRepositoryInterface;
+    protected OrderItemsRepositoryInterface $orderItemsRepository;
 
     /**
      * @param ProductReponsitoryInterface $repositoryInterface
      * @param ColorRepositoryInterface $colorRepositoryInterface
+     * @param OrderItemsRepositoryInterface $orderItemsRepository
      */
     public function __construct(
-        ProductReponsitoryInterface $repositoryInterface,
-        ColorRepositoryInterface    $colorRepositoryInterface
+        ProductReponsitoryInterface   $repositoryInterface,
+        ColorRepositoryInterface      $colorRepositoryInterface,
+        OrderItemsRepositoryInterface $orderItemsRepository,
     )
     {
         $this->productReponsitory       = $repositoryInterface;
         $this->colorRepositoryInterface = $colorRepositoryInterface;
+        $this->orderItemsRepository     = $orderItemsRepository;
     }
 
     /**
@@ -82,14 +87,18 @@ class ProductService implements ProductServiceInterface
         }
     }
 
-    private function convertAttribute(array $attributes)
+    /**
+     * @param array $attributes
+     * @return array
+     */
+    private function convertAttribute(array $attributes): array
     {
         if (isset($attributes['image_url'])) {
             $image = $attributes['image_url'];
 
             $attribute['image_url'] = handleImage($image);
         } else {
-            if ($attributes['oldImage']) {
+            if (isset($attributes['oldImage'])) {
                 $attributes['image_url'] = $attributes['oldImage'];
             } else {
                 $attribute['image_url'] = "no-image.png";
@@ -136,10 +145,16 @@ class ProductService implements ProductServiceInterface
     public function delete(int $id): mixed
     {
         try {
+            $count = $this->orderItemsRepository->findWhere(['product_id' => $id])->count();
+            if ($count > Common::COUNT_DELETE) {
+                return null;
+            }
+
             $product = $this->productReponsitory->find($id);
 
             if ($product) {
                 $product->delete();
+                $this->colorRepositoryInterface->where(['product_id' => $id])->delete();
             }
 
             return $product;
@@ -215,7 +230,7 @@ class ProductService implements ProductServiceInterface
                 ["tags", "LIKE", Arr::get($conditions, "tags")],
             ];
 
-            return $this->productReponsitory->listProduct($conditions, Common::PAGINATE_FE);
+            return $this->productReponsitory->listProduct(condition($conditions), Common::PAGINATE_FE);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return null;

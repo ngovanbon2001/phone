@@ -93,6 +93,7 @@ Route::prefix('admin')->middleware('isAdmin')->group(function () {
 
     //color
     Route::post('/version/store', [ProductColorController::class, 'store'])->name('version.store');
+    Route::post('/version/update/{id}', [ProductColorController::class, 'update'])->name('version.update');
     Route::get('/version/destroy/{id}', [ProductColorController::class, 'destroy'])->name('version.destroy');
 
     //order
@@ -133,49 +134,50 @@ Route::prefix('/')->group(function () {
     Route::get('/auth/google',  [SocialController::class, 'redirectToGoogle'])->name('google.login');
     Route::get('/auth/google/callback',  [SocialController::class, 'handleGoogleCallback']);
 
+    // product
     Route::prefix('/product')->middleware('product')->group(function () {
         Route::get('/', [WebProductController::class, 'index'])->name('web.product');
 
         Route::get('/detail/{id}', [WebProductController::class, 'show'])->name('web.product.detail');
     });
 
+    // cart
     Route::post('cart/create', [CartController::class, 'store'])->name('cart.create');
-
     Route::get('cart/{id}', [CartController::class, 'index'])->name('cart')->middleware('cart.check_id');
-
     Route::post('cart/update', [CartController::class, 'update'])->name('cart.update');
-
-    Route::get('order/create/{id}', [WebOrderController::class, 'create'])->name('order.create')->middleware('cart.check_id');
-
-    Route::post('order/store', [WebOrderController::class, 'store'])->name('order.store');
-
-    Route::get('order/show/{id}', [WebOrderController::class, 'show'])->name('order.show')->middleware('cart.check_id');
-
-    Route::get('order/detail/{id}', [WebOrderController::class, 'detail'])->name('order.detail');
-
-    Route::get('order/pdf/{id}', [WebOrderController::class, 'exportPdf'])->name('order.pdf');
-
-    Route::post('order/cancel/{id}', [WebOrderController::class, 'cancel'])->name('web.order.cancel');
-
-    Route::post('order/hide/{id}', [WebOrderController::class, 'hide'])->name('web.order.delete');
-
-    Route::post('logout', [AuthLoginController::class, 'logout'])->name('user.logout');
-
-    Route::post('select-delivery', [CartController::class, 'delivery'])->name('select-delivery');
-
     Route::delete('cart/destroy/{id}/{colorId}', [CartController::class, 'delete'])->name('cart.destroy');
 
+    // order
+    Route::get('order/create/{id}', [WebOrderController::class, 'create'])->name('order.create')->middleware('cart.check_id');
+    Route::post('order/store', [WebOrderController::class, 'store'])->name('order.store');
+    Route::get('order/show/{id}', [WebOrderController::class, 'show'])->name('order.show')->middleware('cart.check_id');
+    Route::get('order/detail/{id}', [WebOrderController::class, 'detail'])->name('order.detail');
+    Route::get('order/pdf/{id}', [WebOrderController::class, 'exportPdf'])->name('order.pdf');
+    Route::post('order/cancel/{id}', [WebOrderController::class, 'cancel'])->name('web.order.cancel');
+    Route::post('order/hide/{id}', [WebOrderController::class, 'hide'])->name('web.order.delete');
+    Route::get('order/build-now/{id}', [WebOrderController::class, 'buildNow'])->name('web.order.build-now');
+    Route::post('order/build-now', [WebOrderController::class, 'build'])->name('web.order.build');
+    Route::post('select-delivery', [CartController::class, 'delivery'])->name('select-delivery');
+
+    // user
+    Route::post('logout', [AuthLoginController::class, 'logout'])->name('user.logout');
     Route::post('save-user', [UserTempController::class, 'create'])->name('save-user');
-
     Route::get('save-user/{id}', [UserTempController::class, 'show'])->name('user.register');
+    Route::get('user/show/{id}', [WebUserController::class, 'edit'])->name('web.user.edit');
+    Route::post('user/update/{id}', [WebUserController::class, 'update'])->name('web.user.update');
 
+    // change password
     Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
     Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
     Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
     Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
+    // user
+    Route::post('save-user', [UserTempController::class, 'create'])->name('save-user');
+    Route::get('save-user/{id}', [UserTempController::class, 'show'])->name('user.register');
     Route::get('user/show/{id}', [WebUserController::class, 'edit'])->name('web.user.edit');
     Route::post('user/update/{id}', [WebUserController::class, 'update'])->name('web.user.update');
+    Route::post('logout', [AuthLoginController::class, 'logout'])->name('user.logout');
 });
 
 Route::get('change-language/{locale}', [LanguageController::class, 'changeLanguage'])->name('change.language');

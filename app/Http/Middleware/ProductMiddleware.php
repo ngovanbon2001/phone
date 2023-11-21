@@ -2,8 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use App\Services\Contracts\BrandServiceInterface;
-use App\Services\Contracts\CategoryServiceInterface;
+use App\Constants\Common;
+use App\Repositories\Contracts\BrandRepositoryInterface;
+use App\Repositories\Contracts\CategoryReponsitoryInterface;
 use App\Services\Contracts\ProductServiceInterface;
 use Closure;
 use Illuminate\Http\Request;
@@ -11,22 +12,14 @@ use Illuminate\Http\Request;
 class ProductMiddleware
 {
     protected ProductServiceInterface  $productServiceInterface;
-    protected BrandServiceInterface    $brandServiceInterface;
-    protected CategoryServiceInterface $categoryService;
 
     /**
      * @param ProductServiceInterface $productServiceInterface
-     * @param CategoryServiceInterface $categoryService
-     * @param BrandServiceInterface $brandServiceInterface
      */
     public function __construct(
         ProductServiceInterface  $productServiceInterface,
-        CategoryServiceInterface $categoryService,
-        BrandServiceInterface    $brandServiceInterface,
     ) {
         $this->productServiceInterface = $productServiceInterface;
-        $this->brandServiceInterface   = $brandServiceInterface;
-        $this->categoryService         = $categoryService;
     }
 
     /**
@@ -38,8 +31,14 @@ class ProductMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $brands     = $this->brandServiceInterface->list([]);
-        $categories = $this->categoryService->list([]);
+        $brands     = app(BrandRepositoryInterface::class)
+                        ->whereNull('deleted_at')
+                        ->where('active', Common::ACTIVE)
+                        ->get();
+        $categories = app(CategoryReponsitoryInterface::class)
+                        ->whereNull('deleted_at')
+                        ->where('active', Common::ACTIVE)
+                        ->get();
         $tags       = $this->productServiceInterface->getTags();
         view()->share(['brands' => $brands, 'categories' => $categories, 'tags' => $tags]);
         return $next($request);

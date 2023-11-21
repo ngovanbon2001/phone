@@ -17,6 +17,7 @@ use App\Services\Contracts\ImageServiceInterface;
 use App\Services\Contracts\OrderServiceInterface;
 use App\Services\Contracts\ProductServiceInterface;
 use App\Services\Contracts\ReportServiceInterface;
+use App\Services\Contracts\StatisticServiceInterface;
 use App\Services\Contracts\UserExtendServiceInterface;
 use App\Services\Contracts\UserServiceInterface;
 use App\Services\Contracts\UserTempServiceInterface;
@@ -24,6 +25,7 @@ use App\Services\ImageService;
 use App\Services\OrderService;
 use App\Services\ProductService;
 use App\Services\ReportService;
+use App\Services\StatisticService;
 use App\Services\UserExtendService;
 use App\Services\UserService;
 use App\Services\UserTempService;
@@ -51,6 +53,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(UserTempServiceInterface::class, UserTempService::class);
         $this->app->bind(UserExtendServiceInterface::class, UserExtendService::class);
         $this->app->bind(ColorServiceInterface::class, ColorService::class);
+        $this->app->bind(StatisticServiceInterface::class, StatisticService::class);
 
         $provinces = DB::table('provinces')->get();
 

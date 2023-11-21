@@ -15,6 +15,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
 class OrderService implements OrderServiceInterface
@@ -107,11 +108,11 @@ class OrderService implements OrderServiceInterface
                     $total = $total + ($value['product_quantity'] * $value['product_price']);
                     $emailContent .= "Tên sản phẩm: {$value['product_name']}\n";
                     $emailContent .= "Số lượng: {$value['product_quantity']}\n";
-                    $emailContent .= "Giá: {$value['product_price']} $\n";
+                    $emailContent .= "Giá: {$value['product_price']} ". config('project.currency') ." \n";
                     $emailContent .= "-------------------------\n";
                 }
 
-                $emailContent .= "Tổng: {$total} $\n";
+                $emailContent .= "Tổng: {$total} ". config('project.currency');
 
                 $result = $this->orderItemsRepositoryInterface->insertOrUpdateBatch($items);
 
@@ -151,7 +152,7 @@ class OrderService implements OrderServiceInterface
                 if (
                     !$product || ($order->status == Common::IN_ACTIVE
                         && isset($product->amount_color)
-                        && $order->product_quantity > $product->amount_color)
+                        && $order->product_quantity > $product->amount_color) || ($order->status > Common::PAID)
                 ) {
                     Log::error('Fail amount');
                     return null;
@@ -187,6 +188,13 @@ class OrderService implements OrderServiceInterface
             $order = $this->orderItemsRepositoryInterface->find($id);
 
             if ($order) {
+                if (
+                    (Route::currentRouteName() === 'cancel-order' && $order->status > Common::PAID) 
+                        || (!(Route::currentRouteName() === 'cancel-order') && $order->status > Common::ACTIVE)
+                ) {
+                    return null;
+                }
+
                 $product = $this->colorRepositoryInterface->find($order->color);
 
                 if ($order->status > Common::IN_ACTIVE) {
@@ -300,9 +308,11 @@ class OrderService implements OrderServiceInterface
             $year = Carbon::now()->year;
 
             $result = DB::table("orders")
-                ->whereMonth('created_at', '=', $month)
-                ->whereYear('created_at', '=', $year)
-                ->selectRaw('SUM(total_products) as total_products, SUM(total_money) as total_money')
+                ->join('order_items', 'orders.id', '=', 'order_items.order_id')
+                ->where('order_items.status', '=', Common::PAID)
+                ->whereMonth('orders.created_at', '=', $month)
+                ->whereYear('orders.created_at', '=', $year)
+                ->selectRaw('SUM(order_items.product_quantity) as total_products, SUM(order_items.product_price * order_items.product_quantity) as total_money')
                 ->get();
 
             return $result->first();
@@ -435,6 +445,78 @@ class OrderService implements OrderServiceInterface
             ]);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * @param array $attributes
+     * @return mixed
+     */
+    public function buildNow(array $attributes): mixed
+    {
+        DB::beginTransaction();
+        try {
+            $province  = DB::table('provinces')->find($attributes['provinces']);
+            $districts = DB::table('districts')->find($attributes['districts']);
+            $wards     = DB::table('wards')->find($attributes['wards']);
+            $emailContent = "Bạn đã mua hàng thành công! Dưới đây là danh sách sản phẩm bạn đã mua:\n\n";
+
+            $attribute = [
+                'user_id'        => auth()->user()->id ?? null,
+                'customer_name'  => $attributes['customer_name'] ?? null,
+                'customer_phone' => $attributes['customer_phone'] ?? null,
+                'customer_email' => $attributes['customer_email'] ?? null,
+                'status'         => Common::IN_ACTIVE ?? 0,
+                'address' => ($attributes['address_detail'] ?? '') .' - '. ($wards->name ?? '') . ' - ' . ($districts->name ?? '') . ' - ' . ($province->name ?? ''),
+                'total_money'    => array_reduce($attributes['items'] ?? [], function ($carry, $item) {
+                    return $carry + ((int)$item["product_quantity"] * (float)$item["product_price"]);
+                }, 0),
+                'total_products' => array_reduce($attributes['items'] ?? [], function ($carry, $item) {
+                    return $carry + (int)$item["product_quantity"];
+                })
+            ];
+
+            $order = $this->orderRepository->create($attribute);
+            $items = [];
+            if ($order) {
+                $total = 0;
+                foreach ($attributes['items'] as $value) {
+                    $items[] = [
+                        'order_id'         => $order->id,
+                        'product_id'       => $value['product_id'],
+                        'product_name'     => $value['product_name'],
+                        'product_image'    => $value['product_image'],
+                        'product_price'    => $value['product_price'],
+                        'product_quantity' => $value['product_quantity'],
+                        'color'            => $value['color'] ?? '',
+                    ];
+                    $total = $total + ($value['product_quantity'] * $value['product_price']);
+                    $emailContent .= "Tên sản phẩm: {$value['product_name']}\n";
+                    $emailContent .= "Số lượng: {$value['product_quantity']}\n";
+                    $emailContent .= "Giá: {$value['product_price']} ". config('project.currency') ." \n";
+                    $emailContent .= "-------------------------\n";
+                }
+
+                $emailContent .= "Tổng: {$total} ". config('project.currency');
+
+                $result = $this->orderItemsRepositoryInterface->insertOrUpdateBatch($items);
+
+                if ($result) {
+                    // Send email
+                    Mail::raw($emailContent, function ($message) use ($attributes) {
+                        $message->to($attributes['customer_email'] ?? null)->subject('Order Confirmation');
+                    });
+
+                    DB::commit();
+                    return $order;
+                }
+            }
+            DB::rollBack();
+            return $order;
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
+            DB::rollBack();
             return null;
         }
     }

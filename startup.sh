@@ -1,11 +1,21 @@
-#!/bin/sh
+# Sao chép tệp .env
+cp .env.example .env
 
-#copy env
-# cp .env.example .env
-# install
-composer install --prefer-dist --no-scripts --no-autoloader
+# Cài đặt Composer Dependencies
+composer install --ignore-platform-req=ext-gd
 
-# secret
-# php artisan key:generate
+# Làm sạch cache
+php artisan cache:clear
 
-composer dump-autoload --no-scripts --optimize
+# Tạo lại cache cấu hình
+php artisan config:cache
+
+# Tạo khóa ứng dụng
+php artisan key:generate
+
+php artisan storage:link
+
+php artisan migrate
+
+# Tạo lại autoload file
+composer dump-autoload --no-scripts
