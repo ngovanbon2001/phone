@@ -103,6 +103,7 @@ Route::prefix('admin')->middleware('isAdmin')->group(function () {
     Route::post('/order/cancel-order/{id}', [OrderController::class, 'cancel'])->name('cancel-order');
     Route::get('/order/export', [OrderController::class, 'export'])->name('exportOrder');
     Route::delete('order/delete/{id}', [OrderController::class, 'delete'])->name('order.delete');
+    Route::get('order/pdf/{id}', [WebOrderController::class, 'exportPdf'])->name('export.pdf');
 
     //user
     Route::get('/user', [UserController::class, 'index'])->name('indexUser');

@@ -36,13 +36,13 @@
                                     <p><b>@lang('languages.product_name'): </b> <span>{{ $order['product_name'] ?? '' }}</span></p>
                                 </div>
                                 <div>
-                                    <p><b>@lang('languages.price'): </b> <span>{{ number_format($order['product_price'] ?? 0, 2) }}</span></p>
+                                    <p><b>@lang('languages.price') ({{ config('project.currency') }}): </b> <span>{{ number_format($order['product_price'] ?? 0, 2) }}</span></p>
                                 </div>
                                 <div>
                                     <p><b>@lang('languages.quantity'): </b> <span>{{ $order['product_quantity'] ?? 0 }}</span></p>
                                 </div>
                                 <div>
-                                    <p><b>@lang('languages.total'): </b> <span>{{ number_format((($order['product_price'] ?? 0) * ($order['product_quantity'] ?? 0)), 2) }}</span></p>
+                                    <p><b>@lang('languages.total') ({{ config('project.currency') }}): </b> <span>{{ number_format((($order['product_price'] ?? 0) * ($order['product_quantity'] ?? 0)), 2) }}</span></p>
                                 </div>
                                 <div class="title">
                                     <h2>@lang('languages.customer')</h2>

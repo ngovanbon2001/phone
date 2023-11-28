@@ -31,7 +31,7 @@ class LoginController extends Controller
         ) {
             return redirect()->route('homeAdmin');
         } else {
-            session()->flash('message-error', 'User account or password incorrect');
+            session()->flash('message-error', __('languages.fail'). ' '. __('languages.login'));
             return redirect()->route('admin.login');
         }
     }
