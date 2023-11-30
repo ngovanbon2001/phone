@@ -20,6 +20,7 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\OrderController as WebOrderController;
 use App\Http\Controllers\Web\ProductController as WebProductController;
+use App\Http\Controllers\Web\ReportController as WebReportController;
 use App\Http\Controllers\Web\SocialController;
 use App\Http\Controllers\Web\UserController as WebUserController;
 use App\Models\Province;
@@ -103,6 +104,7 @@ Route::prefix('admin')->middleware('isAdmin')->group(function () {
     Route::post('/order/cancel-order/{id}', [OrderController::class, 'cancel'])->name('cancel-order');
     Route::get('/order/export', [OrderController::class, 'export'])->name('exportOrder');
     Route::delete('order/delete/{id}', [OrderController::class, 'delete'])->name('order.delete');
+    Route::get('order/pdf/{id}', [WebOrderController::class, 'exportPdf'])->name('export.pdf');
 
     //user
     Route::get('/user', [UserController::class, 'index'])->name('indexUser');
@@ -178,6 +180,9 @@ Route::prefix('/')->group(function () {
     Route::get('user/show/{id}', [WebUserController::class, 'edit'])->name('web.user.edit');
     Route::post('user/update/{id}', [WebUserController::class, 'update'])->name('web.user.update');
     Route::post('logout', [AuthLoginController::class, 'logout'])->name('user.logout');
+
+    // comment
+    Route::post('report/create', [WebReportController::class, 'store'])->name('report.create');
 });
 
 Route::get('change-language/{locale}', [LanguageController::class, 'changeLanguage'])->name('change.language');

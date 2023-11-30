@@ -107,6 +107,9 @@
                                                     </form>
                                                     @endif
                                             </td>
+                                            <td>
+                                                <a href="{{ route('export.pdf', $value->id ?? 0) }}" class="btn btn-secondary"><i class="bx bxs-file-pdf"></i></a>
+                                            </td>
                                         </tr>
                                         @endforeach
                                         @endif

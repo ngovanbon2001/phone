@@ -341,4 +341,5 @@ return [
     'start_date' => "Ngày bắt đầu",
     'end_date' => "Ngày kết thúc",
     'paginate' => 'Phân trang',
+    'review' => 'Đánh giá',
 ];

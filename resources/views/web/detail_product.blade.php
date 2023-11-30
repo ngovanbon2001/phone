@@ -96,6 +96,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="pill" href="#specification">@lang('languages.specification')</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="pill" href="#reviews">@lang('languages.review')</a>
+                            </li>
                         </ul>
 
                         <div class="tab-content">
@@ -116,6 +119,47 @@
                                     <li><b>@lang('languages.internal_memory'): </b>{{ $product->specifications->internal_memory ?? '' }}</li>
                                     <li><b>@lang('languages.battery'): </b>{{ $product->specifications->battery ?? '' }}</li>
                                 </ul>
+                            </div>
+                            <div id="reviews" class="container tab-pane fade">
+                                @if(!empty($comment))
+                                @foreach($comment as $value)
+                                <div class="reviews-submitted">
+                                    <div class="reviewer">{{ $value->user_name ?? '' }} - <span>{{ $value->created_at ?? '' }}</span></div>
+                                    <p>
+                                        {{ $value->comments ?? '' }}
+                                    </p>
+                                </div>
+                                @endforeach
+                                @endif
+                                @if(isset(auth()->user()->id))
+                                <div class="reviews-submit">
+                                    <form action="{{ route('report.create') }}" method="post">
+                                        @csrf
+                                        <div class="row form">
+                                            <input type="hidden" value="{{ auth()->user()->id ?? 0 }}" name="user_id">
+                                            <input type="hidden" value="{{ $product->id ?? 0 }}" name="product_id">
+                                            <input type="hidden" value="{{ auth()->user()->username ?? '' }}" name="user_name">
+                                            <input type="hidden" value="{{ $product->name ?? '' }}" name="product_name">
+
+                                            <div class="col-sm-12">
+                                                <textarea placeholder="{{ __('languages.review') }}" name="comments"></textarea>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <button>@lang('languages.submit')</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                    @endif
+                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>
