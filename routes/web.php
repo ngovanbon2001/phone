@@ -20,6 +20,7 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\Web\CartController;
 use App\Http\Controllers\Web\OrderController as WebOrderController;
 use App\Http\Controllers\Web\ProductController as WebProductController;
+use App\Http\Controllers\Web\ReportController as WebReportController;
 use App\Http\Controllers\Web\SocialController;
 use App\Http\Controllers\Web\UserController as WebUserController;
 use App\Models\Province;
@@ -179,6 +180,9 @@ Route::prefix('/')->group(function () {
     Route::get('user/show/{id}', [WebUserController::class, 'edit'])->name('web.user.edit');
     Route::post('user/update/{id}', [WebUserController::class, 'update'])->name('web.user.update');
     Route::post('logout', [AuthLoginController::class, 'logout'])->name('user.logout');
+
+    // comment
+    Route::post('report/create', [WebReportController::class, 'store'])->name('report.create');
 });
 
 Route::get('change-language/{locale}', [LanguageController::class, 'changeLanguage'])->name('change.language');

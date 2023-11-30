@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Constants\Common;
 use App\Http\Controllers\Controller;
 use App\Services\Contracts\ProductServiceInterface;
+use App\Services\Contracts\ReportServiceInterface;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -13,14 +14,17 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     protected ProductServiceInterface  $productServiceInterface;
+    protected ReportServiceInterface $reportService;
 
     /**
      * @param ProductServiceInterface $productServiceInterface
      */
     public function __construct(
         ProductServiceInterface  $productServiceInterface,
+        ReportServiceInterface  $reportService,
     ) {
         $this->productServiceInterface = $productServiceInterface;
+        $this->reportService  = $reportService;
     }
 
     /**
@@ -57,6 +61,10 @@ class ProductController extends Controller
             return view('error');
         }
 
-        return view('web.detail_product', compact('product', 'products', 'newProduct'));
+        $comment = $this->reportService->list([
+            ['product_id', '=', $id]
+        ]);
+
+        return view('web.detail_product', compact('product', 'products', 'newProduct', 'comment'));
     }
 }

@@ -10,7 +10,7 @@ class Comment extends Model
 {
     use HasFactory, SoftDeletes;
     protected $table = 'comment';
-    public $timestamps = false;
+    public $timestamps = true;
     protected $fillable = [
         'user_id',
         'product_id',

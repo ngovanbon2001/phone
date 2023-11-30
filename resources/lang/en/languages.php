@@ -347,4 +347,5 @@ return [
     'start_date' => "Start date",
     'end_date' => "End date",
     'paginate' => 'Paginate',
+    'review' => 'Review',
 ];
