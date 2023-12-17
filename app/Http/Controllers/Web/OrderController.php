@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Constants\Common;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Order\BuildNowRequest;
 use App\Http\Requests\Order\CreateRequest;
 use App\Services\Contracts\CartServiceInterface;
 use App\Services\Contracts\OrderServiceInterface;
@@ -142,10 +143,10 @@ class OrderController extends Controller
     }
 
     /**
-     * @param CreateRequest $request
+     * @param BuildNowRequest $request
      * @return View|Factory|Application|RedirectResponse
      */
-    public function build(CreateRequest $request): View|Factory|Application|RedirectResponse
+    public function build(BuildNowRequest $request): View|Factory|Application|RedirectResponse
     {
         $order = $this->orderServiceInterface->buildNow($request->all());
 

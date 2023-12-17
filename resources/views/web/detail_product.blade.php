@@ -59,15 +59,24 @@
                                     <div class="quantity">
                                         <h4>@lang('languages.quantity'):</h4>
                                         <div class="qty">
-                                            <button type="button" class="btn-minus"><i class="fa fa-minus"></i></button>
+                                            <button type="button" class="btn-minus button-quantity"><i class="fa fa-minus"></i></button>
                                             <input id="amount" type="text" name="quantity" value="1">
-                                            <button type="button" class="btn-plus"><i class="fa fa-plus"></i></button>
+                                            <button type="button" class="btn-plus button-quantity"><i class="fa fa-plus"></i></button>
+                                        </div>
+
+                                        <div style="display: flex;">
+                                        <p style="font-size: 10px;">@lang('languages.max'):</p>
+                                        @if ($product->productColor)
+                                        @foreach ($product->productColor as $value)
+                                        <p id="color-amount-{{ $value->id ?? 0 }}" data-amount="{{ $value->amount_color ?? 0 }}" style="font-size: 10px;">{{ isset($value->color) ? __(config('project.color')[$value->color]) : '' }}({{ $value->amount_color ?? 0 }})</p>&emsp14;
+                                        @endforeach
+                                        @endif
                                         </div>
                                     </div>
                                     <div class="p-color">
                                         <div class="input-append" style="display: flex;">
                                             <h4 style="padding-top: 1%;">@lang('languages.color'):</h4>
-                                            <select name="color" style="width: 50%;" class="form-control input-sm">
+                                            <select id="color" name="color" style="width: 50%;" class="form-control input-sm">
                                                 @foreach($product->productColor as $key => $value)
                                                 <option value="{{ $value->id ?? '' }}">{{ (isset($value['color']) && $value['color'] !== '') ? __(config('project.color')[$value['color']]) : '' }}</option>
                                                 @endforeach
@@ -293,6 +302,26 @@
         showToasrt(toastrSuccess, true);
     } else if (toastrError) {
         showToasrt(toastrError, false);
+    }
+
+    var input = $('#amount');
+    $('.button-quantity').on('click', function(){
+        checkQuantity();
+    });
+
+    $('select#color').on('change', function(){
+        checkQuantity();
+    });
+
+    function checkQuantity() {
+        var color = $('#color').val();
+        var max = $('#color-amount-' + color).data('amount');
+        var value = input.val();
+        if (value < 1) {
+            input.val(1);
+        } else if(value > max) {
+            input.val(max);
+        }
     }
 </script>
 @endsection
