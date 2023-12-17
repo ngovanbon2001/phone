@@ -350,4 +350,5 @@ return [
     'review' => 'Review',
     'max' => 'Max',
     'sufficient' => 'is not available in sufficient quantity!',
+    'comment' => 'Comment',
 ];

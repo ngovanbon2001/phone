@@ -344,4 +344,5 @@ return [
     'review' => 'Đánh giá',
     'max' => 'Tối đa',
     'sufficient' => 'không đủ số lượng!',
+    'comment' => 'Bình luận',
 ];
