@@ -119,3 +119,11 @@ if (!function_exists('colorProduct')) {
         return isset($color->color) ? __(config('project.color')[$color->color]) : '';
     }
 }
+
+if (!function_exists('getAmount')) {
+    function getAmount(int $id)
+    {
+        $color = DB::table('product_color')->select('amount_color')->find($id);
+        return isset($color->amount_color) ? $color->amount_color : 0;
+    }
+}

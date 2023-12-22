@@ -176,6 +176,13 @@
                 </a>
             </li><!-- End Product Nav -->
 
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ route('comment') }}">
+                    <i class="bx bxs-comment"></i>
+                    <span>@lang('languages.comment')</span>
+                </a>
+            </li><!-- End Report Nav -->
+
             <li class="nav-heading">@lang('languages.pages')</li>
 
             <li class="nav-item">

@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests\Order;
 
-use App\Rules\CheckAmountRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateRequest extends FormRequest
+class BuildNowRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,7 +27,7 @@ class CreateRequest extends FormRequest
             'customer_name'  => 'required|string',
             'customer_phone' => 'required',
             'customer_email' => 'required|email',
-            'items'          => ['required', 'array', new CheckAmountRule()],
+            'items'          => 'required|array',
         ];
     }
 }

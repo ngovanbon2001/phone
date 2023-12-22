@@ -28,6 +28,7 @@
                     </ul>
                     <h3>@lang('languages.product')</h3>
                     <ul class="no-list-style">
+                        <img src="{{ $order['product_image'] ?? '' }}" alt="Product Image">
                         <li><b>@lang('languages.product_name'):</b> {{ $order['product_name'] ?? '' }}</li>
                         <li><b>@lang('languages.price') ({{ config('project.currency') }}):</b> {{ number_format($order['product_price'] ?? 0, 2) }}</li>
                         <li><b>@lang('languages.quantity'):</b> {{ $order['product_quantity'] ?? '' }}</li>

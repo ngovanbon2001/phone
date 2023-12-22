@@ -348,4 +348,7 @@ return [
     'end_date' => "End date",
     'paginate' => 'Paginate',
     'review' => 'Review',
+    'max' => 'Max',
+    'sufficient' => 'is not available in sufficient quantity!',
+    'comment' => 'Comment',
 ];

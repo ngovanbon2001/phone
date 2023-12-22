@@ -51,6 +51,7 @@
                                             <input id="cart-{{ $value['product_id'] ?? 0 }}-{{ $value['color'] ?? 0 }}" class="cart" data-cart="{{ auth()->user()->id ?? 0 }}" data-id="{{ $value['product_id'] ?? 0}}" data-name="{{ $value['name'] ?? ''}}" data-color="{{ $value['color'] ?? ''}}" data-image="{{ $value['options']['image'] ?? '' }}" data-price="{{ $value['price'] ?? 0 }}" data-qty="{{ $value['quantity'] ?? 0 }}" type="number" name="quantity" value="{{ $value['quantity'] ?? 0 }}" oninput="checkQuantity(this)">
                                             <button class="btn-plus update-cart" data-id="{{ $value['product_id'] ?? 0 }}" data-color="{{ $value['color'] ?? 0 }}"><i class="fa fa-plus"></i></button>
                                         </div>
+                                        <p id="color-amount-{{ $value['color'] ?? 0 }}" data-amount="{{ getAmount($value['color'] ?? 0) }}" style="font-size: 10px;">@lang('languages.max'): {{ getAmount($value['color'] ?? 0) }}</p>
                                     </td>
                                     <td id="total-{{ $value['product_id'] ?? 0 }}-{{ $value['color'] ?? 0 }}">{{ number_format(($value['price'] ?? 0) * ($value['quantity'] ?? 0), 2) }}{{ config('project.currency') }}</td>
                                     <td><button type="button" data-id="{{ $value['product_id'] ?? 0 }}" data-color="{{ $value['color'] ?? 0 }}" class="delete-cart"><i class="fa fa-trash"></i></button></td>
@@ -112,8 +113,12 @@
 
     function checkQuantity(input) {
         var value = parseFloat(input.value);
+        var color = input.dataset.color;
+        var max = $('#color-amount-' + color).data('amount');
         if (value < 1) {
             input.value = 1;
+        } else if (value > max) {
+            input.value = max;
         }
     }
 </script>

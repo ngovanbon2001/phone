@@ -206,8 +206,11 @@ $(document).ready(function() {
 
     function quantity(input, productId, color) {
         var value = parseFloat(input.val());
+        var max = $('#color-amount-' + color).data('amount');
         if (value < 1) {
             input.val(1);
+        } else if(value > max) {
+            input.val(max);
         } else {
             cost = parseFloat(cart.data('price')) * parseInt(cart.val());
             $('#total-'+productId+ '-' +color).text(numeral(cost).format('0,0.00')+currency);

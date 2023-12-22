@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\LoginController;
@@ -126,6 +127,10 @@ Route::prefix('admin')->middleware('isAdmin')->group(function () {
     Route::get('/report', [ReportController::class, 'index'])->name('indexReport');
 
     Route::get('/contact', [HomeController::class, 'contact'])->name("contact");
+
+    // comment
+    Route::get('/comment', [CommentController::class, 'index'])->name("comment");
+    Route::delete('/comment/destroy/{id}', [CommentController::class, 'destroy'])->name("comment.destroy");
 });
 
 Route::get('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');

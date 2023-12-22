@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Constants\Common;
 use App\Repositories\Contracts\ColorRepositoryInterface;
+use App\Repositories\Contracts\OrderItemsRepositoryInterface;
 use App\Services\Contracts\ColorServiceInterface;
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -10,13 +12,19 @@ use Illuminate\Support\Facades\Log;
 class ColorService implements ColorServiceInterface
 {
     protected ColorRepositoryInterface $colorRepositoryInterface;
+    protected OrderItemsRepositoryInterface $orderItemsRepository;
 
     /**
-     * @param BannerRepositoryInterface $bannerRepository
+     * @param ColorRepositoryInterface $colorRepositoryInterface
+     * @param OrderItemsRepositoryInterface $orderItemsRepository
      */
-    public function __construct(ColorRepositoryInterface $colorRepositoryInterface)
+    public function __construct(
+        ColorRepositoryInterface $colorRepositoryInterface,
+        OrderItemsRepositoryInterface $orderItemsRepository,
+    )
     {
-        return $this->colorRepositoryInterface = $colorRepositoryInterface;
+        $this->colorRepositoryInterface = $colorRepositoryInterface;
+        $this->orderItemsRepository     = $orderItemsRepository;
     }
 
     /**
@@ -75,6 +83,11 @@ class ColorService implements ColorServiceInterface
     public function delete(int $id): mixed
     {
         try {
+            $count = $this->orderItemsRepository->findWhere(['color' => $id])->count();
+            if ($count > Common::COUNT_DELETE) {
+                return null;
+            }
+            
             $version = $this->colorRepositoryInterface->find($id);
 
             if ($version) {

@@ -342,4 +342,7 @@ return [
     'end_date' => "Ngày kết thúc",
     'paginate' => 'Phân trang',
     'review' => 'Đánh giá',
+    'max' => 'Tối đa',
+    'sufficient' => 'không đủ số lượng!',
+    'comment' => 'Bình luận',
 ];

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Constants\Common;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Order\BuildNowRequest;
 use App\Http\Requests\Order\CreateRequest;
 use App\Services\Contracts\CartServiceInterface;
 use App\Services\Contracts\OrderServiceInterface;
@@ -95,6 +96,8 @@ class OrderController extends Controller
     public function exportPdf(int $id): mixed
     {
         $order = $this->orderServiceInterface->detailItem($id);
+        $order['product_image'] = public_path(str_replace('/storage', 'storage', $order['product_image'] ?? ''));
+        $order['product_image'] = str_replace('\\', '/', $order['product_image'] ?? '');
         $pdf   = PDF::loadView('web/pdf', compact('order'));
         $pdf->getDomPDF()->set_option('isHtml5ParserEnabled', true);
         $pdf->getDomPDF()->set_option('isPhpEnabled', true);
@@ -142,10 +145,10 @@ class OrderController extends Controller
     }
 
     /**
-     * @param CreateRequest $request
+     * @param BuildNowRequest $request
      * @return View|Factory|Application|RedirectResponse
      */
-    public function build(CreateRequest $request): View|Factory|Application|RedirectResponse
+    public function build(BuildNowRequest $request): View|Factory|Application|RedirectResponse
     {
         $order = $this->orderServiceInterface->buildNow($request->all());
 
