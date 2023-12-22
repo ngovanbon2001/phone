@@ -96,6 +96,8 @@ class OrderController extends Controller
     public function exportPdf(int $id): mixed
     {
         $order = $this->orderServiceInterface->detailItem($id);
+        $order['product_image'] = public_path(str_replace('/storage', 'storage', $order['product_image'] ?? ''));
+        $order['product_image'] = str_replace('\\', '/', $order['product_image'] ?? '');
         $pdf   = PDF::loadView('web/pdf', compact('order'));
         $pdf->getDomPDF()->set_option('isHtml5ParserEnabled', true);
         $pdf->getDomPDF()->set_option('isPhpEnabled', true);
