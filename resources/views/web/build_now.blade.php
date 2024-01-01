@@ -172,6 +172,10 @@
         checkQuantity();
     });
 
+    input.on('change', function() {
+        checkQuantity();
+    }); 
+
     function checkQuantity() {
         var color = $('#color').val();
         var max = $('#color-amount-' + color).data('amount');
