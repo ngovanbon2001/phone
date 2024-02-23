@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ExampleController;
+use App\Http\Controllers\SvgController;
 use App\Http\Controllers\Web\CartController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,3 +26,5 @@ Route::post('login', [LoginController::class, 'login']);
 Route::post('refresh', [LoginController::class, 'refresh']);
 Route::get('listUser', [LoginController::class, 'listUser'])->middleware('jwt.auth');
 Route::get('list', [ExampleController::class, 'index']);
+
+Route::get('preview-svg', [SvgController::class, 'generateSVG']);
