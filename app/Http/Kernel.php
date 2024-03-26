@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AddressMiddleware;
 use App\Http\Middleware\CheckAdminMiddleware;
 use App\Http\Middleware\CheckCartMiddleware;
 use App\Http\Middleware\CountRequestsMiddleware;
@@ -43,7 +44,8 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            SetLocalMiddleware::class
+            SetLocalMiddleware::class,
+            AddressMiddleware::class,
         ],
 
         'api' => [
