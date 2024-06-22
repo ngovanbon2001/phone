@@ -194,6 +194,7 @@ Route::get('/test2', function () {
 Route::get('/test3', function () {
     dd(Redis::get('request_count'));
 });
+
 Route::get('/test-log', function () {
     Log::channel('telegram')->error('This is an error message!');
     dd("chạy ở đây");
