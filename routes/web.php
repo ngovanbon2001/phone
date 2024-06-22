@@ -24,6 +24,7 @@ use App\Http\Controllers\Web\SocialController;
 use App\Http\Controllers\Web\UserController as WebUserController;
 use App\Models\Province;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
 
@@ -192,4 +193,9 @@ Route::get('/test2', function () {
 
 Route::get('/test3', function () {
     dd(Redis::get('request_count'));
+});
+
+Route::get('/test-log', function () {
+    Log::channel('telegram')->error('This is an error message!');
+    dd("chạy ở đây");
 });
