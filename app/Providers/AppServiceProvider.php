@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Constants\Common;
 use App\Services\BannerService;
 use App\Services\BrandService;
 use App\Services\CartService;
@@ -29,7 +28,6 @@ use App\Services\StatisticService;
 use App\Services\UserExtendService;
 use App\Services\UserService;
 use App\Services\UserTempService;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -54,16 +52,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(UserExtendServiceInterface::class, UserExtendService::class);
         $this->app->bind(ColorServiceInterface::class, ColorService::class);
         $this->app->bind(StatisticServiceInterface::class, StatisticService::class);
-
-        $provinces = DB::table('provinces')->get();
-
-        //all category
-        $categories = DB::table('categories')->whereNull('deleted_at')->get();
-
-        //all brand
-        $brands = DB::table('brands')->whereNull('deleted_at')->get();
-
-        view()->share(['provinces' => $provinces, 'categories' => $categories ?? [], 'brands' => $brands ?? []]);
     }
 
     /**

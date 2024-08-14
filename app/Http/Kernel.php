@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\CheckAdminMiddleware;
 use App\Http\Middleware\CheckCartMiddleware;
+use App\Http\Middleware\CommonMiddleware;
 use App\Http\Middleware\CountRequestsMiddleware;
 use App\Http\Middleware\isAdmin;
 use App\Http\Middleware\ProductMiddleware;
@@ -76,6 +77,7 @@ class Kernel extends HttpKernel
         'count_requests' => CountRequestsMiddleware::class,
         'product' => ProductMiddleware::class,
         'cart.check_id' => CheckCartMiddleware::class,
-        'check.admin' => CheckAdminMiddleware::class
+        'check.admin' => CheckAdminMiddleware::class,
+        'common' => CommonMiddleware::class,
     ];
 }

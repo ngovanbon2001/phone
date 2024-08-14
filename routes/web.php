@@ -44,7 +44,7 @@ Auth::routes();
 Route::get('admin/login', [LoginController::class, 'index'])->name('admin.login');
 Route::post('admin/login/submit', [LoginController::class, 'login'])->name('admin.login.submit');
 
-Route::prefix('admin')->middleware('isAdmin')->group(function () {
+Route::prefix('admin')->middleware(['isAdmin', 'common'])->group(function () {
     Route::get('/', [HomeController::class, 'home'])->name('homeAdmin');
     Route::post('admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
 
@@ -129,7 +129,7 @@ Route::prefix('admin')->middleware('isAdmin')->group(function () {
 
 Route::get('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
 
-Route::prefix('/')->group(function () {
+Route::prefix('/')->middleware('common')->group(function () {
     Route::get('/', [HomeControllerFE::class, 'index'])->name('web.home');
 
     Route::get('/auth/google',  [SocialController::class, 'redirectToGoogle'])->name('google.login');
