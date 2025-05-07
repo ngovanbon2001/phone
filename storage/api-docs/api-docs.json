@@ -1,0 +1,55 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Gotech API",
+        "description": "Tài liệu API cho hệ thống Gotech",
+        "contact": {
+            "email": "admin@gotech.vn"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/listUser": {
+            "get": {
+                "summary": "Lấy danh sách tài khoản người dùng",
+                "description": "Trả về danh sách tất cả các tài khoản người dùng hiện có trong hệ thống",
+                "operationId": "listUser",
+                "responses": {
+                    "200": {
+                        "description": "Danh sách tài khoản",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "ID của người dùng",
+                                                "type": "integer"
+                                            },
+                                            "name": {
+                                                "description": "Tên người dùng",
+                                                "type": "string"
+                                            },
+                                            "email": {
+                                                "description": "Địa chỉ email của người dùng",
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Yêu cầu không hợp lệ"
+                    },
+                    "500": {
+                        "description": "Lỗi server"
+                    }
+                }
+            }
+        }
+    }
+}

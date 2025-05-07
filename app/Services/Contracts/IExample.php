@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Contract;
+namespace App\Services\Contracts;
 
 interface IExample
 {

@@ -7,7 +7,7 @@ use App\Repositories\BannerRepository;
 use App\Repositories\BrandRepository;
 use App\Repositories\CategoryReponsitory;
 use App\Repositories\ColorRepository;
-use App\Repositories\Contract\TestRepository;
+use App\Repositories\Contracts\TestRepository;
 use App\Repositories\Contracts\AdminRepositoryInterface;
 use App\Repositories\Contracts\BannerRepositoryInterface;
 use App\Repositories\Contracts\BrandRepositoryInterface;
@@ -28,7 +28,7 @@ use App\Repositories\ReportRepository;
 use App\Repositories\TestRepositoryEloquent;
 use App\Repositories\UserRepository;
 use App\Repositories\UserTempRepository;
-use App\Service\Contract\IExample;
+use App\Services\Contracts\IExample;
 use App\Service\ExampleService;
 use Illuminate\Support\ServiceProvider;
 

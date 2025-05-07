@@ -9,7 +9,19 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use App\Models\Admin;
 
+
+/**
+ * @OA\Info(
+ *     title="Gotech API",
+ *     version="1.0.0",
+ *     description="Tài liệu API cho hệ thống Gotech",
+ *     @OA\Contact(
+ *         email="admin@gotech.vn"
+ *     )
+ * )
+ */
 class LoginController extends Controller
 {
     /*
@@ -65,5 +77,39 @@ class LoginController extends Controller
     {
         Auth::logout();
         return redirect('/');
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/listUser",
+     *     summary="Lấy danh sách tài khoản người dùng",
+     *     description="Trả về danh sách tất cả các tài khoản người dùng hiện có trong hệ thống",
+     *     operationId="listUser",
+     *     @OA\Response(
+     *         response="200",
+     *         description="Danh sách tài khoản",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(
+     *                 type="object",
+     *                 @OA\Property(property="id", type="integer", description="ID của người dùng"),
+     *                 @OA\Property(property="name", type="string", description="Tên người dùng"),
+     *                 @OA\Property(property="email", type="string", description="Địa chỉ email của người dùng")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="400",
+     *         description="Yêu cầu không hợp lệ"
+     *     ),
+     *     @OA\Response(
+     *         response="500",
+     *         description="Lỗi server"
+     *     )
+     * )
+     */
+    public function listUser()
+    {
+        return Admin::all();
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Service;
+namespace App\Services;
 
 use App\Repositories\TestRepositoryEloquent;
-use App\Service\Contract\IExample;
+use App\Services\Contracts\IExample;
 
 class ExampleService implements IExample
 {
