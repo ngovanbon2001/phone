@@ -1,16 +1,14 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use App\Models\Admin;
-
 
 /**
  * @OA\Info(
@@ -61,8 +59,8 @@ class LoginController extends Controller
     public function login(Request $request): RedirectResponse
     {
         if (Auth::attempt([
-            'email' => $request->input('email'),
-            'password' => $request->input('password')
+            'email'    => $request->input('email'),
+            'password' => $request->input('password'),
         ])) {
             loginCart();
 
@@ -85,6 +83,21 @@ class LoginController extends Controller
      *     summary="Lấy danh sách tài khoản người dùng",
      *     description="Trả về danh sách tất cả các tài khoản người dùng hiện có trong hệ thống",
      *     operationId="listUser",
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *         name="name",
+     *         in="query",
+     *         description="Tên người dùng",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         description="Email người dùng",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
      *     @OA\Response(
      *         response="200",
      *         description="Danh sách tài khoản",
