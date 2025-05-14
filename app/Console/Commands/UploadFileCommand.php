@@ -1,7 +1,6 @@
 <?php
 namespace App\Console\Commands;
 
-use App\Jobs\ProcessUploadedFile;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -51,21 +50,36 @@ class UploadFileCommand extends Command
         // })->toArray();
         // DB::table('categories')->insert($converted);
 
-        $response = Http::withoutVerifying()->get('https://app.cscmobicorp.com/uploadfile/files/g10_a25');
-        $data     = json_decode($response->body());
-        $list = $data->data;
-        $listCate = [];
-        foreach ($list as $val) {
-            // $exists = DB::table('categories')->where('code', Str::slug($val->categoryCode))->first();
-            // if (empty($exists)) {
-            //     DB::table('categories')->insert([
-            //         'name' => trim($val->categoryName),
-            //         'code' => Str::slug($val->categoryCode),
-            //     ]);
-            // }
+        // $response = Http::withoutVerifying()->get('https://app.cscmobicorp.com/uploadfile/files/g10_a25');
+        // $data     = json_decode($response->body());
+        // $list = $data->data;
+        // $listCate = [];
+        // foreach ($list as $val) {
+        //     $exists = DB::table('categories')->where('code', Str::slug($val->categoryCode))->first();
+        //     if (empty($exists)) {
+        //         DB::table('categories')->insert([
+        //             'name' => trim($val->categoryName),
+        //             'code' => Str::slug($val->categoryCode),
+        //         ]);
+        //     }
 
-            ProcessUploadedFile::dispatch($list);
+        //     ProcessUploadedFile::dispatch($list);
+        // }
+        $response = Http::withoutVerifying()->get('https://photoai.cscmobicorp.com/wallapi/images?category=all&page=1&pageNumber=20000');
+        Log::info($response->body());
+        $data = json_decode($response->body());
+        $list = $data->images;
+        foreach ($list as $val) {
+            $exists = DB::table('categories')->where('code', Str::slug($val->category))->first();
+            DB::table('images')->insert([
+                'category_id'   => $exists->id ?? 0,
+                'category_name' => $val->category ?? '',
+                'code' => $val->id ?? '',
+                'name' => $val->name ?? '',
+                'original_image_url' => $val->original_image_url ?? '',
+                'thumbnail_image_url' => $val->thumbnail_image_url ?? '',
+                'views' => $val->views ?? '',
+            ]);
         }
-        Log::info($listCate);
     }
 }
