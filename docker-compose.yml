@@ -1,6 +1,6 @@
 version: '2.5.1'
 services:
-  vaccination:
+  serve:
     build:
       context: .
       dockerfile: dockerfile
